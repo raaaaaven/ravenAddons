@@ -14,6 +14,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
+@Suppress("ClassName")
 @Mod(modid = "ravenAddons", useMetadata = true)
 class ravenAddons {
     private val loadedClasses = mutableSetOf<Any>()

@@ -25,8 +25,7 @@ object DropAlert {
             ChatUtils.debug("magicFindAlert triggered: $type DROP! $drop")
 
             ravenAddons.launchCoroutine {
-                // this delay is probably unneeded
-                delay(500) // it makes it run in a different thread so the game doesn't freeze for 500ms
+                delay(500)
 
                 ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $type DROP! $drop")
             }
