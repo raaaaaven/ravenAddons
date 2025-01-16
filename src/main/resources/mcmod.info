@@ -1,0 +1,18 @@
+[
+  {
+    "modid": "${modid}",
+    "name": "ravenAddons",
+    "description": "",
+    "version": "${version}",
+    "mcversion": "${mcversion}",
+    "url": "https://github.com/raaaaaven/ravenAddons",
+    "updateUrl": "",
+    "authorList": [
+      "raven"
+    ],
+    "credits": "",
+    "logoFile": "",
+    "screenshots": [],
+    "dependencies": []
+  }
+]

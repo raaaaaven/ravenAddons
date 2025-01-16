@@ -1,0 +1,13 @@
+[versions]
+#libautoupdate = "1.0.3"
+hypixelmodapi = "1.0.1.1"
+vigilance = "306"
+universalcraft = "363"
+
+[libraries]
+#libautoupdate = { module = "moe.nea:libautoupdate", version.ref = "libautoupdate" }
+hypixelmodapi = { module = "net.hypixel:mod-api-forge", version.ref = "hypixelmodapi" }
+hypixelmodapitweaker = { module = "net.hypixel:mod-api-forge-tweaker", version.ref = "hypixelmodapi" }
+
+vigilance = { module = "gg.essential:vigilance", version.ref = "vigilance" }
+universalcraft = { module = "gg.essential:universalcraft-1.8.9-forge", version.ref = "universalcraft" }
