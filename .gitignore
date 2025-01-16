@@ -2,6 +2,7 @@
 .vscode/
 run/
 build/
+annotation-processors/build/
 .gradle/
 
 .devauth/*
