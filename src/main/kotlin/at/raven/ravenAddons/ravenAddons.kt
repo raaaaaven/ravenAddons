@@ -2,6 +2,7 @@ package at.raven.ravenAddons
 
 import at.raven.ravenAddons.config.ConfigCommand
 import at.raven.ravenAddons.loadmodule.LoadedModules
+import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
@@ -14,7 +15,8 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 
-@Mod(modid = "ravenAddons", useMetadata = true)
+@Suppress("ClassName")
+@Mod(modid = "ravenAddons", useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
     private val loadedClasses = mutableSetOf<Any>()
 
@@ -35,6 +37,8 @@ class ravenAddons {
     }
 
     companion object{
+        const val MOD_VERSION = "1.0.0"
+
         private val globalJob: Job = Job(null)
         val coroutineScope =
             CoroutineScope(

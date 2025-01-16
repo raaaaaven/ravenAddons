@@ -2,7 +2,6 @@ package at.raven.ravenAddons.tweaker;
 
 import java.io.File;
 import java.util.List;
-import kotlin.Suppress;
 import net.hypixel.modapi.tweaker.HypixelModAPITweaker;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;

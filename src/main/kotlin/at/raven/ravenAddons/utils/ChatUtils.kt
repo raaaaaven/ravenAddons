@@ -1,7 +1,6 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import net.minecraft.client.Minecraft
