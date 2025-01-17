@@ -38,8 +38,8 @@ object TitleManager {
 
     private fun command() {
         setTitle(
-            "§ahello everyone",
-            "§baaa",
+            "§atest title",
+            "§btest subtitle",
             10.seconds,
             2.seconds,
             2.seconds

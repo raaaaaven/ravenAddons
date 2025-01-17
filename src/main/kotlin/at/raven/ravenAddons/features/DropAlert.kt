@@ -23,7 +23,7 @@ object DropAlert {
             val type = group("type")
             val drop = group("drop")
 
-            ChatUtils.debug("magicFindAlert triggered: $type DROP! $drop")
+            ChatUtils.debug("dropAlert triggered: $type DROP! $drop")
 
             ravenAddons.launchCoroutine {
                 delay(500)
