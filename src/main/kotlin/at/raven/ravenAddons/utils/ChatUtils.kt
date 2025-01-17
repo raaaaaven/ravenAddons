@@ -39,7 +39,7 @@ object ChatUtils {
         message: String,
         usePrefix: Boolean = true,
     ) {
-        val finalMessage = if (usePrefix) "§8[§cRA§8]&7 $message" else message
+        val finalMessage = if (usePrefix) "§8[§cRA§8]§7 $message" else message
 
         chat(ChatComponentText(finalMessage))
     }
