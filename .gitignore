@@ -4,6 +4,7 @@ run/
 build/
 annotation-processors/build/
 .gradle/
+.kotlin/
 
 .devauth/*
 !.devauth/config.toml
