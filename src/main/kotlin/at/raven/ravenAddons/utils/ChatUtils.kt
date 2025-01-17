@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 object ChatUtils {
     fun testMessageCommand(array: Array<String>) {
         if (array.isEmpty()) {
-            chat("cant test a message without one i think")
+            chat("Failed to run because you didn't put a message to test...")
             return
         }
         val hidden = array.last() == "-s"
@@ -30,7 +30,7 @@ object ChatUtils {
         message: String,
         usePrefix: Boolean = true,
     ) {
-        val finalMessage = if (usePrefix) "§d[§cRA§d] $message" else message
+        val finalMessage = if (usePrefix) "§4[§cRA§4]§7 $message" else message
 
         chat(finalMessage, usePrefix = false)
     }
