@@ -1,0 +1,7 @@
+{
+  "package": "at.raven.ravenAddons.mixin",
+  "plugin": "at.raven.ravenAddons.init.AutoDiscoveryMixinPlugin",
+  "refmap": "mixins.ravenAddons.refmap.json",
+  "minVersion": "0.7",
+  "compatibilityLevel": "JAVA_8"
+}

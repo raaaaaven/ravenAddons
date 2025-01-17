@@ -23,27 +23,23 @@ object ChatUtils {
         if (!hidden) chat("Testing message: §7$rawMessage")
         if (hidden) rawMessage = rawMessage.replace(" -s", "")
         val formattedMessage = rawMessage.replace("&", "§")
-        chat(formattedMessage)
+        chat(formattedMessage, false)
     }
 
     fun warning(
         message: String,
         usePrefix: Boolean = true,
     ) {
-        val prefix = if (usePrefix) "§c[Awesome] " else "§c"
+        val finalMessage = if (usePrefix) "§c[RA] $message" else message
 
-        val finalMessage = prefix + message
-
-        chat(ChatComponentText(finalMessage))
+        chat(finalMessage)
     }
 
     fun chat(
         message: String,
         usePrefix: Boolean = true,
     ) {
-        val prefix = if (usePrefix) "§e[Awesome] " else "§e"
-
-        val finalMessage = prefix + message
+        val finalMessage = if (usePrefix) "§e[RA] $message" else message
 
         chat(ChatComponentText(finalMessage))
     }
@@ -62,8 +58,11 @@ object ChatUtils {
     fun chatClickable(
         message: String,
         command: String,
+        usePrefix: Boolean = true,
     ) {
-        val text = ChatComponentText(message)
+        val newMessage = if (usePrefix) "§e[RA] $message" else message
+
+        val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
         text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§eRuns $command"))
         Minecraft.getMinecraft().thePlayer.addChatMessage(text)
@@ -76,7 +75,7 @@ object ChatUtils {
     fun debug(message: String) {
         if (!ravenAddonsConfig.debugMessages) return
 
-        chat("§7[Awesome Debug] $message", usePrefix = false)
+        chat("§7[RA Debug] $message", usePrefix = false)
     }
 
     fun debug(nonString: Any) {
@@ -92,7 +91,7 @@ object ChatUtils {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("awtestmessage") {
+        event.register("ratestmessage") {
             description = "Prints a message in chat."
             callback { testMessageCommand(it) }
         }
