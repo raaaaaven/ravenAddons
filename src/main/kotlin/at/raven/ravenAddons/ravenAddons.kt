@@ -1,6 +1,7 @@
 package at.raven.ravenAddons
 
 import at.raven.ravenAddons.config.ConfigCommand
+import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
@@ -28,6 +29,8 @@ class ravenAddons {
     @Mod.EventHandler
     fun preInit(event: FMLPreInitializationEvent) {
         LoadedModules.modules.forEach { loadModule(it) }
+
+        MinecraftForge.EVENT_BUS.post(CommandRegistrationEvent())
     }
 
     @Mod.EventHandler
