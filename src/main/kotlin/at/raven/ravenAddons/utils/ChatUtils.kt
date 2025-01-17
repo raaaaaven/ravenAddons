@@ -32,7 +32,7 @@ object ChatUtils {
     ) {
         val finalMessage = if (usePrefix) "§d[§cRA§d] $message" else message
 
-        chat(finalMessage)
+        chat(finalMessage, usePrefix = false)
     }
 
     fun chat(
