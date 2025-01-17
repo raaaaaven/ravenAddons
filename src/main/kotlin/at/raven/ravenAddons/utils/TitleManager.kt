@@ -22,12 +22,6 @@ object TitleManager {
     private var titleFadeIn = 0
     private var titleFadeOut = 0
 
-    val textTitle = ravenAddonsConfig.developerTitle
-    val textSubTitle = ravenAddonsConfig.developerSubTitle
-
-    val finalTitle = textTitle.replace("&","§")
-    val finalSubTitle = textSubTitle.replace("&","§")
-
     fun setTitle(
         title: String? = null,
         subTitle: String? = null,
@@ -43,13 +37,33 @@ object TitleManager {
         this.titleFadeOut = (fadeOut.inSeconds() * 20).toInt()
     }
 
-    private fun command() {
+    private fun command(args: Array<String>) {
+        if (args.size != 3) {
+            ChatUtils.warning("Wrong usage! /ratesttitle <duration> <fadeIn> <fadeOut>")
+            return
+        }
+        val title = ravenAddonsConfig.developerTitle.replace("&","§")
+        val subtitle = ravenAddonsConfig.developerSubTitle.replace("&","§")
+        if (title.isEmpty() && subtitle.isEmpty()) {
+            ChatUtils.warning("Wrong usage! Either a title or subtitle need to be set in the config.")
+            return
+        }
+
+        val duration = args.getOrNull(0)?.toIntOrNull()?.seconds
+        val fadeIn = args.getOrNull(1)?.toIntOrNull()?.seconds
+        val fadeOut = args.getOrNull(2)?.toIntOrNull()?.seconds
+
+        if (duration == null || fadeIn == null || fadeOut == null) {
+            ChatUtils.warning("Wrong usage! /ratesttitle <duration> <fadeIn> <fadeOut>")
+            return
+        }
+
         setTitle(
-            finalTitle,
-            finalSubTitle,
-            10.seconds,
-            2.seconds,
-            2.seconds
+            title,
+            subtitle,
+            duration,
+            fadeIn,
+            fadeOut
         )
     }
 
@@ -67,7 +81,7 @@ object TitleManager {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("ratesttitle") {
             description = "Display a test title"
-            callback { command() }
+            callback { command(it) }
         }
     }
 
