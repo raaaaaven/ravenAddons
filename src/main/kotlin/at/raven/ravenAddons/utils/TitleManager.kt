@@ -22,6 +22,12 @@ object TitleManager {
     private var titleFadeIn = 0
     private var titleFadeOut = 0
 
+    val textTitle = ravenAddonsConfig.developerTitle
+    val textSubTitle = ravenAddonsConfig.developerSubTitle
+
+    val finalTitle = textTitle.replace("&","§")
+    val finalSubTitle = textSubTitle.replace("&","§")
+
     fun setTitle(
         title: String? = null,
         subTitle: String? = null,
@@ -39,8 +45,8 @@ object TitleManager {
 
     private fun command() {
         setTitle(
-            ravenAddonsConfig.developerTitle,
-            ravenAddonsConfig.developerSubTitle,
+            finalTitle,
+            finalSubTitle,
             10.seconds,
             2.seconds,
             2.seconds
