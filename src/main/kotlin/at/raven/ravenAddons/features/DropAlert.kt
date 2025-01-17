@@ -5,6 +5,7 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.StringUtils.removeColors
 import kotlinx.coroutines.delay
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -18,7 +19,7 @@ object DropAlert {
     fun onChat(event: ClientChatReceivedEvent) {
         if (!ravenAddonsConfig.dropAlert || ravenAddonsConfig.dropAlertUserName.isEmpty()) return
 
-        rngPattern.matchMatcher(event.message.formattedText) {
+        rngPattern.matchMatcher(event.message.formattedText.removeColors()) {
             val type = group("type")
             val drop = group("drop")
 
