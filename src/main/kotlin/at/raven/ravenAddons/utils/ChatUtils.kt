@@ -60,7 +60,7 @@ object ChatUtils {
         command: String,
         usePrefix: Boolean = true,
     ) {
-        val newMessage = if (usePrefix) "§8[§cRA§8]&7 $message" else message
+        val newMessage = if (usePrefix) "§8[§cRA§8]§7 $message" else message
 
         val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
