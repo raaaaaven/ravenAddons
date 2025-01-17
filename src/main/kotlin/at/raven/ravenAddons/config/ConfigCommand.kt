@@ -20,7 +20,7 @@ object ConfigCommand {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("ravenaddons") {
-            description = ""
+            description = "Opens the Config GUI"
             aliases = listOf("raven", "ra")
             callback { openConfig() }
         }

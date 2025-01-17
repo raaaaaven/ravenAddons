@@ -26,10 +26,26 @@ object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
     @Property(
         type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
-        description = "This is a text property. It stores a single line of continuous text.",
+        description = "This allows the user to see debug messages.",
         category = "Developer"
     )
     var debugMessages = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "/ratesttitle Title",
+        description = "Sets the title for the test title.",
+        category = "Developer"
+    )
+    var developerTitle = ""
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "/ratesttitle SubTitle",
+        description = "Sets the subTitle for the test title.",
+        category = "Developer"
+    )
+    var developerSubTitle = ""
 
     init {
         initialize()
