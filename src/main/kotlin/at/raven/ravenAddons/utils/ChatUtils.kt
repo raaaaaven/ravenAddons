@@ -30,7 +30,7 @@ object ChatUtils {
         message: String,
         usePrefix: Boolean = true,
     ) {
-        val finalMessage = if (usePrefix) "§c[RA] $message" else message
+        val finalMessage = if (usePrefix) "§d[§cRA§d] $message" else message
 
         chat(finalMessage)
     }
@@ -39,7 +39,7 @@ object ChatUtils {
         message: String,
         usePrefix: Boolean = true,
     ) {
-        val finalMessage = if (usePrefix) "§e[RA] $message" else message
+        val finalMessage = if (usePrefix) "§8[§cRA§8]&7 $message" else message
 
         chat(ChatComponentText(finalMessage))
     }
@@ -60,7 +60,7 @@ object ChatUtils {
         command: String,
         usePrefix: Boolean = true,
     ) {
-        val newMessage = if (usePrefix) "§e[RA] $message" else message
+        val newMessage = if (usePrefix) "§8[§cRA§8]&7 $message" else message
 
         val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
@@ -75,7 +75,7 @@ object ChatUtils {
     fun debug(message: String) {
         if (!ravenAddonsConfig.debugMessages) return
 
-        chat("§7[RA Debug] $message", usePrefix = false)
+        chat("§7[RA DEBUG] $message", usePrefix = false)
     }
 
     fun debug(nonString: Any) {
