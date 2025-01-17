@@ -5,12 +5,6 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.io.File
 
-/**
- * An configuration which gives an overview of all property types,
- * as well as a visual demonstration of each option. Also demos some
- * aspects such as fields with different initial values.
- */
-@Suppress("ClassName")
 object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
 
     @Property(
