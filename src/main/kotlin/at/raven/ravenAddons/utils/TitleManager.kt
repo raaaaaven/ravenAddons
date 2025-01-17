@@ -16,7 +16,7 @@ object TitleManager {
     private var subTitle = ""
 
     private var titleTimer = 0
-    private var titleDisplayTime = 0
+    private var titleTotalTime = 0
 
     private var titleFadeIn = 0
     private var titleFadeOut = 0
@@ -31,7 +31,7 @@ object TitleManager {
         this.title = title ?: ""
         this.subTitle = subTitle ?: ""
 
-        this.titleTimer = (timer.inSeconds() * 20).toInt()
+        this.titleTotalTime = (timer.inSeconds() * 20).toInt()
         this.titleFadeIn = (fadeIn.inSeconds() * 20).toInt()
         this.titleFadeOut = (fadeOut.inSeconds() * 20).toInt()
     }
@@ -41,8 +41,8 @@ object TitleManager {
             "§ahello everyone",
             "§baaa",
             10.seconds,
-            1.seconds,
-            5.seconds
+            2.seconds,
+            2.seconds
         )
     }
 
@@ -50,12 +50,15 @@ object TitleManager {
     fun onRenderOverlay(event: RenderGameOverlayEvent.Pre) {
         if (event.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
 
+        if (titleTotalTime == 0) return
+        if (titleTimer >= titleTotalTime) return
+
         renderTitle(event.partialTicks)
     }
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("rashowtitle") {
+        event.register("ratesttitle") {
             description = "Display a test title"
             callback { command() }
         }
@@ -64,38 +67,43 @@ object TitleManager {
     private fun renderTitle(partialTicks: Float) {
         val windowWidth = Minecraft.getMinecraft().displayWidth
         val windowHeight = Minecraft.getMinecraft().displayHeight
-
         val fontRenderer = Minecraft.getMinecraft().fontRendererObj
-        var titleProgress = titleTimer - partialTicks
-        var alpha = 255
 
-        if (titleTimer > titleFadeOut + titleDisplayTime) {
-            var alphaMultiplier = (titleFadeIn + titleDisplayTime + titleFadeOut) - titleProgress
-            alpha = (alphaMultiplier.toFloat() * 255f / titleFadeIn.toFloat()).toInt()
-        }
-        if (titleTimer <= titleFadeOut) {
-            var alphaMultiplier = titleProgress
-            alpha = (alphaMultiplier.toFloat() * 255f / titleFadeOut.toFloat()).toInt()
+        val fadeOutStart = titleTotalTime-titleFadeOut
+        val interpolatedTime = titleTimer + partialTicks
+
+        val alpha = when (interpolatedTime) {
+            in 0.0..titleFadeIn.toDouble() -> {
+                val alphaMultiplier = interpolatedTime / titleFadeIn
+                (alphaMultiplier * 255).toInt()
+            }
+            in fadeOutStart.toDouble()..titleTotalTime.toDouble() -> {
+                val fadeDuration = titleTotalTime - fadeOutStart
+                val timeSinceFadeStart = interpolatedTime - fadeOutStart
+                val alphaMultiplier = 1.0 - (timeSinceFadeStart / fadeDuration)
+                (alphaMultiplier * 255).toInt()
+            }
+            else -> 255
         }
 
         if (alpha.coerceIn(0, 255) > 8) {
-            GlStateManager.pushMatrix();
-            GlStateManager.translate((windowWidth / 4).toDouble(), (windowHeight / 4).toDouble(), 0.0);
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0);
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(4.0f, 4.0f, 4.0f);
+            GlStateManager.pushMatrix()
+            GlStateManager.translate((windowWidth / 4).toDouble(), (windowHeight / 4).toDouble(), 0.0)
+            GlStateManager.enableBlend()
+            GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
+            GlStateManager.pushMatrix()
+            GlStateManager.scale(4.0f, 4.0f, 4.0f)
             val color = alpha shl 24 and 0xFF000000.toInt()
             fontRenderer.drawString(title,
                 (-fontRenderer.getStringWidth(title) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true);
-            GlStateManager.popMatrix();
-            GlStateManager.pushMatrix();
-            GlStateManager.scale(2.0f, 2.0f, 2.0f);
+            GlStateManager.popMatrix()
+            GlStateManager.pushMatrix()
+            GlStateManager.scale(2.0f, 2.0f, 2.0f)
             fontRenderer.drawString(subTitle,
                 (-fontRenderer.getStringWidth(subTitle) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true);
-            GlStateManager.popMatrix();
-            GlStateManager.disableBlend();
-            GlStateManager.popMatrix();
+            GlStateManager.popMatrix()
+            GlStateManager.disableBlend()
+            GlStateManager.popMatrix()
         }
     }
 
@@ -103,11 +111,13 @@ object TitleManager {
     fun onTick(event: TickEvent.ClientTickEvent) {
         if (event.phase != TickEvent.Phase.END) return
 
-        if (titleTimer > 0) {
-            --titleTimer
-            if (titleTimer <= 0) {
+        if (titleTimer < titleTotalTime) {
+            ++titleTimer
+            if (titleTotalTime <= titleTimer) {
                 title = ""
                 subTitle = ""
+                titleTotalTime = 0
+                titleTimer = 0
             }
         }
     }
