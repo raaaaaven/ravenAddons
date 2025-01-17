@@ -2,6 +2,7 @@ package at.raven.ravenAddons
 
 import at.raven.ravenAddons.config.ConfigCommand
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
@@ -10,11 +11,15 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
+import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.GuiScreen
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.fml.common.gameevent.TickEvent
 
 @Suppress("ClassName")
 @Mod(modid = "ravenAddons", useMetadata = true, version = MOD_VERSION)
@@ -35,10 +40,10 @@ class ravenAddons {
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
-        ClientCommandHandler.instance.registerCommand(ConfigCommand)
         loadedClasses.clear()
     }
 
+    @LoadModule
     companion object{
         const val MOD_VERSION = "1.0.0"
 
@@ -56,6 +61,20 @@ class ravenAddons {
                     ChatUtils.warning("Async exception caught")
                     e.printStackTrace()
                 }
+            }
+        }
+        private var screenToOpenNextTick: GuiScreen? = null
+
+        fun openScreen(screen: GuiScreen) {
+            screenToOpenNextTick = screen
+        }
+
+        @SubscribeEvent
+        fun onTick(event: TickEvent.ClientTickEvent) {
+            if (event.phase != TickEvent.Phase.END) return
+            if (screenToOpenNextTick != null) {
+                Minecraft.getMinecraft().displayGuiScreen(screenToOpenNextTick)
+                screenToOpenNextTick = null
             }
         }
     }
