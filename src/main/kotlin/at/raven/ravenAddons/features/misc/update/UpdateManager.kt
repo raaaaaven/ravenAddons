@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture
 object UpdateManager {
     private val updateContext =
         UpdateContext(
-            UpdateSource.githubUpdateSource("", "ravenAddons"),
+            UpdateSource.githubUpdateSource("raaaaaven", "ravenAddons"),
             UpdateTarget.deleteAndSaveInTheSameFolder(this::class.java),
             CurrentVersion.of(modVersion),
             "pre"
