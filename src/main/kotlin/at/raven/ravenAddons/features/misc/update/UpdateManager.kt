@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.features.misc.update
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -46,7 +47,7 @@ object UpdateManager {
                 if (fromCommand) {
                     ChatUtils.chat("Didn't find any updates")
                 } else {
-                    ChatUtils.debug("did not find an update")
+                    ChatUtils.debug("Didn't find an update")
                 }
                 return@thenAcceptAsync
             }
@@ -54,14 +55,13 @@ object UpdateManager {
                 if (fromCommand) {
                     ChatUtils.chat("Already up-to-date")
                 } else {
-                    ChatUtils.debug("already up-to-date")
+                    ChatUtils.debug("Already up-to-date")
                 }
                 return@thenAcceptAsync
             }
             ChatUtils.chat("§aFound update ${it.update.versionName}! Use §b/raupdate §ato complete it.")
-            ChatUtils.debug("${it.update.versionNumber.asNumber}")
             updateState = UpdateState.AVAILABLE
-//            if (config.fullAutoUpdates) queueUpdate()
+            if (ravenAddonsConfig.fullAutoUpdates) queueUpdate()
         }
     }
 
@@ -99,6 +99,7 @@ object UpdateManager {
 
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
+        if (!ravenAddonsConfig.autoUpdates) return
         checkUpdate()
     }
 

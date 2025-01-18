@@ -63,6 +63,24 @@ object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
     )
     var developerSubTitle = ""
 
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Check for Updates",
+        description = "Automatically check for updates on each startup",
+        category = "General",
+        subcategory = "Updates"
+    )
+    var autoUpdates = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "DROP Alerts",
+        description = "Automatically downlaod new version on each startup",
+        category = "General",
+        subcategory = "Updates"
+    )
+    var fullAutoUpdates = false
+
     init {
         initialize()
 
