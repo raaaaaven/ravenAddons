@@ -33,6 +33,14 @@ object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Gemstone Powder Notification",
+        description = "Display a title based on how much Gemstone Powder you get from chests.",
+        category = "Mining"
+    )
+    var gemstonePowderNotification = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
         category = "Developer"
