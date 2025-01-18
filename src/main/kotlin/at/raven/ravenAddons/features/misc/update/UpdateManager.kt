@@ -59,9 +59,14 @@ object UpdateManager {
                 }
                 return@thenAcceptAsync
             }
-            ChatUtils.chat("§aFound update ${it.update.versionName}! Use §b/raupdate §ato complete it.")
+            var message = "\"§aFound update ${it.update.versionName}!"
+            if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
+                message += "Use §b/raupdate §ato complete it."
+            }
+            ChatUtils.chat(message)
+
             updateState = UpdateState.AVAILABLE
-            if (ravenAddonsConfig.fullAutoUpdates) queueUpdate()
+            if (fromCommand || ravenAddonsConfig.fullAutoUpdates) queueUpdate()
         }
     }
 
