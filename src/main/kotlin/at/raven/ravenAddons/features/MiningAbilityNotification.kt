@@ -11,8 +11,18 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object MiningAbilityNotification {
+
+    private val abilities = listOf(
+        "Mining Speed Boost",
+        "Pickobulus",
+        "Anomalous Desire",
+        "Maniac Miner",
+        "Gemstone Infusion",
+        "Sheer Force"
+    )
+
     private val miningAbilityPattern =
-        "^§r§a§r§6(?<ability>[\\w ]+) §r§ais now available!§r\$".toPattern()
+        "^§r§a§r§6(?<ability>${abilities.joinToString("|")}) §r§ais now available!§r\$".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
