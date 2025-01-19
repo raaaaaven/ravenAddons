@@ -5,7 +5,10 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.io.File
 
-object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
+object ravenAddonsConfig : Vigilant(
+    File("./config/ravenAddons.toml"),
+    sortingBehavior = ConfigSorting()
+) {
 
     @Property(
         type = PropertyType.SWITCH,
