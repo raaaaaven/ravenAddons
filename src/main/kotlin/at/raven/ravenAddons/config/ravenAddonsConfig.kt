@@ -44,6 +44,30 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Better Device Notifications",
+        description = "Replace Hypixel's device titles for your username.",
+        category = "Dungeons"
+    )
+    var betterDeviceNotification = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Better Device Notifications Title",
+        description = "Choose a title.",
+        category = "Dungeons"
+    )
+    var betterDeviceNotificationTitle = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Better Device Notifications SubTitle",
+        description = "Choose a subtitle.",
+        category = "Dungeons"
+    )
+    var betterDeviceNotificationSubTitle = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
         category = "Developer"
