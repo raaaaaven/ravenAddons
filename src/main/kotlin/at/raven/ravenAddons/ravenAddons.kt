@@ -3,6 +3,7 @@ package at.raven.ravenAddons
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.loadmodule.LoadedModules
+import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
 import kotlinx.coroutines.CoroutineName
@@ -19,7 +20,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
-@Mod(modid = "ravenAddons", useMetadata = true, version = MOD_VERSION)
+@Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
     private val loadedClasses = mutableSetOf<Any>()
 
@@ -43,6 +44,7 @@ class ravenAddons {
     @LoadModule
     companion object{
         const val MOD_VERSION = "1.0.0"
+        const val MOD_ID = "ravenAddons"
 
         private val globalJob: Job = Job(null)
         val coroutineScope =

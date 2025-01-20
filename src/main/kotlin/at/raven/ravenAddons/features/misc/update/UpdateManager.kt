@@ -9,7 +9,6 @@ import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
 import moe.nea.libautoupdate.PotentialUpdate
 import moe.nea.libautoupdate.UpdateContext
-import moe.nea.libautoupdate.UpdateSource
 import moe.nea.libautoupdate.UpdateTarget
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.CompletableFuture
@@ -18,10 +17,10 @@ import java.util.concurrent.CompletableFuture
 object UpdateManager {
     private val updateContext =
         UpdateContext(
-            UpdateSource.githubUpdateSource("raaaaaven", "ravenAddons"),
+            ModrinthUpdateSource("project", "forge", "1.8.9"),
             UpdateTarget.deleteAndSaveInTheSameFolder(this::class.java),
             CurrentVersion.of(modVersion),
-            "pre"
+            ravenAddons.MOD_ID
         )
 
     private var _activePromise: CompletableFuture<*>? = null
@@ -59,7 +58,7 @@ object UpdateManager {
                 }
                 return@thenAcceptAsync
             }
-            var message = "\"§aFound update ${it.update.versionName}!"
+            var message = "§aFound update ${it.update.versionName}!"
             if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
                 message += "Use §b/raupdate §ato complete it."
             }
