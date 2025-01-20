@@ -56,7 +56,7 @@ object ravenAddonsConfig : Vigilant(
         description = "Choose a title.",
         category = "Dungeons"
     )
-    var betterDeviceNotificationTitle = false
+    var betterDeviceNotificationTitle = ""
 
     @Property(
         type = PropertyType.TEXT,
@@ -64,7 +64,7 @@ object ravenAddonsConfig : Vigilant(
         description = "Choose a subtitle.",
         category = "Dungeons"
     )
-    var betterDeviceNotificationSubTitle = false
+    var betterDeviceNotificationSubTitle = ""
 
     @Property(
         type = PropertyType.SWITCH,
