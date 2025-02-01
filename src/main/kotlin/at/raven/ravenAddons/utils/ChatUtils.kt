@@ -9,6 +9,8 @@ import net.minecraft.event.HoverEvent
 import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.IChatComponent
+import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
@@ -23,6 +25,9 @@ object ChatUtils {
         if (!hidden) chat("Testing message: §7$rawMessage")
         if (hidden) rawMessage = rawMessage.replace(" -s", "")
         val formattedMessage = rawMessage.replace("&", "§")
+
+        // replace with Event.post() from EventUtils when #10 gets merged
+        MinecraftForge.EVENT_BUS.post(ClientChatReceivedEvent(0, ChatComponentText(formattedMessage)))
         chat(formattedMessage, false)
     }
 
