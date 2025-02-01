@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.mixin;
+package at.raven.ravenAddons.mixin.transformers;
 
 import at.raven.ravenAddons.event.GameLoadEvent;
 import net.minecraft.client.gui.GuiMainMenu;

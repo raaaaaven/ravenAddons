@@ -4,14 +4,8 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.GameLoadEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
-import gg.essential.universal.UChat
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
-import net.minecraft.command.CommandBase
-import net.minecraft.command.ICommandSender
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
-import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler.openGui
 
 @LoadModule
 object ConfigCommand {
