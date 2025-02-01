@@ -12,9 +12,13 @@ object InventoryUtils {
 
     fun getContainerName(): String = Minecraft.getMinecraft().currentScreen.let {
         if (it is GuiChest) {
-            val chest = it.inventorySlots as ContainerChest
-            chest.getName()
+            it.getContainerName()
         } else ""
+    }
+
+    fun GuiChest.getContainerName(): String {
+        val container = this.inventorySlots as ContainerChest
+        return container.getName()
     }
 
     fun ContainerChest.getLowerItems(): Map<Slot, ItemStack?> = buildMap {
