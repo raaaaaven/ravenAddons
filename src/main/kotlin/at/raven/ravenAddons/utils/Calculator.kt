@@ -6,8 +6,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object Calculator {
-    fun String.calc(): Double {
+    fun String.calc(): Double? {
         val tokens = tokenize(this)
+        if (tokens.isEmpty()) {
+            ChatUtils.warning("Invalid input '$this'")
+            return null
+        }
+
         val rpn = toRPN(tokens)
         return evaluateRPN(rpn)
     }
@@ -28,15 +33,21 @@ object Calculator {
                     tokens.add(Token.Number(numberBuffer.toDouble()))
                     numberBuffer = ""
                 }
-                when {
-                    char in OperatorType.getValidChars() -> {
+                when (char) {
+                    in OperatorType.getValidChars() -> {
                         val operator = OperatorType.entries.find { char in it.validChars }
-                            ?: throw IllegalArgumentException("Unknown operator: $char")
+                            ?: run {
+                                ChatUtils.warning("Unknown operator: $char")
+                                return emptyList()
+                            }
                         tokens.add(Token.Operator(operator))
                     }
-                    char == '(' -> tokens.add(Token.LeftParen)
-                    char == ')' -> tokens.add(Token.RightParen)
-                    else -> throw IllegalArgumentException("Invalid character in expression: $char")
+                    '(' -> tokens.add(Token.LeftParen)
+                    ')' -> tokens.add(Token.RightParen)
+                    else -> {
+                        ChatUtils.warning("Invalid character in expression: $char")
+                        return emptyList()
+                    }
                 }
             }
         }

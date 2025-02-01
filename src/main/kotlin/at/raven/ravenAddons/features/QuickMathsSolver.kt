@@ -22,7 +22,11 @@ object QuickMathsSolver {
         pattern.matchMatcher(message) {
             try {
                 val expression = group("expression") ?: return
-                val result = expression.calc().toString().removeSuffix(".0")
+                val resultNumber = expression.calc() ?: run {
+                    ChatUtils.warning("Invalid input: '$expression'")
+                    return
+                }
+                val result = resultNumber.toString().removeSuffix(".0")
 
                 ChatUtils.chat("§7The §d§lQUICK MATHS! §r§7answer is §f§l$result§r§7!")
                 TitleManager.setTitle("§f§l$result", "§d§lQUICK MATHS!", 2.5.seconds, 0.5.seconds, 0.5.seconds)
