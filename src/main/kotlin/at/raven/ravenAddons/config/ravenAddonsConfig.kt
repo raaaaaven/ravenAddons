@@ -12,6 +12,14 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "QUICK MATHS! Solver",
+        description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
+        category = "General"
+    )
+    var quickMathsSolver = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "DROP Alerts",
         description = "Message a user about your RARE DROPS.",
         category = "SkyBlock"
