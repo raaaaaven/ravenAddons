@@ -23,7 +23,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.COLOR,
         name = "Care Package Highlight Colour",
-        description = "Customize the color related to the Care Package Highlighter",
+        description = "Customize the color related to the Care Package Highlighter.",
         category = "Pit"
     )
     var carePackageHighlighterColour = Color(0, 255, 0, 100)
