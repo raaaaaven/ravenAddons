@@ -157,6 +157,7 @@ object TitleManager {
         event.title("Title Manager")
         if (titleTimer == 0) {
             event.addIrrelevant("not displaying anything")
+            return
         }
         event.addData {
             add("title: '$title'")
