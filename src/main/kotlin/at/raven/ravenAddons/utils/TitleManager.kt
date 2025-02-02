@@ -19,7 +19,6 @@ object TitleManager {
 
     private var titleTimer = 0
     private var titleTotalTime = 0
-
     private var titleFadeIn = 0
     private var titleFadeOut = 0
 
@@ -145,9 +144,5 @@ object TitleManager {
         }
     }
 
-    private fun Duration.inSeconds(): Double {
-        val millisecondsToSeconds = 1000.0
-
-        return this.inWholeMilliseconds.toDouble() / millisecondsToSeconds
-    }
+    private fun Duration.inSeconds(): Double = this.inWholeMilliseconds.toDouble() / 1000.0
 }
