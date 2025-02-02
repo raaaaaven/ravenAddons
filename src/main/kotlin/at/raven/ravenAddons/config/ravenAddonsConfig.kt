@@ -5,11 +5,13 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 import java.io.File
+import kotlin.reflect.KProperty
 
 object ravenAddonsConfig : Vigilant(
     File("./config/ravenAddons.toml"),
     sortingBehavior = ConfigSorting()
 ) {
+    private val clazz = javaClass
 
     @Property(
         type = PropertyType.SWITCH,
@@ -118,22 +120,17 @@ object ravenAddonsConfig : Vigilant(
     init {
         initialize()
 
-        val clazz = javaClass
+        this::carePackageHighlighterColour dependOn this::carePackageHighlighter
 
-        addDependency(
-            clazz.getDeclaredField("carePackageHighlighterColour"),
-            clazz.getDeclaredField("carePackageHighlighter")
-        )
+        this::dropAlertUserName dependOn this::dropAlert
 
-        addDependency(clazz.getDeclaredField("dropAlertUserName"), clazz.getDeclaredField("dropAlert"))
+        this::betterDeviceNotificationTitle dependOn this::betterDeviceNotification
+        this::betterDeviceNotificationSubTitle dependOn this::betterDeviceNotification
+    }
 
-        addDependency(
-            clazz.getDeclaredField("betterDeviceNotificationTitle"),
-            clazz.getDeclaredField("betterDeviceNotification")
-        )
-        addDependency(
-            clazz.getDeclaredField("betterDeviceNotificationSubTitle"),
-            clazz.getDeclaredField("betterDeviceNotification")
-        )
+    // this method name kinda sucks, sadly vigilance already took up all the "good" names
+    // am open to suggestions
+    infix fun <T> KProperty<T>.dependOn(dependency: KProperty<T>) {
+        addDependency(clazz.getDeclaredField(this.name), clazz.getDeclaredField(dependency.name))
     }
 }
