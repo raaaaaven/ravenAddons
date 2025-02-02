@@ -120,17 +120,15 @@ object ravenAddonsConfig : Vigilant(
     init {
         initialize()
 
-        this::carePackageHighlighterColour dependOn this::carePackageHighlighter
+        this::carePackageHighlighterColour requires this::carePackageHighlighter
 
-        this::dropAlertUserName dependOn this::dropAlert
+        this::dropAlertUserName requires this::dropAlert
 
-        this::betterDeviceNotificationTitle dependOn this::betterDeviceNotification
-        this::betterDeviceNotificationSubTitle dependOn this::betterDeviceNotification
+        this::betterDeviceNotificationTitle requires this::betterDeviceNotification
+        this::betterDeviceNotificationSubTitle requires this::betterDeviceNotification
     }
 
-    // this method name kinda sucks, sadly vigilance already took up all the "good" names
-    // am open to suggestions
-    infix fun <T> KProperty<T>.dependOn(dependency: KProperty<T>) {
+    infix fun <T> KProperty<T>.requires(dependency: KProperty<T>) {
         addDependency(clazz.getDeclaredField(this.name), clazz.getDeclaredField(dependency.name))
     }
 }
