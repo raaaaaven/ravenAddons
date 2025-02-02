@@ -16,4 +16,15 @@ object StringUtils {
 
         return result.toString()
     }
+
+    fun String.cleanupColors(): String {
+        var message = this
+        while (message.startsWith("§r")) {
+            message = message.substring(2)
+        }
+        while (message.endsWith("§r")) {
+            message = message.substring(0, message.length - 2)
+        }
+        return message
+    }
 }
