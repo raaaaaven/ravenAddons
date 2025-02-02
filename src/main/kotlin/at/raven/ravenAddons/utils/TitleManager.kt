@@ -4,6 +4,7 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import net.minecraft.client.Minecraft
+import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -86,11 +87,12 @@ object TitleManager {
     }
 
     private fun renderTitle(partialTicks: Float) {
-        val windowWidth = Minecraft.getMinecraft().displayWidth
-        val windowHeight = Minecraft.getMinecraft().displayHeight
+        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
+        val windowWidth = scaledResolution.scaledWidth
+        val windowHeight = scaledResolution.scaledHeight
         val fontRenderer = Minecraft.getMinecraft().fontRendererObj
 
-        val fadeOutStart = titleTotalTime-titleFadeOut
+        val fadeOutStart = titleTotalTime - titleFadeOut
         val interpolatedTime = titleTimer + partialTicks
 
         val alpha = when (interpolatedTime) {
@@ -109,7 +111,7 @@ object TitleManager {
 
         if (alpha.coerceIn(0, 255) > 8) {
             GlStateManager.pushMatrix()
-            GlStateManager.translate((windowWidth / 4).toDouble(), (windowHeight / 4).toDouble(), 0.0)
+            GlStateManager.translate((windowWidth / 2).toDouble(), (windowHeight / 2).toDouble(), 0.0)
             GlStateManager.enableBlend()
             GlStateManager.tryBlendFuncSeparate(770, 771, 1, 0)
             GlStateManager.pushMatrix()
