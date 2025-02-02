@@ -2,13 +2,13 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -134,9 +134,7 @@ object TitleManager {
     }
 
     @SubscribeEvent
-    fun onTick(event: TickEvent.ClientTickEvent) {
-        if (event.phase != TickEvent.Phase.END) return
-
+    fun onTick(event: TickEvent) {
         if (titleTimer < titleTotalTime) {
             ++titleTimer
             if (titleTotalTime <= titleTimer) {
