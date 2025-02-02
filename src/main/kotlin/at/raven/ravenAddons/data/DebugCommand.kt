@@ -23,12 +23,12 @@ object DebugCommand {
         list.add(
             if (search.isNotEmpty()) {
                 if (search.equalsIgnoreColor("all")) {
-                    "search for everything:"
+                    "Search for everything:"
                 } else {
-                    "search '$search':"
+                    "Search '$search':"
                 }
             } else {
-                "no search specified, only showing interesting stuff:"
+                "No search specified! Only showing interesting stuff:"
             },
         )
 
@@ -39,7 +39,7 @@ object DebugCommand {
             list.add("")
             list.add("Nothing interesting to show right now!")
             list.add("Looking for something specific? /radebug <search>")
-            list.add("Wanna see everything? /radebug all")
+            list.add("Display everything? /radebug all")
         }
 
         list.add("```")
@@ -47,11 +47,20 @@ object DebugCommand {
         ChatUtils.chat("Copied ravenAddons debug data to the clipboard.")
     }
 
+    private fun version(strings: Array<String>) {
+        ChatUtils.chat("ravenAddons Version: ${ravenAddons.MOD_VERSION}")
+    }
+
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("radebug") {
-            description = "Copies important(?) debug data to the scoreboard."
+            description = "Copies important(?) debug data to the clipboard."
             callback { command(it) }
+        }
+
+        event.register("raversion") {
+            description = "State the version of ravenAddons you are currently using."
+            callback { version(it) }
         }
     }
 }
