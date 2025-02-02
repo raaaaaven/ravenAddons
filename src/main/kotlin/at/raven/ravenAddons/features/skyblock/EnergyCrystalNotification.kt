@@ -1,5 +1,8 @@
 package at.raven.ravenAddons.features.skyblock
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RenderUtils
@@ -15,7 +18,8 @@ object EnergyCrystalNotification {
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
-//        if (!ravenAddonsConfig.energyCrystalNotification) return
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!ravenAddonsConfig.energyCrystalNotification) return
 
         val player = PlayerUtils.getPlayer() ?: return
         hasEnergyCrystal = player.inventory.mainInventory.any { it != null && it.displayName.contains("Energy Crystal") } == true
@@ -23,7 +27,8 @@ object EnergyCrystalNotification {
 
     @SubscribeEvent
     fun onRenderOverlay(event: RenderGameOverlayEvent.Pre) {
-//        if (!ravenAddonsConfig.energyCrystalNotification) return
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!ravenAddonsConfig.energyCrystalNotification) return
         if (event.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
         if (!hasEnergyCrystal) return
 

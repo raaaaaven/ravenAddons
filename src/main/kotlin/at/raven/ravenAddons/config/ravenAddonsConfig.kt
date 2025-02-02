@@ -3,7 +3,6 @@ package at.raven.ravenAddons.config
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
-import org.fusesource.jansi.Ansi
 import java.awt.Color
 import java.io.File
 
@@ -91,6 +90,14 @@ object ravenAddonsConfig : Vigilant(
         category = "Dungeons"
     )
     var betterDeviceNotificationSubTitle = ""
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Energy Crystal Notification",
+        description = "Shows a reminder on screen when you have an unplaced Energy Crystal",
+        category = "Dungeons"
+    )
+    var energyCrystalNotification = false
 
     @Property(
         type = PropertyType.SWITCH,
