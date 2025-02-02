@@ -22,7 +22,6 @@ object GemstonePowderNotification {
             val amount = group("amount")
 
             ChatUtils.debug("GemstonePowderNotification: $amount")
-
             TitleManager.setTitle("", "§dGemstone Powder §8x$amount", 1.5.seconds, 0.seconds, 0.seconds)
         }
     }
