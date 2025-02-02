@@ -18,6 +18,10 @@ enum class HypixelGame(val gameType: GameType) {
         var currentGame: HypixelGame? = null
             private set
         fun HypixelGame.isPlaying() = this == currentGame
+        fun Collection<HypixelGame>.isPlayingAny() = this.any { it.isPlaying() }
+
+        fun HypixelGame.isNotPlaying() = this != currentGame
+        fun Collection<HypixelGame>.isNotPlayingAny() = this.any { it.isNotPlaying() }
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onHypixelData(event: HypixelServerChangeEvent) {
