@@ -2,8 +2,7 @@ package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.PlayerUtils
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.ScaledResolution
+import at.raven.ravenAddons.utils.RenderUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -13,7 +12,6 @@ import net.minecraftforge.fml.common.gameevent.TickEvent
 object EnergyCrystalNotification {
     private const val ENERGY_CRYSTAL = "§cPLACE CRYSTAL"
     private var hasEnergyCrystal = false
-    private val mc get() = Minecraft.getMinecraft()
 
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {
@@ -29,8 +27,8 @@ object EnergyCrystalNotification {
         if (event.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
         if (!hasEnergyCrystal) return
 
-        val fontRenderer = mc.fontRendererObj
-        val x = ScaledResolution(mc).scaledWidth / 2
+        val fontRenderer = RenderUtils.fontRenderer
+        val x = RenderUtils.scaledWidth / 2
         val y = 40f
 
         GlStateManager.pushMatrix()

@@ -43,6 +43,7 @@ class ravenAddons {
     @LoadModule
     companion object{
         const val MOD_VERSION = "1.0.0"
+        val mc get() = Minecraft.getMinecraft()
 
         private val globalJob: Job = Job(null)
         val coroutineScope =
