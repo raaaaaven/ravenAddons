@@ -42,8 +42,8 @@ object TitleManager {
             ChatUtils.warning("Wrong usage! /ratesttitle <duration> <fadeIn> <fadeOut>")
             return
         }
-        val title = ravenAddonsConfig.developerTitle.replace("&","§")
-        val subtitle = ravenAddonsConfig.developerSubTitle.replace("&","§")
+        val title = ravenAddonsConfig.developerTitle.replace("&", "§")
+        val subtitle = ravenAddonsConfig.developerSubTitle.replace("&", "§")
         if (title.isEmpty() && subtitle.isEmpty()) {
             ChatUtils.warning("Wrong usage! Either a title or subtitle need to be set in the config.")
             return
@@ -99,12 +99,14 @@ object TitleManager {
                 val alphaMultiplier = interpolatedTime / titleFadeIn
                 (alphaMultiplier * 255).toInt()
             }
+
             in fadeOutStart.toDouble()..titleTotalTime.toDouble() -> {
                 val fadeDuration = titleTotalTime - fadeOutStart
                 val timeSinceFadeStart = interpolatedTime - fadeOutStart
                 val alphaMultiplier = 1.0 - (timeSinceFadeStart / fadeDuration)
                 (alphaMultiplier * 255).toInt()
             }
+
             else -> 255
         }
 
@@ -116,13 +118,17 @@ object TitleManager {
             GlStateManager.pushMatrix()
             GlStateManager.scale(4.0f, 4.0f, 4.0f)
             val color = alpha shl 24 and 0xFF000000.toInt()
-            fontRenderer.drawString(title,
-                (-fontRenderer.getStringWidth(title) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true);
+            fontRenderer.drawString(
+                title,
+                (-fontRenderer.getStringWidth(title) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true
+            )
             GlStateManager.popMatrix()
             GlStateManager.pushMatrix()
             GlStateManager.scale(2.0f, 2.0f, 2.0f)
-            fontRenderer.drawString(subTitle,
-                (-fontRenderer.getStringWidth(subTitle) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true);
+            fontRenderer.drawString(
+                subTitle,
+                (-fontRenderer.getStringWidth(subTitle) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true
+            )
             GlStateManager.popMatrix()
             GlStateManager.disableBlend()
             GlStateManager.popMatrix()

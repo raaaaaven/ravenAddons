@@ -5,4 +5,4 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable
 import net.minecraftforge.fml.common.eventhandler.Event
 
 @Cancelable
-class ActionBarEvent(val message: String, var chatComponent: IChatComponent): Event()
+class ActionBarEvent(val message: String, var chatComponent: IChatComponent) : Event()

@@ -17,6 +17,7 @@ enum class HypixelGame(val gameType: GameType) {
     companion object {
         var currentGame: HypixelGame? = null
             private set
+
         fun HypixelGame.isPlaying() = this == currentGame
         fun Collection<HypixelGame>.isPlayingAny() = this.any { it.isPlaying() }
 

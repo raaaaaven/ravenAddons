@@ -41,7 +41,7 @@ class ravenAddons {
     }
 
     @LoadModule
-    companion object{
+    companion object {
         const val MOD_VERSION = "1.0.0"
 
         private val globalJob: Job = Job(null)
@@ -60,6 +60,7 @@ class ravenAddons {
                 }
             }
         }
+
         private var screenToOpenNextTick: GuiScreen? = null
 
         fun openScreen(screen: GuiScreen) {

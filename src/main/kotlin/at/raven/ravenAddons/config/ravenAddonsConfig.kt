@@ -3,7 +3,6 @@ package at.raven.ravenAddons.config
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
-import org.fusesource.jansi.Ansi
 import java.awt.Color
 import java.io.File
 
@@ -121,11 +120,20 @@ object ravenAddonsConfig : Vigilant(
 
         val clazz = javaClass
 
-        addDependency(clazz.getDeclaredField("carePackageHighlighterColour"), clazz.getDeclaredField("carePackageHighlighter"))
+        addDependency(
+            clazz.getDeclaredField("carePackageHighlighterColour"),
+            clazz.getDeclaredField("carePackageHighlighter")
+        )
 
         addDependency(clazz.getDeclaredField("dropAlertUserName"), clazz.getDeclaredField("dropAlert"))
 
-        addDependency(clazz.getDeclaredField("betterDeviceNotificationTitle"), clazz.getDeclaredField("betterDeviceNotification"))
-        addDependency(clazz.getDeclaredField("betterDeviceNotificationSubTitle"), clazz.getDeclaredField("betterDeviceNotification"))
+        addDependency(
+            clazz.getDeclaredField("betterDeviceNotificationTitle"),
+            clazz.getDeclaredField("betterDeviceNotification")
+        )
+        addDependency(
+            clazz.getDeclaredField("betterDeviceNotificationSubTitle"),
+            clazz.getDeclaredField("betterDeviceNotification")
+        )
     }
 }
