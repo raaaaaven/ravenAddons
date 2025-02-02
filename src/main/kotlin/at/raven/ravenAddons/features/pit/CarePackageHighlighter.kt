@@ -1,6 +1,8 @@
 package at.raven.ravenAddons.features.pit
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.InventoryUtils.getContainerName
@@ -24,6 +26,7 @@ object CarePackageHighlighter {
 
     @SubscribeEvent
     fun onContainerForeground(event: ContainerBackgroundDrawEvent) {
+        if (HypixelGame.THE_PIT.isNotPlaying()) return
         if (!ravenAddonsConfig.carePackageHighlighter) return
         if (event.gui !is GuiChest) return
         if (event.gui.getContainerName() != "Chest") return
