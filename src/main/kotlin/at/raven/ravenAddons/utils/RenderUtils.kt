@@ -15,7 +15,6 @@ object RenderUtils {
         GlStateManager.disableLighting()
         GlStateManager.disableDepth()
         GlStateManager.pushMatrix()
-        // TODO don't use z
         GlStateManager.translate(0f, 0f, 110 + Minecraft.getMinecraft().renderItem.zLevel)
         Gui.drawRect(x, y, x + 16, y + 16, color.rgb)
         GlStateManager.popMatrix()
@@ -40,7 +39,4 @@ object RenderUtils {
         GlStateManager.enableDepth()
         GlStateManager.enableLighting()
     }
-
-    // move to ColorUtils or something better
-    fun Color.withAlpha(alpha: Int) = Color(this.red, this.green, this.blue, alpha)
 }

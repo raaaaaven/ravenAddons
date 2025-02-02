@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features
+package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.loadmodule.LoadModule
