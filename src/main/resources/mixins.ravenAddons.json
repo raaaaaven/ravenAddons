@@ -1,5 +1,5 @@
 {
-  "package": "at.raven.ravenAddons.mixin",
+  "package": "at.raven.ravenAddons.mixin.transformers",
   "plugin": "at.raven.ravenAddons.init.AutoDiscoveryMixinPlugin",
   "refmap": "mixins.ravenAddons.refmap.json",
   "minVersion": "0.7",

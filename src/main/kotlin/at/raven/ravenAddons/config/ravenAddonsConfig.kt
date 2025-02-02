@@ -3,9 +3,38 @@ package at.raven.ravenAddons.config
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
+import org.fusesource.jansi.Ansi
+import java.awt.Color
 import java.io.File
 
-object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
+object ravenAddonsConfig : Vigilant(
+    File("./config/ravenAddons.toml"),
+    sortingBehavior = ConfigSorting()
+) {
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Care Package Highlighter",
+        description = "Highlights important items inside of Care Packages inside the Hypixel Pit.",
+        category = "Pit"
+    )
+    var carePackageHighlighter = false
+
+    @Property(
+        type = PropertyType.COLOR,
+        name = "Care Package Highlight Colour",
+        description = "Customize the color related to the Care Package Highlighter.",
+        category = "Pit"
+    )
+    var carePackageHighlighterColour = Color(0, 255, 0, 100)
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "QUICK MATHS! Solver",
+        description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
+        category = "General"
+    )
+    var quickMathsSolver = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -38,6 +67,30 @@ object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
         category = "Mining"
     )
     var gemstonePowderNotification = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Better Device Notifications",
+        description = "Replace Hypixel's device titles for your username.",
+        category = "Dungeons"
+    )
+    var betterDeviceNotification = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Better Device Notifications Title",
+        description = "Choose a title.",
+        category = "Dungeons"
+    )
+    var betterDeviceNotificationTitle = ""
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Better Device Notifications SubTitle",
+        description = "Choose a subtitle.",
+        category = "Dungeons"
+    )
+    var betterDeviceNotificationSubTitle = ""
 
     @Property(
         type = PropertyType.SWITCH,
@@ -86,6 +139,11 @@ object ravenAddonsConfig : Vigilant(File("./config/ravenAddons.toml")) {
 
         val clazz = javaClass
 
+        addDependency(clazz.getDeclaredField("carePackageHighlighterColour"), clazz.getDeclaredField("carePackageHighlighter"))
+
         addDependency(clazz.getDeclaredField("dropAlertUserName"), clazz.getDeclaredField("dropAlert"))
+
+        addDependency(clazz.getDeclaredField("betterDeviceNotificationTitle"), clazz.getDeclaredField("betterDeviceNotification"))
+        addDependency(clazz.getDeclaredField("betterDeviceNotificationSubTitle"), clazz.getDeclaredField("betterDeviceNotification"))
     }
 }
