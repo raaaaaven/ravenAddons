@@ -1,6 +1,8 @@
 package at.raven.ravenAddons.features
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlayingAny
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.Calculator.calc
 import at.raven.ravenAddons.utils.ChatUtils
@@ -16,6 +18,7 @@ object QuickMathsSolver {
 
     @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
+        if (listOf(HypixelGame.SKYBLOCK, HypixelGame.THE_PIT).isNotPlayingAny()) return
         if (!ravenAddonsConfig.quickMathsSolver) return
         val message = event.message.unformattedText
 
