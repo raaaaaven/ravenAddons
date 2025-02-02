@@ -14,18 +14,12 @@ object ChatManager {
     @SubscribeEvent
     fun onChat(event: ClientChatReceivedEvent) {
         val original = event.message
-        var message = original.formattedText
+        val message = original.formattedText.cleanupColors()
 
-        message = message.cleanupColors()
+        val newEvent =
+            if (event.type.toInt() == 2) ActionBarEvent(message, original)
+            else ChatReceivedEvent(message, original)
 
-        if (event.type.toInt() != 2) {
-            val isCancelled = ChatReceivedEvent(message, original).postAndCatch()
-
-            if (isCancelled) event.cancel()
-        } else {
-            val isCancelled = ActionBarEvent(message, original).postAndCatch()
-
-            if (isCancelled) event.cancel()
-        }
+        if (newEvent.postAndCatch()) event.cancel()
     }
 }
