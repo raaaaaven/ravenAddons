@@ -7,6 +7,7 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
+import moe.nea.libautoupdate.GithubReleaseUpdateSource
 import moe.nea.libautoupdate.PotentialUpdate
 import moe.nea.libautoupdate.UpdateContext
 import moe.nea.libautoupdate.UpdateTarget
@@ -17,10 +18,10 @@ import java.util.concurrent.CompletableFuture
 object UpdateManager {
     private val updateContext =
         UpdateContext(
-            ModrinthUpdateSource("project", "forge", "1.8.9"),
+            GithubReleaseUpdateSource("raaaaaven", "ravenAddons"),
             UpdateTarget.deleteAndSaveInTheSameFolder(this::class.java),
             CurrentVersion.of(modVersion),
-            ravenAddons.MOD_ID
+            "pre"
         )
 
     private var _activePromise: CompletableFuture<*>? = null
