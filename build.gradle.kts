@@ -103,6 +103,7 @@ repositories {
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
     maven("https://repo.essential.gg/repository/maven-public/")
     maven("https://repo.hypixel.net/repository/Hypixel/")
+    maven("https://repo.nea.moe/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -133,6 +134,8 @@ dependencies {
 
     compileOnly(libs.hypixelmodapi)
     shadowImpl(libs.hypixelmodapitweaker)
+
+    shadowImpl(libs.libautoupdate)
 
     compileOnly(ksp(project(":annotation-processors"))!!)
 }
@@ -197,8 +200,10 @@ tasks.shadowJar {
 //            }
 //        }
 //    }
+    relocate("moe.nea.libautoupdate", "$baseGroup.deps.libautoupdate")
 
     relocate("net.hypixel.modapi.tweaker", "$baseGroup.deps.hypixel.modapi.tweaker")
+
     relocate("gg.essential.vigilance", "$baseGroup.deps.essential.vigilance")
     relocate("gg.essential.elementa", "$baseGroup.deps.essential.elementa")
     relocate("gg.essential.universalcraft", "$baseGroup.deps.essential.universalcraft")
