@@ -11,6 +11,7 @@ As mentioned above, features are being ported over from the ChatTriggers module 
 
 ## Pit
 - Care Package Highlighter
+
 ![Care Package Highlighter - Mystic Sword](https://cdn.modrinth.com/data/cached_images/a9e81c7528013f61bdd4829f40ddf3e67775f4c9.png)
 
 ## SkyBlock
