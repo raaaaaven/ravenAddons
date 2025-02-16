@@ -53,23 +53,23 @@ object UpdateManager {
             potentialUpdate = it
             if (!it.isUpdateAvailable) {
                 if (fromCommand) {
-                    ChatUtils.chat("Didn't find an update")
+                    ChatUtils.chat("Failed to find an update.")
                 } else {
-                    ChatUtils.debug("Didn't find an update")
+                    ChatUtils.debug("Failed to find an update.")
                 }
                 return@thenAcceptAsync
             }
             if (modVersionNumber(it.update.versionName) <= modVersion) {
                 if (fromCommand) {
-                    ChatUtils.chat("Already up-to-date")
+                    ChatUtils.chat("Already up-to-date.")
                 } else {
-                    ChatUtils.debug("Already up-to-date")
+                    ChatUtils.debug("Already up-to-date.")
                 }
                 return@thenAcceptAsync
             }
-            var message = "§aFound update ${it.update.versionName}!"
+            var message = "${it.update.versionName} is available!"
             if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
-                message += " Use §b/raupdate §ato complete it."
+                message += " Use §b/raupdate §7to download it."
             }
             ChatUtils.chat(message)
 
@@ -97,7 +97,7 @@ object UpdateManager {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("raupdate") {
-            description = "Checks for new ravenAddons updates"
+            description = "Checks for new ravenAddons updates."
             callback { updateCommand() }
         }
     }

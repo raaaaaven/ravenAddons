@@ -43,7 +43,7 @@ class ravenAddons {
 
     @LoadModule
     companion object{
-        const val MOD_VERSION = "1.1.0"
+        const val MOD_VERSION = "1.0.0"
         const val MOD_ID = "ravenAddons"
 
         private val globalJob: Job = Job(null)
