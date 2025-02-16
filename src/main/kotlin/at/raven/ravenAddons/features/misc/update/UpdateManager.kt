@@ -7,9 +7,9 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
-import moe.nea.libautoupdate.GithubReleaseUpdateSource
 import moe.nea.libautoupdate.PotentialUpdate
 import moe.nea.libautoupdate.UpdateContext
+import moe.nea.libautoupdate.UpdateSource
 import moe.nea.libautoupdate.UpdateTarget
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.CompletableFuture
@@ -18,7 +18,7 @@ import java.util.concurrent.CompletableFuture
 object UpdateManager {
     private val updateContext =
         UpdateContext(
-            GithubReleaseUpdateSource("raaaaaven", "ravenAddons"),
+            UpdateSource.githubUpdateSource("raaaaaven", "ravenAddons"),
             UpdateTarget.deleteAndSaveInTheSameFolder(this::class.java),
             CurrentVersion.of(modVersion),
             "pre"
@@ -35,7 +35,15 @@ object UpdateManager {
     private var potentialUpdate: PotentialUpdate? = null
     private var updateState = UpdateState.NONE
 
-    private fun modVersionNumber(version: String) = version.replace(".", "").toInt()
+    private fun modVersionNumber(version: String): Int {
+        var string = version
+
+        if (string.startsWith("ravenAddons ")) {
+            string = string.removePrefix("ravenAddons ")
+        }
+
+        return string.replace(".", "").toInt()
+    }
     private val modVersion get() = modVersionNumber(ravenAddons.MOD_VERSION)
 
     private fun checkUpdate(fromCommand: Boolean = false) {
@@ -45,7 +53,7 @@ object UpdateManager {
             potentialUpdate = it
             if (!it.isUpdateAvailable) {
                 if (fromCommand) {
-                    ChatUtils.chat("Didn't find any updates")
+                    ChatUtils.chat("Didn't find an update")
                 } else {
                     ChatUtils.debug("Didn't find an update")
                 }
@@ -61,7 +69,7 @@ object UpdateManager {
             }
             var message = "§aFound update ${it.update.versionName}!"
             if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
-                message += "Use §b/raupdate §ato complete it."
+                message += "\nUse §b/raupdate §ato complete it."
             }
             ChatUtils.chat(message)
 
