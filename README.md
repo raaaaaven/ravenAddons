@@ -26,7 +26,8 @@ As mentioned above, features are being ported over from the ChatTriggers module 
 
 # Upcoming
 
-Gemstone Powder Notification Threshold
+- Gemstone Powder Notification Threshold
+  
 - Add more customizability to the Gemstone Powder Notification that lets the user choose the amount of powder they would only want to be displayed.
 
 - Dodge List
