@@ -69,7 +69,7 @@ object UpdateManager {
             }
             var message = "§aFound update ${it.update.versionName}!"
             if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
-                message += "\nUse §b/raupdate §ato complete it."
+                message += " Use §b/raupdate §ato complete it."
             }
             ChatUtils.chat(message)
 
