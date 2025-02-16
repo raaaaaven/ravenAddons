@@ -35,15 +35,7 @@ object UpdateManager {
     private var potentialUpdate: PotentialUpdate? = null
     private var updateState = UpdateState.NONE
 
-    private fun modVersionNumber(version: String): Int {
-        var string = version
-
-        if (string.startsWith("ravenAddons ")) {
-            string = string.removePrefix("ravenAddons ")
-        }
-
-        return string.replace(".", "").toInt()
-    }
+    private fun modVersionNumber(version: String) = version.removePrefix("ravenAddons ").replace(".", "").toInt()
     private val modVersion get() = modVersionNumber(ravenAddons.MOD_VERSION)
 
     private fun checkUpdate(fromCommand: Boolean = false) {
