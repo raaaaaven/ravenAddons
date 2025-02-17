@@ -13,6 +13,32 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "QUICK MATHS! Solver",
+        description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
+        category = "General"
+    )
+    var quickMathsSolver = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Check for Updates",
+        description = "Automatically check for updates on each startup.",
+        category = "General",
+        subcategory = "Updates"
+    )
+    var autoUpdates = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Download Updates",
+        description = "Automatically download new version on each startup.",
+        category = "General",
+        subcategory = "Updates"
+    )
+    var fullAutoUpdates = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Care Package Highlighter",
         description = "Highlights important items inside of Care Packages inside the Hypixel Pit.",
         category = "Pit"
@@ -26,14 +52,6 @@ object ravenAddonsConfig : Vigilant(
         category = "Pit"
     )
     var carePackageHighlighterColour = Color(0, 255, 0, 100)
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "QUICK MATHS! Solver",
-        description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
-        category = "General"
-    )
-    var quickMathsSolver = false
 
     @Property(
         type = PropertyType.SWITCH,
