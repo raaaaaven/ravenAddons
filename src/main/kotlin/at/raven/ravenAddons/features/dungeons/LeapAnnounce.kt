@@ -1,0 +1,48 @@
+package at.raven.ravenAddons.features.dungeons
+
+import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
+import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.SoundUtils
+import at.raven.ravenAddons.utils.StringUtils.removeColors
+import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+
+@LoadModule
+object LeapAnnounce {
+
+    // REGEX TEST: §r§aYou have teleported to §r§bGillsplash§r§a!§r
+    private val leapPattern = "^You have teleported to (?<ign>.+)!\$".toPattern()
+
+    @SubscribeEvent
+    fun onChat(event: ClientChatReceivedEvent) {
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+
+        leapPattern.matchMatcher(event.message.formattedText.removeColors()) {
+            val ign = group("ign")
+
+            if (ravenAddonsConfig.leapAnnounce) {
+                ChatUtils.debug("leapAnnounce: teleported to $ign")
+                ChatUtils.debug("sending: ${ravenAddonsConfig.leapAnnounceMessage}")
+
+                val message = ravenAddonsConfig.leapAnnounceMessage.replace("\$ign", ign)
+
+                val announce = if (ravenAddonsConfig.leapAnnouncePrefix) {
+                    "/pc [RA] $message"
+                } else {
+                    "/pc $message"
+                }
+
+                ChatUtils.sendMessage(announce)
+            }
+
+            if (ravenAddonsConfig.leapSound) {
+                ChatUtils.debug("leapSound: playing pling")
+                SoundUtils.pling()
+            }
+        }
+    }
+}
