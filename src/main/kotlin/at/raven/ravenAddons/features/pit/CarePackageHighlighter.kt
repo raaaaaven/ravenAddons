@@ -25,7 +25,7 @@ object CarePackageHighlighter {
     )
 
     @SubscribeEvent
-    fun onContainerForeground(event: ContainerBackgroundDrawEvent) {
+    fun onContainerBackground(event: ContainerBackgroundDrawEvent) {
         if (HypixelGame.THE_PIT.isNotPlaying()) return
         if (!ravenAddonsConfig.carePackageHighlighter) return
         if (event.gui !is GuiChest) return

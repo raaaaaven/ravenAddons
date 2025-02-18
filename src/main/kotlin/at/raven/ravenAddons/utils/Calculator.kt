@@ -8,10 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 object Calculator {
     fun String.calc(): Double? {
         val tokens = tokenize(this)
-        if (tokens.isEmpty()) {
-            ChatUtils.warning("Invalid input '$this'")
-            return null
-        }
+        if (tokens.isEmpty()) return null
 
         val rpn = toRPN(tokens)
         return evaluateRPN(rpn)
