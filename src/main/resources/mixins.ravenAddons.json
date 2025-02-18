@@ -1,7 +1,7 @@
 {
-  "package": "at.raven.ravenAddons.mixin.transformers",
-  "plugin": "at.raven.ravenAddons.init.AutoDiscoveryMixinPlugin",
-  "refmap": "mixins.ravenAddons.refmap.json",
+  "package": "at.raven.ravenaddons.mixin.transformers",
+  "plugin": "at.raven.ravenaddons.init.AutoDiscoveryMixinPlugin",
+  "refmap": "mixins.ravenaddons.refmap.json",
   "minVersion": "0.7",
   "compatibilityLevel": "JAVA_8"
 }

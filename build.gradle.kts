@@ -26,7 +26,7 @@ loom {
     launchConfigs {
         "client" {
             property("mixin.debug", "true")
-            arg("--tweakClass", "at.raven.ravenAddons.tweaker.TestTweaker")
+            arg("--tweakClass", "at.raven.ravenaddons.tweaker.TestTweaker")
         }
     }
     runConfigs {
@@ -54,7 +54,7 @@ loom {
 }
 
 ksp {
-    arg("symbolProcessor", "at.raven.ravenAddons.loadmodule.LoadModuleProvider")
+    arg("symbolProcessor", "at.raven.ravenaddons.loadmodule.LoadModuleProvider")
 }
 
 kotlin {
@@ -151,7 +151,7 @@ tasks.withType(org.gradle.jvm.tasks.Jar::class) {
         this["ForceLoadAsMod"] = "true"
 
         //  If you don't want mixins, remove these lines
-        this["TweakClass"] = "at.raven.ravenAddons.tweaker.TestTweaker"
+        this["TweakClass"] = "at.raven.ravenaddons.tweaker.TestTweaker"
         this["MixinConfigs"] = "mixins.$modid.json"
         if (transformerFile.exists())
             this["FMLAT"] = "${modid}_at.cfg"
