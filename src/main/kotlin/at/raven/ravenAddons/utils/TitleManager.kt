@@ -82,7 +82,7 @@ object TitleManager {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("ratesttitle") {
-            description = "Display a test title"
+            description = "Display a test title."
             callback { command(it) }
         }
     }
@@ -156,7 +156,7 @@ object TitleManager {
     fun onDebug(event: DebugDataCollectionEvent) {
         event.title("Title Manager")
         if (titleTimer == 0) {
-            event.addIrrelevant("not displaying anything")
+            event.addIrrelevant("Not displaying anything")
             return
         }
         event.addData {

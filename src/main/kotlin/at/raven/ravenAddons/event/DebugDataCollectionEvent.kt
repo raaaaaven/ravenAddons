@@ -12,7 +12,7 @@ class DebugDataCollectionEvent(
     private var irrelevant = false
 
     fun title(title: String) {
-        if (currentTitle != null) error("title already set: '$currentTitle'")
+        if (currentTitle != null) error("Title already set: '$currentTitle'")
 
         currentTitle = title
     }

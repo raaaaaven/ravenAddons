@@ -37,9 +37,9 @@ enum class HypixelGame(val gameType: GameType) {
         fun onDebug(event: DebugDataCollectionEvent) {
             event.title("HypixelGame")
             if (currentGame == null) {
-                event.addIrrelevant("not playing anything (known)")
+                event.addIrrelevant("Not playing anything (known)")
             } else {
-                event.addData("playing: $currentGame")
+                event.addData("Playing: $currentGame")
             }
         }
     }

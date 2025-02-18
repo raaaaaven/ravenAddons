@@ -25,7 +25,7 @@ object ClipboardUtils {
             delay(11)
             getClipboard(attempt - 1)
         } else {
-            ChatUtils.warning("Couldn't read the clipboard.")
+            ChatUtils.warning("Failed to read the clipboard.")
             null
         }
 
