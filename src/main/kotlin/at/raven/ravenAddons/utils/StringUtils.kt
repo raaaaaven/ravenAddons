@@ -16,4 +16,6 @@ object StringUtils {
 
         return result.toString()
     }
+
+    fun String?.equalsIgnoreColor(string: String?) = this?.let { it.removeColors() == string?.removeColors() } == true
 }

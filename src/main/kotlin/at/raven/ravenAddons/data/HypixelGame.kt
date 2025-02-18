@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.data
 
+import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.hypixel.HypixelGameSwitch
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -30,6 +31,16 @@ enum class HypixelGame(val gameType: GameType) {
             if (oldGame == currentGame) return
 
             HypixelGameSwitch(oldGame, currentGame).post()
+        }
+
+        @SubscribeEvent
+        fun onDebug(event: DebugDataCollectionEvent) {
+            event.title("HypixelGame")
+            if (currentGame == null) {
+                event.addIrrelevant("Not playing anything (known)")
+            } else {
+                event.addData("Playing: $currentGame")
+            }
         }
     }
 }
