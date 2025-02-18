@@ -42,7 +42,7 @@ class ravenAddons {
     }
 
     @LoadModule
-    companion object{
+    companion object {
         const val MOD_VERSION = "1.1.1"
         const val MOD_ID = "ravenAddons"
 

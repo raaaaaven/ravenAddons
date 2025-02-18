@@ -40,7 +40,8 @@ object BetterDeviceNotification {
                     ravenAddonsConfig.betterDeviceNotificationSubTitle,
                     1.5.seconds,
                     0.seconds,
-                    0.seconds)
+                    0.seconds
+                )
                 SoundUtils.pling()
             }
         }

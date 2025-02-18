@@ -2,9 +2,9 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
-import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
