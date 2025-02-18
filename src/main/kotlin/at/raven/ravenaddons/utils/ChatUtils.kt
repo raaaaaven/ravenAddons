@@ -1,0 +1,103 @@
+package at.raven.ravenaddons.utils
+
+import at.raven.ravenaddons.config.RavenAddonsConfig
+import at.raven.ravenaddons.event.CommandRegistrationEvent
+import at.raven.ravenaddons.loadmodule.LoadModule
+import at.raven.ravenaddons.utils.EventUtils.post
+import net.minecraft.client.Minecraft
+import net.minecraft.event.ClickEvent
+import net.minecraft.event.HoverEvent
+import net.minecraft.network.play.client.C01PacketChatMessage
+import net.minecraft.util.ChatComponentText
+import net.minecraft.util.IChatComponent
+import net.minecraftforge.client.event.ClientChatReceivedEvent
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+
+@LoadModule
+object ChatUtils {
+    fun testMessageCommand(array: Array<String>) {
+        if (array.isEmpty()) {
+            chat("Failed to run because you didn't put a message to test...")
+            return
+        }
+        val hidden = array.last() == "-s"
+        var rawMessage = array.toList().joinToString(" ")
+        if (!hidden) chat("Testing message: §7$rawMessage")
+        if (hidden) rawMessage = rawMessage.replace(" -s", "")
+        val formattedMessage = rawMessage.replace("&", "§")
+
+        ClientChatReceivedEvent(0, ChatComponentText(formattedMessage)).post()
+        chat(formattedMessage, false)
+    }
+
+    fun warning(
+        message: String,
+        usePrefix: Boolean = true,
+    ) {
+        val finalMessage = if (usePrefix) "§4[§cRA§4]§7 $message" else message
+
+        chat(finalMessage, usePrefix = false)
+    }
+
+    fun chat(
+        message: String,
+        usePrefix: Boolean = true,
+    ) {
+        val finalMessage = if (usePrefix) "§8[§cRA§8]§7 $message" else message
+
+        chat(ChatComponentText(finalMessage))
+    }
+
+    fun chat(
+        nonString: Any,
+        usePrefix: Boolean = true,
+    ) {
+        chat(nonString.toString(), usePrefix)
+    }
+
+    fun chat(chatComponent: IChatComponent) {
+        Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent)
+    }
+
+    fun chatClickable(
+        message: String,
+        command: String,
+        usePrefix: Boolean = true,
+    ) {
+        val newMessage = if (usePrefix) "§8[§cRA§8]§7 $message" else message
+
+        val text = ChatComponentText(newMessage)
+        text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
+        text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§eRuns $command"))
+        Minecraft.getMinecraft().thePlayer.addChatMessage(text)
+    }
+
+    fun sendMessage(message: String) {
+        Minecraft.getMinecraft().thePlayer.sendChatMessage(message)
+    }
+
+    fun debug(message: String) {
+        if (!RavenAddonsConfig.debugMessages) return
+
+        chat("§7[RA DEBUG] $message", usePrefix = false)
+    }
+
+    fun debug(nonString: Any) {
+        debug(nonString.toString())
+    }
+
+    fun sendChatPacket(packet: C01PacketChatMessage) {
+        Minecraft
+            .getMinecraft()
+            .thePlayer.sendQueue
+            .addToSendQueue(packet)
+    }
+
+    @SubscribeEvent
+    fun onCommandRegistration(event: CommandRegistrationEvent) {
+        event.register("ratestmessage") {
+            description = "Prints a message in chat."
+            callback { testMessageCommand(it) }
+        }
+    }
+}
