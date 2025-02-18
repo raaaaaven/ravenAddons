@@ -26,7 +26,7 @@ object ConfigCommand {
     }
 
     private fun openConfig() {
-        val gui = configGui ?: return
+        val gui = configGui ?: ravenAddonsConfig.gui() ?: return
         ravenAddons.openScreen(gui)
     }
 }

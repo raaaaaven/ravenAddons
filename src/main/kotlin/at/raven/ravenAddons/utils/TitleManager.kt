@@ -4,9 +4,8 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
+import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
-import net.minecraft.client.Minecraft
-import net.minecraft.client.gui.ScaledResolution
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
@@ -78,16 +77,15 @@ object TitleManager {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("ratesttitle") {
-            description = "Display a test title"
+            description = "Display a test title."
             callback { command(it) }
         }
     }
 
     private fun renderTitle(partialTicks: Float) {
-        val scaledResolution = ScaledResolution(Minecraft.getMinecraft())
-        val windowWidth = scaledResolution.scaledWidth
-        val windowHeight = scaledResolution.scaledHeight
-        val fontRenderer = Minecraft.getMinecraft().fontRendererObj
+        val windowWidth = RenderUtils.scaledWidth
+        val windowHeight = RenderUtils.scaledHeight
+        val fontRenderer = RenderUtils.fontRenderer
 
         val fadeOutStart = titleTotalTime - titleFadeOut
         val interpolatedTime = titleTimer + partialTicks
@@ -143,6 +141,24 @@ object TitleManager {
                 titleTotalTime = 0
                 titleTimer = 0
             }
+        }
+    }
+
+    @SubscribeEvent
+    fun onDebug(event: DebugDataCollectionEvent) {
+        event.title("Title Manager")
+        if (titleTimer == 0) {
+            event.addIrrelevant("Not displaying anything")
+            return
+        }
+        event.addData {
+            add("title: '$title'")
+            add("subtitle: '$subTitle'")
+            add("")
+            add("totalTime = $titleTotalTime")
+            add("remainingTime = $titleTimer")
+            add("fadeIn = $titleFadeIn")
+            add("fadeOut = $titleFadeOut")
         }
     }
 

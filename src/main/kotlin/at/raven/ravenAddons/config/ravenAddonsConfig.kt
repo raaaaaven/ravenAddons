@@ -15,6 +15,32 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "QUICK MATHS! Solver",
+        description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
+        category = "General"
+    )
+    var quickMathsSolver = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Check for Updates",
+        description = "Automatically check for updates on each startup.",
+        category = "General",
+        subcategory = "Updates"
+    )
+    var autoUpdates = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Download Updates",
+        description = "Automatically download new version on each startup.",
+        category = "General",
+        subcategory = "Updates"
+    )
+    var fullAutoUpdates = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Care Package Highlighter",
         description = "Highlights important items inside of Care Packages inside the Hypixel Pit.",
         category = "Pit"
@@ -28,14 +54,6 @@ object ravenAddonsConfig : Vigilant(
         category = "Pit"
     )
     var carePackageHighlighterColour = Color(0, 255, 0, 100)
-
-    @Property(
-        type = PropertyType.SWITCH,
-        name = "QUICK MATHS! Solver",
-        description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
-        category = "General"
-    )
-    var quickMathsSolver = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -79,7 +97,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Better Device Notifications Title",
+        name = "Better Device Notifications Title.",
         description = "Choose a title.",
         category = "Dungeons"
     )
@@ -87,11 +105,55 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Better Device Notifications SubTitle",
+        name = "Better Device Notifications SubTitle.",
         description = "Choose a subtitle.",
         category = "Dungeons"
     )
     var betterDeviceNotificationSubTitle = ""
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Energy Crystal Notification",
+        description = "Shows a reminder on screen when you have an unplaced Energy Crystal.",
+        category = "Dungeons"
+    )
+    var energyCrystalNotification = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Leap Announce",
+        description = "Announce when you leap to someone in party chat.",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapAnnounce = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Leap Message",
+        description = "Enter a custom message for the leap announce. \nUse §f\$ign §7for the username.",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapAnnounceMessage = "Leaping to \$ign."
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Leap Prefix",
+        description = "Enable having [RA] in front of your leap announce?",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapAnnouncePrefix = true
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Leap Pling",
+        description = "Play the pling sound effect when leaping to someone.",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapSound = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -126,7 +188,11 @@ object ravenAddonsConfig : Vigilant(
 
         this::betterDeviceNotificationTitle requires this::betterDeviceNotification
         this::betterDeviceNotificationSubTitle requires this::betterDeviceNotification
+
+        this::leapAnnounceMessage requires this::leapAnnounce
+        this::leapAnnouncePrefix requires this::leapAnnounce
     }
+
 
     infix fun <T> KProperty<T>.requires(dependency: KProperty<T>) {
         addDependency(clazz.getDeclaredField(this.name), clazz.getDeclaredField(dependency.name))
