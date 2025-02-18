@@ -2,6 +2,7 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.client.event.RenderGameOverlayEvent
@@ -79,7 +80,7 @@ object TitleManager {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("ratesttitle") {
-            description = "Display a test title"
+            description = "Display a test title."
             callback { command(it) }
         }
     }
@@ -146,5 +147,23 @@ object TitleManager {
         val millisecondsToSeconds = 1000.0
 
         return this.inWholeMilliseconds.toDouble() / millisecondsToSeconds
+    }
+
+    @SubscribeEvent
+    fun onDebug(event: DebugDataCollectionEvent) {
+        event.title("Title Manager")
+        if (titleTimer == 0) {
+            event.addIrrelevant("Not displaying anything")
+            return
+        }
+        event.addData {
+            add("title: '$title'")
+            add("subtitle: '$subTitle'")
+            add("")
+            add("totalTime = $titleTotalTime")
+            add("remainingTime = $titleTimer")
+            add("fadeIn = $titleFadeIn")
+            add("fadeOut = $titleFadeOut")
+        }
     }
 }
