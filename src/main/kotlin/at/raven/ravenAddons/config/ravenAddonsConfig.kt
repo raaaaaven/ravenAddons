@@ -95,7 +95,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Better Device Notifications Title",
+        name = "Better Device Notifications Title.",
         description = "Choose a title.",
         category = "Dungeons"
     )
@@ -103,7 +103,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Better Device Notifications SubTitle",
+        name = "Better Device Notifications SubTitle.",
         description = "Choose a subtitle.",
         category = "Dungeons"
     )
@@ -112,10 +112,46 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Energy Crystal Notification",
-        description = "Shows a reminder on screen when you have an unplaced Energy Crystal",
+        description = "Shows a reminder on screen when you have an unplaced Energy Crystal.",
         category = "Dungeons"
     )
     var energyCrystalNotification = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Leap Announce",
+        description = "Announce when you leap to someone in party chat.",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapAnnounce = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Leap Message",
+        description = "Enter a custom message for the leap announce. \nUse §f\$ign §7for the username.",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapAnnounceMessage = "Leaping to \$ign."
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Leap Prefix",
+        description = "Enable having [RA] in front of your leap announce?",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapAnnouncePrefix = true
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Leap Pling",
+        description = "Play the pling sound effect when leaping to someone.",
+        category = "Dungeons",
+        subcategory = "Leap"
+    )
+    var leapSound = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -152,5 +188,8 @@ object ravenAddonsConfig : Vigilant(
 
         addDependency(clazz.getDeclaredField("betterDeviceNotificationTitle"), clazz.getDeclaredField("betterDeviceNotification"))
         addDependency(clazz.getDeclaredField("betterDeviceNotificationSubTitle"), clazz.getDeclaredField("betterDeviceNotification"))
+
+        addDependency(clazz.getDeclaredField("leapAnnounceMessage"), clazz.getDeclaredField("leapAnnounce"))
+        addDependency(clazz.getDeclaredField("leapAnnouncePrefix"), clazz.getDeclaredField("leapAnnounce"))
     }
 }
