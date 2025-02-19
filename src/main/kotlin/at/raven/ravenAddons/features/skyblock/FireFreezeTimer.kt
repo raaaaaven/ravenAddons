@@ -1,7 +1,6 @@
 package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import kotlinx.coroutines.delay
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
@@ -10,7 +9,9 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.SimpleTimeMark
+import at.raven.ravenAddons.utils.TitleManager
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
+import kotlinx.coroutines.delay
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -40,14 +41,14 @@ object FireFreezeTimer {
         val location =
             Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
 
-        val entities = checkNearbyEntities(location).associate { it to SimpleTimeMark.now() + 10.seconds }
+        val entities = checkNearbyEntities(location)
 
         frozenEntities.clear()
-        frozenEntities.putAll(entities)
+        frozenEntities.putAll(entities.associate { it to SimpleTimeMark.now() + 10.seconds })
 
         entityCount = entities.size
         if (entities.size == 1 && entities.toList().firstOrNull() != null) {
-            entityName = entities.toList().first().first.name
+            entityName = entities.toList().first().name
         }
 
         if (ravenAddonsConfig.fireFreezeNotification) {
@@ -81,7 +82,7 @@ object FireFreezeTimer {
 
         val entities = frozenEntities.toMap()
         for ((entity, timer) in entities) {
-            if (timer.isInPast() || entity.isInWorld()) {
+            if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
                 if (messageCooldown.isInPast() && entity.isInWorld()) {
                     ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
