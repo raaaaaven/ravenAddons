@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import kotlinx.coroutines.delay
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
@@ -49,6 +50,14 @@ object FireFreezeTimer {
             entityName = entities.toList().first().first.name
         }
 
+        if (ravenAddonsConfig.fireFreezeNotification) {
+            ravenAddons.launchCoroutine {
+                delay(5000)
+
+                TitleManager.setTitle("", "§bRE-FREEZE!", 1.seconds, 0.5.seconds, 0.5.seconds)
+                ChatUtils.chat("Fire Freeze Staff is ready for re-freezing.")
+            }
+        }
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
             if (messageCooldown.isInPast()) {
@@ -75,6 +84,7 @@ object FireFreezeTimer {
             if (timer.isInPast() || entity.isInWorld()) {
                 frozenEntities.remove(entity)
                 if (messageCooldown.isInPast() && entity.isInWorld()) {
+                    ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     messageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
