@@ -17,6 +17,7 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.sound.PlaySoundEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import scala.sys.process.ProcessBuilderImpl.Simple
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
@@ -40,10 +41,15 @@ object FireFreezeTimer {
         frozenEntities.putAll(entities)
         }
 
-        if (ravenAddonsConfig.fireFreezeAnnounce) {
-            ChatUtils.debug("fireFreezeAnnounce: sending message")
+        var cooldown = SimpleTimeMark.farPast()
 
-            ChatUtils.sendMessage("/pc [RA] Mob(s) frozen!")
+        if (ravenAddonsConfig.fireFreezeAnnounce) {
+
+            if (cooldown.isInPast()) {
+                ChatUtils.debug("fireFreezeAnnounce: sending message")
+                ChatUtils.sendMessage("/pc [RA] Mob(s) frozen!")
+                var cooldown = SimpleTimeMark.now() + 5.seconds
+            }
         }
     }
 
