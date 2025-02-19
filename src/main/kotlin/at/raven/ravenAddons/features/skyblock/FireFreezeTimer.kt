@@ -3,13 +3,14 @@ package at.raven.ravenAddons.features.skyblock
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
+import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ClipboardUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
-import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
@@ -56,7 +57,7 @@ object FireFreezeTimer {
         entityCount = entities.size
         val firstEntity = entities.toList().firstOrNull()
         if (entities.size == 1 && firstEntity != null) {
-            entityName = firstEntity.getNearestArmorStand() ?: firstEntity.name
+            entityName = firstEntity.getMatchedName() ?: firstEntity.name
         }
         ChatUtils.debug(entityName.toString())
 
@@ -136,15 +137,75 @@ object FireFreezeTimer {
         return this in entityList
     }
 
-    private fun Entity.getNearestArmorStand(): String? {
+    private fun Entity.getMatchedName(fromCommand: Boolean = false): String? {
+        val name = this.getArmorStandName()
+
+        armorStandPattern.matchMatcher(name?.removeColors() ?: "") {
+            val group = group("name")
+
+            return group
+        }
+        if (!fromCommand) {
+            ChatUtils.warning("Unknown mob detected! Please report!")
+            println("'${name?.removeColors()}'")
+        }
+        return null
+    }
+
+    private fun Entity.getArmorStandName(): String? {
         val worldEntities = ravenAddons.mc.theWorld.loadedEntityList ?: return null
-        val armorStandList = worldEntities.filter { it is EntityArmorStand && armorStandPattern.matches(it.customNameTag.removeColors()) }
+        val armorStandList = worldEntities.filter { it is EntityArmorStand && it.customNameTag.contains("❤") }
         if (armorStandList.isEmpty()) return null
         val armorStand = armorStandList.minBy { it.positionVector.distanceTo(this.positionVector) } ?: return null
 
-        armorStandPattern.matchMatcher(armorStand.customNameTag.removeColors()) {
-            return group("name")
+        return armorStand.customNameTag
+    }
+
+    @SubscribeEvent
+    fun onCommandRegistration(event: CommandRegistrationEvent) {
+        event.register("racopyentities") {
+            description = "Copy nearby entities for proper name detection."
+            callback { copyEntitiesCommand() }
         }
-        return null
+    }
+
+    private fun copyEntitiesCommand() {
+        val worldEntities = ravenAddons.mc.theWorld.loadedEntityList ?: return
+        val mobList = worldEntities.filter {
+            it is EntityLivingBase && it !is EntityPlayerSP && it !is EntityArmorStand
+        }
+        ChatUtils.debug(mobList)
+
+        val matchedMobs = mutableListOf<Pair<String, String>>()  //armor stand name, mob name
+        val unmatchedMobs = mutableListOf<Pair<String, String>>()  //armor stand name, vanilla name
+
+        loop@ for (mob in mobList) {
+            val mobCustomName = mob.getArmorStandName() ?: continue
+
+            armorStandPattern.matchMatcher(mobCustomName.removeColors()) {
+                matchedMobs.add(mobCustomName.removeColors() to group("name"))
+                continue@loop
+            }
+
+            unmatchedMobs.add(mobCustomName.removeColors() to mob.name)
+        }
+
+        ChatUtils.debug("matched mobs: $matchedMobs")
+        ChatUtils.debug("unmatched mobs: $unmatchedMobs")
+
+        var stringToCopy = "------------------\n"
+        stringToCopy += "matched ${matchedMobs.size} mobs\n"
+        matchedMobs.forEach {
+            stringToCopy += it.second + " | " + it.first + "\n"
+        }
+        stringToCopy += "---------\n"
+        stringToCopy += "couldn't match ${unmatchedMobs.size} mobs\n"
+        unmatchedMobs.forEach {
+            stringToCopy += it.second + " | " + it.first + "\n"
+        }
+        stringToCopy += "------------------\n"
+
+        ClipboardUtils.copyToClipboard(stringToCopy)
+        ChatUtils.chat("Copied ${matchedMobs.size + unmatchedMobs.size} mobs to the clipboard")
     }
 }
