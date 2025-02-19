@@ -11,6 +11,7 @@ import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
 import net.minecraft.client.entity.EntityPlayerSP
+import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
@@ -32,22 +33,33 @@ object FireFreezeTimer {
         if (event.sound.pitch != 0.4920635f) return
         if (event.sound.volume != 0.6f) return
 
-        if (ravenAddonsConfig.fireFreezeTimer) {
-            val location =
-                Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
+        var entityName: String? = null
+        var entityCount: Int? = null
 
-            val entities = checkNearbyEntities(location).associate { it to SimpleTimeMark.now() + 10.seconds }
+        val location =
+            Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
 
-            frozenEntities.clear()
-            frozenEntities.putAll(entities)
+        val entities = checkNearbyEntities(location).associate { it to SimpleTimeMark.now() + 10.seconds }
+
+        frozenEntities.clear()
+        frozenEntities.putAll(entities)
+
+        entityCount = entities.size
+        if (entities.size == 1 && entities.toList().firstOrNull() != null) {
+            entityName = entities.toList().first().first.name
         }
 
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
-
             if (messageCooldown.isInPast()) {
                 ChatUtils.debug("fireFreezeAnnounce: sending message")
-                ChatUtils.sendMessage("/pc [RA] Mob(s) frozen!")
+                if (entityName == null) {
+                    val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
+
+                    ChatUtils.sendMessage("/pc [RA] $string frozen!")
+                }
+                else
+                    ChatUtils.sendMessage("/pc [RA] $entityName frozen!")
                 messageCooldown = SimpleTimeMark.now() + 5.seconds
             }
         }
@@ -56,13 +68,14 @@ object FireFreezeTimer {
     @SubscribeEvent
     fun onWorldRender(event: WorldRenderEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!ravenAddonsConfig.fireFreezeTimer) return
 
         val entities = frozenEntities.toMap()
         for ((entity, timer) in entities) {
-            if (timer.isInPast() || entity !in (ravenAddons.mc.theWorld.loadedEntityList ?: emptyList())) {
+            if (timer.isInPast() || entity.isInWorld()) {
                 frozenEntities.remove(entity)
-                if (messageCooldown.isInPast()) {
-                    ChatUtils.sendMessage("/pc [RA] Mob(s) died or is now unfrozen!")
+                if (messageCooldown.isInPast() && entity.isInWorld()) {
+                    ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     messageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
                 continue
@@ -75,7 +88,7 @@ object FireFreezeTimer {
 
     private fun checkNearbyEntities(location: Vec3): List<EntityLivingBase> {
         val entities = ravenAddons.mc.theWorld.loadedEntityList ?: return emptyList()
-        val frozenEntities = mutableListOf<EntityLivingBase>()
+        val entitiesToFreeze = mutableListOf<EntityLivingBase>()
         for (entity in entities) {
             if (entity !is EntityLivingBase) continue
 
@@ -84,14 +97,21 @@ object FireFreezeTimer {
             if (entity is EntityArmorStand) continue
             if (entity.positionVector.distanceTo(location) > 5) continue
 
-            frozenEntities.add(entity)
+            if (entity in frozenEntities) continue
+            entitiesToFreeze.add(entity)
         }
 
-        return frozenEntities.toList()
+        return entitiesToFreeze.toList()
     }
 
     @SubscribeEvent
     fun onHypixelServerChange(event: HypixelServerChangeEvent) {
         frozenEntities.clear()
+    }
+
+    private fun Entity.isInWorld(): Boolean {
+        val entityList = ravenAddons.mc.theWorld.loadedEntityList ?: return false
+
+        return this in entityList
     }
 }
