@@ -195,12 +195,12 @@ object FireFreezeTimer {
         var stringToCopy = "------------------\n"
         stringToCopy += "matched ${matchedMobs.size} mobs\n"
         matchedMobs.forEach {
-            stringToCopy += it.second + " | " + it.first + "\n"
+            stringToCopy += it.second + " | '" + it.first + "'\n"
         }
         stringToCopy += "---------\n"
         stringToCopy += "couldn't match ${unmatchedMobs.size} mobs\n"
         unmatchedMobs.forEach {
-            stringToCopy += it.second + " | " + it.first + "\n"
+            stringToCopy += it.second + " | '" + it.first + "'\n"
         }
         stringToCopy += "------------------\n"
 
