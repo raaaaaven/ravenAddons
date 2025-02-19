@@ -51,8 +51,7 @@ object FireFreezeTimer {
 
         val entities = checkNearbyEntities(location)
 
-        frozenEntities.clear()
-        frozenEntities.putAll(entities.associate { it to SimpleTimeMark.now() + 10.seconds })
+        frozenEntities.putAll(entities.filter { it !in frozenEntities }.associate { it to SimpleTimeMark.now() + 10.seconds })
 
         entityCount = entities.size
         val firstEntity = entities.toList().firstOrNull()
