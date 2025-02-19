@@ -31,7 +31,8 @@ object FireFreezeTimer {
     private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
     private var messageCooldown = SimpleTimeMark.farPast()
 
-    private val armorStandPattern = "^(\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kmb]+❤".toPattern()
+    // https://regex101.com/r/YwLEWt/2
+    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?".toPattern()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
