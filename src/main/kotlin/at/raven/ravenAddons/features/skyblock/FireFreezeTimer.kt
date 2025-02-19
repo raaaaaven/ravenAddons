@@ -8,6 +8,8 @@ import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.TitleManager
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
@@ -27,6 +29,8 @@ import kotlin.time.Duration.Companion.seconds
 object FireFreezeTimer {
     private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
     private var messageCooldown = SimpleTimeMark.farPast()
+
+    private val armorStandPattern = "^(\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kmb]+❤".toPattern()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
@@ -48,11 +52,11 @@ object FireFreezeTimer {
 
         entityCount = entities.size
         if (entities.size == 1 && entities.toList().firstOrNull() != null) {
-            entityName = entities.toList().first().name
+            entityName = entities.toList().first().getNearestArmorStand()
         }
 
         if (ravenAddonsConfig.fireFreezeNotification) {
-            ravenAddons.launchCoroutine {
+            ravenAddons.launchCoroutine { //TODO: triggers once per entity plz fix
                 delay(5000)
 
                 TitleManager.setTitle("", "§bRE-FREEZE!", 1.seconds, 0.5.seconds, 0.5.seconds)
@@ -124,5 +128,16 @@ object FireFreezeTimer {
         val entityList = ravenAddons.mc.theWorld.loadedEntityList ?: return false
 
         return this in entityList
+    }
+
+    private fun Entity.getNearestArmorStand(): String? {
+        val worldEntities = ravenAddons.mc.theWorld.loadedEntityList ?: return null
+
+        val armorStand = worldEntities.filter { it is EntityArmorStand && armorStandPattern.matches(it.name) }.minBy { it.positionVector.distanceTo(this.positionVector) } ?: return null
+
+        armorStandPattern.matchMatcher(armorStand.name) {
+            return group("name")
+        }
+        return null
     }
 }
