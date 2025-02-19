@@ -43,7 +43,7 @@ object FireFreezeTimer {
         if (ravenAddonsConfig.fireFreezeAnnounce) {
             ChatUtils.debug("fireFreezeAnnounce: sending message")
 
-            ChatUtils.sendMessage("/pc [RA] Mob(s) successfully frozen!")
+            ChatUtils.sendMessage("/pc [RA] Mob(s) frozen!")
         }
     }
 
@@ -55,6 +55,7 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || entity !in (ravenAddons.mc.theWorld.loadedEntityList ?: emptyList())) {
                 frozenEntities.remove(entity)
+                ChatUtils.sendMessage("/pc [RA] Mob(s) died or is now unfrozen!")
                 continue
             }
 
