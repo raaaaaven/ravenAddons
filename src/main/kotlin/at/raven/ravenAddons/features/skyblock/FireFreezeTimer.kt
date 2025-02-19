@@ -1,11 +1,13 @@
 package at.raven.ravenAddons.features.skyblock
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
+import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
 import net.minecraft.client.entity.EntityPlayerSP
@@ -24,6 +26,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
+        if (ravenAddonsConfig.fireFreezeTimer) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         if (event.name != "random.anvil_land") return
         if (event.sound.pitch != 0.4920635f) return
@@ -35,6 +38,13 @@ object FireFreezeTimer {
 
         frozenEntities.clear()
         frozenEntities.putAll(entities)
+        }
+
+        if (ravenAddonsConfig.fireFreezeAnnounce) {
+            ChatUtils.debug("fireFreezeAnnounce: sending message")
+
+            ChatUtils.sendMessage("/pc [RA] Mob(s) successfully frozen!")
+        }
     }
 
     @SubscribeEvent
@@ -48,7 +58,8 @@ object FireFreezeTimer {
                 continue
             }
 
-            event.drawString(null, entity, "§bfrozen until ${timer.timeUntil()}", false, Color.WHITE, event.partialTicks, Vec3(0.0, 0.5, 0.0))
+            val duration = "%.2f".format(timer.timeUntil().inWholeMilliseconds/1000.0)
+            event.drawString(null, entity, "§b❄ $duration", false, Color.WHITE, event.partialTicks, Vec3(0.0, 0.5, 0.0))
         }
     }
 
