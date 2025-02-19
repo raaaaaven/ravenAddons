@@ -30,6 +30,7 @@ import kotlin.time.Duration.Companion.seconds
 object FireFreezeTimer {
     private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
     private var messageCooldown = SimpleTimeMark.farPast()
+    private var titleCooldown = SimpleTimeMark.farPast()
 
     // https://regex101.com/r/YwLEWt/2
     private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?".toPattern()
@@ -59,8 +60,9 @@ object FireFreezeTimer {
         }
         ChatUtils.debug(entityName.toString())
 
-        if (ravenAddonsConfig.fireFreezeNotification) {
-            ravenAddons.launchCoroutine { //TODO: triggers once per entity plz fix
+        if (ravenAddonsConfig.fireFreezeNotification && titleCooldown.isInPast()) {
+            titleCooldown = SimpleTimeMark.now() + 1.seconds
+            ravenAddons.launchCoroutine {
                 delay(5000)
 
                 TitleManager.setTitle("", "§bRE-FREEZE!", 1.seconds, 0.5.seconds, 0.5.seconds)
