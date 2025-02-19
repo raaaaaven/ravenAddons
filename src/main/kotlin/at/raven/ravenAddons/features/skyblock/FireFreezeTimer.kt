@@ -17,38 +17,38 @@ import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.sound.PlaySoundEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import scala.sys.process.ProcessBuilderImpl.Simple
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object FireFreezeTimer {
     private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
+    private var messageCooldown = SimpleTimeMark.farPast()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
-        if (ravenAddonsConfig.fireFreezeTimer) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         if (event.name != "random.anvil_land") return
         if (event.sound.pitch != 0.4920635f) return
         if (event.sound.volume != 0.6f) return
 
-        val location = Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
+        if (ravenAddonsConfig.fireFreezeTimer) {
+            val location =
+                Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
 
-        val entities = checkNearbyEntities(location).associate { it to SimpleTimeMark.now() + 10.seconds }
+            val entities = checkNearbyEntities(location).associate { it to SimpleTimeMark.now() + 10.seconds }
 
-        frozenEntities.clear()
-        frozenEntities.putAll(entities)
+            frozenEntities.clear()
+            frozenEntities.putAll(entities)
         }
 
-        var cooldown = SimpleTimeMark.farPast()
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
 
-            if (cooldown.isInPast()) {
+            if (messageCooldown.isInPast()) {
                 ChatUtils.debug("fireFreezeAnnounce: sending message")
                 ChatUtils.sendMessage("/pc [RA] Mob(s) frozen!")
-                var cooldown = SimpleTimeMark.now() + 5.seconds
+                messageCooldown = SimpleTimeMark.now() + 5.seconds
             }
         }
     }
@@ -61,11 +61,14 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || entity !in (ravenAddons.mc.theWorld.loadedEntityList ?: emptyList())) {
                 frozenEntities.remove(entity)
-                ChatUtils.sendMessage("/pc [RA] Mob(s) died or is now unfrozen!")
+                if (messageCooldown.isInPast()) {
+                    ChatUtils.sendMessage("/pc [RA] Mob(s) died or is now unfrozen!")
+                    messageCooldown = SimpleTimeMark.now() + 5.seconds
+                }
                 continue
             }
 
-            val duration = "%.2f".format(timer.timeUntil().inWholeMilliseconds/1000.0)
+            val duration = "%.2f".format(timer.timeUntil().inWholeMilliseconds / 1000.0)
             event.drawString(null, entity, "§b❄ $duration", false, Color.WHITE, event.partialTicks, Vec3(0.0, 0.5, 0.0))
         }
     }
