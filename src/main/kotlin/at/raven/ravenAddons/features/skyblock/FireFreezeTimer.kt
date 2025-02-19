@@ -5,11 +5,10 @@ import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
-import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
 import net.minecraft.client.entity.EntityPlayerSP
-import net.minecraft.entity.Entity
+import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.Vec3
@@ -20,7 +19,7 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object FireFreezeTimer {
-    private val frozenEntities: MutableMap<Entity, SimpleTimeMark> = mutableMapOf()
+    private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
@@ -40,9 +39,9 @@ object FireFreezeTimer {
     fun onWorldRender(event: WorldRenderEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
 
-        val entities = frozenEntities
+        val entities = frozenEntities.toMap()
         for ((entity, timer) in entities) {
-            if (timer.isInPast()) {
+            if (timer.isInPast() || entity !in (ravenAddons.mc.theWorld.loadedEntityList ?: emptyList())) {
                 frozenEntities.remove(entity)
                 continue
             }
@@ -51,17 +50,18 @@ object FireFreezeTimer {
         }
     }
 
-    private fun checkNearbyEntities(location: Vec3): List<Entity> {
+    private fun checkNearbyEntities(location: Vec3): List<EntityLivingBase> {
         val entities = ravenAddons.mc.theWorld.loadedEntityList ?: return emptyList()
-        val frozenEntities = mutableListOf<Entity>()
+        val frozenEntities = mutableListOf<EntityLivingBase>()
         for (entity in entities) {
+            if (entity !is EntityLivingBase) continue
+
             if (entity is EntityPlayerSP) continue
             if (entity is EntityPlayer && entity.uniqueID.version() == 4) continue
             if (entity is EntityArmorStand) continue
             if (entity.positionVector.distanceTo(location) > 5) continue
 
             frozenEntities.add(entity)
-            ChatUtils.debug("${entity.name} @ ${entity.positionVector} (dist: ${entity.positionVector.distanceTo(location)})")
         }
 
         return frozenEntities.toList()
