@@ -62,6 +62,7 @@ object FireFreezeTimer {
             if (timer.isInPast() || entity !in (ravenAddons.mc.theWorld.loadedEntityList ?: emptyList())) {
                 frozenEntities.remove(entity)
                 if (messageCooldown.isInPast()) {
+                    ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) died or is now unfrozen!")
                     messageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
