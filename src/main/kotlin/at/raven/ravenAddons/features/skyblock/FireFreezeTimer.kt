@@ -2,6 +2,7 @@ package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
+import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -23,6 +24,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         if (event.name != "random.anvil_land") return
         if (event.sound.pitch != 0.4920635f) return
         if (event.sound.volume != 0.6f) return
@@ -65,5 +67,10 @@ object FireFreezeTimer {
         }
 
         return frozenEntities.toList()
+    }
+
+    @SubscribeEvent
+    fun onHypixelServerChange(event: HypixelServerChangeEvent) {
+        frozenEntities.clear()
     }
 }
