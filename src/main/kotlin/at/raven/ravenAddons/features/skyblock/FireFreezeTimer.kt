@@ -9,7 +9,9 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.SimpleTimeMark
+import at.raven.ravenAddons.utils.TitleManager
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
+import kotlinx.coroutines.delay
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
@@ -42,6 +44,14 @@ object FireFreezeTimer {
             frozenEntities.putAll(entities)
         }
 
+        if (ravenAddonsConfig.fireFreezeNotification) {
+            ravenAddons.launchCoroutine {
+                delay(5000)
+
+                TitleManager.setTitle("", "§bRE-FREEZE!", 1.seconds, 0.5.seconds, 0.5.seconds)
+                ChatUtils.chat("Fire Freeze Staff is ready for re-freezing.")
+            }
+        }
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
 
