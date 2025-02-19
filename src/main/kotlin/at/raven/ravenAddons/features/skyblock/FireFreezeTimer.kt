@@ -65,8 +65,8 @@ object FireFreezeTimer {
             ravenAddons.launchCoroutine {
                 delay(5000)
 
-                TitleManager.setTitle("", "§bRE-FREEZE!", 1.seconds, 0.5.seconds, 0.5.seconds)
-                ChatUtils.chat("Fire Freeze Staff is ready for re-freezing.")
+                TitleManager.setTitle("", "§bRE-FREEZE!", 2.seconds, 1.seconds, 1.seconds)
+                ChatUtils.chat("Fire Freeze Staff is ready for use.")
             }
         }
 
@@ -103,7 +103,7 @@ object FireFreezeTimer {
             }
 
             val duration = "%.2f".format(timer.timeUntil().inWholeMilliseconds / 1000.0)
-            event.drawString(null, entity, "§b❄ $duration", false, Color.WHITE, event.partialTicks, Vec3(0.0, 0.5, 0.0))
+            event.drawString(null, entity, "§b❄ $duration", false, Color.WHITE, event.partialTicks, Vec3(0.0, 0.90, 0.0))
         }
     }
 
