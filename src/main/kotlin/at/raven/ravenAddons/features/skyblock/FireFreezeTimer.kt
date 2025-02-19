@@ -11,6 +11,7 @@ import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
+import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
 import kotlinx.coroutines.delay
@@ -51,9 +52,11 @@ object FireFreezeTimer {
         frozenEntities.putAll(entities.associate { it to SimpleTimeMark.now() + 10.seconds })
 
         entityCount = entities.size
-        if (entities.size == 1 && entities.toList().firstOrNull() != null) {
-            entityName = entities.toList().first().getNearestArmorStand()
+        val firstEntity = entities.toList().firstOrNull()
+        if (entities.size == 1 && firstEntity != null) {
+            entityName = firstEntity.getNearestArmorStand() ?: firstEntity.name
         }
+        ChatUtils.debug(entityName.toString())
 
         if (ravenAddonsConfig.fireFreezeNotification) {
             ravenAddons.launchCoroutine { //TODO: triggers once per entity plz fix
@@ -132,10 +135,11 @@ object FireFreezeTimer {
 
     private fun Entity.getNearestArmorStand(): String? {
         val worldEntities = ravenAddons.mc.theWorld.loadedEntityList ?: return null
+        val armorStandList = worldEntities.filter { it is EntityArmorStand && armorStandPattern.matches(it.customNameTag.removeColors()) }
+        if (armorStandList.isEmpty()) return null
+        val armorStand = armorStandList.minBy { it.positionVector.distanceTo(this.positionVector) } ?: return null
 
-        val armorStand = worldEntities.filter { it is EntityArmorStand && armorStandPattern.matches(it.name) }.minBy { it.positionVector.distanceTo(this.positionVector) } ?: return null
-
-        armorStandPattern.matchMatcher(armorStand.name) {
+        armorStandPattern.matchMatcher(armorStand.customNameTag.removeColors()) {
             return group("name")
         }
         return null
