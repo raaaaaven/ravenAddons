@@ -49,9 +49,10 @@ object FireFreezeTimer {
         val location =
             Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
 
-        val entities = checkNearbyEntities(location)
+        val entities = checkNearbyEntities(location).filter { it !in frozenEntities }
+        if (entities.isEmpty()) return
 
-        frozenEntities.putAll(entities.filter { it !in frozenEntities }.associate { it to SimpleTimeMark.now() + 10.seconds })
+        frozenEntities.putAll(entities.associate { it to SimpleTimeMark.now() + 10.seconds })
 
         entityCount = entities.size
         val firstEntity = entities.toList().firstOrNull()
