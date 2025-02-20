@@ -42,8 +42,8 @@ class ravenAddons {
     }
 
     @LoadModule
-    companion object {
-        const val MOD_VERSION = "1.1.1"
+    companion object{
+        const val MOD_VERSION = "1.3.0"
         const val MOD_ID = "ravenAddons"
 
         val mc get() = Minecraft.getMinecraft()
@@ -54,8 +54,8 @@ class ravenAddons {
                 CoroutineName("ravenAddons") + SupervisorJob(globalJob),
             )
 
-        fun launchCoroutine(function: suspend () -> Unit) {
-            coroutineScope.launch {
+        fun launchCoroutine(function: suspend () -> Unit): Job {
+            return coroutineScope.launch {
                 try {
                     function()
                 } catch (e: Exception) {

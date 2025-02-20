@@ -6,6 +6,7 @@ import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
@@ -83,9 +84,9 @@ object TitleManager {
     }
 
     private fun renderTitle(partialTicks: Float) {
-        val windowWidth = RenderUtils.scaledWidth
-        val windowHeight = RenderUtils.scaledHeight
-        val fontRenderer = RenderUtils.fontRenderer
+        val windowWidth = GuiRenderUtils.scaledWidth
+        val windowHeight = GuiRenderUtils.scaledHeight
+        val fontRenderer = GuiRenderUtils.fontRenderer
 
         val fadeOutStart = titleTotalTime - titleFadeOut
         val interpolatedTime = titleTimer + partialTicks

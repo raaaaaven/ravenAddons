@@ -1,6 +1,6 @@
-package at.raven.ravenAddons.utils
+package at.raven.ravenAddons.utils.render
 
-import at.raven.ravenAddons.ravenAddons.Companion.mc
+import at.raven.ravenAddons.ravenAddons
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.ScaledResolution
@@ -8,12 +8,12 @@ import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.inventory.Slot
 import java.awt.Color
 
-object RenderUtils {
-    val scaledResolution get() = ScaledResolution(mc)
+object GuiRenderUtils {
+    val scaledResolution get() = ScaledResolution(ravenAddons.Companion.mc)
     val scaledWidth get() = scaledResolution.scaledWidth
     val scaledHeight get() = scaledResolution.scaledHeight
 
-    val fontRenderer get() = mc.fontRendererObj
+    val fontRenderer get() = ravenAddons.Companion.mc.fontRendererObj
 
     infix fun Slot.highlight(color: Color) {
         highlight(color, xDisplayPosition, yDisplayPosition)

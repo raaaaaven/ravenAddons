@@ -17,7 +17,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "QUICK MATHS! Solver",
         description = "Solves the QUICK MATHS! equation for you.\nUseful for §eHypixel SkyBlock §rand §eThe Pit§r.",
-        category = "General"
+        category = "General",
+        subcategory = "Miscellaneous"
     )
     var quickMathsSolver = false
 
@@ -43,7 +44,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Care Package Highlighter",
         description = "Highlights important items inside of Care Packages inside the Hypixel Pit.",
-        category = "Pit"
+        category = "Pit",
+        subcategory = "Care Package"
     )
     var carePackageHighlighter = false
 
@@ -51,7 +53,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.COLOR,
         name = "Care Package Highlight Colour",
         description = "Customize the color related to the Care Package Highlighter.",
-        category = "Pit"
+        category = "Pit",
+        subcategory = "Care Package"
     )
     var carePackageHighlighterColour = Color(0, 255, 0, 100)
 
@@ -59,7 +62,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "DROP Alerts",
         description = "Message a user about your RARE DROPS.",
-        category = "SkyBlock"
+        category = "SkyBlock",
+        subcategory = "Drops"
     )
     var dropAlert = false
 
@@ -67,15 +71,44 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.TEXT,
         name = "DROP Alerts Username",
         description = "Choose a username for your RARE DROPS.",
-        category = "SkyBlock"
+        category = "SkyBlock",
+        subcategory = "Drops"
     )
     var dropAlertUserName = ""
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Fire Freeze Timer",
+        description = "Display a 10 second timer above a frozen entity's head.",
+        category = "SkyBlock",
+        subcategory = "Fire Freeze Staff"
+    )
+    var fireFreezeTimer = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Fire Freeze Notification",
+        description = "Sends a title and chat message for when fire freeze is available after a successful fire freeze on a mob.",
+        category = "SkyBlock",
+        subcategory = "Fire Freeze Staff"
+    )
+    var fireFreezeNotification = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Fire Freeze Announcer",
+        description = "Announce to your party when a mob becomes frozen or unfrozen.",
+        category = "SkyBlock",
+        subcategory = "Fire Freeze Staff"
+    )
+    var fireFreezeAnnounce = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
-        category = "Mining"
+        category = "Mining",
+        subcategory = "Notifications"
     )
     var miningAbilityNotification = false
 
@@ -83,7 +116,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Gemstone Powder Notification",
         description = "Display a title based on how much Gemstone Powder you get from chests.",
-        category = "Mining"
+        category = "Mining",
+        subcategory = "Notifications"
     )
     var gemstonePowderNotification = false
 
@@ -91,7 +125,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Better Device Notifications",
         description = "Replace Hypixel's device titles for your username.",
-        category = "Dungeons"
+        category = "Dungeons",
+        subcategory = "Floor 7"
     )
     var betterDeviceNotification = false
 
@@ -99,7 +134,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.TEXT,
         name = "Better Device Notifications Title.",
         description = "Choose a title.",
-        category = "Dungeons"
+        category = "Dungeons",
+        subcategory = "Floor 7"
     )
     var betterDeviceNotificationTitle = ""
 
@@ -107,7 +143,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.TEXT,
         name = "Better Device Notifications SubTitle.",
         description = "Choose a subtitle.",
-        category = "Dungeons"
+        category = "Dungeons",
+        subcategory = "Floor 7"
     )
     var betterDeviceNotificationSubTitle = ""
 
@@ -115,7 +152,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Energy Crystal Notification",
         description = "Shows a reminder on screen when you have an unplaced Energy Crystal.",
-        category = "Dungeons"
+        category = "Dungeons",
+        subcategory = "Floor 7"
     )
     var energyCrystalNotification = false
 
@@ -167,7 +205,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.TEXT,
         name = "/ratesttitle Title",
         description = "Sets the title for the test title.",
-        category = "Developer"
+        category = "Developer",
+        subcategory = "Title"
     )
     var developerTitle = ""
 
@@ -175,7 +214,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.TEXT,
         name = "/ratesttitle SubTitle",
         description = "Sets the subTitle for the test title.",
-        category = "Developer"
+        category = "Developer",
+        subcategory = "Title"
     )
     var developerSubTitle = ""
 
