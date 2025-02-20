@@ -9,12 +9,11 @@ import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundHelloPacket
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
-import net.hypixel.modapi.packet.impl.serverbound.ServerboundPartyInfoPacket
 import kotlin.jvm.optionals.getOrNull
 
 @LoadModule
 object HypixelEvents {
-    private val modApi = HypixelModAPI.getInstance()
+    val modApi: HypixelModAPI = HypixelModAPI.getInstance()
 
     init {
         modApi.subscribeToEventPacket(ClientboundLocationPacket::class.java)
@@ -44,5 +43,4 @@ object HypixelEvents {
         ).post()
     }
 
-    fun sendPartyPacket() = modApi.sendPacket(ServerboundPartyInfoPacket())
 }

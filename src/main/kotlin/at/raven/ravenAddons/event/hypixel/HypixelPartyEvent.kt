@@ -5,6 +5,6 @@ import net.minecraftforge.fml.common.eventhandler.Event
 import java.util.UUID
 
 class HypixelPartyEvent(
-    inParty: Boolean,
-    memberMap: MutableMap<UUID, ClientboundPartyInfoPacket.PartyMember>
+    val inParty: Boolean,
+    val memberMap: MutableMap<UUID, ClientboundPartyInfoPacket.PartyMember>
 ) : Event()
