@@ -58,14 +58,14 @@ object FireFreezeTimer {
         if (entities.size == 1 && firstEntity != null) {
             entityName = firstEntity.getMatchedName() ?: firstEntity.name
         }
-        ChatUtils.debug(entityName.toString())
+        ChatUtils.debug("fireFreezeTimer: " + entityName.toString())
 
         if (ravenAddonsConfig.fireFreezeNotification && titleCooldown.isInPast()) {
             titleCooldown = SimpleTimeMark.now() + 1.seconds
             ravenAddons.launchCoroutine {
                 delay(5000)
 
-                TitleManager.setTitle("", "§bRE-FREEZE!", 2.seconds, 1.seconds, 1.seconds)
+                TitleManager.setTitle("", "§bFIRE FREEZE!", 2.seconds, 1.seconds, 1.seconds)
                 ChatUtils.chat("Fire Freeze Staff is ready for use.")
             }
         }
@@ -94,7 +94,7 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
-                if (messageCooldown.isInPast() && entity.isInWorld()) {
+                if (ravenAddonsConfig.fireFreezeAnnounce && messageCooldown.isInPast() && entity.isInWorld()) {
                     ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     messageCooldown = SimpleTimeMark.now() + 5.seconds
