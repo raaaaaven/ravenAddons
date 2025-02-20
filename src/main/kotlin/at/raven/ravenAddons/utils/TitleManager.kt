@@ -4,6 +4,7 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -86,9 +87,9 @@ object TitleManager {
     }
 
     private fun renderTitle(partialTicks: Float) {
-        val windowWidth = RenderUtils.scaledWidth
-        val windowHeight = RenderUtils.scaledHeight
-        val fontRenderer = RenderUtils.fontRenderer
+        val windowWidth = GuiRenderUtils.scaledWidth
+        val windowHeight = GuiRenderUtils.scaledHeight
+        val fontRenderer = GuiRenderUtils.fontRenderer
 
         val fadeOutStart = titleTotalTime - titleFadeOut
         val interpolatedTime = titleTimer + partialTicks

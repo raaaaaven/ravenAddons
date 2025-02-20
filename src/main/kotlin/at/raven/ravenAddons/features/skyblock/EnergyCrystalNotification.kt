@@ -5,7 +5,7 @@ import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.PlayerUtils
-import at.raven.ravenAddons.utils.RenderUtils
+import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -32,8 +32,8 @@ object EnergyCrystalNotification {
         if (event.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
         if (!hasEnergyCrystal) return
 
-        val fontRenderer = RenderUtils.fontRenderer
-        val x = RenderUtils.scaledWidth / 2
+        val fontRenderer = GuiRenderUtils.fontRenderer
+        val x = GuiRenderUtils.scaledWidth / 2
         val y = 40f
 
         GlStateManager.pushMatrix()

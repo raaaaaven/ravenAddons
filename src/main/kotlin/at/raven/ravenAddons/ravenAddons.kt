@@ -54,8 +54,8 @@ class ravenAddons {
                 CoroutineName("ravenAddons") + SupervisorJob(globalJob),
             )
 
-        fun launchCoroutine(function: suspend () -> Unit) {
-            coroutineScope.launch {
+        fun launchCoroutine(function: suspend () -> Unit): Job {
+            return coroutineScope.launch {
                 try {
                     function()
                 } catch (e: Exception) {
