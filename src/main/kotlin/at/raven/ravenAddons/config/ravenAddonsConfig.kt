@@ -5,6 +5,7 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 import java.io.File
+import java.util.UUID
 import kotlin.reflect.KProperty
 
 object ravenAddonsConfig : Vigilant(

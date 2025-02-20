@@ -13,11 +13,15 @@ import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
+import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Job
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import java.io.File
 import java.lang.Thread.sleep
 import java.util.UUID
 
@@ -28,7 +32,12 @@ object DodgeList {
     private val playerJoinPattern =
         "Party Finder > (?<name>.+) joined the dungeon group! .+".toPattern()
 
+    private const val FILE_PATH = "config/ravenAddons/dodgeList.json"
     private val throwers: MutableMap<UUID, String> = mutableMapOf()
+
+    init {
+        loadFromFile()
+    }
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -130,6 +139,7 @@ object DodgeList {
             ChatUtils.chat(message, usePrefix = false)
 
             throwers.remove(playerUUID)
+            saveToFile()
         }
     }
 
@@ -188,6 +198,7 @@ object DodgeList {
             }
 
             throwers.put(playerUUID, reason)
+            saveToFile()
 
             val message = "§8§m-----------------------------------------------------\n" +
                     "§7Added §a$player§7 to the list.\n" +
@@ -203,7 +214,7 @@ object DodgeList {
             val playerUUID = player.getPlayerUUID()
 
             if (playerUUID !in throwers) {
-                ChatUtils.chat("'$player' is not a thrower")
+                ChatUtils.debug("'$player' is not a thrower")
                 return@launchCoroutine
             }
 
@@ -245,6 +256,26 @@ object DodgeList {
             sleep(500)
 
             ChatUtils.sendMessage("/p kick $player")
+        }
+    }
+
+    private fun saveToFile() {
+        ravenAddons.launchCoroutine {
+            val gson = GsonBuilder().create()
+            val jsonString = gson.toJson(throwers)
+
+            File(FILE_PATH).writeText(jsonString)
+        }
+    }
+
+    private fun loadFromFile() {
+        val gson = Gson()
+        val type = object : TypeToken<Map<UUID, String>>() {}.type
+
+        val map: Map<UUID, String> = gson.fromJson(File(FILE_PATH).readText(), type)
+
+        for ((uuid, reason) in map) {
+            throwers.put(uuid, reason)
         }
     }
 }
