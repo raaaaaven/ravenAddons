@@ -30,7 +30,8 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object FireFreezeTimer {
     private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
-    private var messageCooldown = SimpleTimeMark.farPast()
+    private var freezeMessageCooldown = SimpleTimeMark.farPast()
+    private var unfreezeMessageCooldown = SimpleTimeMark.farPast()
     private var titleCooldown = SimpleTimeMark.farPast()
 
     // https://regex101.com/r/YwLEWt/2
@@ -59,7 +60,7 @@ object FireFreezeTimer {
         if (entities.size == 1 && firstEntity != null) {
             entityName = firstEntity.getMatchedName() ?: firstEntity.name
         }
-        ChatUtils.debug("fireFreezeTimer: " + entityName.toString())
+        ChatUtils.debug("fireFreezeTimer: $entityName")
 
         if (ravenAddonsConfig.fireFreezeNotification && titleCooldown.isInPast()) {
             titleCooldown = SimpleTimeMark.now() + 1.seconds
@@ -72,7 +73,7 @@ object FireFreezeTimer {
         }
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
-            if (messageCooldown.isInPast()) {
+            if (freezeMessageCooldown.isInPast()) {
                 ChatUtils.debug("fireFreezeAnnounce: sending message")
                 if (entityName == null) {
                     val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
@@ -81,7 +82,7 @@ object FireFreezeTimer {
                 }
                 else
                     ChatUtils.sendMessage("/pc [RA] $entityName frozen!")
-                messageCooldown = SimpleTimeMark.now() + 5.seconds
+                freezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
             }
         }
     }
@@ -95,10 +96,10 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
-                if (ravenAddonsConfig.fireFreezeAnnounce && messageCooldown.isInPast() && entity.isInWorld()) {
+                if (ravenAddonsConfig.fireFreezeAnnounce && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
                     ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
-                    messageCooldown = SimpleTimeMark.now() + 5.seconds
+                    unfreezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
                 continue
             }
