@@ -73,8 +73,8 @@ object FireFreezeTimer {
         }
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
+            ChatUtils.debug("fireFreezeAnnounce: sending message")
             if (freezeMessageCooldown.isInPast()) {
-                ChatUtils.debug("fireFreezeAnnounce: sending message")
                 if (entityName == null) {
                     val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
 
@@ -96,8 +96,8 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
+                ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
                 if (ravenAddonsConfig.fireFreezeAnnounce && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
-                    ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     unfreezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
@@ -175,7 +175,6 @@ object FireFreezeTimer {
         val mobList = worldEntities.filter {
             it is EntityLivingBase && it !is EntityPlayerSP && it !is EntityArmorStand
         }
-        ChatUtils.debug(mobList)
 
         val matchedMobs = mutableListOf<Pair<String, String>>()  //armor stand name, mob name
         val unmatchedMobs = mutableListOf<Pair<String, String>>()  //armor stand name, vanilla name
@@ -190,9 +189,6 @@ object FireFreezeTimer {
 
             unmatchedMobs.add(mobCustomName.removeColors() to mob.name)
         }
-
-        ChatUtils.debug("matched mobs: $matchedMobs")
-        ChatUtils.debug("unmatched mobs: $unmatchedMobs")
 
         var stringToCopy = "------------------\n"
         stringToCopy += "matched ${matchedMobs.size} mobs\n"
