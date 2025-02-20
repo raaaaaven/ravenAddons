@@ -73,16 +73,19 @@ object FireFreezeTimer {
         }
 
         if (ravenAddonsConfig.fireFreezeAnnounce) {
-            ChatUtils.debug("fireFreezeAnnounce: sending message")
+            ChatUtils.debug("fireFreezeAnnounce: sending message in 250ms")
             if (freezeMessageCooldown.isInPast()) {
-                if (entityName == null) {
-                    val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
-
-                    ChatUtils.sendMessage("/pc [RA] $string frozen!")
-                }
-                else
-                    ChatUtils.sendMessage("/pc [RA] $entityName frozen!")
                 freezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
+                ravenAddons.launchCoroutine {
+                    delay(250)
+                    if (entityName == null) {
+                        val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
+
+                        ChatUtils.sendMessage("/pc [RA] $string frozen!")
+                    }
+                    else
+                        ChatUtils.sendMessage("/pc [RA] $entityName frozen!")
+                }
             }
         }
     }
