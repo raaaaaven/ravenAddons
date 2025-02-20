@@ -81,7 +81,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Fire Freeze Notification",
-        description = "Create a title for a Fire Freeze Staff should be used on a mob again.\nThis title only appears after freezing a mob.",
+        description = "Sends a title and chat message for when fire freeze is available after a successful fire freeze on a mob.",
         category = "SkyBlock",
         subcategory = "Fire Freeze Staff"
     )
@@ -90,7 +90,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Fire Freeze Announcer",
-        description = "Announce to your party when a mob is frozen or not.",
+        description = "Announce to your party when a mob becomes frozen or unfrozen.",
         category = "SkyBlock",
         subcategory = "Fire Freeze Staff"
     )
