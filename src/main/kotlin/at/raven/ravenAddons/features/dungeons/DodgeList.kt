@@ -62,7 +62,7 @@ object DodgeList {
                 }
 
                 if (player.getPlayerUUID() in throwers) {
-                    checkPlayer(player.lowercase())
+                    checkPlayer(player)
                 }
             }
         }
@@ -267,8 +267,9 @@ object DodgeList {
 
                     val chatComponent = ChatComponentText("")
                     chatComponent.siblings.addAll(listOf(
+                        lineComponent,
                         prefixComponent,
-                        ChatComponentText("§7$player is on the dodge list!"),
+                        ChatComponentText("§7$player is on the dodge list! "),
                         removeComponent,
                         ChatComponentText("§7$player: §f$reason")
                     ))
