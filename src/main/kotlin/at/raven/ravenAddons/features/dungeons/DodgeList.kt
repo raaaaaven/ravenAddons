@@ -34,7 +34,8 @@ object DodgeList {
     private val playerJoinPattern =
         "Party Finder > (?<name>.+) joined the dungeon group! .+".toPattern()
 
-    private const val FILE_PATH = "config/ravenAddons/dodgeList.json"
+    private val configPath = File("config/ravenAddons")
+    private val configFile = File(configPath, "dodgeList.json")
 
     // uuid + (name, reason)
     private val throwers: MutableMap<UUID, Pair<String, String>> = mutableMapOf()
@@ -314,23 +315,22 @@ object DodgeList {
         ravenAddons.launchCoroutine {
             val gson = GsonBuilder().create()
             val jsonString = gson.toJson(throwers)
-            val file = File(FILE_PATH)
 
-            if (!file.exists()) {
-                file.createNewFile()
+            configPath.mkdirs()
+            if (!configFile.exists()) {
+                configFile.createNewFile()
             }
 
-            File(FILE_PATH).writeText(jsonString)
+            configFile.writeText(jsonString)
         }
     }
 
     private fun loadFromFile() {
         val gson = Gson()
         val type = object : TypeToken<Map<UUID, Pair<String, String>>>() {}.type
-        val file = File(FILE_PATH)
 
-        if (file.exists()) {
-            val map: Map<UUID, Pair<String, String>> = gson.fromJson(file.readText(), type)
+        if (configFile.exists()) {
+            val map: Map<UUID, Pair<String, String>> = gson.fromJson(configFile.readText(), type)
 
             for ((uuid, reason) in map) {
                 throwers.put(uuid, reason)
