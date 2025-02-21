@@ -1,7 +1,7 @@
 package at.raven.ravenAddons.event
 
-import at.raven.ravenAddons.commands.CommandBuilder
-import at.raven.ravenAddons.commands.CommandManager.commandList
+import at.raven.ravenAddons.data.commands.CommandBuilder
+import at.raven.ravenAddons.data.commands.CommandManager.commandList
 import net.minecraftforge.client.ClientCommandHandler
 import net.minecraftforge.fml.common.eventhandler.Event
 

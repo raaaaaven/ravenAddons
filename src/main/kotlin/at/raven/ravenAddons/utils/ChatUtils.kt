@@ -2,15 +2,15 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.EventUtils.post
 import net.minecraft.client.Minecraft
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.IChatComponent
-import net.minecraftforge.client.event.ClientChatReceivedEvent
-import net.minecraftforge.common.MinecraftForge
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
@@ -26,8 +26,7 @@ object ChatUtils {
         if (hidden) rawMessage = rawMessage.replace(" -s", "")
         val formattedMessage = rawMessage.replace("&", "§")
 
-        // replace with Event.post() from EventUtils when #10 gets merged
-        MinecraftForge.EVENT_BUS.post(ClientChatReceivedEvent(0, ChatComponentText(formattedMessage)))
+        ChatReceivedEvent(formattedMessage, ChatComponentText(formattedMessage)).post()
         chat(formattedMessage, false)
     }
 

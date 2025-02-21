@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.commands
+package at.raven.ravenAddons.data.commands
 
 import net.minecraft.command.CommandBase
 import net.minecraft.command.ICommandSender

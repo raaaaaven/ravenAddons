@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.commands
+package at.raven.ravenAddons.data.commands
 
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule

@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features
+package at.raven.ravenAddons.features.pit
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
@@ -25,7 +25,7 @@ object CarePackageHighlighter {
     )
 
     @SubscribeEvent
-    fun onContainerForeground(event: ContainerBackgroundDrawEvent) {
+    fun onContainerBackground(event: ContainerBackgroundDrawEvent) {
         if (HypixelGame.THE_PIT.isNotPlaying()) return
         if (!ravenAddonsConfig.carePackageHighlighter) return
         if (event.gui !is GuiChest) return

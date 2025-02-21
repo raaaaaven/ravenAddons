@@ -12,4 +12,10 @@ object EventUtils {
         MinecraftForge.EVENT_BUS.post(this)
         return this.isCanceled
     }
+
+    fun Event.cancel() {
+        if (this.isCancelable) {
+            this.isCanceled = true
+        }
+    }
 }

@@ -3,12 +3,12 @@ package at.raven.ravenAddons.utils
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
+import at.raven.ravenAddons.event.TickEvent
+import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
@@ -19,7 +19,6 @@ object TitleManager {
 
     private var titleTimer = 0
     private var titleTotalTime = 0
-
     private var titleFadeIn = 0
     private var titleFadeOut = 0
 
@@ -43,8 +42,8 @@ object TitleManager {
             ChatUtils.warning("Wrong usage! /ratesttitle <duration> <fadeIn> <fadeOut>")
             return
         }
-        val title = ravenAddonsConfig.developerTitle.replace("&","§")
-        val subtitle = ravenAddonsConfig.developerSubTitle.replace("&","§")
+        val title = ravenAddonsConfig.developerTitle.replace("&", "§")
+        val subtitle = ravenAddonsConfig.developerSubTitle.replace("&", "§")
         if (title.isEmpty() && subtitle.isEmpty()) {
             ChatUtils.warning("Wrong usage! Either a title or subtitle need to be set in the config.")
             return
@@ -69,9 +68,7 @@ object TitleManager {
     }
 
     @SubscribeEvent
-    fun onRenderOverlay(event: RenderGameOverlayEvent.Pre) {
-        if (event.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
-
+    fun onRenderOverlay(event: RenderOverlayEvent) {
         if (titleTotalTime == 0) return
         if (titleTimer >= titleTotalTime) return
 
@@ -99,12 +96,14 @@ object TitleManager {
                 val alphaMultiplier = interpolatedTime / titleFadeIn
                 (alphaMultiplier * 255).toInt()
             }
+
             in fadeOutStart.toDouble()..titleTotalTime.toDouble() -> {
                 val fadeDuration = titleTotalTime - fadeOutStart
                 val timeSinceFadeStart = interpolatedTime - fadeOutStart
                 val alphaMultiplier = 1.0 - (timeSinceFadeStart / fadeDuration)
                 (alphaMultiplier * 255).toInt()
             }
+
             else -> 255
         }
 
@@ -116,13 +115,17 @@ object TitleManager {
             GlStateManager.pushMatrix()
             GlStateManager.scale(4.0f, 4.0f, 4.0f)
             val color = alpha shl 24 and 0xFF000000.toInt()
-            fontRenderer.drawString(title,
-                (-fontRenderer.getStringWidth(title) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true);
+            fontRenderer.drawString(
+                title,
+                (-fontRenderer.getStringWidth(title) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true
+            )
             GlStateManager.popMatrix()
             GlStateManager.pushMatrix()
             GlStateManager.scale(2.0f, 2.0f, 2.0f)
-            fontRenderer.drawString(subTitle,
-                (-fontRenderer.getStringWidth(subTitle) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true);
+            fontRenderer.drawString(
+                subTitle,
+                (-fontRenderer.getStringWidth(subTitle) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true
+            )
             GlStateManager.popMatrix()
             GlStateManager.disableBlend()
             GlStateManager.popMatrix()
@@ -130,9 +133,7 @@ object TitleManager {
     }
 
     @SubscribeEvent
-    fun onTick(event: TickEvent.ClientTickEvent) {
-        if (event.phase != TickEvent.Phase.END) return
-
+    fun onTick(event: TickEvent) {
         if (titleTimer < titleTotalTime) {
             ++titleTimer
             if (titleTotalTime <= titleTimer) {
@@ -142,12 +143,6 @@ object TitleManager {
                 titleTimer = 0
             }
         }
-    }
-
-    private fun Duration.inSeconds(): Double {
-        val millisecondsToSeconds = 1000.0
-
-        return this.inWholeMilliseconds.toDouble() / millisecondsToSeconds
     }
 
     @SubscribeEvent
@@ -167,4 +162,6 @@ object TitleManager {
             add("fadeOut = $titleFadeOut")
         }
     }
+
+    private fun Duration.inSeconds(): Double = this.inWholeMilliseconds.toDouble() / 1000.0
 }

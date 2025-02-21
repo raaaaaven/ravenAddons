@@ -1,11 +1,13 @@
 package at.raven.ravenAddons
 
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.EventUtils.post
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -18,7 +20,6 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 
 @Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
@@ -33,7 +34,7 @@ class ravenAddons {
     fun preInit(event: FMLPreInitializationEvent) {
         LoadedModules.modules.forEach { loadModule(it) }
 
-        MinecraftForge.EVENT_BUS.post(CommandRegistrationEvent())
+        CommandRegistrationEvent().post()
     }
 
     @Mod.EventHandler
@@ -64,6 +65,7 @@ class ravenAddons {
                 }
             }
         }
+
         private var screenToOpenNextTick: GuiScreen? = null
 
         fun openScreen(screen: GuiScreen) {
@@ -71,8 +73,7 @@ class ravenAddons {
         }
 
         @SubscribeEvent
-        fun onTick(event: TickEvent.ClientTickEvent) {
-            if (event.phase != TickEvent.Phase.END) return
+        fun onTick(event: TickEvent) {
             if (screenToOpenNextTick != null) {
                 Minecraft.getMinecraft().displayGuiScreen(screenToOpenNextTick)
                 screenToOpenNextTick = null

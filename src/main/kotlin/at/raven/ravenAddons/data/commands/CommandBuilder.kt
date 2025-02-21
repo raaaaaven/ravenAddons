@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.commands
+package at.raven.ravenAddons.data.commands
 
 class CommandBuilder(
     val name: String,
