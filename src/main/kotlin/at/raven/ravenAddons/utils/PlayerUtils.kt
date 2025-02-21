@@ -37,7 +37,7 @@ object PlayerUtils {
             )
         } catch (e: Exception) {
             e.printStackTrace()
-            ChatUtils.warning("something exploded!!")
+            ChatUtils.debug("something exploded!!")
             null
         }
     }
@@ -53,7 +53,7 @@ object PlayerUtils {
             Gson().fromJson(response, JsonObject::class.java).get("name").asString
         } catch (e: Exception) {
             e.printStackTrace()
-            ChatUtils.warning("something exploded!!")
+            ChatUtils.debug("something exploded!!")
             null
         }
     }

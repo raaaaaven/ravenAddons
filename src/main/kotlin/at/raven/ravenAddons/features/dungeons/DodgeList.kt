@@ -17,7 +17,6 @@ import at.raven.ravenAddons.utils.TitleManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import kotlinx.coroutines.Job
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
@@ -143,8 +142,7 @@ object DodgeList {
             }
             ChatUtils.chat(message, usePrefix = false)
 
-            throwers.remove(playerUUID)
-            saveToFile()
+            playerUUID?.let { removePlayer(it) }
         }
     }
 
@@ -159,7 +157,7 @@ object DodgeList {
                     if (newPlayerName != reason.first) {
                         changedNamesMap.put(reason.first, newPlayerName)
                     }
-                    throwers.put(player, newPlayerName to reason.second)
+                    addPlayer(player, newPlayerName, reason.second)
 
                     message += "§7• §b${newPlayerName}§7: §f${reason.second}\n"
                 }
@@ -176,15 +174,15 @@ object DodgeList {
     }
 
     private var resetConfirmation = false
-    private var resetJob: Job? = null
 
     private fun resetList() {
         if (!resetConfirmation) {
             resetConfirmation = true
 
             ChatUtils.chat("§cType §e/dodge reset §cagain to confirm.")
-            resetJob = ravenAddons.launchCoroutine {
+            ravenAddons.launchCoroutine {
                 sleep(5000)
+                if (resetConfirmation == false) return@launchCoroutine
                 resetConfirmation = false
                 ChatUtils.chat("§cThe confirmation period expired.")
             }
@@ -194,7 +192,6 @@ object DodgeList {
 
         resetConfirmation = false
         throwers.clear()
-        resetJob?.cancel()
         ChatUtils.chat("§bSuccessfully reset the list.")
     }
 
@@ -211,8 +208,7 @@ object DodgeList {
                 reason = "No reason provided."
             }
 
-            throwers.put(playerUUID, player to reason)
-            saveToFile()
+            addPlayer(playerUUID, player, reason)
 
             val message = "§8§m-----------------------------------------------------\n" +
                     "§7Added §a$player§7 to the list.\n" +
@@ -279,8 +275,7 @@ object DodgeList {
 
                     ChatUtils.chat(chatComponent)
                     TitleManager.setTitle("§c$storedName §e→ §a$player", "§e$reason", 1.5.seconds, 0.5.seconds, 0.5.seconds)
-                    throwers.put(playerUUID, player to reason)
-                    saveToFile()
+                    addPlayer(playerUUID, player, reason)
                 } else {
                     val chatComponent = ChatComponentText("")
                     chatComponent.siblings.addAll(listOf(
@@ -309,6 +304,16 @@ object DodgeList {
 
             ChatUtils.sendMessage("/p kick $player")
         }
+    }
+
+    private fun addPlayer(uuid: UUID, name: String, reason: String) {
+        throwers.put(uuid, name to reason)
+        saveToFile()
+    }
+
+    private fun removePlayer(uuid: UUID) {
+        throwers.remove(uuid)
+        saveToFile()
     }
 
     private fun saveToFile() {
