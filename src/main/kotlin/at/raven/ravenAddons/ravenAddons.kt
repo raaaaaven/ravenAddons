@@ -7,6 +7,7 @@ import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.EventUtils.post
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -33,7 +34,7 @@ class ravenAddons {
     fun preInit(event: FMLPreInitializationEvent) {
         LoadedModules.modules.forEach { loadModule(it) }
 
-        MinecraftForge.EVENT_BUS.post(CommandRegistrationEvent())
+        CommandRegistrationEvent().post()
     }
 
     @Mod.EventHandler
