@@ -33,7 +33,7 @@ class ravenAddons {
     fun preInit(event: FMLPreInitializationEvent) {
         LoadedModules.modules.forEach { loadModule(it) }
 
-        MinecraftForge.EVENT_BUS.post(CommandRegistrationEvent())
+        CommandRegistrationEvent().post()
     }
 
     @Mod.EventHandler

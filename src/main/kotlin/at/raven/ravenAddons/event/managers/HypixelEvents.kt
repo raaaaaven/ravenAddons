@@ -3,10 +3,10 @@ package at.raven.ravenAddons.event.managers
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.EventUtils.post
 import net.hypixel.modapi.HypixelModAPI
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundHelloPacket
 import net.hypixel.modapi.packet.impl.clientbound.event.ClientboundLocationPacket
-import net.minecraftforge.common.MinecraftForge
 import kotlin.jvm.optionals.getOrNull
 
 @LoadModule
@@ -19,18 +19,16 @@ object HypixelEvents {
     }
 
     private fun onHelloPacket(packet: ClientboundHelloPacket) {
-        MinecraftForge.EVENT_BUS.post(HypixelJoinEvent(packet.environment))
+        HypixelJoinEvent(packet.environment).post()
     }
 
     private fun onLocationPacket(packet: ClientboundLocationPacket) {
-        MinecraftForge.EVENT_BUS.post(
-            HypixelServerChangeEvent(
-                packet.serverName,
-                packet.serverType.getOrNull(),
-                packet.lobbyName.getOrNull(),
-                packet.mode.getOrNull(),
-                packet.map.getOrNull(),
-            ),
-        )
+        HypixelServerChangeEvent(
+            packet.serverName,
+            packet.serverType.getOrNull(),
+            packet.lobbyName.getOrNull(),
+            packet.mode.getOrNull(),
+            packet.map.getOrNull(),
+        ).post()
     }
 }
