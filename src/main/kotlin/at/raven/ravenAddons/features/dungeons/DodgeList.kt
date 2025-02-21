@@ -13,6 +13,7 @@ import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
+import at.raven.ravenAddons.utils.TitleManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
@@ -24,6 +25,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.io.File
 import java.lang.Thread.sleep
 import java.util.UUID
+import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object DodgeList {
@@ -33,7 +35,9 @@ object DodgeList {
         "Party Finder > (?<name>.+) joined the dungeon group! .+".toPattern()
 
     private const val FILE_PATH = "config/ravenAddons/dodgeList.json"
-    private val throwers: MutableMap<UUID, String> = mutableMapOf()
+
+    // uuid + (name, reason)
+    private val throwers: MutableMap<UUID, Pair<String, String>> = mutableMapOf()
 
     init {
         loadFromFile()
@@ -146,10 +150,17 @@ object DodgeList {
     private fun listPlayers() {
         ravenAddons.launchCoroutine {
             var message = "§8§m-----------------------------------------------------\n"
+            val changedNamesMap = mutableMapOf<String, String>() //old name -> new name
 
             if (throwers.isNotEmpty()) {
                 for ((player, reason) in throwers) {
-                    message += "§7• §b${player.getPlayerName()}§7: §f$reason\n"
+                    val newPlayerName = player.getPlayerName() ?: continue
+                    if (newPlayerName != reason.first) {
+                        changedNamesMap.put(reason.first, newPlayerName)
+                    }
+                    throwers.put(player, newPlayerName to reason.second)
+
+                    message += "§7• §b${newPlayerName}§7: §f${reason.second}\n"
                 }
             } else {
                 message += " §7The dodge list is currently empty!\n" //TODO: better text
@@ -158,6 +169,8 @@ object DodgeList {
             message += "§8§m-----------------------------------------------------"
 
             ChatUtils.chat(message, usePrefix = false)
+
+            //TODO: display changedNamesMap
         }
     }
 
@@ -197,7 +210,7 @@ object DodgeList {
                 reason = "No reason provided."
             }
 
-            throwers.put(playerUUID, reason)
+            throwers.put(playerUUID, player to reason)
             saveToFile()
 
             val message = "§8§m-----------------------------------------------------\n" +
@@ -211,17 +224,20 @@ object DodgeList {
 
     private fun checkPlayer(player: String) {
         ravenAddons.launchCoroutine {
-            val playerUUID = player.getPlayerUUID()
+            val playerUUID = player.getPlayerUUID() ?: return@launchCoroutine
 
             if (playerUUID !in throwers) {
                 ChatUtils.debug("'$player' is not a thrower")
                 return@launchCoroutine
             }
 
-            val reason = throwers[playerUUID]
+            val reason = throwers[playerUUID]?.second ?: return@launchCoroutine
+            val storedName = throwers[playerUUID]?.first ?: return@launchCoroutine
 
-            val message = ChatComponentText("§8§m-----------------------------------------------------\n")
-            message.siblings.add(ChatComponentText("§8[§cRA§8] "))
+            val message = ChatComponentText("")
+            val lineComponent = ChatComponentText("§8§m-----------------------------------------------------\n")
+            val prefixComponent = ChatComponentText("§8[§cRA§8] ")
+            message.siblings.add(prefixComponent)
 
             val announceComponent = ChatComponentText("§9§l[ANNOUNCE] ")
             announceComponent.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/pc [RA] $player is on the dodge list!")
@@ -241,9 +257,44 @@ object DodgeList {
             val removeComponent = ChatComponentText("§c§l[REMOVE]\n")
             removeComponent.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dodge remove $player")
             removeComponent.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to remove the user from the dodge list."))
-            message.siblings.add(removeComponent)
 
             message.siblings.add(ChatComponentText("§8§m-----------------------------------------------------"))
+
+            if (storedName.lowercase() == player.lowercase()) {
+                if (storedName != player) {
+                    val newMessage = ChatComponentText("")
+                    newMessage.siblings.add(lineComponent)
+                    newMessage.siblings.add(
+                        ChatComponentText("§7§lUser Updated: §c$storedName §e→ §a$player\n")
+                    )
+
+                    val chatComponent = ChatComponentText("")
+                    chatComponent.siblings.addAll(listOf(
+                        prefixComponent,
+                        ChatComponentText("§7$player is on the dodge list!"),
+                        removeComponent,
+                        ChatComponentText("§7$player: §f$reason")
+                    ))
+
+                    ChatUtils.chat(chatComponent)
+                    TitleManager.setTitle("§c$storedName §e→ §a$player", "§e$reason", 1.5.seconds, 0.5.seconds, 0.5.seconds)
+                    throwers.put(playerUUID, player to reason)
+                    saveToFile()
+                } else {
+                    val chatComponent = ChatComponentText("")
+                    chatComponent.siblings.addAll(listOf(
+                        lineComponent,
+                        prefixComponent,
+                        ChatComponentText("§7$player is on the dodge list! "),
+                        removeComponent,
+                        prefixComponent,
+                        ChatComponentText("§7$player: §f$reason")
+                    ))
+
+                    ChatUtils.chat(chatComponent)
+                    TitleManager.setTitle("§e$player", "§e$reason", 1.5.seconds, 0.5.seconds, 0.5.seconds)
+                }
+            }
 
             ChatUtils.chat(message)
             SoundUtils.playSound("random.anvil_land", 1f, 1f)
@@ -263,6 +314,11 @@ object DodgeList {
         ravenAddons.launchCoroutine {
             val gson = GsonBuilder().create()
             val jsonString = gson.toJson(throwers)
+            val file = File(FILE_PATH)
+
+            if (!file.exists()) {
+                file.createNewFile()
+            }
 
             File(FILE_PATH).writeText(jsonString)
         }
@@ -270,12 +326,15 @@ object DodgeList {
 
     private fun loadFromFile() {
         val gson = Gson()
-        val type = object : TypeToken<Map<UUID, String>>() {}.type
+        val type = object : TypeToken<Map<UUID, Pair<String, String>>>() {}.type
+        val file = File(FILE_PATH)
 
-        val map: Map<UUID, String> = gson.fromJson(File(FILE_PATH).readText(), type)
+        if (file.exists()) {
+            val map: Map<UUID, Pair<String, String>> = gson.fromJson(file.readText(), type)
 
-        for ((uuid, reason) in map) {
-            throwers.put(uuid, reason)
+            for ((uuid, reason) in map) {
+                throwers.put(uuid, reason)
+            }
         }
     }
 }
