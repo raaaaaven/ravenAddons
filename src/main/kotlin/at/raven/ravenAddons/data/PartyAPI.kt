@@ -7,7 +7,7 @@ import at.raven.ravenAddons.event.managers.HypixelEvents
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.EventUtils.post
-import at.raven.ravenAddons.utils.PlayerUtils.getPlayerName
+import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPartyInfoPacket
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -27,9 +27,9 @@ object PartyAPI {
             val newPartyMap = mutableMapOf<String, PartyRole>()
 
             for ((memberUUID, role) in event.memberMap) {
-                val name = memberUUID.getPlayerName() ?: continue
+                val player = memberUUID.getPlayer() ?: continue
 
-                newPartyMap.put(name, role.role.getRole())
+                newPartyMap.put(player.name, role.role.getRole())
             }
 
             partyList = newPartyMap.toMap()
