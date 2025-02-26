@@ -28,7 +28,7 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object DodgeList {
     private val fullPartyPattern =
-        "Party Finder > Your (dungeon | kuudra) group is full! Click here to warp to the dungeon!".toPattern()
+        "Party Finder > Your (dungeon|kuudra) group is full!.+".toPattern()
     private val playerJoinPattern =
         "Party Finder > (?<name>.+) joined.+".toPattern()
 
