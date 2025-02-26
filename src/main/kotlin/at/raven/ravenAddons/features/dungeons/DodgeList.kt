@@ -259,10 +259,13 @@ object DodgeList {
 
                     message.siblings.addAll(listOf(
                         lineComponent,
+                        prefixComponent,
                         ChatComponentText("§7§lUser Updated: §c$storedName §e→ §a$player\n"),
+                        prefixComponent,
                         ChatComponentText("§7$player is on the dodge list! "),
                         removeComponent,
-                        ChatComponentText("§7$player: §f$reason")
+                        prefixComponent,
+                        ChatComponentText("§7$player: §f$reason\n")
                     ))
 
                     TitleManager.setTitle("§c$storedName §e→ §a$player", "§e$reason", 1.5.seconds, 0.5.seconds, 0.5.seconds)
