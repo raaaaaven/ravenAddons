@@ -57,7 +57,7 @@ object PlayerUtils {
             val response = connection.inputStream.bufferedReader().use { it.readText() }
 
             val json = Gson().fromJson(response, JsonObject::class.java)
-            val uuidString = ""
+            val uuidString = json.get("id").asString
             val name = json.get("name").asString
 
             PlayerIdentifier(
