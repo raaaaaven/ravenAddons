@@ -28,9 +28,9 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object DodgeList {
     private val fullPartyPattern =
-        "Party Finder > Your dungeon group is full! Click here to warp to the dungeon!".toPattern()
+        "Party Finder > Your (dungeon | kuudra) group is full! Click here to warp to the dungeon!".toPattern()
     private val playerJoinPattern =
-        "Party Finder > (?<name>.+) joined the dungeon group! .+".toPattern()
+        "Party Finder > (?<name>.+) joined.+".toPattern()
 
     private val configPath = File("config/ravenAddons")
     private val configFile = File(configPath, "dodgeList.json")
