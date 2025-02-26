@@ -57,10 +57,11 @@ object DodgeList {
 
                 if (player == PlayerUtils.playerName) {
                     PartyAPI.sendPartyPacket()
-                    return@launchCoroutine
+//                    return@launchCoroutine
                 }
 
                 if (player.getPlayer()?.uuid in throwers) {
+                    ChatUtils.debug("checking $player on list")
                     checkPlayer(player)
                 }
             }
@@ -262,7 +263,7 @@ object DodgeList {
                         ChatComponentText("§7§lUser Updated: §c$storedName §e→ §a$player\n"),
                         ChatComponentText("§7$player is on the dodge list! "),
                         removeComponent,
-                        ChatComponentText("§7$player: §f$reason")
+                        ChatComponentText("§7$player: §f$reason\n")
                     ))
 
                     TitleManager.setTitle("§c$storedName §e→ §a$player", "§e$reason", 1.5.seconds, 0.5.seconds, 0.5.seconds)
