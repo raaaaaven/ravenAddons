@@ -108,7 +108,7 @@ object DodgeList {
 
         ravenAddons.launchCoroutine {
             val argument = args.getOrNull(0)
-            val subcommand = subcommands.firstOrNull { it.name == argument }
+            val subcommand = subcommands.firstOrNull { it.name == argument || argument in it.aliases}
 
             if (argument == null) {
                 DodgeListHelp.execute(args.drop(1))
