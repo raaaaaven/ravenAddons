@@ -111,7 +111,7 @@ object DodgeList {
                 return@launchCoroutine
             }
             if (subcommand == null) {
-                DodgeListAdd.execute(args.drop(1))
+                DodgeListAdd.execute(args.toList())
                 return@launchCoroutine
             }
 
@@ -128,7 +128,7 @@ object DodgeList {
                 return@launchCoroutine
             }
 
-            val reason = throwers[playerUUID]?.reason ?: return@launchCoroutine
+            val reason = throwers[playerUUID]?.actualReason ?: return@launchCoroutine
             val storedName = throwers[playerUUID]?.playerName ?: return@launchCoroutine
 
             val message = ChatComponentText("")
@@ -182,7 +182,12 @@ object DodgeList {
         }
     }
 
-    fun addPlayer(uuid: UUID, name: String, reason: String) {
+    fun addPlayer(uuid: UUID, data: DodgeListCustomData) {
+        throwers.put(uuid, data)
+        saveToFile()
+    }
+
+    fun addPlayer(uuid: UUID, name: String, reason: String?) {
         throwers.put(uuid, DodgeListCustomData(name, reason))
         saveToFile()
     }
@@ -231,5 +236,7 @@ object DodgeList {
 
 data class DodgeListCustomData(
     @Expose val playerName: String,
-    @Expose val reason: String
-)
+    @Expose val reason: String?
+) {
+    val actualReason: String get() = reason ?: "No reason provided!"
+}

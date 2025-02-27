@@ -45,7 +45,7 @@ object DodgeListList: DodgeListSubcommand() {
                 DodgeList.addPlayer(uuid, player.name, data.reason)
             }
 
-            component.add("§7• §b${player.name}§7: §f${data.reason}\n")
+            component.add("§7• §b${player.name}§7: §f${data.actualReason}\n")
         }
         DodgeList.saveToFile()
 

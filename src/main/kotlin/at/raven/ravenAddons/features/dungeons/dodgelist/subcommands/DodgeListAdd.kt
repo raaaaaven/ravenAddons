@@ -3,6 +3,7 @@ package at.raven.ravenAddons.features.dungeons.dodgelist.subcommands
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeList
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.add
+import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListCustomData
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListSubcommand
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils.PlayerIdentifier
@@ -31,17 +32,16 @@ object DodgeListAdd: DodgeListSubcommand() {
             return
         }
 
-        actualPlayer.addToList(args.drop(1).joinToString(" "))
+        actualPlayer.addToList(args.drop(1).joinToString(" ").takeIf { it.isNotEmpty() })
     }
 
-    private fun PlayerIdentifier.addToList(reason: String) {
+    private fun PlayerIdentifier.addToList(reason: String?) {
         val uuid = this.uuid
         val name = this.name
-        val reason = if (reason.isEmpty()) "No reason provided!" else reason
+        val data = DodgeListCustomData(name, reason)
 
-        sendChatMessage(name, reason)
-
-        DodgeList.addPlayer(uuid, name, reason)
+        sendChatMessage(name, data.actualReason)
+        DodgeList.addPlayer(uuid, data)
     }
 
     private fun sendChatMessage(player: String, reason: String) {
