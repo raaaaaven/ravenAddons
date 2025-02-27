@@ -100,4 +100,7 @@ object ChatUtils {
             callback { testMessageCommand(it) }
         }
     }
+
+    fun IChatComponent.add(component: IChatComponent) = this.siblings.add(component)
+    fun IChatComponent.add(string: String) = this.siblings.add(ChatComponentText(string))
 }

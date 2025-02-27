@@ -2,10 +2,10 @@ package at.raven.ravenAddons.features.dungeons.dodgelist.subcommands
 
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeList
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.add
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListCustomData
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListSubcommand
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ChatUtils.add
 import at.raven.ravenAddons.utils.PlayerUtils.PlayerIdentifier
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
 import net.minecraft.util.ChatComponentText

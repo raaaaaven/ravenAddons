@@ -3,10 +3,10 @@ package at.raven.ravenAddons.features.dungeons.dodgelist.subcommands
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeList
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeList.throwers
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.add
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListSubcommand
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ChatUtils.add
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText

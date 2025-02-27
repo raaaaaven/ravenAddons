@@ -3,7 +3,6 @@ package at.raven.ravenAddons.features.dungeons.dodgelist
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
-import net.minecraft.util.IChatComponent
 
 object DodgeListChatComponents {
     fun getLineComponent(withNewLine: Boolean = true) =
@@ -48,7 +47,4 @@ object DodgeListChatComponents {
 
         return component
     }
-
-    fun IChatComponent.add(component: IChatComponent) = this.siblings.add(component)
-    fun IChatComponent.add(string: String) = this.siblings.add(ChatComponentText(string))
 }
