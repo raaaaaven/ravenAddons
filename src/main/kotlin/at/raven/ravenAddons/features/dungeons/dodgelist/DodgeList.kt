@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.features.dungeons.dodgelist
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.PartyAPI
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -50,7 +51,7 @@ object DodgeList {
         loadFromFile()
     }
 
-    val subcommands = listOf<DodgeListSubcommand>(
+    val subcommands = listOf<DodgeListSubcommand>( //having this be automatic might be cool
         DodgeListAdd,
         DodgeListRemove,
         DodgeListList,
@@ -60,7 +61,7 @@ object DodgeList {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (false /* todo: config */) return
+        if (!ravenAddonsConfig.dodgeList) return
 
         if (fullPartyPattern.matches(event.message.removeColors())) {
             ChatUtils.chat("Checking for people in the dodge list...")
@@ -100,7 +101,7 @@ object DodgeList {
     }
 
     private fun dodgeListCommand(args: Array<String>) {
-        if (false /* todo: config */) {
+        if (!ravenAddonsConfig.dodgeList) {
             ChatUtils.chat("§cThe dodge list feature is currently disabled. \n§7• §bEnable it in the SkyBlock category of §e/raven §bor §e/ra§b.")
             return
         }

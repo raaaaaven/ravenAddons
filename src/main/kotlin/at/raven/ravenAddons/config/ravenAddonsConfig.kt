@@ -5,7 +5,6 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 import java.io.File
-import java.util.UUID
 import kotlin.reflect.KProperty
 
 object ravenAddonsConfig : Vigilant(
@@ -193,6 +192,14 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Leap"
     )
     var leapSound = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Dodge List",
+        description = "Enable the player dodge list for party finder.",
+        category = "Dungeons"
+    )
+    var dodgeList = false
 
     @Property(
         type = PropertyType.SWITCH,
