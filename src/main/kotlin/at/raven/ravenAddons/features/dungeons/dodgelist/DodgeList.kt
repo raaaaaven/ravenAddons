@@ -211,10 +211,14 @@ object DodgeList {
         val type = object : TypeToken<Map<UUID, DodgeListCustomData>>() {}.type
 
         if (configFile.exists()) {
-            val map: Map<UUID, DodgeListCustomData> = gson.fromJson(configFile.readText(), type)
+            try {
+                val map: Map<UUID, DodgeListCustomData> = gson.fromJson(configFile.readText(), type)
 
-            for ((uuid, reason) in map) {
-                throwers.put(uuid, reason)
+                for ((uuid, reason) in map) {
+                    throwers.put(uuid, reason)
+                }
+            } catch (_: Throwable) {
+                //todo: remove this try catch before merging, this is just so nothing goes wrong from migration
             }
         }
     }
