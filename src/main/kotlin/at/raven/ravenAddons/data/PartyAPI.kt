@@ -7,6 +7,7 @@ import at.raven.ravenAddons.event.managers.HypixelEvents
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.EventUtils.post
+import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPartyInfoPacket
@@ -14,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object PartyAPI {
-    var partyList: Map<String, PartyRole> = emptyMap()
+    var partyList: Map<PlayerUtils.PlayerIdentifier, PartyRole> = emptyMap()
         private set
 
     @SubscribeEvent
@@ -24,12 +25,12 @@ object PartyAPI {
                 partyList = emptyMap()
             }
 
-            val newPartyMap = mutableMapOf<String, PartyRole>()
+            val newPartyMap = mutableMapOf<PlayerUtils.PlayerIdentifier, PartyRole>()
 
             for ((memberUUID, role) in event.memberMap) {
                 val player = memberUUID.getPlayer() ?: continue
 
-                newPartyMap.put(player.name, role.role.getRole())
+                newPartyMap.put(player, role.role.getRole())
             }
 
             partyList = newPartyMap.toMap()

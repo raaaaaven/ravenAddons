@@ -3,6 +3,7 @@ package at.raven.ravenAddons.features.dungeons.dodgelist
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.PartyAPI
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.PartyUpdateEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.getAnnounceComponent
 import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.getBlockComponent
@@ -22,6 +23,7 @@ import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
+import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
@@ -47,6 +49,8 @@ object DodgeList {
 
     internal val throwers: MutableMap<UUID, DodgeListCustomData> = mutableMapOf()
 
+    private var partyListCheck = SimpleTimeMark.farPast()
+
     init {
         loadFromFile()
     }
@@ -66,6 +70,7 @@ object DodgeList {
         if (fullPartyPattern.matches(event.message.removeColors())) {
             ChatUtils.chat("Checking for people in the dodge list...")
             PartyAPI.sendPartyPacket()
+            partyListCheck = SimpleTimeMark.now()
         }
         ravenAddons.launchCoroutine {
             playerJoinPattern.matchMatcher(event.message.removeColors()) {
@@ -73,6 +78,7 @@ object DodgeList {
 
                 if (playerName == PlayerUtils.playerName) {
                     PartyAPI.sendPartyPacket()
+                    partyListCheck = SimpleTimeMark.now()
                     return@launchCoroutine
                 }
 
@@ -138,14 +144,14 @@ object DodgeList {
             TitleManager.setTitle("§c${data.playerName} §e→ §a$newPlayerName", "§e${data.actualReason}", 1.5.seconds, 0.5.seconds, 0.5.seconds)
             addPlayer(player.uuid, newPlayerName, data.reason)
         } else {
-            TitleManager.setTitle("§e$player", "§e${data.actualReason}", 1.5.seconds, 0.5.seconds, 0.5.seconds)
+            TitleManager.setTitle("§e$newPlayerName", "§e${data.actualReason}", 1.5.seconds, 0.5.seconds, 0.5.seconds)
         }
 
         message.add(prefixComponent)
-        message.add("§7$player is on the dodge list! ")
+        message.add("§7$newPlayerName is on the dodge list! ")
         message.add(getRemoveComponent(newPlayerName))
         message.add(prefixComponent)
-        message.add("§7$player: §f${data.actualReason}\n")
+        message.add("§7$newPlayerName: §f${data.actualReason}\n")
         message.add(getAnnounceComponent(newPlayerName))
         message.add(getKickComponent(newPlayerName))
         message.add(getBlockComponent(newPlayerName))
@@ -153,6 +159,18 @@ object DodgeList {
 
         ChatUtils.chat(message)
         SoundUtils.playSound("random.anvil_land", 1f, 1f)
+    }
+
+    @SubscribeEvent
+    fun onPartyUpdate(event: PartyUpdateEvent) {
+        if (!ravenAddonsConfig.dodgeList) return
+        if (partyListCheck.passedSince() > 10.seconds) return
+
+        ravenAddons.launchCoroutine {
+            for ((player, _) in event.partyList) {
+                checkPlayer(player, player.name)
+            }
+        }
     }
 
     private fun kickPlayer(player: String) {
