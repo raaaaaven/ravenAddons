@@ -88,6 +88,7 @@ class ravenAddons {
             val newCurrentScreen = Minecraft.getMinecraft().currentScreen
             if (newCurrentScreen != currentScreen && currentScreen is SettingsGui) {
                 ChatUtils.debug("saving config")
+                ravenAddonsConfig.markDirty()
                 ravenAddonsConfig.writeData()
             }
             currentScreen = Minecraft.getMinecraft().currentScreen
