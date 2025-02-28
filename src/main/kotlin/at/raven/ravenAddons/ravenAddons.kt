@@ -1,11 +1,13 @@
 package at.raven.ravenAddons
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
+import gg.essential.vigilance.gui.SettingsGui
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -65,6 +67,7 @@ class ravenAddons {
             }
         }
         private var screenToOpenNextTick: GuiScreen? = null
+        private var currentScreen: GuiScreen? = null
 
         fun openScreen(screen: GuiScreen) {
             screenToOpenNextTick = screen
@@ -73,10 +76,21 @@ class ravenAddons {
         @SubscribeEvent
         fun onTick(event: TickEvent.ClientTickEvent) {
             if (event.phase != TickEvent.Phase.END) return
+            configManager()
+
             if (screenToOpenNextTick != null) {
                 Minecraft.getMinecraft().displayGuiScreen(screenToOpenNextTick)
                 screenToOpenNextTick = null
             }
+        }
+
+        private fun configManager() {
+            val newCurrentScreen = Minecraft.getMinecraft().currentScreen
+            if (newCurrentScreen != currentScreen && currentScreen is SettingsGui) {
+                ChatUtils.debug("saving config")
+                ravenAddonsConfig.writeData()
+            }
+            currentScreen = Minecraft.getMinecraft().currentScreen
         }
     }
 }
