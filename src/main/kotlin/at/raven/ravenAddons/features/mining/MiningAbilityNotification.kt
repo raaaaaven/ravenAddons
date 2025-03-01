@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features.skyblock
+package at.raven.ravenAddons.features.mining
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
