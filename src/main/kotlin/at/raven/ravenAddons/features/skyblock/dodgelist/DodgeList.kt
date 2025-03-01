@@ -99,12 +99,12 @@ object DodgeList {
     @SubscribeEvent
     fun onCommand(event: CommandRegistrationEvent) {
         event.register("dodge") {
-            description = "dummy"
+            description = "Displays the dodge list help menu."
             callback { dodgeListCommand(it) }
         }
 
         event.register("ra-action-kick") {
-            description = "dummy2"
+            description = "Command used by the dodge list to kick dodged users."
             callback { kickPlayer(it.joinToString(" ")) }
         }
     }
