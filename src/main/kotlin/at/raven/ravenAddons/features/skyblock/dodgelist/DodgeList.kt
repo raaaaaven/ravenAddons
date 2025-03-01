@@ -119,12 +119,8 @@ object DodgeList {
             val argument = args.getOrNull(0)
             val subcommand = subcommands.firstOrNull { it.name == argument || argument in it.aliases}
 
-            if (argument == null) {
+            if (argument == null || subcommand == null) {
                 DodgeListHelp.execute(args.drop(1))
-                return@launchCoroutine
-            }
-            if (subcommand == null) {
-                DodgeListAdd.execute(args.toList())
                 return@launchCoroutine
             }
 
