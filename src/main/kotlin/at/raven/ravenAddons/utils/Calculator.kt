@@ -8,10 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 object Calculator {
     fun String.calc(): Double? {
         val tokens = tokenize(this)
-        if (tokens.isEmpty()) {
-            ChatUtils.warning("Invalid input '$this'")
-            return null
-        }
+        if (tokens.isEmpty()) return null
 
         val rpn = toRPN(tokens)
         return evaluateRPN(rpn)
@@ -42,6 +39,7 @@ object Calculator {
                             }
                         tokens.add(Token.Operator(operator))
                     }
+
                     '(' -> tokens.add(Token.LeftParen)
                     ')' -> tokens.add(Token.RightParen)
                     else -> {
@@ -74,6 +72,7 @@ object Calculator {
                     }
                     operators.add(token)
                 }
+
                 Token.LeftParen -> operators.add(token)
                 Token.RightParen -> {
                     while (operators.isNotEmpty() && operators.last() !is Token.LeftParen) {
@@ -108,6 +107,7 @@ object Calculator {
                     val a = stack.removeLast()
                     stack.addLast(token.type.expression(a, b))
                 }
+
                 else -> {}
             }
         }

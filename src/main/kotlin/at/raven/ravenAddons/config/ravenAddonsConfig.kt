@@ -5,11 +5,13 @@ import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 import java.io.File
+import kotlin.reflect.KProperty
 
 object ravenAddonsConfig : Vigilant(
     File("./config/ravenAddons.toml"),
     sortingBehavior = ConfigSorting()
 ) {
+    private val clazz = javaClass
 
     @Property(
         type = PropertyType.SWITCH,
@@ -220,16 +222,19 @@ object ravenAddonsConfig : Vigilant(
     init {
         initialize()
 
-        val clazz = javaClass
+        this::carePackageHighlighterColour requires this::carePackageHighlighter
 
-        addDependency(clazz.getDeclaredField("carePackageHighlighterColour"), clazz.getDeclaredField("carePackageHighlighter"))
+        this::dropAlertUserName requires this::dropAlert
 
-        addDependency(clazz.getDeclaredField("dropAlertUserName"), clazz.getDeclaredField("dropAlert"))
+        this::betterDeviceNotificationTitle requires this::betterDeviceNotification
+        this::betterDeviceNotificationSubTitle requires this::betterDeviceNotification
 
-        addDependency(clazz.getDeclaredField("betterDeviceNotificationTitle"), clazz.getDeclaredField("betterDeviceNotification"))
-        addDependency(clazz.getDeclaredField("betterDeviceNotificationSubTitle"), clazz.getDeclaredField("betterDeviceNotification"))
+        this::leapAnnounceMessage requires this::leapAnnounce
+        this::leapAnnouncePrefix requires this::leapAnnounce
+    }
 
-        addDependency(clazz.getDeclaredField("leapAnnounceMessage"), clazz.getDeclaredField("leapAnnounce"))
-        addDependency(clazz.getDeclaredField("leapAnnouncePrefix"), clazz.getDeclaredField("leapAnnounce"))
+
+    infix fun <T> KProperty<T>.requires(dependency: KProperty<T>) {
+        addDependency(clazz.getDeclaredField(this.name), clazz.getDeclaredField(dependency.name))
     }
 }

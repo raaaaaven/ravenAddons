@@ -1,15 +1,15 @@
-package at.raven.ravenAddons.features.skyblock
+package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
+import at.raven.ravenAddons.event.TickEvent
+import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
-import net.minecraftforge.client.event.RenderGameOverlayEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent
 
 @LoadModule
 object EnergyCrystalNotification {
@@ -17,7 +17,7 @@ object EnergyCrystalNotification {
     private var hasEnergyCrystal = false
 
     @SubscribeEvent
-    fun onTick(event: TickEvent.ClientTickEvent) {
+    fun onTick(event: TickEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         if (!ravenAddonsConfig.energyCrystalNotification) return
 
@@ -26,10 +26,9 @@ object EnergyCrystalNotification {
     }
 
     @SubscribeEvent
-    fun onRenderOverlay(event: RenderGameOverlayEvent.Pre) {
+    fun onRenderOverlay(event: RenderOverlayEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         if (!ravenAddonsConfig.energyCrystalNotification) return
-        if (event.type != RenderGameOverlayEvent.ElementType.HOTBAR) return
         if (!hasEnergyCrystal) return
 
         val fontRenderer = GuiRenderUtils.fontRenderer

@@ -11,5 +11,5 @@ object SoundUtils {
         player.playSound(sound, volume, pitch)
     }
 
-    fun pling() =  playSound("note.pling", 1f, 1f)
+    fun pling() = playSound("note.pling", 1f, 1f)
 }
