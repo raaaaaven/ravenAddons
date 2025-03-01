@@ -1,9 +1,9 @@
-package at.raven.ravenAddons.features.dungeons.dodgelist.subcommands
+package at.raven.ravenAddons.features.skyblock.dodgelist.subcommands
 
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeList
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListCustomData
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListSubcommand
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeList
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListCustomData
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListSubcommand
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
 import at.raven.ravenAddons.utils.PlayerUtils.PlayerIdentifier

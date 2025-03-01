@@ -1,20 +1,20 @@
-package at.raven.ravenAddons.features.dungeons.dodgelist
+package at.raven.ravenAddons.features.skyblock.dodgelist
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.PartyAPI
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.PartyUpdateEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.getAnnounceComponent
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.getBlockComponent
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.getKickComponent
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.getRemoveComponent
-import at.raven.ravenAddons.features.dungeons.dodgelist.DodgeListChatComponents.prefixComponent
-import at.raven.ravenAddons.features.dungeons.dodgelist.subcommands.DodgeListAdd
-import at.raven.ravenAddons.features.dungeons.dodgelist.subcommands.DodgeListHelp
-import at.raven.ravenAddons.features.dungeons.dodgelist.subcommands.DodgeListList
-import at.raven.ravenAddons.features.dungeons.dodgelist.subcommands.DodgeListRemove
-import at.raven.ravenAddons.features.dungeons.dodgelist.subcommands.DodgeListReset
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getAnnounceComponent
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getBlockComponent
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getKickComponent
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getRemoveComponent
+import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.prefixComponent
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListAdd
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListHelp
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListList
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListRemove
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListReset
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
@@ -68,9 +68,12 @@ object DodgeList {
         if (!ravenAddonsConfig.dodgeList) return
 
         if (fullPartyPattern.matches(event.message.removeColors())) {
-            ChatUtils.chat("Checking for people in the dodge list...")
-            PartyAPI.sendPartyPacket()
-            partyListCheck = SimpleTimeMark.now()
+            if (!ravenAddonsConfig.dodgeListFullPartyCheck) {
+                ChatUtils.debug("dodgeListFullPartyCheck: checking")
+                ChatUtils.chat("Checking for people in the dodge list.")
+                PartyAPI.sendPartyPacket()
+                partyListCheck = SimpleTimeMark.now()
+            }
         }
         ravenAddons.launchCoroutine {
             playerJoinPattern.matchMatcher(event.message.removeColors()) {

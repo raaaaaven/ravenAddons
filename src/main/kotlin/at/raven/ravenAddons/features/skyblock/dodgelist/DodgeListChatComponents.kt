@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features.dungeons.dodgelist
+package at.raven.ravenAddons.features.skyblock.dodgelist
 
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent

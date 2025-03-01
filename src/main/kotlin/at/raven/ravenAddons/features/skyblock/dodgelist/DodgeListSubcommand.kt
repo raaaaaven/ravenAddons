@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features.dungeons.dodgelist
+package at.raven.ravenAddons.features.skyblock.dodgelist
 
 import at.raven.ravenAddons.utils.ChatUtils
 
