@@ -105,6 +105,24 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Dodge List",
+        description = "Enable the player dodge list for party finder.",
+        category = "SkyBlock",
+        subcategory = "Dodge List"
+    )
+    var dodgeList = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Dodge List",
+        description = "Enable the player dodge list for party finder.",
+        category = "SkyBlock",
+        subcategory = "Dodge List"
+    )
+    var dodgeListFullPartyCheck = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
         category = "Mining",
