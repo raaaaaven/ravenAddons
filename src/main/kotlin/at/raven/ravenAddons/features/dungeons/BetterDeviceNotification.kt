@@ -32,8 +32,8 @@ object BetterDeviceNotification {
             if (ign != PlayerUtils.playerName) return
 
             ChatUtils.debug("betterDeviceNotification: attempting to send title and subtitle for $ign")
-
-            ravenAddons.Companion.launchCoroutine {
+            
+            ravenAddons.launchCoroutine {
                 delay(5)
                 TitleManager.setTitle(
                     ravenAddonsConfig.betterDeviceNotificationTitle,

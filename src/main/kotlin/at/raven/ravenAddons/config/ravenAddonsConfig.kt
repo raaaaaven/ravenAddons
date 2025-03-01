@@ -132,8 +132,8 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Better Device Notifications Title.",
-        description = "Choose a title.",
+        name = "Title",
+        description = "Choose a title for Better Device Notifications.",
         category = "Dungeons",
         subcategory = "Floor 7"
     )
@@ -141,8 +141,8 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Better Device Notifications SubTitle.",
-        description = "Choose a subtitle.",
+        name = "Subtitle",
+        description = "Choose a subtitle for Better Device Notifications.",
         category = "Dungeons",
         subcategory = "Floor 7"
     )
