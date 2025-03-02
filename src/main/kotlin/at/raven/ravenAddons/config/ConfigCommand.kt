@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @LoadModule
 object ConfigCommand {
     private var configGui: GuiScreen? = null
-    private var wasModUpdated: Boolean? = null
+    private var wasModUpdated: Boolean = false
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
@@ -39,6 +39,7 @@ object ConfigCommand {
 
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
+        if (!wasModUpdated) return
         ChatUtils.chat("ravenAddons successfully updated to version ${ravenAddons.MOD_VERSION}!")
     }
 
