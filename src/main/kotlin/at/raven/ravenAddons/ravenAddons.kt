@@ -2,6 +2,7 @@ package at.raven.ravenAddons
 
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.TickEvent
+import at.raven.ravenAddons.features.misc.update.UpdateManager
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
@@ -46,10 +47,11 @@ class ravenAddons {
     companion object{
         const val MOD_VERSION = "1.3.0"
         const val MOD_ID = "ravenAddons"
+        val modVersion get() = UpdateManager.modVersionNumber(MOD_VERSION)
 
         val mc get() = Minecraft.getMinecraft()
-
         private val globalJob: Job = Job(null)
+
         val coroutineScope =
             CoroutineScope(
                 CoroutineName("ravenAddons") + SupervisorJob(globalJob),
