@@ -37,3 +37,6 @@ As mentioned above, features are being ported over from the ChatTriggers module 
 - Leap Announcement and Leap Sound
 
 - Place Crystal Notification
+
+- # Merch
+- [Raven Addons Offical Mascot Plushie](https://www.ikea.com/us/en/p/blahaj-soft-toy-shark-90373590/)
