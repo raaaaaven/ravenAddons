@@ -47,29 +47,4 @@ object ConfigCommand {
         val gui = configGui ?: ravenAddonsConfig.gui() ?: return
         ravenAddons.openScreen(gui)
     }
-
-    private val badConfigLine = "\\t\\t\\[dungeons\\.floor_7\\.better_device_notifications_(?:sub)?title]".toPattern()
-
-    @SubscribeEvent
-    fun onConfigFix(event: ConfigFixEvent) {
-        if (event.configVersion <= 130) {
-            var deleteNext = false
-            val newConfig = mutableListOf<String>()
-
-            for (line in event.configLines) {
-                if (deleteNext) {
-                    deleteNext = false
-                    continue
-                }
-
-                if (badConfigLine.matches(line)) {
-                    deleteNext = true
-                } else {
-                    newConfig.add(line)
-                }
-            }
-
-            event.configLines = newConfig
-        }
-    }
 }

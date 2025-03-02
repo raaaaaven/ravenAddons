@@ -243,7 +243,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Developer",
         hidden = true
     )
-    var configVersion = "130"
+    var configVersion = "0"
 
     init {
         initialize()

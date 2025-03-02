@@ -40,7 +40,7 @@ object ConfigFixer {
     private fun fixConfigEvent() {
         val configLines = configFile.readLines()
         val versionLine = configLines.firstOrNull { it.contains("ravenaddonsversion") } ?: ""
-        var versionNumber = 130
+        var versionNumber = 0
         versionInConfigPattern.matchMatcher(versionLine) {
             versionNumber = group("version").toInt()
         }
