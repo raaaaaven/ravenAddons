@@ -4,6 +4,7 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.ravenAddons.Companion.modVersion
 import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
