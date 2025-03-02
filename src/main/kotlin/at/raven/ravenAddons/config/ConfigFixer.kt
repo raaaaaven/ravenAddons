@@ -46,7 +46,7 @@ object ConfigFixer {
             oldVersion = group("version").toInt()
         }
 
-        if (oldVersion == ravenAddons.modVersion) return
+        if (oldVersion >= ravenAddons.modVersion) return
         val event = ConfigFixEvent(configLines, oldVersion, ravenAddons.modVersion)
         event.post()
 

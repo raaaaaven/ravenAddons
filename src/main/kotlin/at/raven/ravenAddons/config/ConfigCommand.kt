@@ -12,7 +12,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @LoadModule
 object ConfigCommand {
     private var configGui: GuiScreen? = null
-    private var wasModUpdated: Boolean = false
+    private var wasModUpdated = ModUpdateStatus.NONE
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
@@ -31,18 +31,33 @@ object ConfigCommand {
         if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
             ravenAddonsConfig.configVersion = ravenAddons.modVersion
             ravenAddonsConfig.markDirty()
-            wasModUpdated = true
+            wasModUpdated = ModUpdateStatus.UPDATED
+        } else if (ravenAddonsConfig.configVersion > ravenAddons.modVersion) {
+            ravenAddonsConfig.configVersion = ravenAddons.modVersion
+            ravenAddonsConfig.markDirty()
+            wasModUpdated = ModUpdateStatus.DOWNGRADED
         }
     }
 
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
-        if (!wasModUpdated) return
-        ChatUtils.chat("ravenAddons successfully updated to version ${ravenAddons.MOD_VERSION}!")
+        val message = wasModUpdated.updateMessage ?: return
+
+        if (wasModUpdated.warning) {
+            ChatUtils.warning(message)
+        } else {
+            ChatUtils.chat(message)
+        }
     }
 
     private fun openConfig() {
         val gui = configGui ?: ravenAddonsConfig.gui() ?: return
         ravenAddons.openScreen(gui)
     }
+}
+enum class ModUpdateStatus(val updateMessage: String? = null, val warning: Boolean = false) {
+    NONE,
+    UPDATED("ravenAddons successfully updated to version ${ravenAddons.MOD_VERSION}!"),
+    DOWNGRADED("ravenAddons was downgraded to ${ravenAddons.MOD_VERSION}! May cause issues!"),
+    ;
 }
