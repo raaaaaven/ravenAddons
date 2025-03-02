@@ -53,9 +53,9 @@ object UpdateManager {
             }
             if (modVersionNumber(it.update.versionName) <= modVersion) {
                 if (fromCommand) {
-                    ChatUtils.chat("Already up-to-date.")
+                    ChatUtils.chat("ravenAddons ${ravenAddons.MOD_VERSION} is the latest version.")
                 } else {
-                    ChatUtils.debug("Already up-to-date.")
+                    ChatUtils.debug("ravenAddons ${ravenAddons.MOD_VERSION} is the latest version.")
                 }
                 return@thenAcceptAsync
             }
