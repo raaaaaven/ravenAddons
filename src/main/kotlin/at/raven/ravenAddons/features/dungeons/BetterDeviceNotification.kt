@@ -53,7 +53,7 @@ object BetterDeviceNotification {
 
     @SubscribeEvent
     fun onConfigFix(event: ConfigFixEvent) {
-        if (event.configVersion <= 130) {
+        event.checkVersion(131) {
             var deleteNext = false
             val newConfig = mutableListOf<String>()
 

@@ -1,13 +1,11 @@
 package at.raven.ravenAddons.config
 
 import at.raven.ravenAddons.event.CommandRegistrationEvent
-import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.GameLoadEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
-import at.raven.ravenAddons.utils.RegexUtils.matches
 import net.minecraft.client.gui.GuiScreen
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -30,9 +28,9 @@ object ConfigCommand {
         ConfigFixer
         configGui = ravenAddonsConfig.gui()
 
-        val configVersion = ravenAddonsConfig.configVersion.toIntOrNull() ?: 0
-        if (configVersion < ravenAddons.modVersion) {
-            ravenAddonsConfig.configVersion = ravenAddons.modVersion.toString()
+        if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
+            ravenAddonsConfig.configVersion = ravenAddons.modVersion
+            ravenAddonsConfig.markDirty()
             wasModUpdated = true
         }
     }

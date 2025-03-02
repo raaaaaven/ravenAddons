@@ -237,13 +237,13 @@ object ravenAddonsConfig : Vigilant(
     var developerSubTitle = ""
 
     @Property(
-        type = PropertyType.TEXT,
+        type = PropertyType.NUMBER,
         name = "ravenAddonsVersion",
         description = "Stores the last loaded ravenAddons version",
         category = "Developer",
         hidden = true
     )
-    var configVersion = "0"
+    var configVersion = 0
 
     init {
         initialize()

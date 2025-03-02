@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.config
 
 import at.raven.ravenAddons.event.ConfigFixEvent
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import java.io.File
@@ -14,7 +15,7 @@ object ConfigFixer {
     private val configPath = File("config/ravenAddons")
     val configFile = File("config/ravenAddons/config.toml")
 
-    private val versionInConfigPattern = "\travenaddonsversion = \"(?<version>\\d+)\"".toPattern()
+    private val versionInConfigPattern = "\travenaddonsversion = (?<version>\\d+)".toPattern()
 
     init {
         try {
@@ -40,11 +41,13 @@ object ConfigFixer {
     private fun fixConfigEvent() {
         val configLines = configFile.readLines()
         val versionLine = configLines.firstOrNull { it.contains("ravenaddonsversion") } ?: ""
-        var versionNumber = 0
+        var oldVersion = 0
         versionInConfigPattern.matchMatcher(versionLine) {
-            versionNumber = group("version").toInt()
+            oldVersion = group("version").toInt()
         }
-        val event = ConfigFixEvent(configLines, versionNumber)
+
+        if (oldVersion == ravenAddons.modVersion) return
+        val event = ConfigFixEvent(configLines, oldVersion, ravenAddons.modVersion)
         event.post()
 
         val newLines = event.configLines
