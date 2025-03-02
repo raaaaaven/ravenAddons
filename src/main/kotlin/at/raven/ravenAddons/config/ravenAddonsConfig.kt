@@ -4,11 +4,10 @@ import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
-import java.io.File
 import kotlin.reflect.KProperty
 
 object ravenAddonsConfig : Vigilant(
-    File("./config/ravenAddons.toml"),
+    ConfigFixer.configFile,
     sortingBehavior = ConfigSorting()
 ) {
     private val clazz = javaClass
@@ -236,6 +235,15 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Title"
     )
     var developerSubTitle = ""
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "ravenAddonsVersion",
+        description = "Stores the last loaded ravenAddons version",
+        category = "Developer",
+        hidden = true
+    )
+    var configVersion = 0
 
     init {
         initialize()

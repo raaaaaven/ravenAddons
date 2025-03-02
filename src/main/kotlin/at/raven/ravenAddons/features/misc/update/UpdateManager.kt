@@ -4,7 +4,7 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
-import at.raven.ravenAddons.ravenAddons
+import at.raven.ravenAddons.ravenAddons.Companion.modVersion
 import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
 import moe.nea.libautoupdate.PotentialUpdate
@@ -35,8 +35,7 @@ object UpdateManager {
     private var potentialUpdate: PotentialUpdate? = null
     private var updateState = UpdateState.NONE
 
-    private fun modVersionNumber(version: String) = version.removePrefix("ravenAddons ").replace(".", "").toInt()
-    private val modVersion get() = modVersionNumber(ravenAddons.MOD_VERSION)
+    internal fun modVersionNumber(version: String) = version.removePrefix("ravenAddons ").replace(".", "").toInt()
 
     private fun checkUpdate(fromCommand: Boolean = false) {
         updateContext.checkUpdate("pre").thenAcceptAsync {
