@@ -113,7 +113,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Dodge List",
+        name = "Party Check",
         description = "Check the party for people on the dodge list when your party finder group is full.",
         category = "SkyBlock",
         subcategory = "Dodge List"
