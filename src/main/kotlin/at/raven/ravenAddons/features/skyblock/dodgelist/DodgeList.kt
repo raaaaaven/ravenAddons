@@ -111,7 +111,7 @@ object DodgeList {
 
     private fun dodgeListCommand(args: Array<String>) {
         if (!ravenAddonsConfig.dodgeList) {
-            ChatUtils.chat("§cThe dodge list feature is currently disabled. \n§7• §bEnable it in the SkyBlock category of §e/raven §bor §e/ra§b.")
+            ChatUtils.chat("The dodge list feature is currently disabled. Enable it in /raven or /ra.");
             return
         }
 
@@ -139,7 +139,7 @@ object DodgeList {
 
         if (data.playerName != newPlayerName) {
             message.add(prefixComponent)
-            message.add("§7§lUser Updated: §c${data.playerName} §e→ §a$newPlayerName\n")
+            message.add("§7§lName change: §c${data.playerName} §e→ §a$newPlayerName\n")
             TitleManager.setTitle("§c${data.playerName} §e→ §a$newPlayerName", "§e${data.actualReason}", 1.5.seconds, 0.5.seconds, 0.5.seconds)
             addPlayer(player.uuid, newPlayerName, data.reason)
         } else {
