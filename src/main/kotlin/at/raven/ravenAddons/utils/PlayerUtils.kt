@@ -1,12 +1,10 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.ravenAddons
-import com.google.gson.Gson
-import com.google.gson.JsonObject
+import at.raven.ravenAddons.utils.APIUtils.getJsonResponse
 import com.mojang.authlib.GameProfile
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
-import java.net.HttpURLConnection
 import java.net.URL
 import java.util.UUID
 
@@ -22,13 +20,7 @@ object PlayerUtils {
 
     private suspend fun String.getFromMojang(): PlayerIdentifier? {
         return try {
-            val connection = URL("https://api.mojang.com/users/profiles/minecraft/$this").openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.connect()
-
-            val response = connection.inputStream.bufferedReader().use { it.readText() }
-
-            val json = Gson().fromJson(response, JsonObject::class.java)
+            val json = URL("https://api.mojang.com/users/profiles/minecraft/$this").getJsonResponse() ?: return null
 
             val uuidString = json.get("id").asString
             val name = json.get("name").asString.removeSuffix("\n")
@@ -50,13 +42,8 @@ object PlayerUtils {
 
     private suspend fun UUID.getNameFromMojang(): PlayerIdentifier? {
         return try {
-            val connection = URL("https://api.mojang.com/user/profile/$this").openConnection() as HttpURLConnection
-            connection.requestMethod = "GET"
-            connection.connect()
+            val json = URL("https://api.mojang.com/user/profile/$this").getJsonResponse() ?: return null
 
-            val response = connection.inputStream.bufferedReader().use { it.readText() }
-
-            val json = Gson().fromJson(response, JsonObject::class.java)
             val uuidString = json.get("id").asString
             val name = json.get("name").asString
 

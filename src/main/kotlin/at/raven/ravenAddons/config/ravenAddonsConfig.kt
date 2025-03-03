@@ -105,7 +105,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Dodge List",
-        description = "Enable the player dodge list for party finder.",
+        description = "Enable the player dodge list for party finder.\n&e/dodge",
         category = "SkyBlock",
         subcategory = "Dodge List"
     )
