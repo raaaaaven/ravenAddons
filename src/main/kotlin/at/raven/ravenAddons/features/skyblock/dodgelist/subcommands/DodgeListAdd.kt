@@ -53,7 +53,7 @@ object DodgeListAdd: DodgeListSubcommand() {
             component.add("§7Added §a$player §7to the list.\n")
             component.add("§f$reason\n")
         } else {
-            component.add("§7Player §c$player §7not found in the list.\n")
+            component.add("§7Player §c$player §7is already in the list.\n")
         }
         component.add(DodgeListChatComponents.getLineComponent(false))
 
