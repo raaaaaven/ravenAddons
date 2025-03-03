@@ -6,7 +6,7 @@ import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.ravenAddons.Companion.modVersion
-import at.raven.ravenAddons.utils.APIUtils
+import at.raven.ravenAddons.utils.APIUtils.patchHttpsRequest
 import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
 import moe.nea.libautoupdate.PotentialUpdate
@@ -115,7 +115,7 @@ object UpdateManager {
         updateContext.cleanup()
         UpdateUtils.patchConnection {
             if (it is HttpsURLConnection) {
-                APIUtils.patchHttpsRequest(it)
+                it.patchHttpsRequest()
             }
         }
     }
