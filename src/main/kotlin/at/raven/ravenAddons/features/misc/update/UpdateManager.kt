@@ -6,14 +6,17 @@ import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.ravenAddons.Companion.modVersion
+import at.raven.ravenAddons.utils.APIUtils
 import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
 import moe.nea.libautoupdate.PotentialUpdate
 import moe.nea.libautoupdate.UpdateContext
 import moe.nea.libautoupdate.UpdateSource
 import moe.nea.libautoupdate.UpdateTarget
+import moe.nea.libautoupdate.UpdateUtils
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.CompletableFuture
+import javax.net.ssl.HttpsURLConnection
 
 @LoadModule
 object UpdateManager {
@@ -110,6 +113,11 @@ object UpdateManager {
 
     init {
         updateContext.cleanup()
+        UpdateUtils.patchConnection {
+            if (it is HttpsURLConnection) {
+                APIUtils.patchHttpsRequest(it)
+            }
+        }
     }
 
     enum class UpdateState {
