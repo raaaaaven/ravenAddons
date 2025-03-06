@@ -68,7 +68,7 @@ object FireFreezeTimer {
             ravenAddons.launchCoroutine {
                 delay(5000)
 
-                TitleManager.setTitle("§b§lFREEZE!", "", 2.seconds, 1.seconds, 1.seconds)
+                TitleManager.setTitle("§b§lFREEZE!", "", 3.seconds, 1.seconds, 1.seconds)
                 ChatUtils.chat("Fire Freeze Staff is ready for re-use.")
             }
         }

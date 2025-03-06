@@ -253,6 +253,8 @@ object ravenAddonsConfig : Vigilant(
 
         this::dropAlertUserName requires this::dropAlert
 
+        this::fireFreezeAnnounce requires this::fireFreezeTimer
+
         this::betterDeviceNotificationTitle requires this::betterDeviceNotification
         this::betterDeviceNotificationSubTitle requires this::betterDeviceNotification
 
