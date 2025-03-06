@@ -43,7 +43,7 @@ object DodgeListRemove : DodgeListSubcommand() {
 
         component.add(DodgeListChatComponents.getLineComponent())
         if (couldRemove) {
-            component.add("§7Removed §c$player §7from the list.\n")
+            component.add("§7Removed §c$player §7from the list. \n")
         } else {
             component.add("§7Player §c$player §7not found in the list.\n")
         }
