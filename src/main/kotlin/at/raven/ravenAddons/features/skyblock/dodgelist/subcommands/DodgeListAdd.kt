@@ -50,7 +50,7 @@ object DodgeListAdd: DodgeListSubcommand() {
 
         component.add(DodgeListChatComponents.getLineComponent())
         if (!alreadyOnList) {
-            component.add("§7Added §a$player §7to the list.\n")
+            component.add("§7Added §a$player §7to the list. \n")
             component.add("§f$reason\n")
         } else {
             component.add("§7Player §c$player §7is already in the list.\n")
