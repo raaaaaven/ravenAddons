@@ -21,9 +21,11 @@ enum class HypixelGame(val gameType: GameType) {
 
         fun HypixelGame.isPlaying() = this == currentGame
         fun Collection<HypixelGame>.isPlayingAny() = this.any { it.isPlaying() }
+        fun isPlayingAny(vararg games: HypixelGame) = games.toList().isPlayingAny()
 
         fun HypixelGame.isNotPlaying() = this != currentGame
-        fun Collection<HypixelGame>.isNotPlayingAny() = this.any { it.isNotPlaying() }
+        fun Collection<HypixelGame>.isNotPlayingAny() = this.all { it.isNotPlaying() }
+        fun isNotPlayingAny(vararg games: HypixelGame) = games.toList().isNotPlayingAny()
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onHypixelData(event: HypixelServerChangeEvent) {
