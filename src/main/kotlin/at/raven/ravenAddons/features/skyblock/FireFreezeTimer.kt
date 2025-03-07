@@ -4,6 +4,7 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -207,5 +208,20 @@ object FireFreezeTimer {
 
         ClipboardUtils.copyToClipboard(stringToCopy)
         ChatUtils.chat("Copied ${matchedMobs.size + unmatchedMobs.size} mobs to the clipboard")
+    }
+
+    @SubscribeEvent
+    fun onConfigFix(event: ConfigFixEvent) {
+        event.checkVersion(150) {
+            val tomlData = event.tomlData ?: return@checkVersion
+            val announcerValue = tomlData.get<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+
+            val newValue = if (announcerValue) 3 else 0
+
+            tomlData.remove<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+            tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announcer", newValue)
+
+            event.tomlData = tomlData
+        }
     }
 }
