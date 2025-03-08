@@ -4,6 +4,7 @@ import at.raven.ravenAddons.data.commands.CommandManager.commandList
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ChatUtils.add
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
@@ -22,42 +23,47 @@ object CommandList {
     private fun commandListCommand() {
         var message = ChatComponentText("")
 
-        var extraLines = mutableListOf(ChatComponentText("§7---------------------------------------------------"))
+        var extraLines = mutableListOf(ChatComponentText("§8§m-----------------------------------------------------\n"))
 
         for (index in commandList.indices) {
             val command = commandList[index]
             if (command.hidden) continue
 
-            val clickableCommand = ChatComponentText("\n§2${command.name}")
-            clickableCommand.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ravenaddons ${command.name}")
+            val clickableCommand = ChatComponentText(" §7• §a${command.name}")
+            val tooltipComponent = ChatComponentText("§bClick to run §2/ra ${command.name}\n")
+            tooltipComponent.add("§7${command.description}")
+
+            clickableCommand.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra ${command.name}")
             clickableCommand.chatStyle.chatHoverEvent =
                 HoverEvent(
                     HoverEvent.Action.SHOW_TEXT,
-                    ChatComponentText("Click to run §2/ravenaddons ${command.name}"),
+                    tooltipComponent,
                 )
 
             command.aliases.forEach { alias ->
-                clickableCommand.siblings.add(ChatComponentText("§8, "))
-                clickableCommand.siblings.add(ChatComponentText("§a$alias"))
+                val tooltipComponent = ChatComponentText("§bClick to run §2/ra $alias\n")
+                tooltipComponent.add("§7${command.description}")
+
+                clickableCommand.add(ChatComponentText("§8, "))
+                clickableCommand.add(ChatComponentText("§2$alias"))
                 clickableCommand.siblings
                     .last()
                     .chatStyle.chatClickEvent =
-                    ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ravenaddons $alias")
+                    ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra $alias")
                 clickableCommand.siblings
                     .last()
                     .chatStyle.chatHoverEvent =
                     HoverEvent(
                         HoverEvent.Action.SHOW_TEXT,
-                        ChatComponentText("Click to run §a/ravenaddons $alias"),
+                        tooltipComponent,
                     )
             }
             extraLines += clickableCommand
-            extraLines += ChatComponentText("\n§e" + command.description)
 
             if (index != (commandList.size - 1)) extraLines.add(ChatComponentText("\n"))
         }
 
-        extraLines.add(ChatComponentText("\n§7---------------------------------------------------"))
+        extraLines.add(ChatComponentText("\n§8§m-----------------------------------------------------"))
         message.siblings.addAll(extraLines)
 
         ChatUtils.chat(message)

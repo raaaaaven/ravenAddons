@@ -6,6 +6,7 @@ class CommandBuilder(
     var description = ""
     var aliases: List<String> = emptyList()
     var hidden = false
+    var usage = ""
     private var autoComplete: ((Array<String>) -> List<String>) = { listOf() }
     var callback: (Array<String>) -> Unit = {}
 
