@@ -45,9 +45,10 @@ object CommandList {
             command.aliases.forEach { alias ->
                 val tooltipComponent = ChatComponentText("§bClick to run /ra $alias\n")
                 tooltipComponent.add("§7${command.description}")
+                if (command.category != CommandCategory.NORMAL) tooltipComponent.add("\n\n${command.category} Command")
 
                 clickableCommand.add(ChatComponentText("§8, "))
-                clickableCommand.add(ChatComponentText("§§${command.category.colorCode}$alias"))
+                clickableCommand.add(ChatComponentText("§${command.category.colorCode}$alias"))
                 clickableCommand.siblings
                     .last()
                     .chatStyle.chatClickEvent =
