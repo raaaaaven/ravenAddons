@@ -20,7 +20,7 @@ object ChatUtils {
 
     fun testMessageCommand(array: Array<String>) {
         if (array.isEmpty()) {
-            chat("Failed to run because you didn't put a message to test...")
+            warning("Failed to run as there was no test message provided.")
             return
         }
         val hidden = array.last() == "-s"

@@ -42,7 +42,7 @@ object CommandManager {
         message.chatStyle.chatClickEvent =
             ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra commands")
         message.chatStyle.chatHoverEvent =
-            HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§8Click here to run §7/ra commands"))
+            HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§bClick here to run §7/ra commands"))
 
         val finalMessage = ChatComponentText("")
         finalMessage.siblings.addAll(listOf(ChatUtils.prefixChatComponent, message))
