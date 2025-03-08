@@ -1,6 +1,6 @@
 package at.raven.ravenAddons.data.commands
 
-import at.raven.ravenAddons.config.ConfigCommand
+import at.raven.ravenAddons.config.ConfigManager
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import net.minecraft.event.ClickEvent
@@ -23,7 +23,7 @@ object CommandManager {
 
     private fun mainCommand(args: Array<String>) {
         if (args.isEmpty()) {
-            ConfigCommand.openConfig()
+            ConfigManager.openConfig()
             return
         }
 

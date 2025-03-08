@@ -14,7 +14,7 @@ import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
-object ConfigCommand {
+object ConfigManager {
     private var configGui: GuiScreen? = null
     private var wasModUpdated = ModUpdateStatus.NONE
 
