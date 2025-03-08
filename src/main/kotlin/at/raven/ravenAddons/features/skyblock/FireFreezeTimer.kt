@@ -1,9 +1,11 @@
 package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.config.ravenAddonsConfig.fireFreezeAnnounce
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.render.WorldRenderEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -67,12 +69,12 @@ object FireFreezeTimer {
             ravenAddons.launchCoroutine {
                 delay(5000)
 
-                TitleManager.setTitle("", "§bFIRE FREEZE!", 2.seconds, 1.seconds, 1.seconds)
-                ChatUtils.chat("Fire Freeze Staff is ready for use.")
+                TitleManager.setTitle("§b§lFREEZE!", "", 3.seconds, 1.seconds, 1.seconds)
+                ChatUtils.chat("Fire Freeze Staff is ready for re-use.")
             }
         }
 
-        if (ravenAddonsConfig.fireFreezeAnnounce) {
+        if (fireFreezeAnnounce == 1 || fireFreezeAnnounce == 3) {
             ChatUtils.debug("fireFreezeAnnounce: sending message in 250ms")
             if (freezeMessageCooldown.isInPast()) {
                 freezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
@@ -99,8 +101,9 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
-                ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen!")
-                if (ravenAddonsConfig.fireFreezeAnnounce && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
+                ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen...")
+                if (fireFreezeAnnounce == 2 || fireFreezeAnnounce == 3 && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
+                    ChatUtils.debug("fireFreezeAnnounce: sending message for unfrozen...")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     unfreezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
@@ -207,5 +210,20 @@ object FireFreezeTimer {
 
         ClipboardUtils.copyToClipboard(stringToCopy)
         ChatUtils.chat("Copied ${matchedMobs.size + unmatchedMobs.size} mobs to the clipboard")
+    }
+
+    @SubscribeEvent
+    fun onConfigFix(event: ConfigFixEvent) {
+        event.checkVersion(150) {
+            val tomlData = event.tomlData ?: return@checkVersion
+            val announcerValue = tomlData.get<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+
+            val newValue = if (announcerValue) 3 else 0
+
+            tomlData.remove<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+            tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announcer", newValue)
+
+            event.tomlData = tomlData
+        }
     }
 }

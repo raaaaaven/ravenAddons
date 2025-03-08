@@ -2,7 +2,6 @@ package at.raven.ravenAddons.features
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
-import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlayingAny
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.Calculator.calc
@@ -19,7 +18,7 @@ object QuickMathsSolver {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (listOf(HypixelGame.SKYBLOCK, HypixelGame.THE_PIT).isNotPlayingAny()) return
+        if (HypixelGame.isNotPlayingAny(HypixelGame.SKYBLOCK, HypixelGame.THE_PIT)) return
         if (!ravenAddonsConfig.quickMathsSolver) return
         val message = event.message.removeColors()
 
