@@ -64,7 +64,7 @@ object UpdateManager {
             }
             var message = "${it.update.versionName} is available!"
             if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
-                message += " Use §b/raupdate §7to download it."
+                message += " Use §b/ra update §7to download it."
             }
             ChatUtils.chat(message)
 

@@ -2,6 +2,7 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
@@ -39,7 +40,7 @@ object TitleManager {
 
     private fun command(args: Array<String>) {
         if (args.size != 3) {
-            ChatUtils.warning("Wrong usage! /ratesttitle <duration> <fadeIn> <fadeOut>")
+            ChatUtils.warning("Wrong usage! /ra testtitle <duration> <fadeIn> <fadeOut>")
             return
         }
         val title = ravenAddonsConfig.developerTitle.replace("&", "§")
@@ -54,7 +55,7 @@ object TitleManager {
         val fadeOut = args.getOrNull(2)?.toIntOrNull()?.seconds
 
         if (duration == null || fadeIn == null || fadeOut == null) {
-            ChatUtils.warning("Wrong usage! /ratesttitle <duration> <fadeIn> <fadeOut>")
+            ChatUtils.warning("Wrong usage! /ra testtitle <duration> <fadeIn> <fadeOut>")
             return
         }
 
@@ -160,6 +161,23 @@ object TitleManager {
             add("remainingTime = $titleTimer")
             add("fadeIn = $titleFadeIn")
             add("fadeOut = $titleFadeOut")
+        }
+    }
+
+    @SubscribeEvent
+    fun onConfigFix(event: ConfigFixEvent) {
+        event.checkVersion(151) {
+            val tomlData = event.tomlData ?: return@checkVersion
+            val titleValue = tomlData.get<String>("developer.title./ratesttitle_title")
+            val subTitleValue = tomlData.get<String>("developer.title./ratesttitle_subtitle")
+
+            tomlData.add("developer.title./ra_testtitle_title", titleValue)
+            tomlData.add("developer.title./ra_testtitle_subtitle", subTitleValue)
+
+            tomlData.remove<String>("developer.title./ratesttitle_title")
+            tomlData.remove<String>("developer.title./ratesttitle_subtitle")
+
+            event.tomlData = tomlData
         }
     }
 
