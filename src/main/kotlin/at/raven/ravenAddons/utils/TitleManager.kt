@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
@@ -80,6 +81,7 @@ object TitleManager {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("testtitle") {
             description = "Display a test title."
+            category = CommandCategory.DEVELOPER
             callback { command(it) }
         }
     }

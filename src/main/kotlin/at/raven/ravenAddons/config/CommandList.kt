@@ -1,5 +1,7 @@
 package at.raven.ravenAddons.config
 
+import at.raven.ravenAddons.data.commands.CommandBuilder
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.data.commands.CommandManager.commandList
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -23,29 +25,29 @@ object CommandList {
     private fun commandListCommand() {
         var message = ChatComponentText("")
 
-        var extraLines = mutableListOf(ChatComponentText("§8§m-----------------------------------------------------\n"))
+        var extraLines = mutableListOf(ChatComponentText("§8§m-----------------------------------------------------"))
 
-        for (index in commandList.indices) {
-            val command = commandList[index]
-            if (command.hidden) continue
+        val sortedCommandList = commandList.sortedWith(
+            compareBy<CommandBuilder> { it.category.ordinal }.thenBy { it.name }
+        )
 
-            val clickableCommand = ChatComponentText(" §7• §a${command.name}")
-            val tooltipComponent = ChatComponentText("§bClick to run §2/ra ${command.name}\n")
+        for (command in sortedCommandList) {
+            if (command.hidden && !ravenAddonsConfig.debugMessages) continue
+
+            val clickableCommand = ChatComponentText("\n §7• §${command.category.colorCode}${command.name}")
+            val tooltipComponent = ChatComponentText("§bClick to run /ra ${command.name}\n")
             tooltipComponent.add("§7${command.description}")
+            if (command.category != CommandCategory.NORMAL) tooltipComponent.add("\n\n${command.category} Command")
 
             clickableCommand.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra ${command.name}")
-            clickableCommand.chatStyle.chatHoverEvent =
-                HoverEvent(
-                    HoverEvent.Action.SHOW_TEXT,
-                    tooltipComponent,
-                )
+            clickableCommand.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltipComponent)
 
             command.aliases.forEach { alias ->
-                val tooltipComponent = ChatComponentText("§bClick to run §2/ra $alias\n")
+                val tooltipComponent = ChatComponentText("§bClick to run /ra $alias\n")
                 tooltipComponent.add("§7${command.description}")
 
                 clickableCommand.add(ChatComponentText("§8, "))
-                clickableCommand.add(ChatComponentText("§2$alias"))
+                clickableCommand.add(ChatComponentText("§§${command.category.colorCode}$alias"))
                 clickableCommand.siblings
                     .last()
                     .chatStyle.chatClickEvent =
@@ -59,8 +61,6 @@ object CommandList {
                     )
             }
             extraLines += clickableCommand
-
-            if (index != (commandList.size - 1)) extraLines.add(ChatComponentText("\n"))
         }
 
         extraLines.add(ChatComponentText("\n§8§m-----------------------------------------------------"))

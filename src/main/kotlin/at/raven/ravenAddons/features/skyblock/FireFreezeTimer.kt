@@ -4,6 +4,7 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.config.ravenAddonsConfig.fireFreezeAnnounce
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
@@ -172,6 +173,7 @@ object FireFreezeTimer {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("copyentities") {
             description = "Copy nearby entities for proper name detection."
+            category = CommandCategory.DEVELOPER
             callback { copyEntitiesCommand() }
         }
     }

@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.data
 
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -55,6 +56,7 @@ object DebugCommand {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("debug") {
             description = "Copies important(?) debug data to the clipboard."
+            category = CommandCategory.DEVELOPER
             callback { command(it) }
         }
 

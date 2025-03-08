@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -99,6 +100,7 @@ object ChatUtils {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("testmessage") {
             description = "Prints a message in chat."
+            category = CommandCategory.DEVELOPER
             callback { testMessageCommand(it) }
         }
     }

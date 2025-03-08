@@ -50,3 +50,12 @@ object CommandManager {
         ChatUtils.chat(finalMessage)
     }
 }
+
+enum class CommandCategory(val colorCode: Char) {
+    NORMAL('a'),
+    DEVELOPER('7'),
+    INTERNAL('8'),
+    ;
+
+    override fun toString() = "§$colorCode${name.lowercase().replaceFirstChar { it.uppercase() }}"
+}
