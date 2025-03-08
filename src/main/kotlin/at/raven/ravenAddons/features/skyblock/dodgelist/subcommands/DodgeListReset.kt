@@ -44,9 +44,9 @@ object DodgeListReset: DodgeListSubcommand() {
     private val resetConfirmationComponent: ChatComponentText get() {
         val component = ChatComponentText("")
         component.add(DodgeListChatComponents.prefixComponent)
-        component.add("§cType §e/dodge reset §cagain to confirm.")
+        component.add("§cType §e/ra dodge reset §cagain to confirm.")
         component.chatStyle.chatClickEvent =
-            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dodge reset")
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra dodge reset")
         component.chatStyle.chatHoverEvent =
             HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to confirm resetting the list."))
 

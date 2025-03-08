@@ -24,7 +24,9 @@ object CommandList {
 
         var extraLines = mutableListOf(ChatComponentText("§7---------------------------------------------------"))
 
-        commandList.forEachIndexed { index, command ->
+        for (index in commandList.indices) {
+            val command = commandList[index]
+            if (command.hidden) continue
 
             val clickableCommand = ChatComponentText("\n§2${command.name}")
             clickableCommand.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ravenaddons ${command.name}")
@@ -54,6 +56,7 @@ object CommandList {
 
             if (index != (commandList.size - 1)) extraLines.add(ChatComponentText("\n"))
         }
+
         extraLines.add(ChatComponentText("\n§7---------------------------------------------------"))
         message.siblings.addAll(extraLines)
 

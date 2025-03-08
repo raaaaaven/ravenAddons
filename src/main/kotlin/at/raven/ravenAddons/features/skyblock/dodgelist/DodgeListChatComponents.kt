@@ -23,7 +23,7 @@ object DodgeListChatComponents {
     fun getKickComponent(playerName: String): ChatComponentText {
         val component = ChatComponentText("§c§l[KICK] ")
         component.chatStyle.chatClickEvent =
-            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra-action-kick $playerName")
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra dodgelist-action-kick $playerName")
         component.chatStyle.chatHoverEvent =
             HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to kick the dodged user."))
 
@@ -41,7 +41,7 @@ object DodgeListChatComponents {
     fun getRemoveComponent(playerName: String): ChatComponentText {
         val component = ChatComponentText("§c§l[REMOVE] \n")
         component.chatStyle.chatClickEvent =
-            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dodge remove $playerName")
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra dodge remove $playerName")
         component.chatStyle.chatHoverEvent =
             HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to remove the user from the dodge list."))
 

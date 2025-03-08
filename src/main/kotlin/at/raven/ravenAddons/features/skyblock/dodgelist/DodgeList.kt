@@ -103,9 +103,10 @@ object DodgeList {
             callback { dodgeListCommand(it) }
         }
 
-        event.register("ra-action-kick") {
+        event.register("dodgelist-action-kick") {
             description = "Command used by the dodge list to kick dodged users."
             callback { kickPlayer(it.joinToString(" ")) }
+            hidden = true
         }
     }
 
