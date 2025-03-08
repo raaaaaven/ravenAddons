@@ -47,7 +47,7 @@ object DebugCommand {
         ChatUtils.chat("Copied ravenAddons debug data to the clipboard.")
     }
 
-    private fun version(strings: Array<String>) {
+    private fun version() {
         ChatUtils.chat("ravenAddons Version: ${ravenAddons.MOD_VERSION}")
     }
 
@@ -60,7 +60,7 @@ object DebugCommand {
 
         event.register("version") {
             description = "State the version of ravenAddons you are currently using."
-            callback { version(it) }
+            callback { version() }
         }
     }
 }
