@@ -75,6 +75,25 @@ object ChatUtils {
         Minecraft.getMinecraft().thePlayer.addChatMessage(text)
     }
 
+    fun chatClickable(
+        message: String,
+        runnable: () -> Any,
+        hoverText: String = "Click here!"
+    ) {
+        val uuid = ClickableChatManager.createRunnableAction(runnable).toString()
+
+        val chatComponent = ChatComponentText("")
+        chatComponent.add(prefixChatComponent)
+        chatComponent.add("§7$message")
+
+        chatComponent.siblings.last().chatStyle.chatHoverEvent =
+            HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText(hoverText))
+        chatComponent.siblings.last().chatStyle.chatClickEvent =
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra chat-action $uuid")
+
+        ChatUtils.chat(chatComponent)
+    }
+
     fun sendMessage(message: String) {
         Minecraft.getMinecraft().thePlayer.sendChatMessage(message)
     }
