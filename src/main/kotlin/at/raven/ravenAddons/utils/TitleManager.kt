@@ -168,7 +168,7 @@ object TitleManager {
 
     @SubscribeEvent
     fun onConfigFix(event: ConfigFixEvent) {
-        event.checkVersion(150) {
+        event.checkVersion(151) {
             val tomlData = event.tomlData ?: return@checkVersion
             val titleValue = tomlData.get<String>("developer.title./ratesttitle_title")
             val subTitleValue = tomlData.get<String>("developer.title./ratesttitle_subtitle")
