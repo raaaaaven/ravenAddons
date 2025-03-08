@@ -77,7 +77,7 @@ object TitleManager {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("ratesttitle") {
+        event.register("testtitle") {
             description = "Display a test title."
             callback { command(it) }
         }

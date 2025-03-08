@@ -53,12 +53,12 @@ object DebugCommand {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("radebug") {
+        event.register("debug") {
             description = "Copies important(?) debug data to the clipboard."
             callback { command(it) }
         }
 
-        event.register("raversion") {
+        event.register("version") {
             description = "State the version of ravenAddons you are currently using."
             callback { version(it) }
         }

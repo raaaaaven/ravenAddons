@@ -91,7 +91,7 @@ object UpdateManager {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("raupdate") {
+        event.register("update") {
             description = "Checks for new ravenAddons updates."
             callback { updateCommand() }
         }

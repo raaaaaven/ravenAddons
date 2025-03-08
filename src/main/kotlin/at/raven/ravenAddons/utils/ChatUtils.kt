@@ -15,6 +15,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object ChatUtils {
+    val prefixChatComponent = ChatComponentText("§8[§cRA§8] ")
+
     fun testMessageCommand(array: Array<String>) {
         if (array.isEmpty()) {
             chat("Failed to run because you didn't put a message to test...")
@@ -95,7 +97,7 @@ object ChatUtils {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("ratestmessage") {
+        event.register("testmessage") {
             description = "Prints a message in chat."
             callback { testMessageCommand(it) }
         }

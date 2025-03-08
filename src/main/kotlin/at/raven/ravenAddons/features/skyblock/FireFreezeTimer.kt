@@ -167,7 +167,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("racopyentities") {
+        event.register("copyentities") {
             description = "Copy nearby entities for proper name detection."
             callback { copyEntitiesCommand() }
         }
