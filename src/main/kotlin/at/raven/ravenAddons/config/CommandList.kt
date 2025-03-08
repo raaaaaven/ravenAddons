@@ -43,7 +43,7 @@ object CommandList {
             clickableCommand.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra ${command.name}")
             clickableCommand.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, tooltipComponent)
 
-            command.aliases.forEach { alias ->
+            for (alias in command.aliases.sortedBy { it }) {
                 val tooltipComponent = ChatComponentText("§bClick to run /ra $alias\n")
                 tooltipComponent.add("§7${command.description}")
                 if (command.category != CommandCategory.NORMAL) tooltipComponent.add("\n\n${command.category} Command")
