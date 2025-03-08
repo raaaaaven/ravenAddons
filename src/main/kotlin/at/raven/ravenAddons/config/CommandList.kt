@@ -18,6 +18,7 @@ object CommandList {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("commands") {
             description = "Prints all commands and their descriptions in chat"
+            aliases = listOf("help")
             callback { commandListCommand() }
         }
     }
