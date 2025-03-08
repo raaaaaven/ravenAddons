@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -160,6 +161,17 @@ object Calculator {
         event.register("calc") {
             description = "Calculates a given mathematical expression."
             callback { calcCommand(it.joinToString()) }
+        }
+    }
+
+    @SubscribeEvent
+    fun onConfigFix(event: ConfigFixEvent) {
+        event.checkVersion(150) {
+            val tomlData = event.tomlData ?: return@checkVersion
+
+            tomlData.remove<Boolean>("general.miscellaneous.quick_maths!_solver")
+
+            event.tomlData = tomlData
         }
     }
 }

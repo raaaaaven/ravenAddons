@@ -7,15 +7,6 @@ ravenAddons is a mod designed for Hypixel SkyBlock, focusing on features often o
 As mentioned above, features are being ported over from the ChatTriggers module while also bringing new and unique features along the way. You can see a list of current and upcoming features below.
 
 <details>
-  
-<summary>General</summary>
-
-## General
-- QUICK MATHS! Solver
-
-</details>
-
-<details>
 <summary>Pit</summary>
 
 ## Pit
