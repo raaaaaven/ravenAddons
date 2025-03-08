@@ -1,63 +1,61 @@
 package at.raven.ravenAddons.data.commands
 
-import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.config.ConfigManager
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import net.minecraftforge.client.ClientCommandHandler
 
 @LoadModule
 object CommandManager {
+    private val mainCommand = SimpleCommand(
+        "ravenAddons",
+        listOf("ra", "raven", "ravenaddons"),
+        { mainCommand(it) },
+    )
+    init {
+        ClientCommandHandler.instance.registerCommand(mainCommand)
+    }
+
     val commandList = mutableListOf<CommandBuilder>()
 
-    @SubscribeEvent
-    fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("racommands") {
-            description = "Prints all commands and their descriptions in chat"
-            callback { commandListCommand() }
+    private fun mainCommand(args: Array<String>) {
+        if (args.isEmpty()) {
+            ConfigManager.openConfig()
+            return
         }
+
+        val subcommand = commandList.firstOrNull { it.name == args[0] || args[0] in it.aliases }
+
+        if (subcommand == null) {
+            showHelpMessage()
+            return
+        }
+
+        subcommand.callback.invoke(args.drop(1).toTypedArray())
     }
 
-    private fun commandListCommand() {
-        var message = ChatComponentText("")
+    private fun showHelpMessage() {
+        val message = ChatComponentText("§7Command not found, click here to see the command list!")
+        message.chatStyle.chatClickEvent =
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra commands")
+        message.chatStyle.chatHoverEvent =
+            HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§bClick here to run §7/ra commands"))
 
-        var extraLines = mutableListOf(ChatComponentText("§7---------------------------------------------------"))
+        val finalMessage = ChatComponentText("")
+        finalMessage.siblings.addAll(listOf(ChatUtils.prefixChatComponent, message))
 
-        commandList.forEachIndexed { index, command ->
-
-            val clickableCommand = ChatComponentText("\n§2${command.name}")
-            clickableCommand.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, "/${command.name}")
-            clickableCommand.chatStyle.chatHoverEvent =
-                HoverEvent(
-                    HoverEvent.Action.SHOW_TEXT,
-                    ChatComponentText("Click to run §2/${command.name}"),
-                )
-
-            command.aliases.forEach { alias ->
-                clickableCommand.siblings.add(ChatComponentText("§8, "))
-                clickableCommand.siblings.add(ChatComponentText("§a$alias"))
-                clickableCommand.siblings
-                    .last()
-                    .chatStyle.chatClickEvent =
-                    ClickEvent(ClickEvent.Action.RUN_COMMAND, "/$alias")
-                clickableCommand.siblings
-                    .last()
-                    .chatStyle.chatHoverEvent =
-                    HoverEvent(
-                        HoverEvent.Action.SHOW_TEXT,
-                        ChatComponentText("Click to run §a/$alias"),
-                    )
-            }
-            extraLines += clickableCommand
-            extraLines += ChatComponentText("\n§e" + command.description)
-
-            if (index != (commandList.size - 1)) extraLines.add(ChatComponentText("\n"))
-        }
-        extraLines.add(ChatComponentText("\n§7---------------------------------------------------"))
-        message.siblings.addAll(extraLines)
-
-        ChatUtils.chat(message)
+        ChatUtils.chat(finalMessage)
     }
+}
+
+enum class CommandCategory(val colorCode: Char) {
+    NORMAL('a'),
+    DEVELOPER('7'),
+    INTERNAL('8'),
+    ;
+
+    override fun toString() = "§$colorCode${name.lowercase().replaceFirstChar { it.uppercase() }}"
 }

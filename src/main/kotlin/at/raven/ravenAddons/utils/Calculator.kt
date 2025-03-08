@@ -158,8 +158,8 @@ object Calculator {
 
     @SubscribeEvent
     fun onCommand(event: CommandRegistrationEvent) {
-        event.register("ratestcalc") {
-            description = "dummy calculator test"
+        event.register("calc") {
+            description = "Calculates a given mathematical expression."
             callback { calcCommand(it.joinToString()) }
         }
     }

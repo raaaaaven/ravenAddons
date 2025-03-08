@@ -97,7 +97,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Dodge List",
-        description = "Enable the player dodge list for party finder.\n&e/dodge",
+        description = "Enable the player dodge list for party finder.\n&e/ra dodge",
         category = "SkyBlock",
         subcategory = "Dodge List"
     )
@@ -212,7 +212,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "/ratesttitle Title",
+        name = "/ra testtitle Title",
         description = "Sets the title for the test title.",
         category = "Developer",
         subcategory = "Title"
@@ -221,7 +221,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "/ratesttitle SubTitle",
+        name = "/ra testtitle SubTitle",
         description = "Sets the subTitle for the test title.",
         category = "Developer",
         subcategory = "Title"

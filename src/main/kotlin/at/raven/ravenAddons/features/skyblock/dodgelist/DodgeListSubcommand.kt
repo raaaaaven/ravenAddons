@@ -12,5 +12,5 @@ abstract class DodgeListSubcommand {
     abstract suspend fun execute(args: List<String>)
 
     open val aliases: List<String> = emptyList()
-    open fun unknownUsage() = ChatUtils.warning("Wrong Usage! /dodge $name$usage")
+    open fun unknownUsage() = ChatUtils.warning("Wrong Usage! /ra dodge $name$usage")
 }

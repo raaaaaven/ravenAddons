@@ -64,7 +64,7 @@ object UpdateManager {
             }
             var message = "${it.update.versionName} is available!"
             if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
-                message += " Use §b/raupdate §7to download it."
+                message += " Use §b/ra update §7to download it."
             }
             ChatUtils.chat(message)
 
@@ -91,7 +91,7 @@ object UpdateManager {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("raupdate") {
+        event.register("update") {
             description = "Checks for new ravenAddons updates."
             callback { updateCommand() }
         }

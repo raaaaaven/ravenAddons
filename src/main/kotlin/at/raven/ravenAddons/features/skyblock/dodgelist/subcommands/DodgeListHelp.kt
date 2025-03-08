@@ -20,13 +20,13 @@ object DodgeListHelp : DodgeListSubcommand() {
         chatComponent.add(DodgeListChatComponents.getLineComponent())
 
         for (command in DodgeList.subcommands) {
-            val component = ChatComponentText("§7• §b/dodge ${command.name}${command.usage} §8- §7${command.description}.\n")
+            val component = ChatComponentText("§7• §b/ra dodge ${command.name}${command.usage} §8- §7${command.description}.\n")
 
             if (!command.hasArguments) {
                 component.chatStyle.chatHoverEvent =
-                    HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§bClick here to run §e/dodge ${command.name}§b."))
+                    HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§bClick here to run §e/ra dodge ${command.name}§b."))
                 component.chatStyle.chatClickEvent =
-                    ClickEvent(ClickEvent.Action.RUN_COMMAND, "/dodge ${command.name}")
+                    ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra dodge ${command.name}")
             } else {
                 component.chatStyle.chatHoverEvent =
                     HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§cThis command cannot be run from chat."))

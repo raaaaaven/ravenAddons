@@ -2,6 +2,7 @@ package at.raven.ravenAddons.features.skyblock.dodgelist
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.PartyAPI
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.PartyUpdateEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -103,9 +104,11 @@ object DodgeList {
             callback { dodgeListCommand(it) }
         }
 
-        event.register("ra-action-kick") {
+        event.register("dodgelist-action-kick") {
             description = "Command used by the dodge list to kick dodged users."
             callback { kickPlayer(it.joinToString(" ")) }
+            category = CommandCategory.INTERNAL
+            hidden = true
         }
     }
 

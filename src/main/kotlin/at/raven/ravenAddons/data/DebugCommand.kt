@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.data
 
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -47,20 +48,21 @@ object DebugCommand {
         ChatUtils.chat("Copied ravenAddons debug data to the clipboard.")
     }
 
-    private fun version(strings: Array<String>) {
+    private fun version() {
         ChatUtils.chat("ravenAddons Version: ${ravenAddons.MOD_VERSION}")
     }
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("radebug") {
+        event.register("debug") {
             description = "Copies important(?) debug data to the clipboard."
+            category = CommandCategory.DEVELOPER
             callback { command(it) }
         }
 
-        event.register("raversion") {
+        event.register("version") {
             description = "State the version of ravenAddons you are currently using."
-            callback { version(it) }
+            callback { version() }
         }
     }
 }

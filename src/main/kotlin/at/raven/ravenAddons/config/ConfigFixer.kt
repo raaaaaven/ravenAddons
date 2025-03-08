@@ -25,7 +25,7 @@ object ConfigFixer {
             e.printStackTrace()
         }
         try {
-            fixConfigEvent()
+            if (configFile.exists()) fixConfigEvent()
         } catch (e: Exception) {
             e.printStackTrace()
         }

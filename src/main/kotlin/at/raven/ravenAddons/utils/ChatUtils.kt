@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -15,9 +16,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object ChatUtils {
+    val prefixChatComponent = ChatComponentText("§8[§cRA§8] ")
+
     fun testMessageCommand(array: Array<String>) {
         if (array.isEmpty()) {
-            chat("Failed to run because you didn't put a message to test...")
+            warning("Failed to run as there was no test message provided.")
             return
         }
         val hidden = array.last() == "-s"
@@ -95,8 +98,9 @@ object ChatUtils {
 
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
-        event.register("ratestmessage") {
+        event.register("testmessage") {
             description = "Prints a message in chat."
+            category = CommandCategory.DEVELOPER
             callback { testMessageCommand(it) }
         }
     }
