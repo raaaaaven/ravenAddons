@@ -27,7 +27,7 @@ object CommandManager {
             return
         }
 
-        val subcommand = commandList.firstOrNull { it.name == args[0] }
+        val subcommand = commandList.firstOrNull { it.name == args[0] || args[0] in it.aliases }
 
         if (subcommand == null) {
             showHelpMessage()
@@ -40,9 +40,9 @@ object CommandManager {
     private fun showHelpMessage() {
         val message = ChatComponentText("§7Command not found, click here to see the command list!")
         message.chatStyle.chatClickEvent =
-            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ravenaddons commands")
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra commands")
         message.chatStyle.chatHoverEvent =
-            HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§8Click here to run §7/ravenaddons commands"))
+            HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§8Click here to run §7/ra commands"))
 
         val finalMessage = ChatComponentText("")
         finalMessage.siblings.addAll(listOf(ChatUtils.prefixChatComponent, message))

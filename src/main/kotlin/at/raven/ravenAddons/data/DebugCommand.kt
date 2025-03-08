@@ -55,7 +55,6 @@ object DebugCommand {
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("debug") {
             description = "Copies important(?) debug data to the clipboard."
-            aliases = listOf("hello")
             callback { command(it) }
         }
 
