@@ -8,11 +8,12 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
-import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import java.lang.Thread.sleep
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -29,24 +30,24 @@ object FireFreezeTimer {
         professorPattern.matchMatcher(event.message.removeColors()) {
             ChatUtils.debug("floor3FireFreezeTimer: timer started")
 
-            val time = ravenAddonsConfig.floor3FireFreezeDuration.seconds
+            val timer = SimpleTimeMark.now() + 5.seconds
 
             ravenAddons.launchCoroutine {
-                var timer = 5.00
+                while (timer.isInFuture()) {
+                    val timeUntil = timer.timeUntil()
 
-                while (timer >= 0) {
-                    if (timer <= time.inWholeSeconds) {
+                    if (timeUntil.inWholeSeconds in 0..ravenAddonsConfig.floor3FireFreezeDuration) {
                         val color = when {
-                            timer > 3.0 -> "§a"
-                            timer > 1.0 -> "§6"
+                            timeUntil >= 3.seconds -> "§a"
+                            timeUntil >= 1.seconds -> "§6"
                             else -> "§c"
                         }
-                        TitleManager.setTitle("$color§l%.2f".format(timer),"$color§lFIRE FREEZE", 1.seconds, 0.seconds, 0.seconds)
-                    }
-                    timer -= 0.01
-                    delay(10)
-                }
+                        val formattedTime = timeUntil.inWholeMilliseconds / 1000f
 
+                        TitleManager.setTitle("$color§l%.2f".format(formattedTime),"$color§lFIRE FREEZE", 1.seconds, 0.seconds, 0.seconds)
+                    }
+                    sleep(50)
+                }
                 TitleManager.setTitle("§c§lNOW!", "§c§lFIRE FREEZE", 2.5.seconds, 0.seconds, 0.seconds)
                 SoundUtils.playSound(ravenAddonsConfig.floor3FireFreezeSound, 1f, 1f)
             }
