@@ -53,7 +53,7 @@ object F3FireFreezeTimer {
                     delay(10)
                 }
 
-                TitleManager.setTitle("§c§lNOW!", "§c§lFIRE unlFREEZE!", 2.5.seconds, 0.seconds, 0.seconds)
+                TitleManager.setTitle("§c§lNOW!", "§c§lFIRE FREEZE", 2.5.seconds, 0.seconds, 0.seconds)
                 SoundUtils.playSound(ravenAddonsConfig.floor3FireFreezeSound, 1f, 1f)
             }
         }
