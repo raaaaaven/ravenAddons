@@ -279,6 +279,9 @@ object ravenAddonsConfig : Vigilant(
 
         this::leapAnnounceMessage requires this::leapAnnounce
         this::leapAnnouncePrefix requires this::leapAnnounce
+
+        this::floor3FireFreezeDuration requires this::floor3FireFreezeTimer
+        this::floor3FireFreezeSound requires this::floor3FireFreezeTimer
     }
 
 
