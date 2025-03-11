@@ -204,6 +204,35 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Fire Freeze Timer",
+        description = "Display a timer for when to freeze The Professor.",
+        category = "Dungeons",
+        subcategory = "Floor 3"
+    )
+    var floor3FireFreezeTimer = false
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Fire Freeze Timer Duration",
+        description = "Select how long the timer should last in seconds.",
+        category = "Dungeons",
+        subcategory = "Floor 3",
+        min = 3,
+        max = 5
+    )
+    var floor3FireFreezeDuration = 5
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Fire Freeze Timer Sound",
+        description = "Choose a minecraft sound to play when you should freeze The Professor. Default: &erandom.anvil_land",
+        category = "Dungeons",
+        subcategory = "Floor 3"
+    )
+    var floor3FireFreezeSound = "random.anvil_land"
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
         category = "Developer"
@@ -251,6 +280,9 @@ object ravenAddonsConfig : Vigilant(
 
         this::leapAnnounceMessage requires this::leapAnnounce
         this::leapAnnouncePrefix requires this::leapAnnounce
+
+        this::floor3FireFreezeDuration requires this::floor3FireFreezeTimer
+        this::floor3FireFreezeSound requires this::floor3FireFreezeTimer
     }
 
 
