@@ -30,9 +30,9 @@ object FireFreezeTimer {
             ChatUtils.debug("floor3FireFreezeTimer: timer started")
 
             val time = when (ravenAddonsConfig.floor3FireFreezeDuration) {
-                0 -> 5.00
-                1 -> 4.00
-                2 -> 3.00
+                3 -> 3.00
+                4 -> 4.00
+                5 -> 5.00
                 else -> 5.00
             }
 

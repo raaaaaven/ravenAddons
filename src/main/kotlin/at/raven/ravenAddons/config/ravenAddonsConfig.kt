@@ -214,18 +214,18 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SLIDER,
         name = "Fire Freeze Timer Duration",
-        description = "Select how long the timer should last.",
+        description = "Select how long the timer should last in seconds.",
         category = "Dungeons",
         subcategory = "Floor 3",
         min = 3,
         max = 5
     )
-    var floor3FireFreezeDuration = 3
+    var floor3FireFreezeDuration = 5
 
     @Property(
         type = PropertyType.TEXT,
         name = "Fire Freeze Timer Sound",
-        description = "Choose a minecraft sound to play when you should freeze The Professor.",
+        description = "Choose a minecraft sound to play when you should freeze The Professor. Default: &erandom.anvil_land",
         category = "Dungeons",
         subcategory = "Floor 3"
     )
