@@ -29,18 +29,13 @@ object FireFreezeTimer {
         professorPattern.matchMatcher(event.message.removeColors()) {
             ChatUtils.debug("floor3FireFreezeTimer: timer started")
 
-            val time = when (ravenAddonsConfig.floor3FireFreezeDuration) {
-                3 -> 3.00
-                4 -> 4.00
-                5 -> 5.00
-                else -> 5.00
-            }
+            val time = ravenAddonsConfig.floor3FireFreezeDuration.seconds
 
             ravenAddons.launchCoroutine {
                 var timer = 5.00
 
                 while (timer >= 0) {
-                    if (timer <= time) {
+                    if (timer <= time.inWholeSeconds) {
                         val color = when {
                             timer > 3.0 -> "§a"
                             timer > 1.0 -> "§6"
