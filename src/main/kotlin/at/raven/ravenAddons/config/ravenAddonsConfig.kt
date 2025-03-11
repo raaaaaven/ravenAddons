@@ -204,7 +204,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Floor 3 Fire Freeze Timer",
+        name = "Fire Freeze Timer",
         description = "Display a timer for when to freeze The Professor.",
         category = "Dungeons",
         subcategory = "Floor 3"
@@ -223,7 +223,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Floor 3 Fire Freeze Timer",
+        name = "Fire Freeze Timer Sound",
         description = "Choose a minecraft sound to play when you should freeze The Professor.",
         category = "Dungeons",
         subcategory = "Floor 3"
