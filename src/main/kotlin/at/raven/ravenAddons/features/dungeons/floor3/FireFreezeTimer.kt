@@ -8,19 +8,18 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
-import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
+import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.lang.Thread.sleep
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object FireFreezeTimer {
 
-        // REGEX TEST: "§r§c[BOSS] The Professor§r§f: Oh? You found my Guardians' one weakness?§r"
-        private val professorPattern = "^\\[BOSS] The Professor: Oh\\? You found my Guardians' one weakness\\?".toPattern()
+    // REGEX TEST: "§r§c[BOSS] The Professor§r§f: Oh? You found my Guardians' one weakness?§r"
+    private val professorPattern = "^\\[BOSS] The Professor: Oh\\? You found my Guardians' one weakness\\?".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -30,24 +29,24 @@ object FireFreezeTimer {
         professorPattern.matchMatcher(event.message.removeColors()) {
             ChatUtils.debug("floor3FireFreezeTimer: timer started")
 
-            val timer = SimpleTimeMark.now() + 5.seconds
+            val time = ravenAddonsConfig.floor3FireFreezeDuration.seconds
 
             ravenAddons.launchCoroutine {
-                while (timer.isInFuture()) {
-                    val timeUntil = timer.timeUntil()
+                var timer = 5.00
 
-                    if (timeUntil.inWholeMilliseconds <= ravenAddonsConfig.floor3FireFreezeDuration * 1000) {
+                while (timer >= 0) {
+                    if (timer <= time.inWholeSeconds) {
                         val color = when {
-                            timeUntil >= 3.seconds -> "§a"
-                            timeUntil >= 1.seconds -> "§6"
+                            timer > 3.0 -> "§a"
+                            timer > 1.0 -> "§6"
                             else -> "§c"
                         }
-                        val formattedTime = timeUntil.inWholeMilliseconds / 1000f
-
-                        TitleManager.setTitle("$color§l%.2f".format(formattedTime),"$color§lFIRE FREEZE", 1.seconds, 0.seconds, 0.seconds)
+                        TitleManager.setTitle("$color§l%.2f".format(timer),"$color§lFIRE FREEZE", 1.seconds, 0.seconds, 0.seconds)
                     }
-                    sleep(50)
+                    timer -= 0.01
+                    delay(10)
                 }
+
                 TitleManager.setTitle("§c§lNOW!", "§c§lFIRE FREEZE", 2.5.seconds, 0.seconds, 0.seconds)
                 SoundUtils.playSound(ravenAddonsConfig.floor3FireFreezeSound, 1f, 1f)
             }
