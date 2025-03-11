@@ -36,7 +36,7 @@ object FireFreezeTimer {
                 while (timer.isInFuture()) {
                     val timeUntil = timer.timeUntil()
 
-                    if (timeUntil.inWholeSeconds in 0..ravenAddonsConfig.floor3FireFreezeDuration) {
+                    if (timeUntil.inWholeMilliseconds <= ravenAddonsConfig.floor3FireFreezeDuration * 1000) {
                         val color = when {
                             timeUntil >= 3.seconds -> "§a"
                             timeUntil >= 1.seconds -> "§6"
