@@ -204,6 +204,34 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Floor 3 Fire Freeze Timer",
+        description = "Display a timer for when to freeze The Professor.",
+        category = "Dungeons",
+        subcategory = "Floor 3"
+    )
+    var floor3FireFreezeTimer = false
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "Fire Freeze Timer Duration",
+        description = "Select how long the timer should last.",
+        category = "Dungeons",
+        subcategory = "Floor 3",
+        options = ["5 Seconds", "4 Seconds", "3 Seconds"]
+    )
+    var floor3FireFreezeDuration = 0
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Floor 3 Fire Freeze Timer",
+        description = "Choose a minecraft sound to play when you should freeze The Professor.",
+        category = "Dungeons",
+        subcategory = "Floor 3"
+    )
+    var floor3FireFreezeSound = "random.anvil_land"
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
         category = "Developer"
