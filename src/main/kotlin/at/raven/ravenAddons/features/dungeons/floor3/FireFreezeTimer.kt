@@ -18,7 +18,6 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object FireFreezeTimer {
 
-        // [BOSS] The Professor: Oh? You found my Guardians' one weakness?
         // REGEX TEST: "§r§c[BOSS] The Professor§r§f: Oh? You found my Guardians' one weakness?§r"
         private val professorPattern = "^\\[BOSS] The Professor: Oh\\? You found my Guardians' one weakness\\?".toPattern()
 
