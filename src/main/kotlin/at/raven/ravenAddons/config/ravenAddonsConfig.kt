@@ -212,14 +212,15 @@ object ravenAddonsConfig : Vigilant(
     var floor3FireFreezeTimer = false
 
     @Property(
-        type = PropertyType.SELECTOR,
+        type = PropertyType.SLIDER,
         name = "Fire Freeze Timer Duration",
         description = "Select how long the timer should last.",
         category = "Dungeons",
         subcategory = "Floor 3",
-        options = ["5 Seconds", "4 Seconds", "3 Seconds"]
+        min = 3,
+        max = 5
     )
-    var floor3FireFreezeDuration = 0
+    var floor3FireFreezeDuration = 3
 
     @Property(
         type = PropertyType.TEXT,
