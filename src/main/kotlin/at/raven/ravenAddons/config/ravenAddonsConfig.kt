@@ -261,7 +261,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Flip Contributors",
         description = "Makes contributors upside down",
-        category = "Contributors"
+        category = "Developer",
+        subcategory = "Contributor"
     )
     var flipContributors = true
 
