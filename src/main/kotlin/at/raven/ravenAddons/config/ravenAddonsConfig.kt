@@ -258,6 +258,14 @@ object ravenAddonsConfig : Vigilant(
     var developerSubTitle = ""
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Flip Contributors",
+        description = "Makes contributors upside down",
+        category = "Contributors"
+    )
+    var flipContributors = true
+
+    @Property(
         type = PropertyType.NUMBER,
         name = "ravenAddonsVersion",
         description = "Stores the last loaded ravenAddons version",
