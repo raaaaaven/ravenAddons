@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features.dungeons
+package at.raven.ravenAddons.features.dungeons.floor3
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
-object F3FireFreezeTimer {
+object FireFreezeTimer {
 
         // [BOSS] The Professor: Oh? You found my Guardians' one weakness?
         // REGEX TEST: "§r§c[BOSS] The Professor§r§f: Oh? You found my Guardians' one weakness?§r"
