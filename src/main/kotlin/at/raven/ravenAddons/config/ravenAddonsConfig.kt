@@ -131,6 +131,17 @@ object ravenAddonsConfig : Vigilant(
     var gemstonePowderNotification = false
 
     @Property(
+        type = PropertyType.SLIDER,
+        name = "Powder Notification Amount",
+        description = "Minimum amount of Gemstone Powder needed for it to be displayed as a title",
+        category = "Mining",
+        subcategory = "Notifications",
+        min = 0,
+        max = 60000
+    )
+    var gemstonePowderThreshold = 0
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Better Device Notifications",
         description = "Replace Hypixel's device titles for your username.",
@@ -245,6 +256,8 @@ object ravenAddonsConfig : Vigilant(
         this::dropAlertUserName requires this::dropAlert
 
         this::fireFreezeAnnounce requires this::fireFreezeTimer
+
+        this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
         this::betterDeviceNotificationTitle requires this::betterDeviceNotification
         this::betterDeviceNotificationSubTitle requires this::betterDeviceNotification
