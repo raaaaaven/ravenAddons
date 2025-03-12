@@ -133,11 +133,11 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SLIDER,
         name = "Powder Notification Amount",
-        description = "Minimum amount of Gemstone Powder needed for it to be displayed as a title",
+        description = "Minimum amount of Gemstone Powder needed for it to be displayed as a title.",
         category = "Mining",
         subcategory = "Notifications",
         min = 0,
-        max = 60000
+        max = 10000
     )
     var gemstonePowderThreshold = 0
 
