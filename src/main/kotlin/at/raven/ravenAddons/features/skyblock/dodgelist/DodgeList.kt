@@ -161,6 +161,15 @@ object DodgeList {
 
         ChatUtils.chat(message)
         SoundUtils.playSound("random.anvil_land", 1f, 1f)
+
+        if (ravenAddonsConfig.dodgeListAutoKick) {
+            ChatUtils.sendMessage("/pc [RA] Auto kicking $newPlayerName since they are on the dodge list.")
+            ravenAddons.launchCoroutine {
+                Thread.sleep(500)
+
+                ChatUtils.sendMessage("/p kick $newPlayerName")
+            }
+        }
     }
 
     @SubscribeEvent
