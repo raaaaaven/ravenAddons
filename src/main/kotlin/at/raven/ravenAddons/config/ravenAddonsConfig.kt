@@ -119,7 +119,16 @@ object ravenAddonsConfig : Vigilant(
         category =  "SkyBlock",
         subcategory = "Dodge List"
     )
-    var dodgeListAutoKick = true
+    var dodgeListAutoKick = false
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Auto Kick With Reason",
+        description = "Announce the reason just before the auto kick.",
+        category =  "SkyBlock",
+        subcategory = "Dodge List"
+    )
+    var dodgeListAutoKickWithReason = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -306,6 +315,7 @@ object ravenAddonsConfig : Vigilant(
 
         this::dodgeListFullPartyCheck requires this::dodgeList
         this::dodgeListAutoKick requires this::dodgeList
+        this::dodgeListAutoKickWithReason requires this::dodgeList
 
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 

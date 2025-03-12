@@ -165,6 +165,13 @@ object DodgeList {
         if (ravenAddonsConfig.dodgeListAutoKick) {
             ChatUtils.sendMessage("/pc [RA] Auto kicking $newPlayerName since they are on the dodge list.")
             ravenAddons.launchCoroutine {
+
+                if (ravenAddonsConfig.dodgeListAutoKickWithReason) {
+                    Thread.sleep(250)
+
+                    ChatUtils.sendMessage("/pc [RA] $newPlayerName: ${data.actualReason}")
+                }
+
                 Thread.sleep(500)
 
                 ChatUtils.sendMessage("/p kick $newPlayerName")
