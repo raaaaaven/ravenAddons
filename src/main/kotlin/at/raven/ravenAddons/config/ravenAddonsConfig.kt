@@ -106,11 +106,29 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Party Check",
-        description = "Check the party for people on the dodge list when your party finder group is full.",
+        description = "Add an additional party check for people on the dodge list when your party finder group is full.",
         category = "SkyBlock",
         subcategory = "Dodge List"
     )
     var dodgeListFullPartyCheck = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Auto Kick",
+        description = "Auto kick users that join your party finder group if they are on your dodge list.",
+        category =  "SkyBlock",
+        subcategory = "Dodge List"
+    )
+    var dodgeListAutoKick = false
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Auto Kick With Reason",
+        description = "Announce the reason just before the auto kick.",
+        category =  "SkyBlock",
+        subcategory = "Dodge List"
+    )
+    var dodgeListAutoKickWithReason = false
 
     @Property(
         type = PropertyType.SWITCH,
@@ -294,6 +312,10 @@ object ravenAddonsConfig : Vigilant(
         this::dropAlertUserName requires this::dropAlert
 
         this::fireFreezeAnnounce requires this::fireFreezeTimer
+
+        this::dodgeListFullPartyCheck requires this::dodgeList
+        this::dodgeListAutoKick requires this::dodgeList
+        this::dodgeListAutoKickWithReason requires this::dodgeList
 
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
