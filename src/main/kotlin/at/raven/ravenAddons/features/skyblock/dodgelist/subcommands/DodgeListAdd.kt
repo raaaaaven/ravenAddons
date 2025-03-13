@@ -12,7 +12,7 @@ import net.minecraft.util.ChatComponentText
 
 object DodgeListAdd: DodgeListSubcommand() {
     override val name = "add"
-    override val usage = " <player>"
+    override val usage = " <player> [reason]"
     override val description = "Add a player to the dodge list with a reason"
 
     override val hasArguments = true
