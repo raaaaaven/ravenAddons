@@ -21,7 +21,7 @@ object ClickableChatManager {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {
         event.register("chat-action") {
-            description = "dummy"
+            description = "Command used by the mod to execute clickable chat action."
             category = CommandCategory.INTERNAL
             hidden = true
             callback = { tryRunCommand(it) }
