@@ -289,7 +289,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Flip Contributors",
-        description = "Makes contributors upside down",
+        description = "Turns contributors upside down.",
         category = "Developer",
         subcategory = "Contributor"
     )
