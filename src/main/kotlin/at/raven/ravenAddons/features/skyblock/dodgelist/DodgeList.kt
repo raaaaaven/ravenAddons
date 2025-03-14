@@ -16,6 +16,7 @@ import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListHel
 import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListList
 import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListRemove
 import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListReset
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListTempAdd
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
@@ -48,7 +49,12 @@ object DodgeList {
     private val configPath = File("config/ravenAddons")
     private val configFile = File(configPath, "dodgeList.json")
 
-    internal val throwers: MutableMap<UUID, DodgeListCustomData> = mutableMapOf()
+    private val _throwers = mutableMapOf<UUID, DodgeListCustomData>()
+    internal val throwers: MutableMap<UUID, DodgeListCustomData>
+        get() {
+            _throwers.entries.removeIf { it.value.expiryDate?.isInFuture() == false }
+            return _throwers
+        }
 
     private var partyListCheck = SimpleTimeMark.farPast()
 
@@ -58,6 +64,7 @@ object DodgeList {
 
     val subcommands = listOf<DodgeListSubcommand>( //having this be automatic might be cool
         DodgeListAdd,
+        DodgeListTempAdd,
         DodgeListRemove,
         DodgeListList,
         DodgeListReset,
@@ -254,7 +261,8 @@ object DodgeList {
 
 data class DodgeListCustomData(
     @Expose val playerName: String,
-    @Expose val reason: String?
+    @Expose val reason: String?,
+    @Expose val expiryDate: SimpleTimeMark? = null,
 ) {
     val actualReason: String get() = reason ?: "No reason provided!"
 }

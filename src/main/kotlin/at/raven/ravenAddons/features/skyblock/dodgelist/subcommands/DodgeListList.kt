@@ -21,8 +21,13 @@ object DodgeListList: DodgeListSubcommand() {
         if (map.isEmpty()) {
             component.add(" §7The dodge list is currently empty!\n")
         } else {
-            for ((_, data) in map) {
-                component.add("§7• §b${data.playerName}§7: §f${data.actualReason}\n")
+            for ((uuid, data) in map) {
+                var string = "§7• §b${data.playerName}§7: §f${data.actualReason}"
+                if (data.expiryDate != null) {
+                    string += " §a(${data.expiryDate.timeUntil()})"
+                }
+
+                component.add(string + "\n")
             }
         }
 
