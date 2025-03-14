@@ -63,11 +63,10 @@ object DodgeListTempAdd: DodgeListSubcommand() {
             component.add("§f$reason\n")
         } else {
             component.add("§7Player §c$player §7is already in the list.\n")
-            return false
         }
         component.add(DodgeListChatComponents.getLineComponent(false))
 
         ChatUtils.chat(component)
-        return true
+        return !alreadyOnList
     }
 }
