@@ -8,12 +8,14 @@ import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
 import at.raven.ravenAddons.utils.PlayerUtils.PlayerIdentifier
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
+import at.raven.ravenAddons.utils.SimpleTimeMark
 import net.minecraft.util.ChatComponentText
+import kotlin.time.Duration
 
-object DodgeListAdd: DodgeListSubcommand() {
-    override val name = "add"
-    override val usage = " <player> [reason]"
-    override val description = "Add a player to the dodge list with a reason"
+object DodgeListTempAdd: DodgeListSubcommand() {
+    override val name = "tempadd"
+    override val usage = " <player> <duration> [reason]"
+    override val description = "Add a player to the dodge list with an expiry date and reason"
 
     override val hasArguments = true
 
@@ -32,25 +34,32 @@ object DodgeListAdd: DodgeListSubcommand() {
             return
         }
 
-        actualPlayer.addToList(args.drop(1).joinToString(" ").takeIf { it.isNotEmpty() })
+        val duration = Duration.parseOrNull(args.getOrNull(1).toString()) ?: run {
+            unknownUsage()
+            return
+        }
+        val reason = args.drop(2).joinToString(" ").takeIf { it.isNotEmpty() }
+
+        actualPlayer.addToList(duration, reason)
     }
 
-    private fun PlayerIdentifier.addToList(reason: String?) {
+    private fun PlayerIdentifier.addToList(duration: Duration, reason: String?) {
         val uuid = this.uuid
         val name = this.name
-        val data = DodgeListCustomData(name, reason)
+        val data = DodgeListCustomData(name, reason, SimpleTimeMark.now() + duration)
 
-        if (!sendChatMessage(name, data.actualReason)) return
+        if (!sendChatMessage(name, data.actualReason, duration.toString())) return
         DodgeList.addPlayer(uuid, data)
     }
 
-    private fun sendChatMessage(player: String, reason: String): Boolean {
+    private fun sendChatMessage(player: String, reason: String, duration: String): Boolean {
         val alreadyOnList = DodgeList.throwers.any { it.value.playerName.lowercase() == player.lowercase() }
         val component = ChatComponentText("")
 
         component.add(DodgeListChatComponents.getLineComponent())
         if (!alreadyOnList) {
             component.add("§7Added §a$player §7to the list. \n")
+            component.add("§ePlayer will be removed in $duration. \n")
             component.add("§f$reason\n")
         } else {
             component.add("§7Player §c$player §7is already in the list.\n")

@@ -22,7 +22,13 @@ object DodgeListList: DodgeListSubcommand() {
             component.add(" §7The dodge list is currently empty!\n")
         } else {
             for ((_, data) in map) {
-                component.add("§7• §b${data.playerName}§7: §f${data.actualReason}\n")
+                var string = "§7• §b${data.playerName}§7: §f${data.actualReason}"
+
+                data.formattedTimeRemaining?.let {
+                    string += " §e($it)"
+                }
+
+                component.add(string + "\n")
             }
         }
 

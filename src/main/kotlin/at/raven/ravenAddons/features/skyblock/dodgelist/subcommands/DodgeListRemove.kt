@@ -30,8 +30,9 @@ object DodgeListRemove : DodgeListSubcommand() {
         while (iterator.hasNext()) {
             val member = iterator.next()
 
-            if (member.value.playerName.lowercase() == playerName.lowercase()) {
-                DodgeList.removePlayer(member.key)
+            if (member.value.playerName.equals(playerName, ignoreCase = true)) {
+                iterator.remove()
+                DodgeList.saveToFile()
             }
         }
 

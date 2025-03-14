@@ -62,7 +62,7 @@ class ravenAddons {
                 try {
                     function()
                 } catch (e: Exception) {
-                    ChatUtils.warning("Async exception caught")
+                    ChatUtils.warning("Caught a ${e.javaClass.simpleName} exception.")
                     e.printStackTrace()
                 }
             }
