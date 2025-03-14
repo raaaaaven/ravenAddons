@@ -59,7 +59,7 @@ object DodgeListTempAdd: DodgeListSubcommand() {
         component.add(DodgeListChatComponents.getLineComponent())
         if (!alreadyOnList) {
             component.add("§7Added §a$player §7to the list. \n")
-            component.add("§b$duration\n")
+            component.add("§ePlayer will be removed in $duration. \n")
             component.add("§f$reason\n")
         } else {
             component.add("§7Player §c$player §7is already in the list.\n")

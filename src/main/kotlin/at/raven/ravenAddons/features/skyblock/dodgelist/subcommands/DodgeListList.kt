@@ -25,7 +25,7 @@ object DodgeListList: DodgeListSubcommand() {
                 var string = "§7• §b${data.playerName}§7: §f${data.actualReason}"
 
                 data.formattedTimeRemaining?.let {
-                    string += " §a($it)"
+                    string += " §e($it)"
                 }
 
                 component.add(string + "\n")
