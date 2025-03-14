@@ -255,12 +255,12 @@ data class DodgeListCustomData(
             val duration = expiryDate ?: return null
             val components = mutableListOf<String>()
 
-            duration.timeUntil().toComponents { days, hours, minutes, seconds, ms ->
+            duration.timeUntil().toComponents { days, hours, minutes, seconds, _ ->
                 if (days > 0) components.add("${days}d")
                 if (hours > 0) components.add("${hours}h")
                 if (minutes > 0) components.add("${minutes}m")
-                if (seconds > 0) components.add("${seconds}s")
-                if (ms > 0 && components.size < 2) components.add("${ms}ms")
+                if (seconds > 0 && components.size < 2) components.add("${seconds}s")
+//                if (ms > 0 && components.size < 2) components.add("${ms}ms")
             }
 
             return components.take(2).joinToString(" ")
