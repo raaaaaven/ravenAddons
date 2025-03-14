@@ -1,5 +1,8 @@
 package at.raven.ravenAddons.features.skyblock.dodgelist
 
+import at.raven.ravenAddons.ravenAddons
+import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ClickableChatManager
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
@@ -21,9 +24,21 @@ object DodgeListChatComponents {
         return component
     }
     fun getKickComponent(playerName: String): ChatComponentText {
+        val uuid = ClickableChatManager.createRunnableAction(
+            oneTime = true,
+            runnable = {
+                ChatUtils.sendMessage("/pc [RA] Kicking $playerName since they are on the dodge list.")
+                ravenAddons.Companion.launchCoroutine {
+                    Thread.sleep(500)
+
+                    ChatUtils.sendMessage("/p kick $playerName")
+                }
+            }
+        ).toString()
+
         val component = ChatComponentText("§c§l[KICK] ")
         component.chatStyle.chatClickEvent =
-            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra dodgelist-action-kick $playerName")
+            ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra chat-action $uuid")
         component.chatStyle.chatHoverEvent =
             HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to kick the dodged user."))
 

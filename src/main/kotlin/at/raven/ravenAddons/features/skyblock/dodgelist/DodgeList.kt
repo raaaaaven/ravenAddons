@@ -2,7 +2,6 @@ package at.raven.ravenAddons.features.skyblock.dodgelist
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.PartyAPI
-import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.PartyUpdateEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -110,13 +109,6 @@ object DodgeList {
             description = "Displays the dodge list help menu."
             callback { dodgeListCommand(it) }
         }
-
-        event.register("dodgelist-action-kick") {
-            description = "Command used by the dodge list to kick dodged users."
-            callback { kickPlayer(it.joinToString(" ")) }
-            category = CommandCategory.INTERNAL
-            hidden = true
-        }
     }
 
     private fun dodgeListCommand(args: Array<String>) {
@@ -198,15 +190,6 @@ object DodgeList {
         }
     }
 
-    private fun kickPlayer(player: String) {
-        ChatUtils.sendMessage("/pc [RA] Kicking $player since they are on the dodge list.")
-        ravenAddons.Companion.launchCoroutine {
-            Thread.sleep(500)
-
-            ChatUtils.sendMessage("/p kick $player")
-        }
-    }
-
     fun addPlayer(uuid: UUID, data: DodgeListCustomData) {
         throwers.put(uuid, data)
         saveToFile()
@@ -272,12 +255,12 @@ data class DodgeListCustomData(
             val duration = expiryDate ?: return null
             val components = mutableListOf<String>()
 
-            duration.timeUntil().toComponents { days, hours, minutes, seconds, ms ->
+            duration.timeUntil().toComponents { days, hours, minutes, seconds, _ ->
                 if (days > 0) components.add("${days}d")
                 if (hours > 0) components.add("${hours}h")
                 if (minutes > 0) components.add("${minutes}m")
-                if (seconds > 0) components.add("${seconds}s")
-                if (ms > 0 && components.size < 2) components.add("${ms}ms")
+                if (seconds > 0 && components.size < 2) components.add("${seconds}s")
+//                if (ms > 0 && components.size < 2) components.add("${ms}ms")
             }
 
             return components.take(2).joinToString(" ")
