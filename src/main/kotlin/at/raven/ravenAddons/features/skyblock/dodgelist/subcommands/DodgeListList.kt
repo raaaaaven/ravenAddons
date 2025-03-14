@@ -23,8 +23,9 @@ object DodgeListList: DodgeListSubcommand() {
         } else {
             for ((_, data) in map) {
                 var string = "§7• §b${data.playerName}§7: §f${data.actualReason}"
-                if (data.expiryDate != null) {
-                    string += " §a(${data.expiryDate.timeUntil()})"
+
+                data.formattedTimeRemaining?.let {
+                    string += " §a($it)"
                 }
 
                 component.add(string + "\n")

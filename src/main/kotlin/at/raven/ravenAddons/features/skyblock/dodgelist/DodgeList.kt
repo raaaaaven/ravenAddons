@@ -52,7 +52,7 @@ object DodgeList {
     private val _throwers = mutableMapOf<UUID, DodgeListCustomData>()
     internal val throwers: MutableMap<UUID, DodgeListCustomData>
         get() {
-            _throwers.entries.removeIf { it.value.expiryDate?.isInFuture() == false }
+            _throwers.entries.removeIf { it.value.isExpired }
             return _throwers
         }
 
@@ -262,7 +262,24 @@ object DodgeList {
 data class DodgeListCustomData(
     @Expose val playerName: String,
     @Expose val reason: String?,
-    @Expose val expiryDate: SimpleTimeMark? = null,
+    @Expose private val expiryDate: SimpleTimeMark? = null,
 ) {
     val actualReason: String get() = reason ?: "No reason provided!"
+
+    val isExpired: Boolean get() = expiryDate?.isInFuture() == false
+    val formattedTimeRemaining: String?
+        get() {
+            val duration = expiryDate ?: return null
+            val components = mutableListOf<String>()
+
+            duration.timeUntil().toComponents { days, hours, minutes, seconds, ms ->
+                if (days > 0) components.add("${days}d")
+                if (hours > 0) components.add("${hours}h")
+                if (minutes > 0) components.add("${minutes}m")
+                if (seconds > 0) components.add("${seconds}s")
+                if (ms > 0 && components.size < 2) components.add("${ms}ms")
+            }
+
+            return components.take(2).joinToString(" ")
+        }
 }
