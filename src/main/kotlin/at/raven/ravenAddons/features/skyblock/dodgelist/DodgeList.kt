@@ -2,7 +2,6 @@ package at.raven.ravenAddons.features.skyblock.dodgelist
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.PartyAPI
-import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.PartyUpdateEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -110,13 +109,6 @@ object DodgeList {
             description = "Displays the dodge list help menu."
             callback { dodgeListCommand(it) }
         }
-
-        event.register("dodgelist-action-kick") {
-            description = "Command used by the dodge list to kick dodged users."
-            callback { kickPlayer(it.joinToString(" ")) }
-            category = CommandCategory.INTERNAL
-            hidden = true
-        }
     }
 
     private fun dodgeListCommand(args: Array<String>) {
@@ -195,15 +187,6 @@ object DodgeList {
             for ((player, _) in event.partyList) {
                 checkPlayer(player, player.name)
             }
-        }
-    }
-
-    private fun kickPlayer(player: String) {
-        ChatUtils.sendMessage("/pc [RA] Kicking $player since they are on the dodge list.")
-        ravenAddons.Companion.launchCoroutine {
-            Thread.sleep(500)
-
-            ChatUtils.sendMessage("/p kick $player")
         }
     }
 
