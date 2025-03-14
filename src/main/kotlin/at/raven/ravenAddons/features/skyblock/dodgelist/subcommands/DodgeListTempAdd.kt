@@ -48,11 +48,11 @@ object DodgeListTempAdd: DodgeListSubcommand() {
         val name = this.name
         val data = DodgeListCustomData(name, reason, SimpleTimeMark.now() + duration)
 
-        sendChatMessage(name, data.actualReason, duration.toString())
+        if (!sendChatMessage(name, data.actualReason, duration.toString())) return
         DodgeList.addPlayer(uuid, data)
     }
 
-    private fun sendChatMessage(player: String, reason: String, duration: String) {
+    private fun sendChatMessage(player: String, reason: String, duration: String): Boolean {
         val alreadyOnList = DodgeList.throwers.any { it.value.playerName.lowercase() == player.lowercase() }
         val component = ChatComponentText("")
 
@@ -63,9 +63,11 @@ object DodgeListTempAdd: DodgeListSubcommand() {
             component.add("§f$reason\n")
         } else {
             component.add("§7Player §c$player §7is already in the list.\n")
+            return false
         }
         component.add(DodgeListChatComponents.getLineComponent(false))
 
         ChatUtils.chat(component)
+        return true
     }
 }

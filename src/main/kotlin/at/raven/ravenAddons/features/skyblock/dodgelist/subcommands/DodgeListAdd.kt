@@ -40,11 +40,11 @@ object DodgeListAdd: DodgeListSubcommand() {
         val name = this.name
         val data = DodgeListCustomData(name, reason)
 
-        sendChatMessage(name, data.actualReason)
+        if (!sendChatMessage(name, data.actualReason)) return
         DodgeList.addPlayer(uuid, data)
     }
 
-    private fun sendChatMessage(player: String, reason: String) {
+    private fun sendChatMessage(player: String, reason: String): Boolean {
         val alreadyOnList = DodgeList.throwers.any { it.value.playerName.lowercase() == player.lowercase() }
         val component = ChatComponentText("")
 
@@ -54,9 +54,11 @@ object DodgeListAdd: DodgeListSubcommand() {
             component.add("§f$reason\n")
         } else {
             component.add("§7Player §c$player §7is already in the list.\n")
+            return false
         }
         component.add(DodgeListChatComponents.getLineComponent(false))
 
         ChatUtils.chat(component)
+        return true
     }
 }
