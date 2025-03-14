@@ -24,6 +24,7 @@ As mentioned above, features are being ported over from the ChatTriggers module 
 + Dodge List
   - Checks if players that join through party finder are on your dodge list. 
   - It allows the user to supply a reason for why you have dodged the user.
+  - Users can choose the duration for how long players should be dodged for by using `/ra dodge tempadd <player> <duration> [reason]
   - Has the additional option to automatically kick (and the option to announce why).
 
 ![Dodge List](https://github.com/user-attachments/assets/a6c970f7-d82b-47dd-aab8-8b31555349bb)
@@ -67,7 +68,7 @@ As mentioned above, features are being ported over from the ChatTriggers module 
 + Mining Ability Notifications
   
 + Gemstone Powder Notifications
-
+  - Option to choose the threshold of powder.
 </details>
 
 # Upcoming
