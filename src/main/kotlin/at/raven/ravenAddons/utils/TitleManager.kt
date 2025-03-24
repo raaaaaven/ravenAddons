@@ -13,7 +13,6 @@ import at.raven.ravenAddons.utils.EventUtils.cancel
 import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
-import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.network.play.server.S45PacketTitle
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -30,21 +29,21 @@ object TitleManager {
         timer: Duration,
         fadeIn: Duration,
         fadeOut: Duration,
+        hidesVanillaTitles: Boolean = true,
     ) {
         val title = TitleObject(
             title ?: "",
             subTitle ?: "",
             timer,
             fadeIn,
-            fadeOut
+            fadeOut,
+            hidesVanillaTitles
         )
 
         setTitle(title)
     }
 
     fun setTitle(title: TitleObject) {
-        clearVanillaTitle()
-
         titlesToRender.clear()
         titlesToRender.add(title)
     }
@@ -55,21 +54,21 @@ object TitleManager {
         timer: Duration,
         fadeIn: Duration,
         fadeOut: Duration,
+        hidesVanillaTitles: Boolean = true,
     ) {
         val title = TitleObject(
             title ?: "",
             subTitle ?: "",
             timer,
             fadeIn,
-            fadeOut
+            fadeOut,
+            hidesVanillaTitles
         )
 
         addTitle(title)
     }
 
     fun addTitle(title: TitleObject) {
-        clearVanillaTitle()
-
         titlesToRender.add(title)
     }
 
@@ -217,7 +216,7 @@ object TitleManager {
         event.cancel()
     }
 
-    fun clearVanillaTitle() = Minecraft.getMinecraft().ingameGUI.displayTitle("", "", 0, 0, 0)
+    fun shouldHideVanillaTitle(): Boolean = titlesToRender.any { it.hidesVanillaTitles }
 }
 
 data class TitleObject(
@@ -227,6 +226,7 @@ data class TitleObject(
     val titleDuration: Duration,
     val titleFadeIn: Duration,
     val titleFadeOut: Duration,
+    val hidesVanillaTitles: Boolean = true,
 ) {
     private val creationTime = SimpleTimeMark.now()
     fun isExpired() = (creationTime + titleDuration).isInPast()
