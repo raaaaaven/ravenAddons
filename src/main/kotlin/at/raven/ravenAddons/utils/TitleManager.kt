@@ -31,8 +31,6 @@ object TitleManager {
         fadeIn: Duration,
         fadeOut: Duration,
     ) {
-        clearVanillaTitle()
-
         val title = TitleObject(
             title ?: "",
             subTitle ?: "",
@@ -40,6 +38,38 @@ object TitleManager {
             fadeIn,
             fadeOut
         )
+
+        setTitle(title)
+    }
+
+    fun setTitle(title: TitleObject) {
+        clearVanillaTitle()
+
+        titlesToRender.clear()
+        titlesToRender.add(title)
+    }
+
+    fun addTitle(
+        title: String? = null,
+        subTitle: String? = null,
+        timer: Duration,
+        fadeIn: Duration,
+        fadeOut: Duration,
+    ) {
+        val title = TitleObject(
+            title ?: "",
+            subTitle ?: "",
+            timer,
+            fadeIn,
+            fadeOut
+        )
+
+        addTitle(title)
+    }
+
+    fun addTitle(title: TitleObject) {
+        clearVanillaTitle()
+
         titlesToRender.add(title)
     }
 
