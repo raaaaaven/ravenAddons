@@ -74,3 +74,9 @@ As mentioned above, features are being ported over from the ChatTriggers module 
 # Upcoming
 
 ???
+
+# To-do list
+
++ Change pre-existing timers to be based around ticks.
+
++ Create global dodge list using a repo system.
