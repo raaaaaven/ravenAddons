@@ -5,11 +5,17 @@ import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
+import at.raven.ravenAddons.event.PacketReceivedEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
+import at.raven.ravenAddons.event.render.TitleReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.EventUtils.cancel
+import at.raven.ravenAddons.utils.EventUtils.post
+import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.network.play.server.S45PacketTitle
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -181,6 +187,21 @@ object TitleManager {
 
             event.tomlData = tomlData
         }
+    }
+
+    @SubscribeEvent
+    fun onPacket(event: PacketReceivedEvent) {
+        if (event.packet !is S45PacketTitle) return
+
+        val chatComponent = event.packet.message ?: return
+        val formattedText = chatComponent.formattedText?.cleanupColors() ?: return
+
+        if (formattedText.isEmpty()) return
+
+        val newEvent = TitleReceivedEvent(formattedText, chatComponent, event.packet.type)
+
+        newEvent.post()
+        if (newEvent.isCanceled) event.cancel()
     }
 
     private fun Duration.inSeconds(): Double = this.inWholeMilliseconds.toDouble() / 1000.0
