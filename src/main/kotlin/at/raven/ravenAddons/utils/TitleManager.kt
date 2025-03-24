@@ -204,5 +204,13 @@ object TitleManager {
         if (newEvent.isCanceled) event.cancel()
     }
 
+    @SubscribeEvent
+    fun onTitle(event: TitleReceivedEvent) {
+        if (titleTotalTime == 0) return
+        if (titleTimer >= titleTotalTime) return
+
+        event.cancel()
+    }
+
     private fun Duration.inSeconds(): Double = this.inWholeMilliseconds.toDouble() / 1000.0
 }
