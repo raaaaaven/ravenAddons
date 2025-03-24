@@ -14,6 +14,7 @@ import at.raven.ravenAddons.utils.EventUtils.cancel
 import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.network.play.server.S45PacketTitle
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -37,6 +38,8 @@ object TitleManager {
         fadeIn: Duration,
         fadeOut: Duration,
     ) {
+        clearVanillaTitle()
+
         this.title = title ?: ""
         this.subTitle = subTitle ?: ""
 
@@ -212,5 +215,6 @@ object TitleManager {
         event.cancel()
     }
 
+    fun clearVanillaTitle() = Minecraft.getMinecraft().ingameGUI.displayTitle("", "", 0, 0, 0)
     private fun Duration.inSeconds(): Double = this.inWholeMilliseconds.toDouble() / 1000.0
 }
