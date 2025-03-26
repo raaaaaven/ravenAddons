@@ -5,24 +5,23 @@ import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
-import at.raven.ravenAddons.event.TickEvent
+import at.raven.ravenAddons.event.PacketReceivedEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
+import at.raven.ravenAddons.event.render.TitleReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.utils.EventUtils.cancel
+import at.raven.ravenAddons.utils.EventUtils.post
+import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager
+import net.minecraft.network.play.server.S45PacketTitle
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object TitleManager {
-    private var title = ""
-    private var subTitle = ""
-
-    private var titleTimer = 0
-    private var titleTotalTime = 0
-    private var titleFadeIn = 0
-    private var titleFadeOut = 0
+    private val titlesToRender = mutableListOf<TitleObject>()
 
     fun setTitle(
         title: String? = null,
@@ -30,13 +29,47 @@ object TitleManager {
         timer: Duration,
         fadeIn: Duration,
         fadeOut: Duration,
+        hidesVanillaTitles: Boolean = true,
     ) {
-        this.title = title ?: ""
-        this.subTitle = subTitle ?: ""
+        val title = TitleObject(
+            title ?: "",
+            subTitle ?: "",
+            timer,
+            fadeIn,
+            fadeOut,
+            hidesVanillaTitles
+        )
 
-        this.titleTotalTime = (timer.inSeconds() * 20).toInt()
-        this.titleFadeIn = (fadeIn.inSeconds() * 20).toInt()
-        this.titleFadeOut = (fadeOut.inSeconds() * 20).toInt()
+        setTitle(title)
+    }
+
+    fun setTitle(title: TitleObject) {
+        titlesToRender.clear()
+        titlesToRender.add(title)
+    }
+
+    fun addTitle(
+        title: String? = null,
+        subTitle: String? = null,
+        timer: Duration,
+        fadeIn: Duration,
+        fadeOut: Duration,
+        hidesVanillaTitles: Boolean = true,
+    ) {
+        val title = TitleObject(
+            title ?: "",
+            subTitle ?: "",
+            timer,
+            fadeIn,
+            fadeOut,
+            hidesVanillaTitles
+        )
+
+        addTitle(title)
+    }
+
+    fun addTitle(title: TitleObject) {
+        titlesToRender.add(title)
     }
 
     private fun command(args: Array<String>) {
@@ -71,10 +104,16 @@ object TitleManager {
 
     @SubscribeEvent
     fun onRenderOverlay(event: RenderOverlayEvent) {
-        if (titleTotalTime == 0) return
-        if (titleTimer >= titleTotalTime) return
+        val iterator = titlesToRender.iterator()
+        while (iterator.hasNext()) {
+            val title = iterator.next()
 
-        renderTitle(event.partialTicks)
+            if (title.isExpired()) {
+                iterator.remove()
+            } else {
+                renderTitle(title, event.partialTicks)
+            }
+        }
     }
 
     @SubscribeEvent
@@ -86,29 +125,12 @@ object TitleManager {
         }
     }
 
-    private fun renderTitle(partialTicks: Float) {
+    private fun renderTitle(title: TitleObject, partialTicks: Float) {
         val windowWidth = GuiRenderUtils.scaledWidth
         val windowHeight = GuiRenderUtils.scaledHeight
         val fontRenderer = GuiRenderUtils.fontRenderer
 
-        val fadeOutStart = titleTotalTime - titleFadeOut
-        val interpolatedTime = titleTimer + partialTicks
-
-        val alpha = when (interpolatedTime) {
-            in 0.0..titleFadeIn.toDouble() -> {
-                val alphaMultiplier = interpolatedTime / titleFadeIn
-                (alphaMultiplier * 255).toInt()
-            }
-
-            in fadeOutStart.toDouble()..titleTotalTime.toDouble() -> {
-                val fadeDuration = titleTotalTime - fadeOutStart
-                val timeSinceFadeStart = interpolatedTime - fadeOutStart
-                val alphaMultiplier = 1.0 - (timeSinceFadeStart / fadeDuration)
-                (alphaMultiplier * 255).toInt()
-            }
-
-            else -> 255
-        }
+        val alpha = title.getAlpha(partialTicks)
 
         if (alpha.coerceIn(0, 255) > 8) {
             GlStateManager.pushMatrix()
@@ -119,15 +141,15 @@ object TitleManager {
             GlStateManager.scale(4.0f, 4.0f, 4.0f)
             val color = alpha shl 24 and 0xFF000000.toInt()
             fontRenderer.drawString(
-                title,
-                (-fontRenderer.getStringWidth(title) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true
+                title.titleText,
+                (-fontRenderer.getStringWidth(title.titleText) / 2).toFloat(), -10.0f, 0xFFFFFF or color, true
             )
             GlStateManager.popMatrix()
             GlStateManager.pushMatrix()
             GlStateManager.scale(2.0f, 2.0f, 2.0f)
             fontRenderer.drawString(
-                subTitle,
-                (-fontRenderer.getStringWidth(subTitle) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true
+                title.subTitleText,
+                (-fontRenderer.getStringWidth(title.subTitleText) / 2).toFloat(), 5.0f, 0xFFFFFF or color, true
             )
             GlStateManager.popMatrix()
             GlStateManager.disableBlend()
@@ -136,33 +158,22 @@ object TitleManager {
     }
 
     @SubscribeEvent
-    fun onTick(event: TickEvent) {
-        if (titleTimer < titleTotalTime) {
-            ++titleTimer
-            if (titleTotalTime <= titleTimer) {
-                title = ""
-                subTitle = ""
-                titleTotalTime = 0
-                titleTimer = 0
-            }
-        }
-    }
-
-    @SubscribeEvent
     fun onDebug(event: DebugDataCollectionEvent) {
         event.title("Title Manager")
-        if (titleTimer == 0) {
+        if (titlesToRender.isEmpty()) {
             event.addIrrelevant("Not displaying anything")
             return
         }
         event.addData {
-            add("title: '$title'")
-            add("subtitle: '$subTitle'")
-            add("")
-            add("totalTime = $titleTotalTime")
-            add("remainingTime = $titleTimer")
-            add("fadeIn = $titleFadeIn")
-            add("fadeOut = $titleFadeOut")
+            titlesToRender.forEach {
+                add("--")
+                add("title: '${it.titleText}'")
+                add("subtitle: '${it.subTitleText}'")
+                add("")
+                add("duration = ${it.titleDuration}")
+                add("fadeIn = ${it.titleFadeIn}")
+                add("fadeOut = ${it.titleFadeOut}")
+            }
         }
     }
 
@@ -183,5 +194,64 @@ object TitleManager {
         }
     }
 
+    @SubscribeEvent
+    fun onPacket(event: PacketReceivedEvent) {
+        if (event.packet !is S45PacketTitle) return
+
+        val chatComponent = event.packet.message ?: return
+        val formattedText = chatComponent.formattedText?.cleanupColors() ?: return
+
+        if (formattedText.isEmpty()) return
+
+        val newEvent = TitleReceivedEvent(formattedText, chatComponent, event.packet.type)
+
+        newEvent.post()
+        if (newEvent.isCanceled) event.cancel()
+    }
+
+    @SubscribeEvent
+    fun onTitle(event: TitleReceivedEvent) {
+        if (titlesToRender.isEmpty()) return
+
+        event.cancel()
+    }
+
+    fun shouldHideVanillaTitle(): Boolean = titlesToRender.any { it.hidesVanillaTitles }
+}
+
+data class TitleObject(
+    val titleText: String = "",
+    val subTitleText: String = "",
+
+    val titleDuration: Duration,
+    val titleFadeIn: Duration,
+    val titleFadeOut: Duration,
+    val hidesVanillaTitles: Boolean = true,
+) {
+    private val creationTime = SimpleTimeMark.now()
+    fun isExpired() = (creationTime + titleDuration).isInPast()
+
+    fun getAlpha(partialTicks: Float): Int {
+        val fadeOutStart = titleDuration - titleFadeOut
+        val interpolatedTime = creationTime.passedSince().inTicks() + partialTicks
+
+        return when (creationTime.passedSince()) {
+            in 0.seconds..titleFadeIn -> {
+                val alphaMultiplier = interpolatedTime / titleFadeIn.inTicks()
+                (alphaMultiplier * 255).toInt()
+            }
+
+            in fadeOutStart..titleDuration -> {
+                val fadeDuration = (titleDuration - fadeOutStart).inTicks()
+                val timeSinceFadeStart = interpolatedTime - fadeOutStart.inTicks()
+                val alphaMultiplier = 1.0 - (timeSinceFadeStart / fadeDuration)
+                (alphaMultiplier * 255).toInt()
+            }
+
+            else -> 255
+        }
+    }
+
+    private fun Duration.inTicks(): Int = (this.inSeconds() * 20).toInt()
     private fun Duration.inSeconds(): Double = this.inWholeMilliseconds.toDouble() / 1000.0
 }
