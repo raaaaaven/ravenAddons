@@ -314,7 +314,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.NUMBER,
-        name = "!since",
+        name = "sinceInq",
         description = "Stores the number of mobs before inquisitor.",
         category = "Developer",
         hidden = true
