@@ -262,6 +262,14 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "!since",
+        description = "Announces to party chat on how many mobs you have spawned before spawning an Inquisitor.",
+        category = "Party Commands"
+    )
+    var sinceCommand = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
         category = "Developer"
@@ -303,6 +311,15 @@ object ravenAddonsConfig : Vigilant(
         hidden = true
     )
     var configVersion = 0
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "sinceInq",
+        description = "Stores the number of mobs before inquisitor.",
+        category = "Developer",
+        hidden = true
+    )
+    var sinceInq = 0
 
     init {
         initialize()

@@ -15,6 +15,7 @@ class ConfigSorting : SortingBehavior() {
         "Events",
         "Mining",
         "Farming",
+        "Party Commands",
         "Developer"
     )
 
