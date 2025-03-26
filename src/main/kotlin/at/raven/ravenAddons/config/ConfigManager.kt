@@ -23,7 +23,6 @@ object ConfigManager {
     fun onGameLoad(event: GameLoadEvent) {
         ConfigFixer
         configGui = ravenAddonsConfig.gui()
-        updateMessageSent = false
 
         if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
             ravenAddonsConfig.configVersion = ravenAddons.modVersion
@@ -38,8 +37,10 @@ object ConfigManager {
 
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
-        wasModUpdated.sendMessage()
-        updateMessageSent = true
+        if (!updateMessageSent) {
+            wasModUpdated.sendMessage()
+            updateMessageSent = true
+        }
     }
 
     fun openConfig() {
