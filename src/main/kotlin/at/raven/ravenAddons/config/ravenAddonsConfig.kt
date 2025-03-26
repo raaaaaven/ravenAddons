@@ -262,8 +262,8 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "since",
-        description = "Announces to party chat on how many mobs you have spawned before an Inquisitor.",
+        name = "!since",
+        description = "Announces to party chat on how many mobs you have spawned before spawning an Inquisitor.",
         category = "Party Commands"
     )
     var sinceCommand = false
