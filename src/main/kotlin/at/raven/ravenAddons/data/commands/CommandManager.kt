@@ -53,6 +53,7 @@ object CommandManager {
 
 enum class CommandCategory(val colorCode: Char) {
     NORMAL('a'),
+    REFILL('b'),
     DEVELOPER('7'),
     INTERNAL('8'),
     ;
