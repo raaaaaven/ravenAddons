@@ -11,9 +11,9 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 object RefillCommand {
     @SubscribeEvent
     fun onCommandRegisteration(event: CommandRegistrationEvent) {
-        event.register("ep") {
+        event.register("pearl") {
             description = "Refill your stack of Ender Pearls to 16."
-            aliases = listOf("pearl")
+            aliases = listOf("ep")
             category = CommandCategory.REFILL
             callback { refill("Ender Pearl", "ender_pearl", 16, "§f") }
         }
@@ -67,26 +67,26 @@ object RefillCommand {
         val amount = max - (item?.stackSize ?: 0)
 
         if (item == null) {
-            ChatUtils.debug("No stack found for $name so grabbing $max.")
-            ChatUtils.chat("Grabbing §f$max §7${name}s from sack.")
+            ChatUtils.debug("No stack found for $name so retrieving $max.")
+            ChatUtils.chat("Retrieving §f$max §7${name}s from sack.")
             ChatUtils.sendMessage("/gfs $id $max")
             return
         }
 
         if (amount == 1) {
             ChatUtils.debug("Found " + item.stackSize + " $name in the inventory so refilling $amount.")
-            ChatUtils.chat("Grabbing §f$amount §7$name from sack.")
+            ChatUtils.chat("Retrieving §f$amount §7$name from sack.")
             ChatUtils.sendMessage("/gfs $id $amount")
         }
 
         if (amount == 0) {
-            ChatUtils.debug("Found max amount ($max) in the inventory.")
+            ChatUtils.debug("$name found: max amount ($max) in the inventory.")
             ChatUtils.chat("You already have §f$max §7${name}s in your inventory.")
             return
         }
 
         ChatUtils.debug("Found " + item.stackSize + " $name in the inventory so refilling $amount.")
-        ChatUtils.chat("Grabbing §f$amount §7${name}s from sack.")
+        ChatUtils.chat("Retrieving §f$amount §7${name}s from sack.")
         ChatUtils.sendMessage("/gfs $id $amount")
     }
 }
