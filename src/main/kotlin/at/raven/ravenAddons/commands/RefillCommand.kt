@@ -12,27 +12,44 @@ object RefillCommand {
     fun onCommandRegisteration(event: CommandRegistrationEvent) {
         event.register("ep") {
             description = "Refill your stack of Ender Pearls to 16."
+            aliases = listOf("pearl")
             callback { refill("Ender Pearl", "ender_pearl", 16, "§f") }
         }
 
-        event.register("ij") {
+        event.register("jerry") {
             description = "Refill your stack of Inflatable Jerrys to 64."
+            aliases = listOf("ij")
             callback { refill("Inflatable Jerry", "inflatable_jerry", 64, "§f") }
         }
 
-        event.register("sb") {
+        event.register("superboom") {
             description = "Refill your stack of Superboom TNT to 64."
+            aliases = listOf("sb")
             callback { refill("Superboom TNT", "superboom_tnt", 64, "§9") }
         }
 
-        event.register("sl") {
+        event.register("leaps") {
             description = "Refill your stack of Spirit Leaps to 16."
+            aliases = listOf("sl")
             callback { refill("Spirit Leap", "spirit_leap", 16, "§9") }
         }
 
-        event.register("de") {
+        event.register("decoy") {
             description = "Refill your stack of Decoys to 64."
+            aliases = listOf("de")
             callback { refill("Decoy", "decoy", 64, "§a") }
+        }
+
+        event.register("cobblestone") {
+            description = "Refill your stack of Cobblestones to 64."
+            aliases = listOf("cs")
+            callback { refill("Cobblestone", "cobblestone", 64, "§f")}
+        }
+
+        event.register("bob-omb") {
+            description = "Refill your stack of Bob-ombs to 64."
+            aliases = listOf("bo")
+            callback { refill("Bob-omb", "bob-omb", 64, "§9") }
         }
     }
 
