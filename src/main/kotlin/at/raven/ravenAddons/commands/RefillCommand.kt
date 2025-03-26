@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.commands
 
+import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
@@ -13,42 +14,49 @@ object RefillCommand {
         event.register("ep") {
             description = "Refill your stack of Ender Pearls to 16."
             aliases = listOf("pearl")
+            category = CommandCategory.REFILL
             callback { refill("Ender Pearl", "ender_pearl", 16, "§f") }
         }
 
         event.register("jerry") {
             description = "Refill your stack of Inflatable Jerrys to 64."
             aliases = listOf("ij")
+            category = CommandCategory.REFILL
             callback { refill("Inflatable Jerry", "inflatable_jerry", 64, "§f") }
         }
 
         event.register("superboom") {
             description = "Refill your stack of Superboom TNT to 64."
             aliases = listOf("sb")
+            category = CommandCategory.REFILL
             callback { refill("Superboom TNT", "superboom_tnt", 64, "§9") }
         }
 
         event.register("leaps") {
             description = "Refill your stack of Spirit Leaps to 16."
             aliases = listOf("sl")
+            category = CommandCategory.REFILL
             callback { refill("Spirit Leap", "spirit_leap", 16, "§9") }
         }
 
         event.register("decoy") {
             description = "Refill your stack of Decoys to 64."
             aliases = listOf("de")
+            category = CommandCategory.REFILL
             callback { refill("Decoy", "decoy", 64, "§a") }
         }
 
         event.register("cobblestone") {
             description = "Refill your stack of Cobblestones to 64."
             aliases = listOf("cs")
+            category = CommandCategory.REFILL
             callback { refill("Cobblestone", "cobblestone", 64, "§f")}
         }
 
         event.register("bob-omb") {
             description = "Refill your stack of Bob-ombs to 64."
             aliases = listOf("bo")
+            category = CommandCategory.REFILL
             callback { refill("Bob-omb", "bob-omb", 64, "§9") }
         }
     }
