@@ -78,6 +78,36 @@ features along the way. You can see a list of current and upcoming features belo
 
 </details>
 
+<details>
+<summary>Party Commands</summary>
+
+## Party Commands
+
++ !since
+    - Announces to the party how many mobs you have spawned before spawning an Inquisitor.
+
+</details>
+
+<details>
+<summary>Commands</summary>
+
+## Commands
+
++ Refill Commands related to Dungeons
+    - Choose between a lot of refill commands. You can view the full list with `/ra help`.
+    - `/ra ep` - Ender Pearl Refill.
+    - `/ra ij` - Inflatable Jerry Refill.
+    - `/ra sb` - Superboom TNT Refill.
+    - `/ra sl` - Spirit Leap Refill.
+    - `/ra de` - Decoy Refill.
+
+
++ Refill Commands related to Mining
+    - `/ra cs` - Cobblestone Refill (Mining Routes).
+    - `/ra bo` - Bob-omb Refill.
+
+</details>
+
 # Upcoming
 
 ???
