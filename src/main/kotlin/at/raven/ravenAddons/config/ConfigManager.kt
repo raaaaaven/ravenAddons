@@ -17,11 +17,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 object ConfigManager {
     private var configGui: GuiScreen? = null
     private var wasModUpdated = ModUpdateStatus.NONE
+    private var updateMessageSent = false
 
     @SubscribeEvent
     fun onGameLoad(event: GameLoadEvent) {
         ConfigFixer
         configGui = ravenAddonsConfig.gui()
+        updateMessageSent = false
 
         if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
             ravenAddonsConfig.configVersion = ravenAddons.modVersion
@@ -37,6 +39,7 @@ object ConfigManager {
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
         wasModUpdated.sendMessage()
+        updateMessageSent = true
     }
 
     fun openConfig() {
