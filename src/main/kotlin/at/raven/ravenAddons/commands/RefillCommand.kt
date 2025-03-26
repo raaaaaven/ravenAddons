@@ -50,7 +50,7 @@ object RefillCommand {
             description = "Refill your stack of Cobblestones to 64."
             aliases = listOf("cs")
             category = CommandCategory.REFILL
-            callback { refill("Cobblestone", "cobblestone", 64, "§f")}
+            callback { refill("Cobblestone", "cobblestone", 64, "§f") }
         }
 
         event.register("bob-omb") {
