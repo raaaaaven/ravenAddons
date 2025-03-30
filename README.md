@@ -5,8 +5,7 @@ Additionally, features for the Hypixel Gamemode, The Pit, are being made.
 
 # Features
 
-As mentioned above, features are being ported over from the ChatTriggers module while also bringing new and unique
-features along the way. You can see a list of current and upcoming features below.
+You can see a list of features below, as well as a list of upcoming features and a to-do list.
 
 <details>
 <summary>Pit</summary>
