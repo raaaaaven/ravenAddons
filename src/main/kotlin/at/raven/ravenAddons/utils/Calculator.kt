@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 @LoadModule
 object Calculator {
     fun String.calc(): Double? {
-        val tokens = tokenize(this)
+        val tokens = tokenize(this.replace(" ", ""))
         if (tokens.isEmpty()) return null
 
         val rpn = toRPN(tokens)
@@ -160,7 +160,7 @@ object Calculator {
     fun onCommand(event: CommandRegistrationEvent) {
         event.register("calc") {
             description = "Calculates a given mathematical expression."
-            callback { calcCommand(it.joinToString()) }
+            callback { calcCommand(it.joinToString("")) }
         }
     }
 
