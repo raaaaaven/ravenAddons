@@ -3,6 +3,7 @@ package at.raven.ravenAddons.config
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
+import scala.sys.Prop
 import java.awt.Color
 import kotlin.reflect.KProperty
 
@@ -65,6 +66,25 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Drops"
     )
     var dropAlertUserName = ""
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "DROP Title",
+        description = "Create a title notification for your drop.",
+        category = "SkyBlock",
+        subcategory = "Drops"
+    )
+    var dropTitle = false
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "DROP Title Rarity",
+        description = "Choose the minimum rarity the drop must be to display the title.",
+        category = "SkyBlock",
+        subcategory = "Drops",
+        options = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"]
+    )
+    var dropTitleRarity = 0
 
     @Property(
         type = PropertyType.SWITCH,
