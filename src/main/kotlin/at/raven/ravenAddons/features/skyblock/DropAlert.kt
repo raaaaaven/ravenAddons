@@ -17,7 +17,7 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object DropAlert {
     private val dropPattern =
-        "(?:§r)*(?<dropCategoryColor>§.)(?:§.)+(?<dropCategory>[\\w\\s]*[CD]ROP!) (?:§.)+(?:\\()?(?:§.)*(?:\\d+x )?(?:§.)*(?<dropColor>§.)(?<name>◆?[\\s\\w]+)(?:§.)+\\)? ?(?:(?:§.)+)?(?:\\((?:\\+(?:§.)*(?<magicFind>\\d+)% (?:§.)+✯ Magic Find(?:§.)*|[\\w\\s]+)\\))?".toPattern()
+        "(?:§r)*(?<dropCategoryColor>§.)(?:§.)+(?<dropCategory>[\\w\\s]*[CD]ROP!) (?:§.)+(?:\\()?(?:§.)*(?:\\d+x )?(?:§.)*(?<dropColor>§.)(?<name>◆?[\\s\\w]+)(?:§.)?+\\)? ?(?:(?:§.)+)?(?:\\((?:\\+(?:§.)*(?<magicFind>\\d+)% (?:§.)+✯ Magic Find(?:§.)*|[\\w\\s]+)\\))?".toPattern()
 
     enum class rarities(
         val colorCode: Char,
@@ -55,18 +55,25 @@ object DropAlert {
                 ravenAddons.launchCoroutine {
                     delay(500)
 
-                    if (magicFind.isNullOrEmpty()) {
-                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name")
-                    } else {
+                    if (!magicFind.isNullOrEmpty()) {
                         ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name(+$magicFind% ✯ Magic Find)")
+                    } else {
+                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name")
                     }
                 }
 
                 if (ravenAddonsConfig.dropTitle && titleRarity >= configRarity) {
 
+                    val subtitle =
+                        if (!magicFind.isNullOrEmpty()) {
+                            "§r§b(+$magicFind% §r§b✯ Magic Find§r§b)"
+                        } else {
+                            ""
+                        }
+
                     TitleManager.setTitle(
                         "$dropCategoryColor§l$dropCategory §r$dropColor$name",
-                        "§r§b(+$magicFind% §r§b✯ Magic Find§r§b)",
+                        subtitle,
                         3.seconds,
                         1.seconds,
                         1.seconds
