@@ -8,78 +8,57 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object DropAlert {
-    private val dropPattern =
-        "(?:§r)*(?<dropCategoryColor>§.)(?:§.)+(?<dropCategory>[\\w\\s]*[CD]ROP!) (?:§.)+(?:\\()?(?:§.)*(?:\\d+x )?(?:§.)*(?<dropColor>§.)(?<name>◆?[\\s\\w]+)(?:§.)?+\\)? ?(?:(?:§.)+)?(?:\\((?:\\+(?:§.)*(?<magicFind>\\d+)% (?:§.)+✯ Magic Find(?:§.)*|[\\w\\s]+)\\))?".toPattern()
-
-    enum class rarities(
-        val colorCode: Char,
-    ) {
-        COMMON('f'),
-        UNCOMMON('a'),
-        RARE('2'),
-        EPIC('5'),
-        LEGENDARY('6'),
-        MYTHIC('d')
-        ;
-
-        companion object {
-            fun getFromChatColor(colorCode: Char) = entries.first { it.colorCode == colorCode }
-        }
-    }
+    private val rngPattern =
+        "^(?<type>PRAY TO RNGESUS|INSANE|CRAZY RARE|VERY RARE|RARE|UNCOMMON|PET) DROP! (?<drop>.+)$".toPattern()
+    private val dropPattern = "^(?<dropCategory>[\\w\\s]+[CD]ROP!) +\\(?(?<name>[◆\\w ]+)\\)?(?:$| \\((?<magicFind>Armor Set Bonus|\\+[\\d,.]+(?:% ✯ Magic Find|☘))\\))".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        dropPattern.matchMatcher(event.message.removeColors()) {
+            val coloredMessage = event.message
 
-        dropPattern.matchMatcher(event.message) {
-            val dropCategoryColor = group("dropCategoryColor")
             val dropCategory = group("dropCategory")
-            val dropColor = group("dropColor")
+            val dropCategoryColor = coloredMessage.substring(0..coloredMessage.indexOf(dropCategory)-1)
+
             val name = group("name")
+            val nameIndex = coloredMessage.indexOf(name)
+            val nameColor = coloredMessage.substring(nameIndex-2 ,nameIndex)
+
             val magicFind = group("magicFind")
 
-            val configRarity = rarities.entries[ravenAddonsConfig.dropTitleRarity]
-            val titleRarity = rarities.getFromChatColor(dropColor.last())
+            val configRarity = ItemRarity.entries[ItemRarity.UNCOMMON.ordinal]
+            val titleRarity = ItemRarity.getFromChatColor(nameColor.last())
+
+            ChatUtils.debug("item is $titleRarity")
 
             if (ravenAddonsConfig.dropAlert || ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
-                ChatUtils.debug("dropAlert triggered: $dropCategory $name")
-
-                ravenAddons.launchCoroutine {
+                ChatUtils.debug("dropAlert triggered: $dropCategory $name $magicFind")
+                ravenAddons.Companion.launchCoroutine {
                     delay(500)
-
-                    if (!magicFind.isNullOrEmpty()) {
-                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name(+$magicFind% ✯ Magic Find)")
-                    } else {
-                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name")
-                    }
-                }
-
-                if (ravenAddonsConfig.dropTitle && titleRarity >= configRarity) {
-
-                    val subtitle =
-                        if (!magicFind.isNullOrEmpty()) {
-                            "§r§b(+$magicFind% §r§b✯ Magic Find§r§b)"
-                        } else {
-                            ""
-                        }
-
-                    TitleManager.setTitle(
-                        "$dropCategoryColor§l$dropCategory §r$dropColor$name",
-                        subtitle,
-                        3.seconds,
-                        1.seconds,
-                        1.seconds
-                    )
+                    if (magicFind != null) {
+                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name") } else
+                        (ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name $magicFind"))
                 }
             }
+//            if (true && titleRarity >= configRarity) {
+
+            ChatUtils.debug("dropAlert triggered: $dropCategoryColor$dropCategory $nameColor$name $magicFind".replace('§','&'))
+            TitleManager.setTitle(
+                "$dropCategoryColor$dropCategory §r$nameColor$name",
+                magicFind,
+                3.seconds,
+                1.seconds,
+                1.seconds)
+//            }
         }
     }
 }
