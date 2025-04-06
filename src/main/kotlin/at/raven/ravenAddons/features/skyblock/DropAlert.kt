@@ -18,7 +18,7 @@ import kotlin.time.Duration.Companion.seconds
 object DropAlert {
     private val rngPattern =
         "^(?<type>PRAY TO RNGESUS|INSANE|CRAZY RARE|VERY RARE|RARE|UNCOMMON|PET) DROP! (?<drop>.+)$".toPattern()
-    private val dropPattern = "^(?<dropCategory>[\\w\\s]+[CD]ROP!) +\\(?(?<name>[◆\\w ]+)\\)?(?:$| \\((?<magicFind>Armor Set Bonus|\\+[\\d,.]+(?:% ✯ Magic Find|☘))\\))".toPattern()
+    private val dropPattern = "^(?<dropCategory>[\\w\\s]+[CD]ROP!) +\\(?(?<name>[◆\\w ]+)\\)?(?:$| \\((?<dropType>Armor Set Bonus|\\+[\\d,.]+(?:% ✯ Magic Find|☘))\\))".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -33,7 +33,9 @@ object DropAlert {
             val nameIndex = coloredMessage.indexOf(name)
             val nameColor = coloredMessage.substring(nameIndex-2 ,nameIndex)
 
-            val magicFind = group("magicFind")
+            val dropType = group("dropType")
+            val dropTypeIndex = coloredMessage.indexOf(dropType)
+            val dropTypeColor = coloredMessage.substring(dropTypeIndex-2 ,dropTypeIndex)
 
             val configRarity = ItemRarity.entries[ItemRarity.UNCOMMON.ordinal]
             val titleRarity = ItemRarity.getFromChatColor(nameColor.last())
@@ -41,24 +43,28 @@ object DropAlert {
             ChatUtils.debug("item is $titleRarity")
 
             if (ravenAddonsConfig.dropAlert || ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
-                ChatUtils.debug("dropAlert triggered: $dropCategory $name $magicFind")
+                ChatUtils.debug("dropAlert triggered: $dropCategory $name $dropType")
                 ravenAddons.Companion.launchCoroutine {
                     delay(500)
-                    if (magicFind != null) {
+                    if (dropType != null) {
                         ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name") } else
-                        (ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name $magicFind"))
+                        (ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name $dropType"))
                 }
             }
-//            if (true && titleRarity >= configRarity) {
+            if (titleRarity >= configRarity) {
 
-            ChatUtils.debug("dropAlert triggered: $dropCategoryColor$dropCategory $nameColor$name $magicFind".replace('§','&'))
+            val subtitle = if (dropType != null) {
+                ""
+            } else "($dropTypeColor$dropType)"
+
+            ChatUtils.debug("dropAlert triggered: $dropCategoryColor$dropCategory $nameColor$name $dropType".replace('§','&'))
             TitleManager.setTitle(
                 "$dropCategoryColor$dropCategory §r$nameColor$name",
-                magicFind,
+                subtitle,
                 3.seconds,
                 1.seconds,
                 1.seconds)
-//            }
+            }
         }
     }
 }
