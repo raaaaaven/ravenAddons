@@ -27,7 +27,7 @@ object DropAlert {
             val coloredMessage = event.message
 
             val dropCategory = group("dropCategory")
-            val dropCategoryColor = coloredMessage.substring(0..coloredMessage.indexOf(dropCategory)-1)
+            val dropCategoryColor = coloredMessage.substring(0..<coloredMessage.indexOf(dropCategory))
 
             val name = group("name")
             val nameIndex = coloredMessage.indexOf(name)
@@ -43,21 +43,21 @@ object DropAlert {
             ChatUtils.debug("item is $titleRarity")
 
             if (ravenAddonsConfig.dropAlert || ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
-                ChatUtils.debug("dropAlert triggered: $dropCategory $name $dropType")
+                ChatUtils.debug("Drop Alert: $dropCategory $name $dropType")
                 ravenAddons.Companion.launchCoroutine {
                     delay(500)
                     if (dropType != null) {
-                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name") } else
-                        (ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name $dropType"))
+                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name $dropType") } else
+                        (ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name"))
                 }
             }
             if (titleRarity >= configRarity) {
 
             val subtitle = if (dropType != null) {
-                ""
-            } else "($dropTypeColor$dropType)"
+                "$dropTypeColor($dropType)"
+            } else ""
 
-            ChatUtils.debug("dropAlert triggered: $dropCategoryColor$dropCategory $nameColor$name $dropType".replace('§','&'))
+            ChatUtils.debug("Drop Title: $dropCategoryColor$dropCategory $nameColor$name $dropType".replace('§','&'))
             TitleManager.setTitle(
                 "$dropCategoryColor$dropCategory §r$nameColor$name",
                 subtitle,
