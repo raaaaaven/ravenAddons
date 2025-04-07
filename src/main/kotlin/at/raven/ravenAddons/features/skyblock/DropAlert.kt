@@ -16,8 +16,6 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object DropAlert {
-    private val rngPattern =
-        "^(?<type>PRAY TO RNGESUS|INSANE|CRAZY RARE|VERY RARE|RARE|UNCOMMON|PET) DROP! (?<drop>.+)$".toPattern()
 
     // https://regex101.com/r/W7Bylx/4
     private val dropPattern = "^(?:§r)?+(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?<multiDropCount>\\d+x)? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?$".toPattern()
