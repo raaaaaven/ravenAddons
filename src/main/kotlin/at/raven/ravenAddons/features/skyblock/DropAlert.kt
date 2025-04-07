@@ -44,7 +44,7 @@ object DropAlert {
                     delay(500)
 
                     val message = buildString {
-                        append("/msg ${ravenAddonsConfig.dropAlertUserName} [RA]")
+                        append("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] ")
                         append("$dropType $item")
                         if (extra.isNotEmpty()) {
                             append(" $extra")
