@@ -18,52 +18,62 @@ import kotlin.time.Duration.Companion.seconds
 object DropAlert {
     private val rngPattern =
         "^(?<type>PRAY TO RNGESUS|INSANE|CRAZY RARE|VERY RARE|RARE|UNCOMMON|PET) DROP! (?<drop>.+)$".toPattern()
-    private val dropPattern = "^(?<dropCategory>[\\w\\s]+[CD]ROP!) +\\(?(?<name>[◆\\w ]+)\\)?(?:$| \\((?<dropType>Armor Set Bonus|\\+[\\d,.]+(?:% ✯ Magic Find|☘))\\))".toPattern()
+
+    // https://regex101.com/r/W7Bylx/4
+    private val dropPattern = "^(?:§r)?+(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?<multiDropCount>\\d+x)? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?$".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
-        dropPattern.matchMatcher(event.message.removeColors()) {
-            val coloredMessage = event.message
+        dropPattern.matchMatcher(event.message) {
+            val dropType = group("dropType") ?: return
+            val extra = group("subtitle").orEmpty().removeColors()
 
-            val dropCategory = group("dropCategory")
-            val dropCategoryColor = coloredMessage.substring(0..<coloredMessage.indexOf(dropCategory))
+            val itemName = group("item") ?: return
+            val itemColor = group("itemColor") ?: return
+            val multiDropCount = group("multiDropCount")
+            val item = multiDropCount?.let { "$it $itemName" } ?: itemName
 
-            val name = group("name")
-            val nameIndex = coloredMessage.indexOf(name)
-            val nameColor = coloredMessage.substring(nameIndex-2 ,nameIndex)
+            val title = if (ravenAddonsConfig.dropTitleCategory) (group("title")) else ("$itemColor$itemName")
 
-            val dropType = group("dropType")
-            val dropTypeIndex = coloredMessage.indexOf(dropType)
-            val dropTypeColor = coloredMessage.substring(dropTypeIndex-2 ,dropTypeIndex)
+            ChatUtils.debug("$title ${group("subtitle")}")
 
-            val configRarity = ItemRarity.entries[ItemRarity.UNCOMMON.ordinal]
-            val titleRarity = ItemRarity.getFromChatColor(nameColor.last())
+            if (ravenAddonsConfig.dropAlert && ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
 
-            ChatUtils.debug("item is $titleRarity")
-
-            if (ravenAddonsConfig.dropAlert || ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
-                ChatUtils.debug("Drop Alert: $dropCategory $name $dropType")
-                ravenAddons.Companion.launchCoroutine {
+                ravenAddons.launchCoroutine {
                     delay(500)
-                    if (dropType != null) {
-                        ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name $dropType") } else
-                        (ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $dropCategory $name"))
+
+                    val message = buildString {
+                        append("/msg ${ravenAddonsConfig.dropAlertUserName} [RA]")
+                        append("$dropType $item")
+                        if (extra.isNotEmpty()) {
+                            append(" $extra")
+                        }
+                    }
+
+                    ChatUtils.sendMessage(message)
                 }
             }
-            if (titleRarity >= configRarity) {
 
-            val subtitle = if (dropType != null) {
-                "$dropTypeColor($dropType)"
-            } else ""
+            val dropTypeColor = group("dropTypeColor") ?: ""
 
-            ChatUtils.debug("Drop Title: $dropCategoryColor$dropCategory $nameColor$name $dropType".replace('§','&'))
-            TitleManager.setTitle(
-                "$dropCategoryColor$dropCategory §r$nameColor$name",
-                subtitle,
-                3.seconds,
-                1.seconds,
-                1.seconds)
+            val configRarity = ItemRarity.entries[ravenAddonsConfig.dropTitleRarity]
+            val titleRarity = dropTypeColor.getOrNull(1)?.let { ItemRarity.getFromChatColor(it) } ?: run {
+                ChatUtils.warning("Couldn't find color code in drop!")
+                println(event.message)
+                return
+            }
+
+            if (ravenAddonsConfig.dropTitle) {
+                if (titleRarity >= configRarity) {
+                    TitleManager.setTitle(
+                        title,
+                        group("subtitle"),
+                        3.seconds,
+                        1.seconds,
+                        1.seconds,
+                    )
+                }
             }
         }
     }

@@ -11,6 +11,6 @@ enum class ItemRarity(
     MYTHIC('d')
     ;
     companion object {
-        fun getFromChatColor(colorCode: Char) = entries.first { it.colorCode == colorCode}
+        fun getFromChatColor(colorCode: Char) = entries.firstOrNull { it.colorCode == colorCode}
     }
 }

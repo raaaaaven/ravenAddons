@@ -77,6 +77,15 @@ object ravenAddonsConfig : Vigilant(
     var dropTitle = false
 
     @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Show DROP Category",
+        description = "Choose whether or not to display the category of the drop in the title.",
+        category = "SkyBlock",
+        subcategory = "Drops"
+    )
+    var dropTitleCategory = true
+
+    @Property(
         type = PropertyType.SELECTOR,
         name = "DROP Title Rarity",
         description = "Choose the minimum rarity the drop must be to display the title.",
