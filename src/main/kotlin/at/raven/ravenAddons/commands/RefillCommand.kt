@@ -77,6 +77,7 @@ object RefillCommand {
             ChatUtils.debug("Found " + item.stackSize + " $name in the inventory so refilling $amount.")
             ChatUtils.chat("Retrieving §f$amount §7$name from sack.")
             ChatUtils.sendMessage("/gfs $id $amount")
+            return
         }
 
         if (amount == 0) {
