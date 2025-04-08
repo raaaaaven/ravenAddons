@@ -37,8 +37,8 @@ object DropAlert {
             val item = multiDropCount?.let { "$it ($itemName)" } ?: itemName
 
             val title = if (ravenAddonsConfig.dropTitleCategory)
-                group("title"
-            ) else {
+                group("title")
+            else {
                 buildString {
                 if (multiDropCount != null) {
                     append("$multiDropColor(")
