@@ -40,9 +40,12 @@ object DropAlert {
                     append("$multiDropColor(")
                     append(multiDropCount)
                     append(" ")
-                }
-                append(itemColor)
-                append("$itemName§7)")
+                    append(itemColor)
+                    append("$itemName§7)")
+                } else {
+                    append(itemColor)
+                    append(itemName)
+                    }
                 }
             }
 
