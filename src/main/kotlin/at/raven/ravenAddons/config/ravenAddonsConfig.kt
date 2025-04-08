@@ -69,7 +69,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "DROP Title",
-        description = "Create a title notification for your drop.",
+        description = "Create a title notification for your RARE drop.",
         category = "SkyBlock",
         subcategory = "Drops"
     )
@@ -77,7 +77,7 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.CHECKBOX,
-        name = "Show DROP Category",
+        name = "DROP Title Category",
         description = "Choose whether or not to display the category of the drop in the title.",
         category = "SkyBlock",
         subcategory = "Drops"
