@@ -8,6 +8,7 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
 import kotlinx.coroutines.delay
@@ -16,6 +17,8 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object DropAlert {
+
+    private var titleCooldown = SimpleTimeMark.farPast()
 
     // https://regex101.com/r/W7Bylx/4
     private val dropPattern = "^(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?:(?<multiDropColor>§.)(?<multiDropCount>\\d+x))? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?\$".toPattern()
@@ -80,7 +83,8 @@ object DropAlert {
             }
 
             if (ravenAddonsConfig.dropTitle) {
-                if (titleRarity >= configRarity) {
+                if (titleRarity >= configRarity || titleCooldown.isInPast()) {
+                    titleCooldown = SimpleTimeMark.now() + 1.seconds
                     TitleManager.setTitle(
                         title,
                         group("subtitle"),
