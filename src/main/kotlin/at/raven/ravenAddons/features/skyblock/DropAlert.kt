@@ -83,7 +83,7 @@ object DropAlert {
             }
 
             if (ravenAddonsConfig.dropTitle) {
-                if (titleRarity >= configRarity || titleCooldown.isInPast()) {
+                if (titleRarity >= configRarity && titleCooldown.isInPast()) {
                     titleCooldown = SimpleTimeMark.now() + 1.seconds
                     TitleManager.setTitle(
                         title,
