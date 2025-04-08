@@ -8,30 +8,92 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
+import at.raven.ravenAddons.utils.TitleManager
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object DropAlert {
-    private val rngPattern =
-        "^(?<type>PRAY TO RNGESUS|INSANE|CRAZY RARE|VERY RARE|RARE|UNCOMMON|PET) DROP! (?<drop>.+)$".toPattern()
+
+    private var titleCooldown = SimpleTimeMark.farPast()
+
+    // https://regex101.com/r/W7Bylx/4
+    private val dropPattern = "^(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?:(?<multiDropColor>§.)(?<multiDropCount>\\d+x))? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?\$".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
-        if (!ravenAddonsConfig.dropAlert || ravenAddonsConfig.dropAlertUserName.isEmpty()) return
+        dropPattern.matchMatcher(event.message) {
+            val dropType = group("dropType") ?: return
+            val extra = group("subtitle").orEmpty().removeColors()
 
-        rngPattern.matchMatcher(event.message.removeColors()) {
-            val type = group("type")
-            val drop = group("drop")
+            val itemName = group("item") ?: return
+            val itemColor = group("itemColor") ?: ""
+            val multiDropCount = group("multiDropCount")
+            val multiDropColor = group("multiDropColor")
+            val item = multiDropCount?.let { "$it ($itemName)" } ?: itemName
 
-            ChatUtils.debug("dropAlert triggered: $type DROP! $drop")
+            val title = if (ravenAddonsConfig.dropTitleCategory)
+                group("title")
+            else {
+                buildString {
+                if (multiDropCount != null) {
+                    append("$multiDropColor(")
+                    append(multiDropCount)
+                    append(" ")
+                    append(itemColor)
+                    append(itemName)
+                    append("$multiDropColor)")
+                } else {
+                    append(itemColor)
+                    append(itemName)
+                    }
+                }
+            }
 
-            ravenAddons.Companion.launchCoroutine {
-                delay(500)
+            ChatUtils.debug("$title ${group("subtitle")}")
 
-                ChatUtils.sendMessage("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] $type DROP! $drop")
+            if (ravenAddonsConfig.dropAlert && ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
+
+                ravenAddons.launchCoroutine {
+                    delay(500)
+
+                    val message = buildString {
+                        append("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] ")
+                        append("$dropType $item")
+                        if (extra.isNotEmpty()) {
+                            append(" $extra")
+                        }
+                    }
+
+                    ChatUtils.sendMessage(message)
+                }
+            }
+
+            val configRarity = ItemRarity.entries[ravenAddonsConfig.dropTitleRarity]
+            val titleRarity = itemColor.getOrNull(1)?.let { char -> ItemRarity.getFromChatColor(char) ?: run {
+                ChatUtils.warning("Unknown color code '$char' for rarity!")
+                ItemRarity.COMMON
+            } } ?: run {
+                ChatUtils.warning("Couldn't find color code in drop!")
+                println(event.message)
+                return
+            }
+
+            if (ravenAddonsConfig.dropTitle) {
+                if (titleRarity >= configRarity && titleCooldown.isInPast()) {
+                    titleCooldown = SimpleTimeMark.now() + 1.seconds
+                    TitleManager.setTitle(
+                        title,
+                        group("subtitle"),
+                        3.seconds,
+                        1.seconds,
+                        1.seconds,
+                    )
+                }
             }
         }
     }

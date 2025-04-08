@@ -68,6 +68,34 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "DROP Title",
+        description = "Create a title notification for your RARE drop.",
+        category = "SkyBlock",
+        subcategory = "Drops"
+    )
+    var dropTitle = false
+
+    @Property(
+        type = PropertyType.CHECKBOX,
+        name = "DROP Title Category",
+        description = "Choose whether or not to display the category of the drop in the title.",
+        category = "SkyBlock",
+        subcategory = "Drops"
+    )
+    var dropTitleCategory = true
+
+    @Property(
+        type = PropertyType.SELECTOR,
+        name = "DROP Title Rarity",
+        description = "Choose the minimum rarity the drop must be to display the title.",
+        category = "SkyBlock",
+        subcategory = "Drops",
+        options = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"]
+    )
+    var dropTitleRarity = 0
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Fire Freeze Timer",
         description = "Display a 10 second timer above a frozen entity's head.",
         category = "SkyBlock",
