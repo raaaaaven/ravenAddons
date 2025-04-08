@@ -3,7 +3,6 @@ package at.raven.ravenAddons.config
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
 import gg.essential.vigilance.data.PropertyType
-import scala.sys.Prop
 import java.awt.Color
 import kotlin.reflect.KProperty
 
