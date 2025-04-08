@@ -18,7 +18,7 @@ import kotlin.time.Duration.Companion.seconds
 object DropAlert {
 
     // https://regex101.com/r/W7Bylx/4
-    private val dropPattern = "^(?:§r)?+(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?<multiDropCount>\\d+x)? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?$".toPattern()
+    private val dropPattern = "^(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?:(?<multiDropColor>§.)(?<multiDropCount>\\d+x))? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?\$".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -30,9 +30,21 @@ object DropAlert {
             val itemName = group("item") ?: return
             val itemColor = group("itemColor") ?: ""
             val multiDropCount = group("multiDropCount")
-            val item = multiDropCount?.let { "$it $itemName" } ?: itemName
+            val multiDropColor = group("multiDropColor")
+            val item = multiDropCount?.let { "$it ($itemName)" } ?: itemName
 
-            val title = if (ravenAddonsConfig.dropTitleCategory) (group("title")) else ("$itemColor$itemName")
+            val title = if (ravenAddonsConfig.dropTitleCategory) (group("title")
+            ) else {
+                buildString {
+                if (multiDropCount != null) {
+                    append("$multiDropColor(")
+                    append(multiDropCount)
+                    append(" ")
+                }
+                append(itemColor)
+                append("$itemName§7)")
+                }
+            }
 
             ChatUtils.debug("$title ${group("subtitle")}")
 
