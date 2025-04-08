@@ -36,7 +36,8 @@ object DropAlert {
             val multiDropColor = group("multiDropColor")
             val item = multiDropCount?.let { "$it ($itemName)" } ?: itemName
 
-            val title = if (ravenAddonsConfig.dropTitleCategory) (group("title")
+            val title = if (ravenAddonsConfig.dropTitleCategory)
+                group("title"
             ) else {
                 buildString {
                 if (multiDropCount != null) {
@@ -44,7 +45,8 @@ object DropAlert {
                     append(multiDropCount)
                     append(" ")
                     append(itemColor)
-                    append("$itemName§7)")
+                    append(itemName)
+                    append("$multiDropColor)")
                 } else {
                     append(itemColor)
                     append(itemName)
@@ -72,7 +74,6 @@ object DropAlert {
             }
 
             val configRarity = ItemRarity.entries[ravenAddonsConfig.dropTitleRarity]
-            println(itemColor)
             val titleRarity = itemColor.getOrNull(1)?.let { char -> ItemRarity.getFromChatColor(char) ?: run {
                 ChatUtils.warning("Unknown color code '$char' for rarity!")
                 ItemRarity.COMMON
