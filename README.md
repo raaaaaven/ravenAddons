@@ -35,6 +35,9 @@ You can see a list of features below, as well as a list of upcoming features and
 + DROP Alerts
     - Select a username to annoy with your rare drops.
 
++ DROP Titles
+    - Create a title notification for your rare drops.
+
 + Fire Freeze Timer
     - Places a timer above an entity's head when they are frozen with a Fire Freeze Staff.
     - Additional options include announcing to party chat when a mob is frozen and a notification for when you should
