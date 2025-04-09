@@ -356,6 +356,9 @@ object ravenAddonsConfig : Vigilant(
 
         this::dropAlertUserName requires this::dropAlert
 
+        this::dropTitleCategory requires this::dropTitle
+        this::dropTitleRarity requires this::dropTitle
+
         this::fireFreezeAnnounce requires this::fireFreezeTimer
 
         this::dodgeListFullPartyCheck requires this::dodgeList
