@@ -20,8 +20,8 @@ object DropAlert {
 
     private var titleCooldown = SimpleTimeMark.farPast()
 
-    // https://regex101.com/r/W7Bylx/4
-    private val dropPattern = "^(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?:(?<multiDropColor>§.)(?<multiDropCount>\\d+x))? ?(?:§.)+)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?: (?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?: §r)?\$".toPattern()
+    // https://regex101.com/r/W7Bylx/6
+    private val dropPattern = "^(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?:(?<multiDropColor>§.)(?<multiDropCount>\\d+x) (?:§.)+)?)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?:\$| (?:(?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?:§r)?\$)".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
