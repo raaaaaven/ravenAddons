@@ -8,6 +8,7 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
@@ -19,12 +20,21 @@ import kotlin.time.Duration.Companion.seconds
 object DropAlert {
 
     private var titleCooldown = SimpleTimeMark.farPast()
+    private var offlineCheck = false
 
     // https://regex101.com/r/W7Bylx/6
     private val dropPattern = "^(?<title>(?<dropTypeColor>(?:§.)+)(?<dropType>[\\w ]+[CD]ROP)! (?:(?:§.)?)+(?:\\((?:§.)+(?:(?<multiDropColor>§.)(?<multiDropCount>\\d+x) (?:§.)+)?)?(?<itemColor>§.)(?<item>[^§]*)(?:(?:§.)+\\))?)(?:\$| (?:(?<subtitle>(?:§r§b|§6)\\(.*?\\)(?:§r)?))?(?:§r)?\$)".toPattern()
 
+    private val offlinePlayer = "That player is not online!".toPattern()
+
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
+        if (offlineCheck && offlinePlayer.matches(event.message.removeColors())) {
+            event.isCanceled = true
+            offlineCheck = false
+            return
+        }
+
         if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         dropPattern.matchMatcher(event.message) {
             val dropType = group("dropType") ?: return
@@ -69,7 +79,11 @@ object DropAlert {
                         }
                     }
 
+                    offlineCheck = true
                     ChatUtils.sendMessage(message)
+
+                    delay(2500)
+                    offlineCheck = false
                 }
             }
 
