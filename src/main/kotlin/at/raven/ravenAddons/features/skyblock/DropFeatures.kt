@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
-object DropAlert {
+object DropFeatures {
 
     private var titleCooldown = SimpleTimeMark.farPast()
     private var offlineCheck = false
