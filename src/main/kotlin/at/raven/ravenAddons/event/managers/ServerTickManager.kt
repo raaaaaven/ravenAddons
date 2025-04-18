@@ -14,8 +14,6 @@ object ServerTickManager {
         if (event.packet !is S32PacketConfirmTransaction) return
         val packet: S32PacketConfirmTransaction = event.packet
 
-        if (packet.actionNumber > 0) return
-
         ServerTickEvent().post()
     }
 }
