@@ -1,17 +1,19 @@
 package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.event.RealServerTickEvent
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ChatUtils.formatDuration
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import net.minecraftforge.fml.common.gameevent.TickEvent.ServerTickEvent
+import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object InstanceLagCalculator {
@@ -56,9 +58,9 @@ object InstanceLagCalculator {
 
             ravenAddons.launchCoroutine {
                 delay(2500)
-                ChatUtils.chat("Time Elapsed: ${"%.2f".format(timeElapsedSeconds)}.")
-                ChatUtils.chat("Tick Time: ${"%.2f".format(tickTimeSeconds)}.")
-                ChatUtils.chat("Time lost to lag: ${"%.2f".format(lagTimeSeconds)}.")
+                ChatUtils.chat("Estimated Time Elapsed: §f§l${formatDuration(timeElapsedSeconds.seconds)}§r§7.")
+                ChatUtils.chat("Estimated Time using server ticks: §f§l${formatDuration(tickTimeSeconds.seconds)}§r§7.")
+                ChatUtils.chat("Total time that was lost to lag: §f§l${formatDuration(lagTimeSeconds.seconds)}§r§7.")
             }
 
 
@@ -74,7 +76,7 @@ object InstanceLagCalculator {
     }
 
     @SubscribeEvent
-    fun onServerTick(event: ServerTickEvent) {
+    fun onServerTick(event: RealServerTickEvent) {
         if (time != null) {
             serverTicks++
         }

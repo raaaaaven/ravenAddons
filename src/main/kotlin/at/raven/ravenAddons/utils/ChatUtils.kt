@@ -13,6 +13,7 @@ import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.IChatComponent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration
 
 @LoadModule
 object ChatUtils {
@@ -126,4 +127,20 @@ object ChatUtils {
 
     fun IChatComponent.add(component: IChatComponent) = this.siblings.add(component)
     fun IChatComponent.add(string: String) = this.siblings.add(ChatComponentText(string))
+
+    fun formatDuration(duration: Duration?): String? {
+        if (duration == null) return null
+
+        val components = mutableListOf<String>()
+
+        duration.toComponents { days, hours, minutes, seconds, _ ->
+            if (days > 0) components.add("${days}d")
+            if (hours > 0) components.add("${hours}h")
+            if (minutes > 0) components.add("${minutes}m")
+            if (seconds > 0 && components.size < 2) components.add("${"%.2f".format(seconds.toDouble())}s")
+        }
+
+        return components.take(2).joinToString(" ")
+    }
+
 }
