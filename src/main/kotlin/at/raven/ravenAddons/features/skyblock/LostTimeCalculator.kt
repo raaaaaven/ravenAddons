@@ -1,6 +1,8 @@
 package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.RealServerTickEvent
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -30,6 +32,7 @@ object LostTimeCalculator {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         if (!ravenAddonsConfig.lostTimeCalculator) return
 
         if (dungeonStartPattern.matches(event.message.removeColors()) || kuudraStartPattern.matches(event.message.removeColors())) {
