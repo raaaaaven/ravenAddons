@@ -160,12 +160,12 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Instance Lag Calculator",
+        name = "Lost Time Calculator",
         description = "Sends a chat message calculating how much time was lost due to lag.",
         category = "SkyBlock",
         subcategory = "Instance"
     )
-    var instanceLagCalculator = false
+    var lostTimeCalculator = false
 
     @Property(
         type = PropertyType.SWITCH,

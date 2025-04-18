@@ -128,19 +128,17 @@ object ChatUtils {
     fun IChatComponent.add(component: IChatComponent) = this.siblings.add(component)
     fun IChatComponent.add(string: String) = this.siblings.add(ChatComponentText(string))
 
-    fun formatDuration(duration: Duration?): String? {
-        if (duration == null) return null
-
-        val components = mutableListOf<String>()
-
-        duration.toComponents { days, hours, minutes, seconds, _ ->
-            if (days > 0) components.add("${days}d")
-            if (hours > 0) components.add("${hours}h")
-            if (minutes > 0) components.add("${minutes}m")
-            if (seconds > 0 && components.size < 2) components.add("${"%.2f".format(seconds.toDouble())}s")
+    fun Duration.format(): String {
+        return buildString {
+            if (isNegative()) append('-')
+            absoluteValue.toComponents { days, hours, minutes, seconds, nanoseconds ->
+                val centiseconds = (nanoseconds / 10_000_000).toString().padStart(3, '0')
+                if (days > 0) append("${days}d ")
+                if (hours > 0 || days > 0) append("${hours}h ")
+                if (minutes > 0 || hours > 0 || days > 0) append("${minutes}m ")
+                append("${seconds}s ${centiseconds}ms")
+            }
         }
-
-        return components.take(2).joinToString(" ")
     }
 
 }

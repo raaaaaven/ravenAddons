@@ -1,6 +1,6 @@
 package at.raven.ravenAddons.utils
 
-import at.raven.ravenAddons.event.managers.ServerTickManager
+import at.raven.ravenAddons.event.managers.ServerManager
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
@@ -32,7 +32,7 @@ value class ServerTimeMark private constructor(val ticks: Long) : Comparable<Ser
     override fun toString(): String = when (ticks) {
         FAR_PAST_TICKS -> "The Far Past"
         FAR_FUTURE_TICKS -> "The Far Future"
-        else -> "ServerTimeMark(ticks=$ticks, now=${ServerTickManager.ticks})"
+        else -> "ServerTimeMark(ticks=$ticks, now=${ServerManager.ticks})"
     }
 
     companion object {
@@ -41,7 +41,7 @@ value class ServerTimeMark private constructor(val ticks: Long) : Comparable<Ser
         val Duration.inWholeTicks: Long
             get() = (this.inWholeMilliseconds / 50)
 
-        fun now() = ServerTimeMark(ServerTickManager.ticks)
+        fun now() = ServerTimeMark(ServerManager.ticks)
 
         private const val FAR_PAST_TICKS = Long.MIN_VALUE
         private const val FAR_FUTURE_TICKS = Long.MAX_VALUE

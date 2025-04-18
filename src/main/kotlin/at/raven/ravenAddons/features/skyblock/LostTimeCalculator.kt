@@ -7,7 +7,7 @@ import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
-import at.raven.ravenAddons.utils.ChatUtils.formatDuration
+import at.raven.ravenAddons.utils.ChatUtils.format
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
@@ -16,7 +16,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
-object InstanceLagCalculator {
+object LostTimeCalculator {
 
     private var time: SimpleTimeMark? = null
 
@@ -30,10 +30,10 @@ object InstanceLagCalculator {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!ravenAddonsConfig.instanceLagCalculator) return
+        if (!ravenAddonsConfig.lostTimeCalculator) return
 
         if (dungeonStartPattern.matches(event.message.removeColors()) || kuudraStartPattern.matches(event.message.removeColors())) {
-            ChatUtils.debug("Instance Lag Calculator: Starting timer")
+            ChatUtils.debug("Instance Lag Calculator: Starting timer.")
             time = SimpleTimeMark.now()
             serverTicks = 0
         }
@@ -50,21 +50,22 @@ object InstanceLagCalculator {
 
             val timeElapsed = time?.passedSince() ?: return
 
-            val timeElapsedSeconds = timeElapsed.inWholeMilliseconds / 1000.0
-            val tickTimeSeconds = serverTicks / 20.0
+            val timeElapsedSeconds = timeElapsed.inWholeMilliseconds.seconds / 1000.0
+            val tickTimeSeconds = serverTicks.seconds / 20.0
+
             val lagTimeSeconds = timeElapsedSeconds - tickTimeSeconds
 
-            ChatUtils.debug("Instance Lag Calculator: Preparing to stop the timer")
+            ChatUtils.debug("Instance Lag Calculator: Preparing to stop the timer.")
 
             ravenAddons.launchCoroutine {
                 delay(2500)
-                ChatUtils.chat("Estimated Time Elapsed: §f§l${formatDuration(timeElapsedSeconds.seconds)}§r§7.")
-                ChatUtils.chat("Estimated Time using server ticks: §f§l${formatDuration(tickTimeSeconds.seconds)}§r§7.")
-                ChatUtils.chat("Total time that was lost to lag: §f§l${formatDuration(lagTimeSeconds.seconds)}§r§7.")
+                ChatUtils.chat("Estimated Time Elapsed: §f${timeElapsedSeconds.format()}§7.")
+                ChatUtils.chat("Estimated Time using server ticks: §f${tickTimeSeconds.format()}§7.")
+                ChatUtils.chat("Total time lost due to lag: §f${lagTimeSeconds.format()}§7.")
             }
 
 
-            ChatUtils.debug("Instance Lag Calculator: Resetting timer")
+            ChatUtils.debug("Lost Time Calculator: Resetting timer.")
 
             resetTimer()
         }
@@ -83,7 +84,8 @@ object InstanceLagCalculator {
     }
 
     @SubscribeEvent
-    fun WorldChangeEvent(event: WorldChangeEvent) {
+    fun onWorldLoad(event: WorldChangeEvent) {
+        ChatUtils.debug("Lost Time Calculator: World Change Detected! Resetting timer.")
         resetTimer()
     }
 }
