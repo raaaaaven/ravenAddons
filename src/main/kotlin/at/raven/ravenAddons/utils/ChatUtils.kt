@@ -6,6 +6,7 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.EventUtils.post
+import at.raven.ravenAddons.utils.ServerTimeMark.Companion.ticks
 import net.minecraft.client.Minecraft
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
@@ -13,6 +14,7 @@ import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.IChatComponent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration
 
 @LoadModule
 object ChatUtils {
@@ -59,7 +61,7 @@ object ChatUtils {
     }
 
     fun chat(chatComponent: IChatComponent) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent)
+        Minecraft.getMinecraft().thePlayer?.addChatMessage(chatComponent)
     }
 
     fun chatClickable(
@@ -72,7 +74,7 @@ object ChatUtils {
         val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
         text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§eRuns $command"))
-        Minecraft.getMinecraft().thePlayer.addChatMessage(text)
+        chat(text)
     }
 
     fun chatClickable(
@@ -91,11 +93,11 @@ object ChatUtils {
         chatComponent.siblings.last().chatStyle.chatClickEvent =
             ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra chat-action $uuid")
 
-        ChatUtils.chat(chatComponent)
+        chat(chatComponent)
     }
 
     fun sendMessage(message: String) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(message)
+        Minecraft.getMinecraft().thePlayer?.sendChatMessage(message)
     }
 
     fun debug(message: String) {
@@ -109,10 +111,7 @@ object ChatUtils {
     }
 
     fun sendChatPacket(packet: C01PacketChatMessage) {
-        Minecraft
-            .getMinecraft()
-            .thePlayer.sendQueue
-            .addToSendQueue(packet)
+        Minecraft.getMinecraft().thePlayer?.sendQueue?.addToSendQueue(packet)
     }
 
     @SubscribeEvent
@@ -126,4 +125,21 @@ object ChatUtils {
 
     fun IChatComponent.add(component: IChatComponent) = this.siblings.add(component)
     fun IChatComponent.add(string: String) = this.siblings.add(ChatComponentText(string))
+
+    fun Duration.format(): String {
+        return buildString {
+            if (isNegative()) append('-')
+            absoluteValue.toComponents { days, hours, minutes, seconds, nanoseconds ->
+                val ms = (nanoseconds / 10_000_000).toString().padStart(3, '0')
+                if (days > 0) append("${days}d ")
+                if (hours > 0 || days > 0) append("${hours}h ")
+                if (minutes > 0 || hours > 0 || days > 0) append("${minutes}m ")
+                if (seconds > 0 || minutes > 0 || hours > 0 || days > 0) append("${seconds}s ")
+                append("${ms}ms")
+            }
+        }
+    }
+
+    fun Duration.clampTicks() = (inWholeMilliseconds/50).ticks
+
 }
