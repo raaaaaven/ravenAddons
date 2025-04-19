@@ -8,6 +8,7 @@ import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ChatUtils.clampTicks
 import at.raven.ravenAddons.utils.ChatUtils.format
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
@@ -49,7 +50,7 @@ object LostTimeCalculator {
                 return
             }
 
-            val timeElapsed = time.passedSince()
+            val timeElapsed = time.passedSince().clampTicks()
             val serverTimeElapsed = serverTime.passedSince()
 
             val lagTimeSeconds = timeElapsed - serverTimeElapsed
@@ -61,7 +62,6 @@ object LostTimeCalculator {
                 ChatUtils.chat("Estimated Time using server ticks: §f${serverTimeElapsed.format()}§7.")
                 ChatUtils.chat("Total time lost due to lag: §f${lagTimeSeconds.format()}§7.")
             }
-
 
             ChatUtils.debug("Lost Time Calculator: Resetting timer.")
 

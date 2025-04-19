@@ -6,6 +6,7 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.EventUtils.post
+import at.raven.ravenAddons.utils.ServerTimeMark.Companion.ticks
 import net.minecraft.client.Minecraft
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
@@ -133,9 +134,12 @@ object ChatUtils {
                 if (days > 0) append("${days}d ")
                 if (hours > 0 || days > 0) append("${hours}h ")
                 if (minutes > 0 || hours > 0 || days > 0) append("${minutes}m ")
-                append("${seconds}s ${ms}ms")
+                if (seconds > 0 || minutes > 0 || hours > 0 || days > 0) append("${seconds}s ")
+                append("${ms}ms")
             }
         }
     }
+
+    fun Duration.clampTicks() = (inWholeMilliseconds%50).ticks
 
 }
