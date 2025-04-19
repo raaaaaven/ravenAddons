@@ -140,6 +140,6 @@ object ChatUtils {
         }
     }
 
-    fun Duration.clampTicks() = (inWholeMilliseconds%50).ticks
+    fun Duration.clampTicks() = (inWholeMilliseconds/50).ticks
 
 }
