@@ -9,11 +9,7 @@ import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.EventUtils.post
-import kotlinx.coroutines.CoroutineName
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.GuiScreen
 import net.minecraftforge.common.MinecraftForge
@@ -21,6 +17,7 @@ import net.minecraftforge.fml.common.Mod
 import net.minecraftforge.fml.common.event.FMLInitializationEvent
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration
 
 @Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
@@ -56,6 +53,13 @@ class ravenAddons {
             CoroutineScope(
                 CoroutineName("ravenAddons") + SupervisorJob(globalJob),
             )
+
+        fun runDelayed(delay: Duration, function: suspend () -> Unit) {
+            launchCoroutine {
+                delay(delay)
+                function()
+            }
+        }
 
         fun launchCoroutine(function: suspend () -> Unit): Job {
             return coroutineScope.launch {

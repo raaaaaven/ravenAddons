@@ -60,7 +60,7 @@ object ChatUtils {
     }
 
     fun chat(chatComponent: IChatComponent) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent)
+        Minecraft.getMinecraft().thePlayer?.addChatMessage(chatComponent)
     }
 
     fun chatClickable(
@@ -73,7 +73,7 @@ object ChatUtils {
         val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
         text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§eRuns $command"))
-        Minecraft.getMinecraft().thePlayer.addChatMessage(text)
+        chat(text)
     }
 
     fun chatClickable(
@@ -92,11 +92,11 @@ object ChatUtils {
         chatComponent.siblings.last().chatStyle.chatClickEvent =
             ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra chat-action $uuid")
 
-        ChatUtils.chat(chatComponent)
+        chat(chatComponent)
     }
 
     fun sendMessage(message: String) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(message)
+        Minecraft.getMinecraft().thePlayer?.sendChatMessage(message)
     }
 
     fun debug(message: String) {
@@ -110,10 +110,7 @@ object ChatUtils {
     }
 
     fun sendChatPacket(packet: C01PacketChatMessage) {
-        Minecraft
-            .getMinecraft()
-            .thePlayer.sendQueue
-            .addToSendQueue(packet)
+        Minecraft.getMinecraft().thePlayer?.sendQueue?.addToSendQueue(packet)
     }
 
     @SubscribeEvent
@@ -132,11 +129,11 @@ object ChatUtils {
         return buildString {
             if (isNegative()) append('-')
             absoluteValue.toComponents { days, hours, minutes, seconds, nanoseconds ->
-                val centiseconds = (nanoseconds / 10_000_000).toString().padStart(3, '0')
+                val ms = (nanoseconds / 10_000_000).toString().padStart(3, '0')
                 if (days > 0) append("${days}d ")
                 if (hours > 0 || days > 0) append("${hours}h ")
                 if (minutes > 0 || hours > 0 || days > 0) append("${minutes}m ")
-                append("${seconds}s ${centiseconds}ms")
+                append("${seconds}s ${ms}ms")
             }
         }
     }
