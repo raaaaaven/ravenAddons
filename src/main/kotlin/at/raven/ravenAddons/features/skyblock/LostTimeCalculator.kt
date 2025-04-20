@@ -8,12 +8,12 @@ import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
-import at.raven.ravenAddons.utils.ChatUtils.clampTicks
-import at.raven.ravenAddons.utils.ChatUtils.format
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
+import at.raven.ravenAddons.utils.TimeUtils.clampTicks
+import at.raven.ravenAddons.utils.TimeUtils.format
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
@@ -61,7 +61,7 @@ object LostTimeCalculator {
             ravenAddons.runDelayed(2.5.seconds) {
                 ChatUtils.chat("Elapsed Time: §f${timeElapsed.format()}§7.")
                 ChatUtils.chat("Server Time: §f${serverTimeElapsed.format()}§7.")
-                ChatUtils.chat("Approximate time lost: §f${lagTimeSeconds.format()}§7.")
+                ChatUtils.chat("Approximate Time Lost: §f${lagTimeSeconds.format()}§7.")
             }
 
             ChatUtils.debug("Lost Time Calculator: Resetting timer.")

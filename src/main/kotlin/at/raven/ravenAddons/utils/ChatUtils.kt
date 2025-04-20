@@ -6,8 +6,6 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.EventUtils.post
-import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
-import at.raven.ravenAddons.utils.ServerTimeMark.Companion.ticks
 import net.minecraft.client.Minecraft
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
@@ -15,7 +13,6 @@ import net.minecraft.network.play.client.C01PacketChatMessage
 import net.minecraft.util.ChatComponentText
 import net.minecraft.util.IChatComponent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration
 
 @LoadModule
 object ChatUtils {
@@ -126,25 +123,4 @@ object ChatUtils {
 
     fun IChatComponent.add(component: IChatComponent) = this.siblings.add(component)
     fun IChatComponent.add(string: String) = this.siblings.add(ChatComponentText(string))
-
-    fun Duration.format(): String {
-        return buildString {
-            if (isNegative()) append('-')
-            absoluteValue.toComponents { days, hours, minutes, seconds, nanoseconds ->
-                val ms = (nanoseconds / 1_000_000).toString().padStart(3, '0')
-                val parts = mutableListOf<String>()
-
-                if (days > 0) parts += "${days}d"
-                if (hours > 0 || parts.isNotEmpty()) parts += "${hours}h"
-                if (minutes > 0 || parts.isNotEmpty()) parts += "${minutes}m"
-                if (seconds > 0 || parts.isNotEmpty()) parts += "§c${seconds}s"
-                parts += "§6${ms}ms"
-
-                append(parts.joinToString(" "))
-            }
-        }
-    }
-
-    fun Duration.clampTicks(): Duration = inWholeTicks.ticks
-
 }
