@@ -15,6 +15,7 @@ import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -53,14 +54,14 @@ object LostTimeCalculator {
             val timeElapsed = time.passedSince().clampTicks()
             val serverTimeElapsed = serverTime.passedSince()
 
-            val lagTimeSeconds = timeElapsed - serverTimeElapsed
+            val lagTimeSeconds = (timeElapsed - serverTimeElapsed).coerceAtLeast(Duration.ZERO)
 
             ChatUtils.debug("Instance Lag Calculator: Preparing to stop the timer.")
 
             ravenAddons.runDelayed(2.5.seconds) {
-                ChatUtils.chat("Estimated Time Elapsed: §f${timeElapsed.format()}§7.")
-                ChatUtils.chat("Estimated Time using server ticks: §f${serverTimeElapsed.format()}§7.")
-                ChatUtils.chat("Total time lost due to lag: §f${lagTimeSeconds.format()}§7.")
+                ChatUtils.chat("Elapsed Time: §f${timeElapsed.format()}§7.")
+                ChatUtils.chat("Server Time: §f${serverTimeElapsed.format()}§7.")
+                ChatUtils.chat("Approximate time lost: §f${lagTimeSeconds.format()}§7.")
             }
 
             ChatUtils.debug("Lost Time Calculator: Resetting timer.")
