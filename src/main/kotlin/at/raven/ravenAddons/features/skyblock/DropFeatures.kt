@@ -87,17 +87,18 @@ object DropFeatures {
                 }
             }
 
-            val configRarity = ItemRarity.entries[ravenAddonsConfig.dropTitleRarity]
-            val titleRarity = itemColor.getOrNull(1)?.let { char -> ItemRarity.getFromChatColor(char) ?: run {
-                ChatUtils.warning("Unknown color code '$char' for rarity!")
-                ItemRarity.COMMON
-            } } ?: run {
-                ChatUtils.warning("Couldn't find color code in drop!")
-                println(event.message)
-                return
-            }
-
             if (ravenAddonsConfig.dropTitle) {
+
+                val configRarity = ItemRarity.entries[ravenAddonsConfig.dropTitleRarity]
+                val titleRarity = ItemRarity.runeMap[itemName] ?: itemColor.getOrNull(1)?.let { char -> ItemRarity.getFromChatColor(char) ?: run {
+                    ChatUtils.warning("Unknown color code '$char' for rarity!")
+                    ItemRarity.COMMON
+                } } ?: run {
+                    ChatUtils.warning("Couldn't find color code in drop!")
+                    println(event.message)
+                    return
+                }
+
                 if (titleRarity >= configRarity && titleCooldown.isInPast()) {
                     titleCooldown = SimpleTimeMark.now() + 1.seconds
                     TitleManager.setTitle(
