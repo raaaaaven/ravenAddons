@@ -43,6 +43,9 @@ You can see a list of features below, as well as a list of upcoming features and
     - Additional options include announcing to party chat when a mob is frozen and a notification for when you should
       re-activate the ability of Fire Freeze Staff to freeze the mob again.
 
++ Lost Time Calculator
+    - Calculates the time lost due to lag at the end of a Dungeons or Kuudra run.
+
 </details>
 
 <details>
