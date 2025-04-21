@@ -27,7 +27,7 @@ object FireFreezeTimer {
         if (!ravenAddonsConfig.floor3FireFreezeTimer) return
 
         professorPattern.matchMatcher(event.message.removeColors()) {
-            ChatUtils.debug("floor3FireFreezeTimer: timer started")
+            ChatUtils.debug("Floor 3 Fire Freeze Timer: Timer started.")
 
             ravenAddons.launchCoroutine {
                 var timer = 5.00

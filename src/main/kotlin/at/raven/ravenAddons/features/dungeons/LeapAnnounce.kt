@@ -25,8 +25,8 @@ object LeapAnnounce {
             val ign = group("ign")
 
             if (ravenAddonsConfig.leapAnnounce) {
-                ChatUtils.debug("leapAnnounce: teleported to $ign")
-                ChatUtils.debug("sending: ${ravenAddonsConfig.leapAnnounceMessage}")
+                ChatUtils.debug("Leap Announce: Teleported to $ign.")
+                ChatUtils.debug("Leap Announce: Sending ${ravenAddonsConfig.leapAnnounceMessage}.")
 
                 val message = ravenAddonsConfig.leapAnnounceMessage.replace("\$ign", ign)
 
@@ -40,7 +40,7 @@ object LeapAnnounce {
             }
 
             if (ravenAddonsConfig.leapSound) {
-                ChatUtils.debug("leapSound: playing pling")
+                ChatUtils.debug("Leap Sound: Playing SoundUtils.pling().")
                 SoundUtils.pling()
             }
         }

@@ -36,20 +36,20 @@ object SinceCommand {
             if (!ravenAddonsConfig.sinceCommand) return
             ravenAddons.launchCoroutine {
                 delay(250)
-                ChatUtils.debug("!since matched. $sinceInq Mobs since.")
+                ChatUtils.debug("Since Command: $sinceInq Mobs since.")
                 ChatUtils.sendMessage("/pc [RA] $sinceInq Mobs since Inquisitor!")
             }
             return
         }
 
         inqPattern.matchMatcher(event.message.removeColors()) {
-            ChatUtils.debug("Inquisitor detected. Resetting sinceInq counter.")
+            ChatUtils.debug("Since Command: Inquisitor detected. Resetting sinceInq counter.")
             resetSince()
             return
         }
 
         if (mobPatterns.any { it.matches(event.message.removeColors()) }) {
-            ChatUtils.debug("Mythologicial Mob detected. Adding to sinceInq counter.")
+            ChatUtils.debug("Since Command: Mythologicial Mob detected. Adding to sinceInq counter.")
             addToSince()
         }
 

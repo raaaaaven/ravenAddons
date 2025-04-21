@@ -25,7 +25,7 @@ enum class ItemRarity(
                 "◆ Endersnake Rune I" to LEGENDARY,
                 "◆ Enchant Rune I" to LEGENDARY,
                 "◆ Lavatears Rune I" to LEGENDARY,
-                "◆ Fiery burst Rune I" to LEGENDARY
+                "◆ Fiery Burst Rune I" to LEGENDARY
             )
         }
 

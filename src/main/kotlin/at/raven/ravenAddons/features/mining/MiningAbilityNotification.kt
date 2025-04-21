@@ -34,7 +34,7 @@ object MiningAbilityNotification {
         miningAbilityPattern.matchMatcher(event.message) {
             val ability = group("ability")
 
-            ChatUtils.debug("miningAbilityNotification: ready")
+            ChatUtils.debug("Mining Ability Notification: Mining ability is ready.")
             TitleManager.setTitle("§6$ability", "§ais now available!", 3.seconds, 0.5.seconds, 0.5.seconds)
         }
     }

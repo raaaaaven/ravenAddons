@@ -26,7 +26,7 @@ object DodgeListTempAdd: DodgeListSubcommand() {
         }
 
         val playerName = args.firstOrNull() ?: run {
-            ChatUtils.debug("Non-empty but no first element!")
+            ChatUtils.debug("Dodge List: Non-empty but no first element!")
             return
         }
         val actualPlayer = playerName.getPlayer() ?: run {

@@ -33,7 +33,7 @@ object BetterDeviceNotification {
             val ign = group("ign")
             if (ign != PlayerUtils.playerName) return
 
-            ChatUtils.debug("betterDeviceNotification: attempting to send title and subtitle for $ign")
+            ChatUtils.debug("Better Device Notification: Sending title and subtitle for $ign.")
 
             ravenAddons.launchCoroutine {
                 delay(5)

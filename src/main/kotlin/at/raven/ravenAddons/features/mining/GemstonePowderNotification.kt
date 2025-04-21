@@ -25,7 +25,7 @@ object GemstonePowderNotification {
             val amount = group("amount")
             if (amount.toInt() < ravenAddonsConfig.gemstonePowderThreshold) return
 
-            ChatUtils.debug("GemstonePowderNotification: $amount")
+            ChatUtils.debug("Gemstone powder Notification: Found amount: $amount.")
             TitleManager.setTitle("", "§dGemstone Powder §8x$amount", 1.5.seconds, 0.seconds, 0.seconds)
         }
     }

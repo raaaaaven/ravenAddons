@@ -63,7 +63,7 @@ object FireFreezeTimer {
         if (entities.size == 1 && firstEntity != null) {
             entityName = firstEntity.getMatchedName() ?: firstEntity.name
         }
-        ChatUtils.debug("fireFreezeTimer: $entityName")
+        ChatUtils.debug("Fire Freeze Timer: $entityName.")
 
         if (ravenAddonsConfig.fireFreezeNotification && titleCooldown.isInPast()) {
             titleCooldown = SimpleTimeMark.now() + 1.seconds
@@ -76,7 +76,7 @@ object FireFreezeTimer {
         }
 
         if (fireFreezeAnnounce == 1 || fireFreezeAnnounce == 3) {
-            ChatUtils.debug("fireFreezeAnnounce: sending message in 250ms")
+            ChatUtils.debug("Fire Freeze Announce: Sending message in 250ms.")
             if (freezeMessageCooldown.isInPast()) {
                 freezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
                 ravenAddons.launchCoroutine {
@@ -102,9 +102,9 @@ object FireFreezeTimer {
         for ((entity, timer) in entities) {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
-                ChatUtils.debug("fireFreezeAnnounce: frozen entity died or is now unfrozen...")
+                ChatUtils.debug("Fire Freeze Announce: Frozen entity died or is now unfrozen.")
                 if (fireFreezeAnnounce == 2 || fireFreezeAnnounce == 3 && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
-                    ChatUtils.debug("fireFreezeAnnounce: sending message for unfrozen...")
+                    ChatUtils.debug("Fire Freeze Announce: Sending message for unfrozen mob.")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     unfreezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
                 }
