@@ -59,7 +59,7 @@ object ChatUtils {
     }
 
     fun chat(chatComponent: IChatComponent) {
-        Minecraft.getMinecraft().thePlayer.addChatMessage(chatComponent)
+        Minecraft.getMinecraft().thePlayer?.addChatMessage(chatComponent)
     }
 
     fun chatClickable(
@@ -72,7 +72,7 @@ object ChatUtils {
         val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
         text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§eRuns $command"))
-        Minecraft.getMinecraft().thePlayer.addChatMessage(text)
+        chat(text)
     }
 
     fun chatClickable(
@@ -91,11 +91,11 @@ object ChatUtils {
         chatComponent.siblings.last().chatStyle.chatClickEvent =
             ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra chat-action $uuid")
 
-        ChatUtils.chat(chatComponent)
+        chat(chatComponent)
     }
 
     fun sendMessage(message: String) {
-        Minecraft.getMinecraft().thePlayer.sendChatMessage(message)
+        Minecraft.getMinecraft().thePlayer?.sendChatMessage(message)
     }
 
     fun debug(message: String) {
@@ -109,10 +109,7 @@ object ChatUtils {
     }
 
     fun sendChatPacket(packet: C01PacketChatMessage) {
-        Minecraft
-            .getMinecraft()
-            .thePlayer.sendQueue
-            .addToSendQueue(packet)
+        Minecraft.getMinecraft().thePlayer?.sendQueue?.addToSendQueue(packet)
     }
 
     @SubscribeEvent
