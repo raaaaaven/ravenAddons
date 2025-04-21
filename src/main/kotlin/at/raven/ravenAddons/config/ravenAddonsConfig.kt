@@ -160,6 +160,15 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Lost Time Calculator",
+        description = "Sends a chat message calculating how much time was lost due to lag.",
+        category = "SkyBlock",
+        subcategory = "Instance"
+    )
+    var lostTimeCalculator = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
         category = "Mining",
