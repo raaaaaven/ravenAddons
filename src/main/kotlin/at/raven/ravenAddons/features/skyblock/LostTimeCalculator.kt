@@ -77,6 +77,8 @@ object LostTimeCalculator {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!ravenAddonsConfig.lostTimeCalculator) return
         ChatUtils.debug("Lost Time Calculator: World Change Detected! Resetting timer.")
         resetTimer()
     }
