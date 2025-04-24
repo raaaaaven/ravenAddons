@@ -1,6 +1,8 @@
 package at.raven.ravenAddons.features.skyblock
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -33,8 +35,7 @@ object DropFeatures {
             return
         }
 
-
-
+        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
         dropPattern.matchMatcher(event.message) {
             val dropType = group("dropType") ?: return
             val extra = group("subtitle").orEmpty().removeColors()
