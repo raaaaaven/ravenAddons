@@ -25,5 +25,5 @@ jobs:
       - name: Upload built mod JAR
         uses: actions/upload-artifact@v4.3.0
         with:
-          name: mod-jar
+          name: ravenAddons Development Build
           path: build/libs/*.jar
