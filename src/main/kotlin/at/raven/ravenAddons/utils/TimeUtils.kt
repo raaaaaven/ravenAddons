@@ -17,8 +17,8 @@ object TimeUtils {
                 if (days > 0) parts += "${days}d"
                 if (hours > 0 || parts.isNotEmpty()) parts += "${hours}h"
                 if (minutes > 0 || parts.isNotEmpty()) parts += "${minutes}m"
-                if (seconds > 0 || parts.isNotEmpty()) parts += "§c${seconds}s"
-                parts += "§6${ms}ms"
+                if (seconds > 0 || parts.isNotEmpty()) parts += "${seconds}s"
+                parts += "${ms}ms"
 
                 append(parts.joinToString(" "))
             }
