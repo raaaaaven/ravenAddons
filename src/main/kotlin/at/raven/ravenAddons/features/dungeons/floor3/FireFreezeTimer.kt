@@ -12,8 +12,8 @@ import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
+import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.lang.Thread.sleep
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -24,8 +24,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
-        if (!ravenAddonsConfig.floor3FireFreezeTimer) return
+        if (HypixelGame.SKYBLOCK.isNotPlaying() || !ravenAddonsConfig.floor3FireFreezeTimer) return
 
         professorPattern.matchMatcher(event.message.removeColors()) {
             ChatUtils.debug("Floor 3 Fire Freeze Timer: Timer started.")
@@ -39,13 +38,13 @@ object FireFreezeTimer {
 
                     if (timeUntil.inWholeMilliseconds <= ravenAddonsConfig.floor3FireFreezeDuration * 1000) {
                         val color = when {
-                            timeUntil >= 3.seconds -> "§a"
+                            timeUntil >= 3.01.seconds -> "§a"
                             timeUntil >= 1.seconds -> "§6"
                             else ->  "§c"
                         }
                         TitleManager.setTitle("$color§l%.2f".format(formattedTime),"$color§lFIRE FREEZE", 1.seconds, 0.seconds, 0.seconds)
                     }
-                    sleep(50)
+                    delay(50)
                 }
 
                 TitleManager.setTitle("§c§lNOW!", "§c§lFIRE FREEZE", 2.5.seconds, 0.seconds, 0.seconds)
