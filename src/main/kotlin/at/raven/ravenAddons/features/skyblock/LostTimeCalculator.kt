@@ -28,11 +28,9 @@ object LostTimeCalculator {
     private val dungeonStartPattern =
         "^\\[NPC] Mort: Here, I found this map when I first entered the dungeon.".toPattern()
 
-    private val dungeonEndPattern = "^\\s+> EXTRA STATS <".toPattern()
-
     private val kuudraStartPattern = "^\\[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!".toPattern()
 
-    private val kuudraEndPattern = "^\\s+KUUDRA DOWN!".toPattern()
+    private val endPattern = "^\\s+(> EXTRA STATS <|KUUDRA DOWN!)".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -45,7 +43,7 @@ object LostTimeCalculator {
             serverTime = ServerTimeMark.now()
         }
 
-        if (dungeonEndPattern.matches(event.message.removeColors()) || kuudraEndPattern.matches(event.message.removeColors())) {
+        if (endPattern.matches(event.message.removeColors())) {
             if (time.isFarPast() || serverTime.isFarPast()) {
                 ravenAddons.runDelayed(2.5.seconds) {
                     ChatUtils.warning("Could not calculate lost time. Likely cause was you left the instance early.")
