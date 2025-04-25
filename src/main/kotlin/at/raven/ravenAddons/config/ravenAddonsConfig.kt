@@ -291,7 +291,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.TEXT,
         name = "Fire Freeze Timer Sound",
-        description = "Choose a minecraft sound to play when you should freeze The Professor. Default: &erandom.anvil_land",
+        description = "Choose a minecraft sound to play when you should freeze The Professor with the default being &erandom.anvil_land&7.",
         category = "Dungeons",
         subcategory = "Floor 3"
     )
