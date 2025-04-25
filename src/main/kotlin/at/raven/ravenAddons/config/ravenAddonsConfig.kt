@@ -271,7 +271,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Fire Freeze Timer",
-        description = "Display a timer for when to freeze The Professor. \n§cMods that disable Boss Messages may affect this feature.",
+        description = "Display a timer for when to freeze The Professor.",
         category = "Dungeons",
         subcategory = "Floor 3"
     )

@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object ChatManager {
-    @SubscribeEvent
+    @SubscribeEvent(receiveCanceled = true)
     fun onChat(event: ClientChatReceivedEvent) {
         val original = event.message
         val message = original.formattedText.cleanupColors()
