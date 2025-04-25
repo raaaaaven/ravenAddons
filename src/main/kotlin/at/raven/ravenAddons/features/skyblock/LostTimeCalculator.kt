@@ -32,7 +32,7 @@ object LostTimeCalculator {
 
     private val kuudraStartPattern = "^\\[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!".toPattern()
 
-    private val kuudraEndPattern = "^\\s+ KUUDRA DOWN!".toPattern()
+    private val kuudraEndPattern = "^\\s+KUUDRA DOWN!".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
