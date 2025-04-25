@@ -28,11 +28,11 @@ object LostTimeCalculator {
     private val dungeonStartPattern =
         "^\\[NPC] Mort: Here, I found this map when I first entered the dungeon.".toPattern()
 
-    private val dungeonEndPattern = "\\s+> EXTRA STATS <".toPattern()
+    private val dungeonEndPattern = "^\\s+> EXTRA STATS <".toPattern()
 
     private val kuudraStartPattern = "^\\[NPC] Elle: Okay adventurers, I will go and fish up Kuudra!".toPattern()
 
-    private val kuudraEndPattern = "^\\s+> KUUDRA DOWN!".toPattern()
+    private val kuudraEndPattern = "^\\s+ KUUDRA DOWN!".toPattern()
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
