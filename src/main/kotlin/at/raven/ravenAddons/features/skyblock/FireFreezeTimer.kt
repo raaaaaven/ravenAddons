@@ -3,7 +3,6 @@ package at.raven.ravenAddons.features.skyblock
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.config.ravenAddonsConfig.fireFreezeAnnounce
 import at.raven.ravenAddons.data.HypixelGame
-import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent

@@ -14,23 +14,33 @@ enum class HypixelGame(val gameType: GameType) {
     SKYBLOCK(GameType.SKYBLOCK),
     ;
 
+    fun isPlaying(): Boolean = this == currentGame
+    fun isNotPlaying(): Boolean = this != currentGame
+
     @LoadModule
     companion object {
         var currentGame: HypixelGame? = null
             private set
 
-        fun HypixelGame.isPlaying() = this == currentGame
-        fun Collection<HypixelGame>.isPlayingAny() = this.any { it.isPlaying() }
-        fun isPlayingAny(vararg games: HypixelGame) = games.toList().isPlayingAny()
+        inline val inSkyBlock: Boolean get() = SKYBLOCK.isPlaying()
+        inline val inPit: Boolean get() = THE_PIT.isPlaying()
 
-        fun HypixelGame.isNotPlaying() = this != currentGame
-        fun Collection<HypixelGame>.isNotPlayingAny() = this.all { it.isNotPlaying() }
-        fun isNotPlayingAny(vararg games: HypixelGame) = games.toList().isNotPlayingAny()
+        fun isPlayingAny(games: Collection<HypixelGame>): Boolean {
+            val current = currentGame ?: return false
+            return current in games
+        }
+        fun isPlayingAny(vararg games: HypixelGame): Boolean {
+            val current = currentGame ?: return false
+            return current in games
+        }
+
+        fun isNotPlayingAny(games: Collection<HypixelGame>) = !isPlayingAny(games)
+        fun isNotPlayingAny(vararg games: HypixelGame) = !isPlayingAny(*games)
 
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onHypixelData(event: HypixelServerChangeEvent) {
             val oldGame = currentGame
-            currentGame = entries.firstOrNull { it.gameType == event.serverType }
+            currentGame = entries.find { it.gameType == event.serverType }
             if (oldGame == currentGame) return
 
             HypixelGameSwitch(oldGame, currentGame).post()
