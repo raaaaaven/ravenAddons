@@ -38,7 +38,7 @@ object FireFreezeTimer {
     private var titleCooldown = SimpleTimeMark.farPast()
 
     // https://regex101.com/r/YwLEWt/2
-    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?".toPattern()
+    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?(?: ✯)?$".toPattern()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
@@ -154,7 +154,11 @@ object FireFreezeTimer {
             return group
         }
         if (!fromCommand) {
-            ChatUtils.warning("Unknown mob detected! Please report!")
+            ChatUtils.chatClickable(
+                message = "§8[§cRA ERROR§8] §7Unknown mob detected! Click here to run §f/ra copyentities§7.",
+                command = "/ra copyentities",
+                usePrefix = false
+            )
             println("'${name?.removeColors()}'")
         }
         return null
