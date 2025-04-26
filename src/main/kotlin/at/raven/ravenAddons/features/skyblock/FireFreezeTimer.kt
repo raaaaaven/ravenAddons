@@ -24,6 +24,9 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
+import net.minecraft.event.ClickEvent
+import net.minecraft.event.HoverEvent
+import net.minecraft.util.ChatComponentText
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.sound.PlaySoundEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -38,7 +41,7 @@ object FireFreezeTimer {
     private var titleCooldown = SimpleTimeMark.farPast()
 
     // https://regex101.com/r/YwLEWt/2
-    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?".toPattern()
+    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,\\/kMB]+❤(?: ﴿)?(?: ✯)?\$".toPattern()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
@@ -154,7 +157,12 @@ object FireFreezeTimer {
             return group
         }
         if (!fromCommand) {
-            ChatUtils.warning("Unknown mob detected! Please report!")
+            val component = ChatComponentText("§8[§cRA ERROR§8] §7Unknown mob detected! Click here to run §f/ra copyentities§7.")
+            component.chatStyle.chatClickEvent =
+                ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra copyentities")
+            component.chatStyle.chatHoverEvent =
+                HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to run §f/ra copyentities §7."))
+            ChatUtils.warning(component)
             println("'${name?.removeColors()}'")
         }
         return null

@@ -42,6 +42,17 @@ object ChatUtils {
         chat(finalMessage, usePrefix = false)
     }
 
+    fun warning(
+        nonString: Any,
+        usePrefix: Boolean = true,
+    ) {
+        chat(nonString.toString(), usePrefix)
+    }
+
+    fun warning(chatComponent: IChatComponent) {
+        Minecraft.getMinecraft().thePlayer?.addChatMessage(chatComponent)
+    }
+
     fun chat(
         message: String,
         usePrefix: Boolean = true,
