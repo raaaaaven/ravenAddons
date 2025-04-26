@@ -170,9 +170,7 @@ object DodgeList {
 
             ChatUtils.sendMessage(kickMessage)
 
-            ravenAddons.launchCoroutine {
-                Thread.sleep(500)
-
+            ravenAddons.runDelayed(0.25.seconds) {
                 ChatUtils.sendMessage("/p kick $newPlayerName")
             }
         }
