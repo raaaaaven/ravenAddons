@@ -152,7 +152,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.CHECKBOX,
         name = "Auto Kick With Reason",
-        description = "Announce the reason just before the auto kick.",
+        description = "Announce the reason when auto kicking.",
         category =  "SkyBlock",
         subcategory = "Dodge List"
     )
