@@ -35,7 +35,7 @@ import com.google.gson.reflect.TypeToken
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.io.File
-import java.util.UUID
+import java.util.*
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -162,17 +162,15 @@ object DodgeList {
         SoundUtils.playSound("random.anvil_land", 1f, 1f)
 
         if (ravenAddonsConfig.dodgeListAutoKick) {
-            ChatUtils.sendMessage("/pc [RA] Auto kicking $newPlayerName since they are on the dodge list.")
-            ravenAddons.launchCoroutine {
+            val kickMessage = if (ravenAddonsConfig.dodgeListAutoKickWithReason) {
+                "/pc [RA] Auto kicking $newPlayerName: ${data.actualReason}"
+            } else {
+                "/pc [RA] Auto kicking $newPlayerName as they are on the dodge list."
+            }
 
-                if (ravenAddonsConfig.dodgeListAutoKickWithReason) {
-                    Thread.sleep(250)
+            ChatUtils.sendMessage(kickMessage)
 
-                    ChatUtils.sendMessage("/pc [RA] $newPlayerName: ${data.actualReason}")
-                }
-
-                Thread.sleep(500)
-
+            ravenAddons.runDelayed(0.25.seconds) {
                 ChatUtils.sendMessage("/p kick $newPlayerName")
             }
         }
