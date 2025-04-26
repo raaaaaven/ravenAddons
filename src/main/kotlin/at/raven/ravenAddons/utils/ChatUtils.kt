@@ -42,17 +42,6 @@ object ChatUtils {
         chat(finalMessage, usePrefix = false)
     }
 
-    fun warning(
-        nonString: Any,
-        usePrefix: Boolean = true,
-    ) {
-        chat(nonString.toString(), usePrefix)
-    }
-
-    fun warning(chatComponent: IChatComponent) {
-        Minecraft.getMinecraft().thePlayer?.addChatMessage(chatComponent)
-    }
-
     fun chat(
         message: String,
         usePrefix: Boolean = true,
@@ -82,7 +71,7 @@ object ChatUtils {
 
         val text = ChatComponentText(newMessage)
         text.chatStyle.chatClickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
-        text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§eRuns $command"))
+        text.chatStyle.chatHoverEvent = HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to run §f$command§."))
         chat(text)
     }
 

@@ -24,9 +24,6 @@ import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
 import net.minecraft.entity.item.EntityArmorStand
 import net.minecraft.entity.player.EntityPlayer
-import net.minecraft.event.ClickEvent
-import net.minecraft.event.HoverEvent
-import net.minecraft.util.ChatComponentText
 import net.minecraft.util.Vec3
 import net.minecraftforge.client.event.sound.PlaySoundEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -157,12 +154,11 @@ object FireFreezeTimer {
             return group
         }
         if (!fromCommand) {
-            val component = ChatComponentText("§8[§cRA ERROR§8] §7Unknown mob detected! Click here to run §f/ra copyentities§7.")
-            component.chatStyle.chatClickEvent =
-                ClickEvent(ClickEvent.Action.RUN_COMMAND, "/ra copyentities")
-            component.chatStyle.chatHoverEvent =
-                HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("§7Click here to run §f/ra copyentities §7."))
-            ChatUtils.warning(component)
+            ChatUtils.chatClickable(
+                message = "§8[§cRA ERROR§8] §7Unknown mob detected! Click here to run §f/ra copyentities§7.",
+                command = "/ra copyentities",
+                usePrefix = false
+            )
             println("'${name?.removeColors()}'")
         }
         return null
