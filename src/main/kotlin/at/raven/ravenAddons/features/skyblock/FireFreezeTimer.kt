@@ -41,7 +41,7 @@ object FireFreezeTimer {
     private var titleCooldown = SimpleTimeMark.farPast()
 
     // https://regex101.com/r/YwLEWt/2
-    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,\\/kMB]+❤(?: ﴿)?(?: ✯)?\$".toPattern()
+    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?(?: ✯)?$".toPattern()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
