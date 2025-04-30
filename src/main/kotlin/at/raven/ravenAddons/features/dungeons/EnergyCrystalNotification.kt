@@ -2,7 +2,6 @@ package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
-import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.loadmodule.LoadModule

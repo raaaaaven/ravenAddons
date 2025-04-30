@@ -29,4 +29,7 @@ object StringUtils {
         }
         return message
     }
+
+    fun <T : Enum<T>> T.toFormattedName() =
+        name.split("_").joinToString(" ") { it.lowercase().replaceFirstChar(Char::uppercase) }
 }

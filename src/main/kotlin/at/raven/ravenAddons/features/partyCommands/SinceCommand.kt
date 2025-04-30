@@ -3,7 +3,6 @@ package at.raven.ravenAddons.features.partyCommands
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.config.ravenAddonsConfig.sinceInq
 import at.raven.ravenAddons.data.HypixelGame
-import at.raven.ravenAddons.data.HypixelGame.Companion.isNotPlaying
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
