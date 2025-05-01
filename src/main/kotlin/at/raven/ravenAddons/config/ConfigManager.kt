@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.config
 
-import at.raven.ravenAddons.event.GameLoadEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -21,7 +20,16 @@ object ConfigManager {
     private var updateMessageSent = false
 
     @SubscribeEvent
-    fun onGameLoad(event: GameLoadEvent) {
+    fun onHypixelJoin(event: HypixelJoinEvent) {
+        if (!updateMessageSent) {
+            wasModUpdated.sendMessage()
+            updateMessageSent = true
+        }
+
+        if (configGui == null) initConfig()
+    }
+
+    private fun initConfig() {
         ConfigFixer
 
         if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
@@ -33,16 +41,7 @@ object ConfigManager {
             ravenAddonsConfig.markDirty()
             wasModUpdated = ModUpdateStatus.DOWNGRADED
         }
-    }
 
-    @SubscribeEvent
-    fun onHypixelJoin(event: HypixelJoinEvent) {
-        if (!updateMessageSent) {
-            wasModUpdated.sendMessage()
-            updateMessageSent = true
-        }
-
-        if (configGui != null) return
         ravenAddons.runDelayed(150.milliseconds) {
             while (ravenAddons.mc.currentScreen != null) {
                 delay(50)
