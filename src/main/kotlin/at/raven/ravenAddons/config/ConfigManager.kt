@@ -12,6 +12,7 @@ import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration.Companion.milliseconds
 
 @LoadModule
 object ConfigManager {
@@ -22,7 +23,6 @@ object ConfigManager {
     @SubscribeEvent
     fun onGameLoad(event: GameLoadEvent) {
         ConfigFixer
-        configGui = ravenAddonsConfig.gui()
 
         if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
             ravenAddonsConfig.configVersion = ravenAddons.modVersion
@@ -40,6 +40,15 @@ object ConfigManager {
         if (!updateMessageSent) {
             wasModUpdated.sendMessage()
             updateMessageSent = true
+        }
+
+        if (configGui != null) return
+        ravenAddons.runDelayed(150.milliseconds) {
+            while (ravenAddons.mc.currentScreen != null) {
+                delay(50)
+            }
+
+            configGui = ravenAddonsConfig.gui()
         }
     }
 
