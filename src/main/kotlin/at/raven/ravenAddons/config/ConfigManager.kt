@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.config
 
-import at.raven.ravenAddons.event.GameLoadEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -12,6 +11,7 @@ import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration.Companion.milliseconds
 
 @LoadModule
 object ConfigManager {
@@ -20,9 +20,17 @@ object ConfigManager {
     private var updateMessageSent = false
 
     @SubscribeEvent
-    fun onGameLoad(event: GameLoadEvent) {
+    fun onHypixelJoin(event: HypixelJoinEvent) {
+        if (!updateMessageSent) {
+            wasModUpdated.sendMessage()
+            updateMessageSent = true
+        }
+
+        if (configGui == null) initConfig()
+    }
+
+    private fun initConfig() {
         ConfigFixer
-        configGui = ravenAddonsConfig.gui()
 
         if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
             ravenAddonsConfig.configVersion = ravenAddons.modVersion
@@ -33,13 +41,13 @@ object ConfigManager {
             ravenAddonsConfig.markDirty()
             wasModUpdated = ModUpdateStatus.DOWNGRADED
         }
-    }
 
-    @SubscribeEvent
-    fun onHypixelJoin(event: HypixelJoinEvent) {
-        if (!updateMessageSent) {
-            wasModUpdated.sendMessage()
-            updateMessageSent = true
+        ravenAddons.runDelayed(150.milliseconds) {
+            while (ravenAddons.mc.currentScreen != null) {
+                delay(50)
+            }
+
+            configGui = ravenAddonsConfig.gui()
         }
     }
 
