@@ -1,7 +1,7 @@
 package at.raven.ravenAddons.features.dungeons.floor3
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -22,7 +22,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.floor3FireFreezeTimer) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.floor3FireFreezeTimer) return
 
         professorPattern.matchMatcher(event.cleanMessage) {
             ChatUtils.debug("Floor 3 Fire Freeze Timer: Timer started.")

@@ -3,6 +3,7 @@ package at.raven.ravenAddons.features.skyblock
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.config.ravenAddonsConfig.fireFreezeAnnounce
 import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
@@ -41,7 +42,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
-        if (!HypixelGame.inSkyBlock) return
+        if (!HypixelGame.inSkyBlock || SkyBlockIsland.CATACOMBS.isInIsland()) return
         if (event.name != "random.anvil_land") return
         if (event.sound.pitch != 0.4920635f) return
         if (event.sound.volume != 0.6f) return
@@ -91,8 +92,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onWorldRender(event: WorldRenderEvent) {
-        if (!HypixelGame.inSkyBlock) return
-        if (!ravenAddonsConfig.fireFreezeTimer) return
+        if (!HypixelGame.inSkyBlock || SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.fireFreezeTimer) return
 
         val entities = frozenEntities.toMap()
         for ((entity, timer) in entities) {

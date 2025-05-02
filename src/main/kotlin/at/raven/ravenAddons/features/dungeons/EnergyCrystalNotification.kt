@@ -1,7 +1,7 @@
 package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -17,8 +17,7 @@ object EnergyCrystalNotification {
 
     @SubscribeEvent
     fun onTick(event: TickEvent) {
-        if (!HypixelGame.inSkyBlock) return
-        if (!ravenAddonsConfig.energyCrystalNotification) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.energyCrystalNotification) return
 
         val player = PlayerUtils.getPlayer() ?: return
         hasEnergyCrystal = player.inventory.mainInventory.any { it != null && it.displayName.contains("Energy Crystal") } == true
@@ -26,8 +25,7 @@ object EnergyCrystalNotification {
 
     @SubscribeEvent
     fun onRenderOverlay(event: RenderOverlayEvent) {
-        if (!HypixelGame.inSkyBlock) return
-        if (!ravenAddonsConfig.energyCrystalNotification) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.energyCrystalNotification) return
         if (!hasEnergyCrystal) return
 
         val fontRenderer = GuiRenderUtils.fontRenderer

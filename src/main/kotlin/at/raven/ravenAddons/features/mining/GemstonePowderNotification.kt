@@ -1,7 +1,8 @@
 package at.raven.ravenAddons.features.mining
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.SkyBlockIsland
+import at.raven.ravenAddons.data.SkyBlockIsland.Companion.miningIslands
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
@@ -18,8 +19,7 @@ object GemstonePowderNotification {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock) return
-        if (!ravenAddonsConfig.gemstonePowderNotification) return
+        if (!SkyBlockIsland.inAnyIsland(miningIslands) || !ravenAddonsConfig.gemstonePowderNotification) return
 
         gemstonePowderPattern.matchMatcher(event.message) {
             val amount = group("amount")

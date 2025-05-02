@@ -1,7 +1,7 @@
 package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
@@ -17,7 +17,7 @@ object LeapAnnounce {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland()) return
 
         leapPattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
