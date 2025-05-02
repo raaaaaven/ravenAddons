@@ -11,7 +11,6 @@ import at.raven.ravenAddons.utils.ChatUtils
 import moe.nea.libautoupdate.CurrentVersion
 import moe.nea.libautoupdate.PotentialUpdate
 import moe.nea.libautoupdate.UpdateContext
-import moe.nea.libautoupdate.UpdateSource
 import moe.nea.libautoupdate.UpdateTarget
 import moe.nea.libautoupdate.UpdateUtils
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -22,7 +21,7 @@ import javax.net.ssl.HttpsURLConnection
 object UpdateManager {
     private val updateContext =
         UpdateContext(
-            UpdateSource.githubUpdateSource("raaaaaven", "ravenAddons"),
+            ModrinthUpdateSource("ravenAddons", "forge", "1.8.9"),
             UpdateTarget.deleteAndSaveInTheSameFolder(this::class.java),
             CurrentVersion.of(modVersion),
             "pre"
