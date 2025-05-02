@@ -66,13 +66,13 @@ object ConfigManager {
             componentMessage = run {
                 val finalComponent = ChatComponentText("§8[§cRA§8] §7ravenAddons successfully updated to version ${ravenAddons.MOD_VERSION}!\n")
                 val linkComponent =
-                    ChatComponentText("§8[§cRA§8] §7Click here to open the changelog on GitHub.")
+                    ChatComponentText("§8[§cRA§8] §7Click here to open the changelog on Modrinth.")
                 linkComponent.chatStyle.chatHoverEvent =
                     HoverEvent(HoverEvent.Action.SHOW_TEXT, ChatComponentText("Click here to open the changelog!"))
                 linkComponent.chatStyle.chatClickEvent =
                     ClickEvent(
                         ClickEvent.Action.OPEN_URL,
-                        "https://github.com/raaaaaven/ravenAddons/releases/tag/${ravenAddons.MOD_VERSION}"
+                        "https://modrinth.com/mod/ravenaddons/version/tag/${ravenAddons.MOD_VERSION}"
                     )
                 finalComponent.add(linkComponent)
                 finalComponent

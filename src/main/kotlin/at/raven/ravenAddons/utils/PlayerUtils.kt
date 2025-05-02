@@ -1,7 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.ravenAddons
-import at.raven.ravenAddons.utils.APIUtils.getJsonResponse
+import at.raven.ravenAddons.utils.APIUtils.getJsonObjectResponse
 import com.mojang.authlib.GameProfile
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
@@ -20,10 +20,10 @@ object PlayerUtils {
 
     private suspend fun String.getFromMojang(): PlayerIdentifier? {
         return try {
-            val json = URL("https://api.mojang.com/users/profiles/minecraft/$this").getJsonResponse() ?: return null
+            val json = URL("https://api.mojang.com/users/profiles/minecraft/$this").getJsonObjectResponse()?.asJsonObject ?: return null
 
-            val uuidString = json.get("id").asString
-            val name = json.get("name").asString.removeSuffix("\n")
+            val uuidString = json["id"].asString
+            val name = json["name"].asString.removeSuffix("\n")
 
             PlayerIdentifier(
                 name,
@@ -42,10 +42,10 @@ object PlayerUtils {
 
     private suspend fun UUID.getNameFromMojang(): PlayerIdentifier? {
         return try {
-            val json = URL("https://api.mojang.com/user/profile/$this").getJsonResponse() ?: return null
+            val json = URL("https://api.mojang.com/user/profile/$this").getJsonObjectResponse() ?: return null
 
-            val uuidString = json.get("id").asString
-            val name = json.get("name").asString
+            val uuidString = json["id"].asString
+            val name = json["name"].asString
 
             PlayerIdentifier(
                 name,
