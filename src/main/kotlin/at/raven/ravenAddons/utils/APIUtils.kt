@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import com.google.gson.JsonArray
 import com.google.gson.JsonElement
 import com.google.gson.JsonObject
@@ -43,6 +44,7 @@ object APIUtils {
         val connection = openConnection() as HttpsURLConnection
         connection.patchHttpsRequest()
         connection.requestMethod = "GET"
+        connection.setRequestProperty("User-Agent", "ravenAddons/${ravenAddons.MOD_VERSION}")
         connection.connect()
 
         val responseText = connection.inputStream.bufferedReader().use { it.readText() }
