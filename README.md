@@ -125,3 +125,5 @@ You can see a list of features below, as well as a list of upcoming features and
 
 + Expand !since to accept arguments and add `!since inq`, `!since chim` and `!since relic` while falling back
   to `!since inq` if no argument was provided.
+
++ If multiple rare drops are dropped at the same time then only use the highest rarity drop in the drop related features.
