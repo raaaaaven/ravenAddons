@@ -7,7 +7,6 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.SoundUtils
-import at.raven.ravenAddons.utils.StringUtils.removeColors
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
@@ -20,7 +19,7 @@ object LeapAnnounce {
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland()) return
 
-        leapPattern.matchMatcher(event.message.removeColors()) {
+        leapPattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
 
             if (ravenAddonsConfig.leapAnnounce) {
