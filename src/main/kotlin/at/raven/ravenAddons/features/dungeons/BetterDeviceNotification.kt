@@ -11,10 +11,9 @@ import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SoundUtils
-import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
-import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -27,14 +26,13 @@ object BetterDeviceNotification {
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.betterDeviceNotification) return
 
-        devicePattern.matchMatcher(event.message.removeColors()) {
+        devicePattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
             if (ign != PlayerUtils.playerName) return
 
             ChatUtils.debug("Better Device Notification: Sending title and subtitle for $ign.")
 
-            ravenAddons.launchCoroutine {
-                delay(5)
+            ravenAddons.runDelayed(5.milliseconds) {
                 TitleManager.setTitle(
                     ravenAddonsConfig.betterDeviceNotificationTitle,
                     ravenAddonsConfig.betterDeviceNotificationSubTitle,

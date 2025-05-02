@@ -19,7 +19,7 @@ public abstract class MixinGuiIngame {
 
     @Inject(method = "renderGameOverlay", at = @At("HEAD"))
     private void beforeRenderGameOverlay(float partialTicks, CallbackInfo ci) {
-        if (TitleManager.INSTANCE.shouldHideVanillaTitle()) {
+        if (TitleManager.shouldHideVanillaTitle()) {
             ravenAddons$storedTitlesTimer = titlesTimer;
             titlesTimer = 0;
         }

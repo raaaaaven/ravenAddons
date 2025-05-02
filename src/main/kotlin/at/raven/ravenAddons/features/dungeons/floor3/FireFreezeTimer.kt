@@ -9,7 +9,6 @@ import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
-import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -25,7 +24,7 @@ object FireFreezeTimer {
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.floor3FireFreezeTimer) return
 
-        professorPattern.matchMatcher(event.message.removeColors()) {
+        professorPattern.matchMatcher(event.cleanMessage) {
             ChatUtils.debug("Floor 3 Fire Freeze Timer: Timer started.")
 
             ravenAddons.launchCoroutine {

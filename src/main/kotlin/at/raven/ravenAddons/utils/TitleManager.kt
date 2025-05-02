@@ -216,6 +216,7 @@ object TitleManager {
         event.cancel()
     }
 
+    @JvmStatic
     fun shouldHideVanillaTitle(): Boolean = titlesToRender.any { it.hidesVanillaTitles }
 }
 

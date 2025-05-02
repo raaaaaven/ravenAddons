@@ -1,8 +1,6 @@
 package at.raven.ravenAddons.data.commands
 
-class CommandBuilder(
-    val name: String,
-) {
+class CommandBuilder(val name: String) {
     var description = ""
     var aliases: List<String> = emptyList()
     var hidden = false
