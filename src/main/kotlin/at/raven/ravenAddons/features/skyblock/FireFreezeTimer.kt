@@ -95,7 +95,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onWorldRender(event: WorldRenderEvent) {
-        if (!HypixelGame.inSkyBlock && SkyBlockIsland.CATACOMBS.isInIsland() && !ravenAddonsConfig.fireFreezeTimer) return
+        if (!HypixelGame.inSkyBlock || SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.fireFreezeTimer) return
 
         val entities = frozenEntities.toMap()
         for ((entity, timer) in entities) {
