@@ -27,7 +27,7 @@ object MiningAbilityNotification {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
         if (!ravenAddonsConfig.miningAbilityNotification) return
 
         miningAbilityPattern.matchMatcher(event.message) {

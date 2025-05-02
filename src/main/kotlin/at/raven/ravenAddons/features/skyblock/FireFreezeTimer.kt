@@ -41,13 +41,12 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
         if (event.name != "random.anvil_land") return
         if (event.sound.pitch != 0.4920635f) return
         if (event.sound.volume != 0.6f) return
 
         var entityName: String? = null
-        var entityCount: Int? = null
 
         val location =
             Vec3(event.sound.xPosF.toDouble(), event.sound.yPosF.toDouble(), event.sound.zPosF.toDouble())
@@ -55,10 +54,10 @@ object FireFreezeTimer {
         val entities = checkNearbyEntities(location).filter { it !in frozenEntities }
         if (entities.isEmpty()) return
 
-        frozenEntities.putAll(entities.associate { it to SimpleTimeMark.now() + 10.seconds })
+        frozenEntities.putAll(entities.associateWith { SimpleTimeMark.now() + 10.seconds })
 
-        entityCount = entities.size
-        val firstEntity = entities.toList().firstOrNull()
+        val entityCount = entities.size
+        val firstEntity = entities.firstOrNull()
         if (entities.size == 1 && firstEntity != null) {
             entityName = firstEntity.getMatchedName() ?: firstEntity.name
         }
@@ -66,9 +65,7 @@ object FireFreezeTimer {
 
         if (ravenAddonsConfig.fireFreezeNotification && titleCooldown.isInPast()) {
             titleCooldown = SimpleTimeMark.now() + 1.seconds
-            ravenAddons.launchCoroutine {
-                delay(5000)
-
+            ravenAddons.runDelayed(5.seconds) {
                 TitleManager.setTitle("§b§lFREEZE!", "", 3.seconds, 1.seconds, 1.seconds)
                 ChatUtils.chat("Fire Freeze Staff is ready for re-use.")
             }
@@ -94,7 +91,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onWorldRender(event: WorldRenderEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
         if (!ravenAddonsConfig.fireFreezeTimer) return
 
         val entities = frozenEntities.toMap()
@@ -130,7 +127,7 @@ object FireFreezeTimer {
             entitiesToFreeze.add(entity)
         }
 
-        return entitiesToFreeze.toList()
+        return entitiesToFreeze
     }
 
     @SubscribeEvent
@@ -191,14 +188,14 @@ object FireFreezeTimer {
         val unmatchedMobs = mutableListOf<Pair<String, String>>()  //armor stand name, vanilla name
 
         loop@ for (mob in mobList) {
-            val mobCustomName = mob.getArmorStandName() ?: continue
+            val mobCustomName = mob.getArmorStandName()?.removeColors() ?: continue
 
-            armorStandPattern.matchMatcher(mobCustomName.removeColors()) {
-                matchedMobs.add(mobCustomName.removeColors() to group("name"))
+            armorStandPattern.matchMatcher(mobCustomName) {
+                matchedMobs.add(mobCustomName to group("name"))
                 continue@loop
             }
 
-            unmatchedMobs.add(mobCustomName.removeColors() to mob.name)
+            unmatchedMobs.add(mobCustomName to mob.name)
         }
 
         var stringToCopy = "------------------\n"

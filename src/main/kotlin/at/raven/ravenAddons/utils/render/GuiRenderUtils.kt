@@ -15,7 +15,7 @@ object GuiRenderUtils {
 
     val fontRenderer get() = ravenAddons.Companion.mc.fontRendererObj
 
-    infix fun Slot.highlight(color: Color) {
+    fun Slot.highlight(color: Color) {
         highlight(color, xDisplayPosition, yDisplayPosition)
     }
 
@@ -30,7 +30,7 @@ object GuiRenderUtils {
         GlStateManager.enableLighting()
     }
 
-    infix fun Slot.drawBorder(color: Color) {
+    fun Slot.drawBorder(color: Color) {
         drawBorder(color, xDisplayPosition, yDisplayPosition)
     }
 

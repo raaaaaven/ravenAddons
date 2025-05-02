@@ -17,7 +17,7 @@ object EnergyCrystalNotification {
 
     @SubscribeEvent
     fun onTick(event: TickEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
         if (!ravenAddonsConfig.energyCrystalNotification) return
 
         val player = PlayerUtils.getPlayer() ?: return
@@ -26,7 +26,7 @@ object EnergyCrystalNotification {
 
     @SubscribeEvent
     fun onRenderOverlay(event: RenderOverlayEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
         if (!ravenAddonsConfig.energyCrystalNotification) return
         if (!hasEnergyCrystal) return
 

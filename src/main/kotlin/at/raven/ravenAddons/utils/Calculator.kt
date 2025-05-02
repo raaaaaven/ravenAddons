@@ -79,18 +79,14 @@ object Calculator {
                     while (operators.isNotEmpty() && operators.last() !is Token.LeftParen) {
                         output.add(operators.removeLast())
                     }
-                    if (operators.isEmpty() || operators.last() !is Token.LeftParen) {
-                        throw IllegalArgumentException("Mismatched parentheses")
-                    }
+                    require(!(operators.isEmpty() || operators.last() !is Token.LeftParen)) { "Mismatched parentheses" }
                     operators.removeLast()
                 }
             }
         }
 
         while (operators.isNotEmpty()) {
-            if (operators.last() is Token.LeftParen) {
-                throw IllegalArgumentException("Mismatched parentheses")
-            }
+            require(operators.last() !is Token.LeftParen) { "Mismatched parentheses" }
             output.add(operators.removeLast())
         }
 
@@ -119,8 +115,8 @@ object Calculator {
     sealed class Token {
         data class Number(val value: Double) : Token()
         data class Operator(val type: OperatorType) : Token()
-        object LeftParen : Token()
-        object RightParen : Token()
+        data object LeftParen : Token()
+        data object RightParen : Token()
     }
 
     enum class OperatorType(val validChars: Set<Char>, val priority: Int, val expression: (Double, Double) -> Double) {

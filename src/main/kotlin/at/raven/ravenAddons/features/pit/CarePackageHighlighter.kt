@@ -25,7 +25,7 @@ object CarePackageHighlighter {
 
     @SubscribeEvent
     fun onContainerBackground(event: ContainerBackgroundDrawEvent) {
-        if (HypixelGame.THE_PIT.isNotPlaying()) return
+        if (!HypixelGame.inPit) return
         if (!ravenAddonsConfig.carePackageHighlighter) return
         if (event.gui !is GuiChest) return
         if (event.gui.getContainerName() != "Chest") return
@@ -33,7 +33,7 @@ object CarePackageHighlighter {
 
         for ((slot, stack) in inventory.getUpperItems()) {
             if (importantItems.any { stack?.displayName?.contains(it) == true }) {
-                slot highlight ravenAddonsConfig.carePackageHighlighterColour
+                slot.highlight(ravenAddonsConfig.carePackageHighlighterColour)
             }
         }
     }

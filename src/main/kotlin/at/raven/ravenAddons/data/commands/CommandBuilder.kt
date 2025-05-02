@@ -1,14 +1,12 @@
 package at.raven.ravenAddons.data.commands
 
-class CommandBuilder(
-    val name: String,
-) {
+class CommandBuilder(val name: String) {
     var description = ""
     var aliases: List<String> = emptyList()
     var hidden = false
     var category = CommandCategory.NORMAL
     private var autoComplete: ((Array<String>) -> List<String>) = { listOf() }
-    var callback: (Array<String>) -> Unit = {}
+    private var callback: (Array<String>) -> Unit = {}
 
     fun callback(callback: (Array<String>) -> Unit) {
         this.callback = callback
