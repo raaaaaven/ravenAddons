@@ -1,7 +1,8 @@
 package at.raven.ravenAddons.features.mining
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.data.SkyBlockIsland
+import at.raven.ravenAddons.data.SkyBlockIsland.Companion.miningIslands
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
@@ -27,8 +28,7 @@ object MiningAbilityNotification {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
-        if (!ravenAddonsConfig.miningAbilityNotification) return
+        if (!SkyBlockIsland.inAnyIsland(miningIslands) || !ravenAddonsConfig.miningAbilityNotification) return
 
         miningAbilityPattern.matchMatcher(event.message) {
             val ability = group("ability")

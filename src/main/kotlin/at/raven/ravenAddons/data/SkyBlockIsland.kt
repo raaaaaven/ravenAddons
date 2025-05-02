@@ -54,6 +54,14 @@ enum class SkyBlockIsland(val id: String, displayName: String? = null) {
             return current in islands
         }
 
+        val miningIslands = setOf(
+            GOLD_MINES,
+            DEEP_CAVERNS,
+            DWARVEN_MINES,
+            CRYSTAL_HOLLOWS,
+            MINESHAFT
+        )
+
         @SubscribeEvent(priority = EventPriority.HIGHEST)
         fun onHypixelData(event: HypixelServerChangeEvent) {
             val old = current

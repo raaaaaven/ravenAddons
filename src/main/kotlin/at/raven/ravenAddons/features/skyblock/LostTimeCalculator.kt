@@ -33,8 +33,7 @@ object LostTimeCalculator {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
-        if (!ravenAddonsConfig.lostTimeCalculator) return
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.lostTimeCalculator) return
 
         if (dungeonStartPattern.matches(event.message.removeColors()) || kuudraStartPattern.matches(event.message.removeColors())) {
             ChatUtils.debug("Instance Lag Calculator: Starting timer.")
@@ -76,8 +75,7 @@ object LostTimeCalculator {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
-        if (!ravenAddonsConfig.lostTimeCalculator) return
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.lostTimeCalculator) return
         ChatUtils.debug("Lost Time Calculator: World Change Detected! Resetting timer.")
         resetTimer()
     }
