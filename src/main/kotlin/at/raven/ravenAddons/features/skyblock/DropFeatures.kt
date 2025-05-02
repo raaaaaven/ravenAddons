@@ -13,6 +13,7 @@ import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -28,13 +29,13 @@ object DropFeatures {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (offlineCheck && offlinePlayer.matches(event.message.removeColors())) {
+        if (offlineCheck && offlinePlayer.matches(event.cleanMessage)) {
             event.isCanceled = true
             offlineCheck = false
             return
         }
 
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
         dropPattern.matchMatcher(event.message) {
             val dropType = group("dropType") ?: return
             val extra = group("subtitle").orEmpty().removeColors()
@@ -45,20 +46,19 @@ object DropFeatures {
             val multiDropColor = group("multiDropColor")
             val item = multiDropCount?.let { "$it ($itemName)" } ?: itemName
 
-            val title = if (ravenAddonsConfig.dropTitleCategory)
-                group("title")
+            val title = if (ravenAddonsConfig.dropTitleCategory) group("title")
             else {
                 buildString {
-                if (multiDropCount != null) {
-                    append("$multiDropColor(")
-                    append(multiDropCount)
-                    append(" ")
-                    append(itemColor)
-                    append(itemName)
-                    append("$multiDropColor)")
-                } else {
-                    append(itemColor)
-                    append(itemName)
+                    if (multiDropCount != null) {
+                        append("$multiDropColor(")
+                        append(multiDropCount)
+                        append(" ")
+                        append(itemColor)
+                        append(itemName)
+                        append("$multiDropColor)")
+                    } else {
+                        append(itemColor)
+                        append(itemName)
                     }
                 }
             }
@@ -67,9 +67,7 @@ object DropFeatures {
 
             if (ravenAddonsConfig.dropAlert && ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
 
-                ravenAddons.launchCoroutine {
-                    delay(500)
-
+                ravenAddons.runDelayed(500.milliseconds) {
                     val message = buildString {
                         append("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] ")
                         append("$dropType $item")
