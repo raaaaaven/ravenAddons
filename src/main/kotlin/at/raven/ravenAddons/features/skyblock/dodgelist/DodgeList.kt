@@ -10,24 +10,14 @@ import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.
 import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getKickComponent
 import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getRemoveComponent
 import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.prefixComponent
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListAdd
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListHelp
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListList
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListRemove
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListReset
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListTempAdd
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.*
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
-import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.*
 import at.raven.ravenAddons.utils.ChatUtils.add
-import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
-import at.raven.ravenAddons.utils.SimpleTimeMark
-import at.raven.ravenAddons.utils.SoundUtils
-import at.raven.ravenAddons.utils.StringUtils.removeColors
-import at.raven.ravenAddons.utils.TitleManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
@@ -74,7 +64,7 @@ object DodgeList {
     fun onChat(event: ChatReceivedEvent) {
         if (!ravenAddonsConfig.dodgeList) return
 
-        if (fullPartyPattern.matches(event.message.removeColors())) {
+        if (fullPartyPattern.matches(event.cleanMessage)) {
             if (!ravenAddonsConfig.dodgeListFullPartyCheck) {
                 ChatUtils.debug("dodgeListFullPartyCheck: checking")
                 ChatUtils.chat("Checking for people in the dodge list.")
@@ -83,7 +73,7 @@ object DodgeList {
             }
         }
         ravenAddons.launchCoroutine {
-            playerJoinPattern.matchMatcher(event.message.removeColors()) {
+            playerJoinPattern.matchMatcher(event.cleanMessage) {
                 val playerName = group("name")
 
                 if (playerName == PlayerUtils.playerName) {

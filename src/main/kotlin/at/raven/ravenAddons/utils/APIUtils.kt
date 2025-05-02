@@ -1,8 +1,12 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.loadmodule.LoadModule
-import com.google.gson.Gson
+import at.raven.ravenAddons.ravenAddons
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
 import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
 import java.net.URL
 import java.security.KeyStore
 import javax.net.ssl.HttpsURLConnection
@@ -36,14 +40,30 @@ object APIUtils {
         }
     }
 
-    suspend fun URL.getJsonResponse(): JsonObject? {
-        val connection = this.openConnection() as HttpsURLConnection
+    fun URL.getJsonElementResponse(): JsonElement? {
+        val connection = openConnection() as HttpsURLConnection
         connection.patchHttpsRequest()
         connection.requestMethod = "GET"
+        connection.setRequestProperty("User-Agent", "ravenAddons/${ravenAddons.MOD_VERSION}")
         connection.connect()
 
-        val response = connection.inputStream.bufferedReader().use { it.readText() }
-
-        return Gson().fromJson(response, JsonObject::class.java)
+        val responseText = connection.inputStream.bufferedReader().use { it.readText() }
+        return try {
+            JsonParser().parse(responseText)
+        } catch (e: JsonSyntaxException) {
+            e.printStackTrace()
+            ChatUtils.warning("Failed to parse response as JSON.")
+            println(this.toString())
+            null
+        } finally {
+            connection.disconnect()
+        }
     }
+
+    fun URL.getJsonObjectResponse(): JsonObject? = this.getJsonElementResponse()?.asJsonObject
+    fun URL.getJsonArrayResponse(): JsonArray? = this.getJsonElementResponse()?.asJsonArray
+
+    fun getJsonElementResponse(url: String) = URL(url).getJsonElementResponse()
+    fun getJsonObjectResponse(url: String) = URL(url).getJsonObjectResponse()
+    fun getJsonArrayResponse(url: String) = URL(url).getJsonArrayResponse()
 }

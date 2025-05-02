@@ -10,7 +10,6 @@ import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SimpleTimeMark
-import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TimeUtils.clampTicks
 import at.raven.ravenAddons.utils.TimeUtils.format
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -35,13 +34,13 @@ object LostTimeCalculator {
     fun onChat(event: ChatReceivedEvent) {
         if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.lostTimeCalculator) return
 
-        if (dungeonStartPattern.matches(event.message.removeColors()) || kuudraStartPattern.matches(event.message.removeColors())) {
+        if (dungeonStartPattern.matches(event.cleanMessage) || kuudraStartPattern.matches(event.cleanMessage)) {
             ChatUtils.debug("Instance Lag Calculator: Starting timer.")
             time = SimpleTimeMark.now()
             serverTime = ServerTimeMark.now()
         }
 
-        if (endPattern.matches(event.message.removeColors())) {
+        if (endPattern.matches(event.cleanMessage)) {
             if (time.isFarPast() || serverTime.isFarPast()) {
                 ravenAddons.runDelayed(2.5.seconds) {
                     ChatUtils.warning("Could not calculate lost time. Likely cause was you left the instance early.")

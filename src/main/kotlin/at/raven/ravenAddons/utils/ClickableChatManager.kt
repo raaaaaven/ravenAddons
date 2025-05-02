@@ -5,7 +5,7 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.util.UUID
+import java.util.*
 
 @LoadModule
 object ClickableChatManager {
@@ -24,7 +24,7 @@ object ClickableChatManager {
             description = "Command used by the mod to execute clickable chat action."
             category = CommandCategory.INTERNAL
             hidden = true
-            callback = { tryRunCommand(it) }
+            callback { tryRunCommand(it) }
         }
     }
 

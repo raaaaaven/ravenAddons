@@ -9,7 +9,6 @@ import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
-import at.raven.ravenAddons.utils.StringUtils.removeColors
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -29,9 +28,9 @@ object SinceCommand {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (HypixelGame.SKYBLOCK.isNotPlaying()) return
+        if (!HypixelGame.inSkyBlock) return
 
-        sincePattern.matchMatcher(event.message.removeColors()) {
+        sincePattern.matchMatcher(event.cleanMessage) {
             if (!ravenAddonsConfig.sinceCommand) return
             ravenAddons.launchCoroutine {
                 delay(250)
@@ -41,13 +40,13 @@ object SinceCommand {
             return
         }
 
-        inqPattern.matchMatcher(event.message.removeColors()) {
+        inqPattern.matchMatcher(event.cleanMessage) {
             ChatUtils.debug("Since Command: Inquisitor detected. Resetting sinceInq counter.")
             resetSince()
             return
         }
 
-        if (mobPatterns.any { it.matches(event.message.removeColors()) }) {
+        if (mobPatterns.any { it.matches(event.cleanMessage) }) {
             ChatUtils.debug("Since Command: Mythologicial Mob detected. Adding to sinceInq counter.")
             addToSince()
         }
