@@ -20,6 +20,7 @@ import kotlin.time.Duration.Companion.seconds
 object DropFeatures {
 
     private var titleCooldown = SimpleTimeMark.farPast()
+    private var messageCooldown = SimpleTimeMark.farPast()
     private var offlineCheck = false
 
     // https://regex101.com/r/W7Bylx/6
@@ -65,7 +66,8 @@ object DropFeatures {
 
             ChatUtils.debug("$title ${group("subtitle")}")
 
-            if (ravenAddonsConfig.dropAlert && ravenAddonsConfig.dropAlertUserName.isNotEmpty()) {
+            if (ravenAddonsConfig.dropAlert && ravenAddonsConfig.dropAlertUserName.isNotEmpty() && messageCooldown.isInPast()) {
+                messageCooldown = SimpleTimeMark.now() + 1.seconds
 
                 ravenAddons.runDelayed(500.milliseconds) {
                     val message = buildString {
