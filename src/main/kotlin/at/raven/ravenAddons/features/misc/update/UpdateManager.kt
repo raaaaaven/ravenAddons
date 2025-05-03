@@ -8,11 +8,7 @@ import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.ravenAddons.Companion.modVersion
 import at.raven.ravenAddons.utils.APIUtils.patchHttpsRequest
 import at.raven.ravenAddons.utils.ChatUtils
-import moe.nea.libautoupdate.CurrentVersion
-import moe.nea.libautoupdate.PotentialUpdate
-import moe.nea.libautoupdate.UpdateContext
-import moe.nea.libautoupdate.UpdateTarget
-import moe.nea.libautoupdate.UpdateUtils
+import moe.nea.libautoupdate.*
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.CompletableFuture
 import javax.net.ssl.HttpsURLConnection

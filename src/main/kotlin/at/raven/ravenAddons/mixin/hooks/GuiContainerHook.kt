@@ -2,7 +2,6 @@ package at.raven.ravenAddons.mixin.hooks
 
 import at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent
 import at.raven.ravenAddons.event.render.container.ContainerForegroundDrawEvent
-import at.raven.ravenAddons.utils.EventUtils.post
 import net.minecraft.client.gui.inventory.GuiContainer
 
 class GuiContainerHook(guiAny: Any) {

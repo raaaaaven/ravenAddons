@@ -2,7 +2,6 @@ package at.raven.ravenAddons.config
 
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.ravenAddons
-import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import java.io.File
 import java.nio.file.Files

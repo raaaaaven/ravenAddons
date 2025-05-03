@@ -1,12 +1,12 @@
 package at.raven.ravenAddons.event
 
+import at.raven.ravenAddons.event.base.RavenEvent
 import at.raven.ravenAddons.utils.StringUtils.equalsIgnoreColor
-import net.minecraftforge.fml.common.eventhandler.Event
 
 class DebugDataCollectionEvent(
     private val list: MutableList<String>,
     private val search: String,
-) : Event() {
+) : RavenEvent() {
     var empty = true
     private var currentTitle: String? = null
     private var irrelevant = false

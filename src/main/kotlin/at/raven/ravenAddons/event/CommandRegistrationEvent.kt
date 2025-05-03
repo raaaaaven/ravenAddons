@@ -2,9 +2,9 @@ package at.raven.ravenAddons.event
 
 import at.raven.ravenAddons.data.commands.CommandBuilder
 import at.raven.ravenAddons.data.commands.CommandManager.commandList
-import net.minecraftforge.fml.common.eventhandler.Event
+import at.raven.ravenAddons.event.base.RavenEvent
 
-class CommandRegistrationEvent : Event() {
+class CommandRegistrationEvent : RavenEvent() {
     fun register(
         name: String,
         block: CommandBuilder.() -> Unit,

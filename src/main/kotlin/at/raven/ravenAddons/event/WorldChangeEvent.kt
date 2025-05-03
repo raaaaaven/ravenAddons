@@ -1,5 +1,5 @@
 package at.raven.ravenAddons.event
 
-import net.minecraftforge.fml.common.eventhandler.Event
+import at.raven.ravenAddons.event.base.RavenEvent
 
-class WorldChangeEvent : Event()
+class WorldChangeEvent : RavenEvent() {}
