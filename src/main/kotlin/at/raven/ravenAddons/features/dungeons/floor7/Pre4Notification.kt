@@ -2,14 +2,20 @@ package at.raven.ravenAddons.features.dungeons.floor7
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
+import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.EntityTeleportEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.EntityUtils.isRealPlayer
+import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.SoundUtils
+import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
+import net.minecraft.entity.player.EntityPlayer
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.milliseconds
@@ -26,6 +32,33 @@ object Pre4Notification {
             60.0, 125.0, 32.0,
             66.0, 130.0, 38.0
         )
+
+    private val waitingBoundingBox =
+        AxisAlignedBB(
+            94.0, 133.0, 48.0,
+            89.0, 128.0, 43.0
+        )
+
+
+    @SubscribeEvent
+    fun onEntityTeleport(event: EntityTeleportEvent) {
+        if (event.entity !is EntityPlayer || !event.entity.isRealPlayer()) return
+        val distanceToPlayer = event.distanceToPlayer ?: return
+        if (distanceToPlayer >= 3.0) return
+        val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
+
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() && waitingBoundingBox.isVecInside(playerPosition) && !ravenAddonsConfig.enterSection4Title) return
+
+        ChatUtils.chat("${event.entity.displayName.formattedText.removeColors()}!!")
+
+        TitleManager.setTitle(
+            "§aEnter Section 4",
+            "${event.entity.displayName.formattedText} §aleaped to you!",
+            3.seconds,
+            1.seconds,
+            1.seconds
+        )
+    }
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -67,6 +100,22 @@ object Pre4Notification {
                 }
 
                 ChatUtils.sendMessage(announce)
+            }
+        }
+    }
+
+    @SubscribeEvent
+    fun onCommand(event: CommandRegistrationEvent) {
+        event.register("pre4test") {
+            description = "asdasjbdj"
+            callback = {
+                val player = PlayerUtils.getPlayer()
+                if (player != null) {
+                    EntityTeleportEvent(
+                        player.positionVector,
+                        player
+                    ).post()
+                }
             }
         }
     }

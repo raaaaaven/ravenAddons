@@ -250,6 +250,15 @@ object ravenAddonsConfig : Vigilant(
     var pre4AnnounceMessage = "Pre 4 complete."
 
     @Property(
+        type = PropertyType.TEXT,
+        name = "Enter Section 4 Title",
+        description = "Display a title when someone leaps to you while waiting to enter the 4th section of phase 3.",
+        category = "Dungeons",
+        subcategory = "Floor 7 - 4th Device"
+    )
+    var enterSection4Title = false
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Energy Crystal Notification",
         description = "Shows a reminder on screen when you have an unplaced Energy Crystal.",
