@@ -44,8 +44,8 @@ object BetterDeviceNotification {
 
                 ravenAddons.runDelayed(5.milliseconds) {
                     TitleManager.setTitle(
-                        ravenAddonsConfig.pre4NotificationTitle,
-                        ravenAddonsConfig.pre4NotificationSubtitle,
+                        title,
+                        subtitle,
                         1.5.seconds,
                         0.seconds,
                         0.seconds
