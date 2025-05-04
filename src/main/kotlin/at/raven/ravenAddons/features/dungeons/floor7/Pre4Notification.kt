@@ -1,4 +1,4 @@
-package at.raven.ravenAddons.features.dungeons
+package at.raven.ravenAddons.features.dungeons.floor7
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
@@ -16,7 +16,7 @@ import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
-object BetterDeviceNotification {
+object Pre4Notification {
 
     // REGEX TEST: §aGillsplash§r§a completed a device! (§r§c6§r§a/7)
     private val devicePattern = "^(?<ign>.+) completed a device! (?<number>.+)$".toPattern()
