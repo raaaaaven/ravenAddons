@@ -2,16 +2,15 @@ package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
-import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
-import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.TitleManager
+import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -20,53 +19,55 @@ import kotlin.time.Duration.Companion.seconds
 object BetterDeviceNotification {
 
     // REGEX TEST: §aGillsplash§r§a completed a device! (§r§c6§r§a/7)
-    private val devicePattern = "^(?<ign>.+)§r§a completed a device! (?<number>.+)$".toPattern()
+    private val devicePattern = "^(?<ign>.+) completed a device! (?<number>.+)$".toPattern()
+
+    private val pre4BoundingBox =
+        AxisAlignedBB(
+            66.0, 125.0, 32.0,
+            66.0, 130.0, 38.0
+        )
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.betterDeviceNotification) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland()) return
 
         devicePattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
             if (ign != PlayerUtils.playerName) return
+            val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
 
-            ChatUtils.debug("Better Device Notification: Sending title and subtitle for $ign.")
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Notification) {
+                ChatUtils.debug("Pre 4 Notification: Sending title and subtitle for $ign.")
 
-            ravenAddons.runDelayed(5.milliseconds) {
-                TitleManager.setTitle(
-                    ravenAddonsConfig.betterDeviceNotificationTitle,
-                    ravenAddonsConfig.betterDeviceNotificationSubTitle,
-                    1.5.seconds,
-                    0.seconds,
-                    0.seconds
-                )
-                SoundUtils.pling()
-            }
-        }
-    }
+                val title = ravenAddonsConfig.pre4NotificationTitle.replace("&", "§")
+                val subtitle = ravenAddonsConfig.pre4NotificationSubtitle.replace("&", "§")
 
-    private val badConfigLine = "\\t\\t\\[dungeons\\.floor_7\\.better_device_notifications_(?:sub)?title]".toPattern()
-
-    @SubscribeEvent
-    fun onConfigFix(event: ConfigFixEvent) {
-        event.checkVersion(131) {
-            var deleteNext = false
-            val newConfig = mutableListOf<String>()
-
-            for (line in event.configLines) {
-                if (deleteNext) {
-                    deleteNext = false
-                    continue
+                ravenAddons.runDelayed(5.milliseconds) {
+                    TitleManager.setTitle(
+                        ravenAddonsConfig.pre4NotificationTitle,
+                        ravenAddonsConfig.pre4NotificationSubtitle,
+                        1.5.seconds,
+                        0.seconds,
+                        0.seconds
+                    )
+                    SoundUtils.pling()
                 }
 
-                if (badConfigLine.matches(line)) {
-                    deleteNext = true
+            }
+
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Announce) {
+                ChatUtils.debug("Pre 4 Announce: Sending message in party chat.")
+
+                val message = ravenAddonsConfig.pre4AnnounceMessage
+
+                val announce = if (ravenAddonsConfig.announcePrefix) {
+                    "/pc [RA] $message"
                 } else {
-                    newConfig.add(line)
+                    "/pc $message"
                 }
-            }
 
-            event.configLines = newConfig
+                ChatUtils.sendMessage(announce)
+            }
         }
     }
 }
