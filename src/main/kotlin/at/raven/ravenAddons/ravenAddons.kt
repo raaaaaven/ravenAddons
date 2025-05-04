@@ -47,7 +47,7 @@ class ravenAddons {
 
     @LoadModule
     companion object{
-        const val MOD_VERSION = "1.9.2"
+        const val MOD_VERSION = "1.9.3"
         const val MOD_ID = "ravenAddons"
         val modVersion get() = UpdateManager.modVersionNumber(MOD_VERSION)
 
