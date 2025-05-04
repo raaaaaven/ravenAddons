@@ -23,7 +23,7 @@ object BetterDeviceNotification {
 
     private val pre4BoundingBox =
         AxisAlignedBB(
-            66.0, 125.0, 32.0,
+            60.0, 125.0, 32.0,
             66.0, 130.0, 38.0
         )
 
