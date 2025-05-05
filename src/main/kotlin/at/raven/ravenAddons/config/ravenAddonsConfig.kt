@@ -250,7 +250,7 @@ object ravenAddonsConfig : Vigilant(
     var pre4AnnounceMessage = "Pre 4 complete."
 
     @Property(
-        type = PropertyType.TEXT,
+        type = PropertyType.SWITCH,
         name = "Enter Section 4 Title",
         description = "Display a title when someone leaps to you while waiting to enter the 4th section of phase 3.",
         category = "Dungeons",
