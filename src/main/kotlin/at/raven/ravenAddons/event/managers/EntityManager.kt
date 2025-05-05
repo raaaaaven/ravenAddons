@@ -4,7 +4,6 @@ import at.raven.ravenAddons.event.EntityTeleportEvent
 import at.raven.ravenAddons.event.PacketReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.EntityUtils
-import at.raven.ravenAddons.utils.EventUtils.post
 import net.minecraft.network.play.server.S18PacketEntityTeleport
 import net.minecraft.util.Vec3
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent

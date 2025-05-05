@@ -2,14 +2,12 @@ package at.raven.ravenAddons.features.dungeons.floor7
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
-import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.EntityTeleportEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.EntityUtils.isRealPlayer
-import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.SoundUtils
@@ -104,7 +102,7 @@ object Pre4Notification {
         }
     }
 
-    @SubscribeEvent
+    /*@SubscribeEvent
     fun onCommand(event: CommandRegistrationEvent) {
         event.register("pre4test") {
             description = "asdasjbdj"
@@ -118,5 +116,5 @@ object Pre4Notification {
                 }
             }
         }
-    }
+    }*/
 }
