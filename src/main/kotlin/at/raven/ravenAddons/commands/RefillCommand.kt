@@ -12,7 +12,7 @@ object RefillCommand {
     private enum class items(
         val command: String,
         val aliases: List<String>,
-        val descrption: String,
+        val description: String,
         val item: String,
         val id: String,
         val stack: Int,
@@ -33,7 +33,7 @@ object RefillCommand {
     fun onCommandRegisteration(event: CommandRegistrationEvent) {
         items.entries.forEach { item ->
             event.register(item.command) {
-                description = item.descrption
+                description = item.description
                 aliases = item.aliases
                 category = CommandCategory.REFILL
                 callback { refill(item) }
