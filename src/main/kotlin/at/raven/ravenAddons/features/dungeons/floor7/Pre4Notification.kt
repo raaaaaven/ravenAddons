@@ -2,6 +2,7 @@ package at.raven.ravenAddons.features.dungeons.floor7
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
+import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.EntityTeleportEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -45,7 +46,7 @@ object Pre4Notification {
         if (distanceToPlayer >= 3.0) return
         val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
 
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() && waitingBoundingBox.isVecInside(playerPosition) && !ravenAddonsConfig.enterSection4Title) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() && !waitingBoundingBox.isVecInside(playerPosition) && !ravenAddonsConfig.enterSection4Title) return
 
         ChatUtils.chat("${event.entity.displayName.formattedText.removeColors()}!!")
 
@@ -102,10 +103,10 @@ object Pre4Notification {
         }
     }
 
-    /*@SubscribeEvent
+    @SubscribeEvent
     fun onCommand(event: CommandRegistrationEvent) {
         event.register("pre4test") {
-            description = "asdasjbdj"
+            description = "Display Enter Section 4 Title"
             callback = {
                 val player = PlayerUtils.getPlayer()
                 if (player != null) {
@@ -116,5 +117,5 @@ object Pre4Notification {
                 }
             }
         }
-    }*/
+    }
 }
