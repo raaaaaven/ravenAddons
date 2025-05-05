@@ -4,7 +4,6 @@ import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.hypixel.IslandChangeEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
-import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.StringUtils.toFormattedName
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent

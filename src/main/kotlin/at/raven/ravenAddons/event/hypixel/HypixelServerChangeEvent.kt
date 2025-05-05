@@ -1,7 +1,7 @@
 package at.raven.ravenAddons.event.hypixel
 
+import at.raven.ravenAddons.event.base.RavenEvent
 import net.hypixel.data.type.ServerType
-import net.minecraftforge.fml.common.eventhandler.Event
 
 class HypixelServerChangeEvent(
     val serverName: String?,
@@ -9,4 +9,4 @@ class HypixelServerChangeEvent(
     val lobbyName: String?,
     val mode: String?,
     val map: String?,
-) : Event()
+) : RavenEvent()

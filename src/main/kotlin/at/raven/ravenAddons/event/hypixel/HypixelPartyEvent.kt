@@ -1,10 +1,10 @@
 package at.raven.ravenAddons.event.hypixel
 
+import at.raven.ravenAddons.event.base.RavenEvent
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket
-import net.minecraftforge.fml.common.eventhandler.Event
-import java.util.UUID
+import java.util.*
 
 class HypixelPartyEvent(
     val inParty: Boolean,
     val memberMap: MutableMap<UUID, ClientboundPartyInfoPacket.PartyMember>
-) : Event()
+) : RavenEvent()

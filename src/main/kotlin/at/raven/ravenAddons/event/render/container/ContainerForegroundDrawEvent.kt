@@ -1,8 +1,8 @@
 package at.raven.ravenAddons.event.render.container
 
+import at.raven.ravenAddons.event.base.RavenEvent
 import net.minecraft.client.gui.inventory.GuiContainer
 import net.minecraft.inventory.Container
-import net.minecraftforge.fml.common.eventhandler.Event
 
 class ContainerForegroundDrawEvent(
     val gui: GuiContainer,
@@ -10,4 +10,4 @@ class ContainerForegroundDrawEvent(
     val mouseX: Int,
     val mouseY: Int,
     val partialTicks: Float,
-) : Event()
+) : RavenEvent()

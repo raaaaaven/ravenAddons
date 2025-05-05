@@ -9,8 +9,6 @@ import at.raven.ravenAddons.event.PacketReceivedEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.event.render.TitleReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
-import at.raven.ravenAddons.utils.EventUtils.cancel
-import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.renderer.GlStateManager

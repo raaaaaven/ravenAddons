@@ -7,7 +7,6 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ClipboardUtils
-import at.raven.ravenAddons.utils.EventUtils.post
 import at.raven.ravenAddons.utils.StringUtils.equalsIgnoreColor
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 

@@ -1,5 +1,5 @@
 package at.raven.ravenAddons.event.render
 
-import net.minecraftforge.fml.common.eventhandler.Event
+import at.raven.ravenAddons.event.base.RavenEvent
 
-class RenderOverlayEvent(val partialTicks: Float) : Event()
+class RenderOverlayEvent(val partialTicks: Float) : RavenEvent()
