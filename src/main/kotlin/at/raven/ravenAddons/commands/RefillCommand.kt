@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object RefillCommand {
-    private enum class ITEM(
+    private enum class Item(
         val command: String,
         val aliases: List<String>,
         val item: String,
@@ -32,7 +32,7 @@ object RefillCommand {
 
     @SubscribeEvent
     fun onCommandRegisteration(event: CommandRegistrationEvent) {
-        ITEM.entries.forEach { item ->
+        Item.entries.forEach { item ->
             event.register(item.command) {
                 description = item.description
                 aliases = item.aliases
@@ -42,7 +42,7 @@ object RefillCommand {
         }
     }
 
-    private fun refill(item: ITEM) {
+    private fun refill(item: Item) {
         if (!HypixelGame.inSkyBlock) return
 
         val inventory = Minecraft.getMinecraft().thePlayer?.inventory?.mainInventory ?: return
