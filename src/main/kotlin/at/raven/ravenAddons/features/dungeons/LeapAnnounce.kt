@@ -28,7 +28,7 @@ object LeapAnnounce {
 
                 val message = ravenAddonsConfig.leapAnnounceMessage.replace("\$ign", ign)
 
-                val announce = if (ravenAddonsConfig.leapAnnouncePrefix) {
+                val announce = if (ravenAddonsConfig.announcePrefix) {
                     "/pc [RA] $message"
                 } else {
                     "/pc $message"

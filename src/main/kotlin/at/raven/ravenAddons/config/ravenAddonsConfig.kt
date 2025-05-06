@@ -197,31 +197,66 @@ object ravenAddonsConfig : Vigilant(
     var gemstonePowderThreshold = 0
 
     @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Announce Prefix",
+        description = "Choose whether or not you want [RA] infront of your dungeon announcements.",
+        category = "Dungeons"
+    )
+    var announcePrefix = true
+
+    @Property(
         type = PropertyType.SWITCH,
-        name = "Better Device Notifications",
-        description = "Replace Hypixel's device titles for your username.",
+        name = "Pre 4 Notification",
+        description = "Display a title notification for when completing the 4th device.",
         category = "Dungeons",
-        subcategory = "Floor 7"
+        subcategory = "Floor 7 - 4th Device"
     )
-    var betterDeviceNotification = false
+    var pre4Notification = false
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Title",
-        description = "Choose a title for Better Device Notifications.",
+        name = "Pre 4 Title",
+        description = "Choose a title for Pre 4 Notification.",
         category = "Dungeons",
-        subcategory = "Floor 7"
+        subcategory = "Floor 7 - 4th Device"
     )
-    var betterDeviceNotificationTitle = ""
+    var pre4NotificationTitle = ""
 
     @Property(
         type = PropertyType.TEXT,
-        name = "Subtitle",
-        description = "Choose a subtitle for Better Device Notifications.",
+        name = "Pre 4 Subtitle",
+        description = "Choose a subtitle for Pre 4 Notification.",
         category = "Dungeons",
-        subcategory = "Floor 7"
+        subcategory = "Floor 7 - 4th Device"
     )
-    var betterDeviceNotificationSubTitle = ""
+    var pre4NotificationSubtitle = ""
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Pre 4 Announce",
+        description = "Announce when you complete the 4th Device in Floor 7.",
+        category = "Dungeons",
+        subcategory = "Floor 7 - 4th Device"
+    )
+    var pre4Announce = false
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Pre 4 Message",
+        description = "Enter a custom message for the Pre 4 Announce.",
+        category = "Dungeons",
+        subcategory = "Floor 7 - 4th Device"
+    )
+    var pre4AnnounceMessage = "Pre 4 complete."
+
+    /*@Property(
+        type = PropertyType.SWITCH,
+        name = "Enter Section 4 Title",
+        description = "Display a title when someone leaps to you while waiting to enter the 4th section of phase 3.",
+        category = "Dungeons",
+        subcategory = "Floor 7 - 4th Device"
+    )
+    var enterSection4Title = false*/
 
     @Property(
         type = PropertyType.SWITCH,
@@ -249,15 +284,6 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Leap"
     )
     var leapAnnounceMessage = "Leaping to \$ign."
-
-    @Property(
-        type = PropertyType.CHECKBOX,
-        name = "Leap Prefix",
-        description = "Enable having [RA] in front of your leap announce?",
-        category = "Dungeons",
-        subcategory = "Leap"
-    )
-    var leapAnnouncePrefix = true
 
     @Property(
         type = PropertyType.SWITCH,
@@ -325,7 +351,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.TEXT,
         name = "/ra testtitle SubTitle",
-        description = "Sets the subTitle for the test title.",
+        description = "Sets the subtitle for the test title.",
         category = "Developer",
         subcategory = "Title"
     )
@@ -376,11 +402,12 @@ object ravenAddonsConfig : Vigilant(
 
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
-        this::betterDeviceNotificationTitle requires this::betterDeviceNotification
-        this::betterDeviceNotificationSubTitle requires this::betterDeviceNotification
+        this::pre4NotificationTitle requires this::pre4Notification
+        this::pre4NotificationSubtitle requires this::pre4Notification
+
+        this::pre4AnnounceMessage requires this::pre4Announce
 
         this::leapAnnounceMessage requires this::leapAnnounce
-        this::leapAnnouncePrefix requires this::leapAnnounce
 
         this::floor3FireFreezeDuration requires this::floor3FireFreezeTimer
         this::floor3FireFreezeSound requires this::floor3FireFreezeTimer

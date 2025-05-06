@@ -4,8 +4,13 @@ import net.minecraftforge.common.MinecraftForge
 
 abstract class CancellableRavenEvent : RavenEvent() {
     override fun post(): Boolean {
-        MinecraftForge.EVENT_BUS.post(this)
-        return this.isCanceled
+        return try {
+            MinecraftForge.EVENT_BUS.post(this)
+            this.isCanceled
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
+        }
     }
     fun cancel() {
         this.isCanceled = true
