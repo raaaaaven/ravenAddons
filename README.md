@@ -121,8 +121,6 @@ You can see a list of features below, as well as a list of upcoming features and
 
 # To-do list
 
-+ Change pre-existing timers to be based around ticks.
-
 + Create global dodge list using a repo system.
 
 + Expand !since to accept arguments and add `!since inq`, `!since chim` and `!since relic` while falling back
