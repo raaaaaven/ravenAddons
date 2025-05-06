@@ -10,29 +10,29 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object RefillCommand {
-    private enum class items(
+    private enum class ITEM(
         val command: String,
         val aliases: List<String>,
-        val description: String,
         val item: String,
         val id: String,
         val stack: Int,
-        val colour: String,
+        val colour: String = "§f",
+        val description: String = "Refills your stack of $item to $stack."
     ) {
-        PEARL("pearl", listOf("ep"), "Refill your stack of Ender Pearls to 16.", "Ender Pearl", "ender_pearl", 16, "§f"),
-        JERRY("jerry", listOf("ij"), "Refill your stack of Inflatable Jerrys to 64.", "Inflatable Jerry", "inflatable_jerry", 64, "§f"),
-        SUPERBBOOM("superboom", listOf("sb"), "Refill your stack of Superboom TNT to 64.", "Superboom TNT", "superboom_tnt", 64, "§9"),
-        LEAP("leaps", listOf("sl"), "Refill your stack of Spirit Leaps to 16.", "Spirit Leap", "spirit_leap", 16, "§9"),
-        DECOY("decoy", listOf("de"), "Refill your stack of Decoys to 64.", "Decoy", "decoy", 64, "§a"),
+        PEARL("pearl", listOf("ep"), "Ender Pearl", "ender_pearl", 16),
+        JERRY("jerry", listOf("ij"), "Inflatable Jerry", "inflatable_jerry", 64),
+        SUPERBBOOM("superboom", listOf("sb"), "Superboom TNT", "superboom_tnt", 64, "§9"),
+        LEAP("leaps", listOf("sl"), "Spirit Leap", "spirit_leap", 16, "§9"),
+        DECOY("decoy", listOf("de"), "Decoy", "decoy", 64, "§a"),
 
-        COBBLESTONE("cobblestone", listOf("cs"), "Refill your stack of Cobblestones to 64.", "Cobblestone", "cobblestone", 64, "§f"),
-        BOB_OMB("bob-omb", listOf("bo"), "Refill your stack of Bob-ombs to 64.", "Bob-omb", "bob-omb", 64, "§9"),
-        OIL_BARREL("barrel", listOf("ob"), "Refill your stack of Oil Barrels to 64", "Oil Barrel", "oil_barrel", 64, "§a")
+        COBBLESTONE("cobblestone", listOf("cs"), "Cobblestone", "cobblestone", 64),
+        BOB_OMB("bob-omb", listOf("bo"), "Bob-omb", "bob-omb", 64, "§9"),
+        OIL_BARREL("barrel", listOf("ob"), "Oil Barrel", "oil_barrel", 64, "§a");
     }
 
     @SubscribeEvent
     fun onCommandRegisteration(event: CommandRegistrationEvent) {
-        items.entries.forEach { item ->
+        ITEM.entries.forEach { item ->
             event.register(item.command) {
                 description = item.description
                 aliases = item.aliases
@@ -42,7 +42,7 @@ object RefillCommand {
         }
     }
 
-    private fun refill(item: items) {
+    private fun refill(item: ITEM) {
         if (!HypixelGame.inSkyBlock) return
 
         val inventory = Minecraft.getMinecraft().thePlayer?.inventory?.mainInventory ?: return
