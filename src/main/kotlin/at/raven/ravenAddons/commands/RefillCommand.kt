@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.commands
 
+import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -42,6 +43,8 @@ object RefillCommand {
     }
 
     private fun refill(item: items) {
+        if (!HypixelGame.inSkyBlock) return
+
         val inventory = Minecraft.getMinecraft().thePlayer?.inventory?.mainInventory ?: return
         val stack = inventory.find { it?.displayName == "${item.colour}${item.item}" }
         val amount = item.stack - (stack?.stackSize ?: 0)
@@ -61,7 +64,7 @@ object RefillCommand {
         }
 
         if (amount == 0) {
-            ChatUtils.debug("${item.item} found: max amount (${item.stack}) in the inventory.")
+            ChatUtils.debug("Found ${item.item} at max amount (${item.stack}) in the inventory.")
             ChatUtils.chat("You already have §f${item.stack} §7${item.item}s in your inventory.")
             return
         }
