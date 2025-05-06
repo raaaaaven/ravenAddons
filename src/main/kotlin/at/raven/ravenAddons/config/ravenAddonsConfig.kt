@@ -207,7 +207,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Pre 4 Notification",
-        description = "Display a custom notification for when completing the 4th device.",
+        description = "Display a title notification for when completing the 4th device.",
         category = "Dungeons",
         subcategory = "Floor 7 - 4th Device"
     )
@@ -351,7 +351,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.TEXT,
         name = "/ra testtitle SubTitle",
-        description = "Sets the subTitle for the test title.",
+        description = "Sets the subtitle for the test title.",
         category = "Developer",
         subcategory = "Title"
     )
