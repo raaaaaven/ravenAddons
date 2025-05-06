@@ -57,8 +57,9 @@ You can see a list of features below, as well as a list of upcoming features and
     - You can choose if the timer should start from five to three seconds.
     - Sound customizability for when you should freeze the professor while the default sound being `random.anvil_land`.
 
-+ Better Device Notifications
-    - Replaces Hypixel's device complete titles for your username with a custom title or subtitle that you have chosen.
++ Pre 4 Notification
+    - Customizable title for when you complete the 4th device.
+    - Option to announce the completion of the 4th device.
 
 + Energy Crystal Notification
     - Shows "Place Crystal" when you have an energy crystal in your inventory.
@@ -110,6 +111,7 @@ You can see a list of features below, as well as a list of upcoming features and
 + Refill Commands related to Mining
     - `/ra cs` - Cobblestone Refill (Mining Routes).
     - `/ra bo` - Bob-omb Refill.
+    - `/ra ob` - Oil Barrel Refill.
 
 </details>
 
