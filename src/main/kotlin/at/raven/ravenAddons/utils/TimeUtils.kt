@@ -26,4 +26,9 @@ object TimeUtils {
     }
 
     fun Duration.clampTicks(): Duration = inWholeTicks.ticks
+
+    fun formatTicks(ticks: Int): String {
+        val seconds = ticks / 20.0
+        return "%.2fs".format(seconds)
+    }
 }

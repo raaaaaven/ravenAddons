@@ -11,10 +11,9 @@ import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
-import at.raven.ravenAddons.utils.TimeUtils.format
+import at.raven.ravenAddons.utils.TimeUtils.formatTicks
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration.Companion.milliseconds
 
 @LoadModule
 object SimonSaysPersonalBestTracker {
@@ -52,9 +51,9 @@ object SimonSaysPersonalBestTracker {
             if (boundingBox.isVecInside(playerPosition)) {
                 if ( timeElapsed < personalBest) {
                     personalBest = timeElapsed
-                    ChatUtils.chat("Simon Says Took §f${timeElapsed.milliseconds.format()}§7. §d(NEW PB)")
+                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §d(NEW PB)")
                 } else {
-                    ChatUtils.chat("Simon Says Took §f${timeElapsed.milliseconds.format()}§7. §8($personalBest)")
+                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §8($personalBest)")
                 }
             }
         }

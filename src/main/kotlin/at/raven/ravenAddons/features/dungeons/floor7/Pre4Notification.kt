@@ -11,7 +11,7 @@ import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
-import at.raven.ravenAddons.utils.TimeUtils.format
+import at.raven.ravenAddons.utils.TimeUtils.formatTicks
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -122,9 +122,9 @@ object Pre4Notification {
 
                 if ( timeElapsed < personalBest) {
                     personalBest = timeElapsed
-                    ChatUtils.chat("Pre 4 Took §f${timeElapsed.milliseconds.format()}§7. §d(NEW PB)")
+                    ChatUtils.chat("Pre 4 Took §f${formatTicks(timeElapsed)}§7. §d(NEW PB)")
                 } else {
-                    ChatUtils.chat("Pre 4 Took §f${timeElapsed.milliseconds.format()}§7. §8($personalBest)")
+                    ChatUtils.chat("Pre 4 Took §f${formatTicks(timeElapsed)}§7. §8($personalBest)")
                 }
             }
         }
