@@ -27,6 +27,9 @@ value class ServerTimeMark private constructor(val ticks: Long) : Comparable<Ser
 
     fun isFarFuture(): Boolean = ticks == FAR_FUTURE_TICKS
 
+    val formattedTime: String
+        get() = TimeUtils.formatTicks(ticks.toInt())
+
     override fun compareTo(other: ServerTimeMark): Int = ticks.compareTo(other.ticks)
 
     override fun toString(): String = when (ticks) {
