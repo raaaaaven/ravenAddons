@@ -114,8 +114,8 @@ object Pre4Notification {
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
                 val timeElapsed = time.passedSince().inWholeMilliseconds.toInt()
 
-                if ( timeElapsed > 15000 ) {
-                    ChatUtils.debug("Could not mark down as completed! Assuming user failed pre 4 so returning.")
+                if ( timeElapsed > 25000 ) {
+                    ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
                     time = ServerTimeMark.FAR_PAST
                     return@matchMatcher
                 }
