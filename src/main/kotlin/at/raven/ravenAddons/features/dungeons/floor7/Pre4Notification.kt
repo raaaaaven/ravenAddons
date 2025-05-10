@@ -8,7 +8,10 @@ import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.RegexUtils.matches
+import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
+import at.raven.ravenAddons.utils.TimeUtils.formatTicks
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -20,6 +23,12 @@ object Pre4Notification {
 
     // REGEX TEST: §aGillsplash§r§a completed a device! (§r§c6§r§a/7)
     private val devicePattern = "^(?<ign>.+) completed a device! (?<number>.+)$".toPattern()
+
+    private val phase3Start = "^\\[BOSS] Goldor: Who dares trespass into my domain\\?".toPattern()
+
+    private var time = ServerTimeMark.FAR_PAST
+
+    private var personalBest = ravenAddonsConfig.pre4PersonalBestNumber
 
     private val pre4BoundingBox =
         AxisAlignedBB(
@@ -60,10 +69,16 @@ object Pre4Notification {
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland()) return
 
+        if (phase3Start.matches(event.cleanMessage)) {
+            time = ServerTimeMark.now()
+        }
+
         devicePattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
             if (ign != PlayerUtils.playerName) return
             val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
+
+            val timeElapsed = time.passedSince().inWholeMilliseconds.toInt()
 
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Notification) {
                 ChatUtils.debug("Pre 4 Notification: Sending title and subtitle for $ign.")
@@ -87,7 +102,7 @@ object Pre4Notification {
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Announce) {
                 ChatUtils.debug("Pre 4 Announce: Sending message in party chat.")
 
-                val message = ravenAddonsConfig.pre4AnnounceMessage
+                val message = ravenAddonsConfig.pre4AnnounceMessage.replace("\$time", "$timeElapsed")
 
                 val announce = if (ravenAddonsConfig.announcePrefix) {
                     "/pc [RA] $message"
@@ -96,6 +111,21 @@ object Pre4Notification {
                 }
 
                 ChatUtils.sendMessage(announce)
+            }
+
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
+                if ( timeElapsed > 25000 ) {
+                    ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
+                    time = ServerTimeMark.FAR_PAST
+                    return@matchMatcher
+                }
+
+                if ( timeElapsed < personalBest) {
+                    personalBest = timeElapsed
+                    ChatUtils.chat("Pre 4 Took §f${formatTicks(timeElapsed)}§7. §d(NEW PB)")
+                } else {
+                    ChatUtils.chat("Pre 4 Took §f${formatTicks(timeElapsed)}§7. §8($personalBest)")
+                }
             }
         }
     }
