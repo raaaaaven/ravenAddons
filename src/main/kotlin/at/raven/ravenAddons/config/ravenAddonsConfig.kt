@@ -252,11 +252,11 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.TEXT,
         name = "Pre 4 Message",
-        description = "Enter a custom message for the Pre 4 Announce.",
+        description = "Enter a custom message for the Pre 4 Announce.\nUse §f\$time §7for the time.",
         category = "Dungeons",
         subcategory = "Floor 7 - 4th Device"
     )
-    var pre4AnnounceMessage = "Pre 4 complete."
+    var pre4AnnounceMessage = "Pre 4 complete in \$time."
 
     @Property(
         type = PropertyType.SWITCH,

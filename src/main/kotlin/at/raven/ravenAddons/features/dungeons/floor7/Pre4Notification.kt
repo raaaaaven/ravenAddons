@@ -78,6 +78,8 @@ object Pre4Notification {
             if (ign != PlayerUtils.playerName) return
             val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
 
+            val timeElapsed = time.passedSince().inWholeMilliseconds.toInt()
+
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Notification) {
                 ChatUtils.debug("Pre 4 Notification: Sending title and subtitle for $ign.")
 
@@ -100,7 +102,7 @@ object Pre4Notification {
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Announce) {
                 ChatUtils.debug("Pre 4 Announce: Sending message in party chat.")
 
-                val message = ravenAddonsConfig.pre4AnnounceMessage
+                val message = ravenAddonsConfig.pre4AnnounceMessage.replace("\$time", "$timeElapsed")
 
                 val announce = if (ravenAddonsConfig.announcePrefix) {
                     "/pc [RA] $message"
@@ -112,8 +114,6 @@ object Pre4Notification {
             }
 
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
-                val timeElapsed = time.passedSince().inWholeMilliseconds.toInt()
-
                 if ( timeElapsed > 25000 ) {
                     ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
                     time = ServerTimeMark.FAR_PAST
