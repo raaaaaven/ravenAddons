@@ -50,6 +50,7 @@ object SimonSaysPersonalBestTracker {
             val timeElapsed = time.passedSince().inWholeTicks.toInt()
 
             if (boundingBox.isVecInside(playerPosition)) {
+                // TO-DO: Calculate the difference between new and old pb.
                 if ( timeElapsed < personalBest) {
                     ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(${formatTicks(personalBest)})")
                     personalBest = timeElapsed
