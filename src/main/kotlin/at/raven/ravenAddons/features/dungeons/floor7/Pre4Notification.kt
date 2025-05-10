@@ -121,11 +121,12 @@ object Pre4Notification {
                     return@matchMatcher
                 }
 
+                // TO-DO: Calculate the difference between new and old pb.
                 if ( timeElapsed < personalBest) {
-                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(${formatTicks(personalBest)})")
+                    ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(${formatTicks(personalBest)})")
                     personalBest = timeElapsed
                 } else {
-                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §8(${formatTicks(personalBest)})")
+                    ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §8(${formatTicks(personalBest)})")
                 }
             }
         }
