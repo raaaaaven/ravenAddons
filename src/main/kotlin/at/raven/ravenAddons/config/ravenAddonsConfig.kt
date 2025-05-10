@@ -409,7 +409,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Developer",
         hidden = true
     )
-    var simonSaysPersonalBestNumber = 0
+    var simonSaysPersonalBestNumber = Int.MAX_VALUE
 
     @Property(
         type = PropertyType.NUMBER,
@@ -418,7 +418,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Developer",
         hidden = true
     )
-    var pre4PersonalBestNumber = 0
+    var pre4PersonalBestNumber = Int.MAX_VALUE
 
     init {
         initialize()

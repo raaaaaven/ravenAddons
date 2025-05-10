@@ -11,6 +11,7 @@ import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
+import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
 import at.raven.ravenAddons.utils.TimeUtils.formatTicks
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -46,7 +47,7 @@ object SimonSaysPersonalBestTracker {
             if (ign != PlayerUtils.playerName) return
             val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
 
-            val timeElapsed = time.passedSince().inWholeMilliseconds.toInt()
+            val timeElapsed = time.passedSince().inWholeTicks.toInt()
 
             if (boundingBox.isVecInside(playerPosition)) {
                 if ( timeElapsed < personalBest) {
