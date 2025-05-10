@@ -103,7 +103,7 @@ object Pre4Notification {
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Announce) {
                 ChatUtils.debug("Pre 4 Announce: Sending message in party chat.")
 
-                val message = ravenAddonsConfig.pre4AnnounceMessage.replace("\$time", "$timeElapsed")
+                val message = ravenAddonsConfig.pre4AnnounceMessage.replace("\$time", formatTicks(timeElapsed))
 
                 val announce = if (ravenAddonsConfig.announcePrefix) {
                     "/pc [RA] $message"
@@ -122,10 +122,10 @@ object Pre4Notification {
                 }
 
                 if ( timeElapsed < personalBest) {
+                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(${formatTicks(personalBest)})")
                     personalBest = timeElapsed
-                    ChatUtils.chat("Pre 4 Took §f${formatTicks(timeElapsed)}§7. §d(NEW PB)")
                 } else {
-                    ChatUtils.chat("Pre 4 Took §f${formatTicks(timeElapsed)}§7. §8($personalBest)")
+                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §8(${formatTicks(personalBest)})")
                 }
             }
         }

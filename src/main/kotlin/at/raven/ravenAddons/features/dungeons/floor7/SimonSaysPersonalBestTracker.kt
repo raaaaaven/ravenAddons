@@ -51,10 +51,10 @@ object SimonSaysPersonalBestTracker {
 
             if (boundingBox.isVecInside(playerPosition)) {
                 if ( timeElapsed < personalBest) {
+                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(${formatTicks(personalBest)})")
                     personalBest = timeElapsed
-                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §d(NEW PB)")
                 } else {
-                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §8($personalBest)")
+                    ChatUtils.chat("Simon Says Took §f${formatTicks(timeElapsed)}§7. §8(${formatTicks(personalBest)})")
                 }
             }
         }
