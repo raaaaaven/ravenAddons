@@ -1,7 +1,9 @@
 package at.raven.ravenAddons.features.dungeons.floor7
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
+import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -115,7 +117,7 @@ object Pre4Notification {
             }
 
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
-                if ( timeElapsed > 25000 ) {
+                if ( timeElapsed > 600 ) {
                     ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
                     time = ServerTimeMark.FAR_PAST
                     return@matchMatcher
@@ -147,4 +149,10 @@ object Pre4Notification {
             }
         }
     }*/
+
+    @SubscribeEvent
+    fun onWorldLoad(event: WorldChangeEvent) {
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.pre4PersonalBest) return
+        time = ServerTimeMark.FAR_PAST
+    }
 }
