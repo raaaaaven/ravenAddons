@@ -28,11 +28,9 @@ object SimonSaysPersonalBestTracker {
 
     private var personalBest = ravenAddonsConfig.simonSaysPersonalBestNumber
 
-    private val boundingBox =
-        AxisAlignedBB(
-            110.0, 124.0, 91.0,
-            107.0, 119.0, 96.0
-        )
+    private val boundingBox = AxisAlignedBB(
+        110.0, 124.0, 91.0, 107.0, 119.0, 96.0
+    )
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -51,12 +49,24 @@ object SimonSaysPersonalBestTracker {
 
             if (boundingBox.isVecInside(playerPosition)) {
                 // TO-DO: Calculate the difference between new and old pb.
-                if ( timeElapsed < personalBest) {
-                    ChatUtils.chat("Simon Says took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${formatTicks(personalBest)})")
+                if (timeElapsed < personalBest) {
+                    ChatUtils.chat(
+                        "Simon Says took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${
+                            formatTicks(
+                                personalBest
+                            )
+                        })"
+                    )
                     ravenAddonsConfig.simonSaysPersonalBestNumber = timeElapsed
                     ravenAddonsConfig.markDirty()
                 } else {
-                    ChatUtils.chat("Simon Says took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${formatTicks(personalBest)})")
+                    ChatUtils.chat(
+                        "Simon Says took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${
+                            formatTicks(
+                                personalBest
+                            )
+                        })"
+                    )
                 }
             }
         }

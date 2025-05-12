@@ -33,11 +33,9 @@ object Pre4Notification {
 
     private var personalBest = ravenAddonsConfig.pre4PersonalBestNumber
 
-    private val pre4BoundingBox =
-        AxisAlignedBB(
-            60.0, 125.0, 32.0,
-            66.0, 130.0, 38.0
-        )
+    private val pre4BoundingBox = AxisAlignedBB(
+        60.0, 125.0, 32.0, 66.0, 130.0, 38.0
+    )
 
     // TO-DO: Fix Enter Section 4 Title
 
@@ -91,11 +89,7 @@ object Pre4Notification {
 
                 ravenAddons.runDelayed(5.milliseconds) {
                     TitleManager.setTitle(
-                        title,
-                        subtitle,
-                        1.5.seconds,
-                        0.seconds,
-                        0.seconds
+                        title, subtitle, 1.5.seconds, 0.seconds, 0.seconds
                     )
                     SoundUtils.pling()
                 }
@@ -117,15 +111,21 @@ object Pre4Notification {
             }
 
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
-                if ( timeElapsed > 600 ) {
+                if (timeElapsed > 600) {
                     ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
                     time = ServerTimeMark.FAR_PAST
                     return@matchMatcher
                 }
 
                 // TO-DO: Calculate the difference between new and old pb.
-                if ( timeElapsed < personalBest) {
-                    ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${formatTicks(personalBest)})")
+                if (timeElapsed < personalBest) {
+                    ChatUtils.chat(
+                        "Pre 4 took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${
+                            formatTicks(
+                                personalBest
+                            )
+                        })"
+                    )
                     ravenAddonsConfig.pre4PersonalBestNumber = timeElapsed
                     ravenAddonsConfig.markDirty()
                 } else {
