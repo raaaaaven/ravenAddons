@@ -1,7 +1,6 @@
 package at.raven.ravenAddons.features.partyCommands
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.config.ravenAddonsConfig.sinceInq
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -34,8 +33,8 @@ object SinceCommand {
             if (!ravenAddonsConfig.sinceCommand) return
             ravenAddons.launchCoroutine {
                 delay(250)
-                ChatUtils.debug("Since Command: $sinceInq Mobs since.")
-                ChatUtils.sendMessage("/pc [RA] $sinceInq Mobs since Inquisitor!")
+                ChatUtils.debug("Since Command: ${ravenAddonsConfig.sinceInq} Mobs since.")
+                ChatUtils.sendMessage("/pc [RA] ${ravenAddonsConfig.sinceInq} Mobs since Inquisitor!")
             }
             return
         }
@@ -54,12 +53,12 @@ object SinceCommand {
     }
 
     private fun addToSince() {
-        sinceInq += 1
+        ravenAddonsConfig.sinceInq += 1
         ravenAddonsConfig.markDirty()
     }
 
     private fun resetSince() {
-        sinceInq = 0
+        ravenAddonsConfig.sinceInq = 0
         ravenAddonsConfig.markDirty()
     }
 }
