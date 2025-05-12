@@ -27,7 +27,9 @@ object RefillCommand {
 
         COBBLESTONE("cobblestone", listOf("cs"), "Cobblestone", "cobblestone", 64),
         BOB_OMB("bob-omb", listOf("bo"), "Bob-omb", "bob-omb", 64, "§9"),
-        OIL_BARREL("barrel", listOf("ob"), "Oil Barrel", "oil_barrel", 64, "§a");
+        OIL_BARREL("barrel", listOf("ob"), "Oil Barrel", "oil_barrel", 64, "§a"),
+        GOBLIN_EGG("goblin", listOf("ge"), "Goblin Egg", "goblin_egg", 64, "§9"),
+        JUNGLE_KEY("jungle", listOf("jk"), "Jungle Key", "jungle_key", 64, "§5");
     }
 
     @SubscribeEvent
