@@ -206,6 +206,15 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Simon Says Personal Best",
+        description = "Tracks your personal best for the Simon Says device.",
+        category = "Dungeons",
+        subcategory = "Floor 7 - 1st Device",
+    )
+    var simonSaysPersonalBest = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Pre 4 Notification",
         description = "Display a title notification for when completing the 4th device.",
         category = "Dungeons",
@@ -243,11 +252,20 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.TEXT,
         name = "Pre 4 Message",
-        description = "Enter a custom message for the Pre 4 Announce.",
+        description = "Enter a custom message for the Pre 4 Announce.\nUse §f\$time §7for the time.",
         category = "Dungeons",
         subcategory = "Floor 7 - 4th Device"
     )
-    var pre4AnnounceMessage = "Pre 4 complete."
+    var pre4AnnounceMessage = "Pre 4 complete in \$time."
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Pre 4 Personal Best",
+        description = "Tracks your personal best for a successful Pre 4.",
+        category = "Dungeons",
+        subcategory = "Floor 7 - 4th Device",
+    )
+    var pre4PersonalBest = false
 
     /*@Property(
         type = PropertyType.SWITCH,
@@ -383,6 +401,24 @@ object ravenAddonsConfig : Vigilant(
         hidden = true
     )
     var sinceInq = 0
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Simon Says Personal Best Number",
+        description = "Stores the personal best for the 1st device.",
+        category = "Developer",
+        hidden = true
+    )
+    var simonSaysPersonalBestNumber = Int.MAX_VALUE
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Pre 4 Personal Best Number",
+        description = "Stores the personal best for the 4th device.",
+        category = "Developer",
+        hidden = true
+    )
+    var pre4PersonalBestNumber = Int.MAX_VALUE
 
     init {
         initialize()

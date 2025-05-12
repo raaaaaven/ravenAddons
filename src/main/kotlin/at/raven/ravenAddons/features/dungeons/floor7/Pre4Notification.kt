@@ -1,14 +1,20 @@
 package at.raven.ravenAddons.features.dungeons.floor7
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
+import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.RegexUtils.matches
+import at.raven.ravenAddons.utils.ServerTimeMark
+import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
 import at.raven.ravenAddons.utils.SoundUtils
+import at.raven.ravenAddons.utils.TimeUtils.formatTicks
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -21,11 +27,15 @@ object Pre4Notification {
     // REGEX TEST: §aGillsplash§r§a completed a device! (§r§c6§r§a/7)
     private val devicePattern = "^(?<ign>.+) completed a device! (?<number>.+)$".toPattern()
 
-    private val pre4BoundingBox =
-        AxisAlignedBB(
-            60.0, 125.0, 32.0,
-            66.0, 130.0, 38.0
-        )
+    private val phase3Start = "^\\[BOSS] Goldor: Who dares trespass into my domain\\?".toPattern()
+
+    private var time = ServerTimeMark.FAR_PAST
+
+    private var personalBest = ravenAddonsConfig.pre4PersonalBestNumber
+
+    private val pre4BoundingBox = AxisAlignedBB(
+        60.0, 125.0, 32.0, 66.0, 130.0, 38.0
+    )
 
     // TO-DO: Fix Enter Section 4 Title
 
@@ -60,10 +70,16 @@ object Pre4Notification {
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland()) return
 
+        if (phase3Start.matches(event.cleanMessage)) {
+            time = ServerTimeMark.now()
+        }
+
         devicePattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
             if (ign != PlayerUtils.playerName) return
             val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
+
+            val timeElapsed = time.passedSince().inWholeTicks.toInt()
 
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Notification) {
                 ChatUtils.debug("Pre 4 Notification: Sending title and subtitle for $ign.")
@@ -73,11 +89,7 @@ object Pre4Notification {
 
                 ravenAddons.runDelayed(5.milliseconds) {
                     TitleManager.setTitle(
-                        title,
-                        subtitle,
-                        1.5.seconds,
-                        0.seconds,
-                        0.seconds
+                        title, subtitle, 1.5.seconds, 0.seconds, 0.seconds
                     )
                     SoundUtils.pling()
                 }
@@ -87,7 +99,7 @@ object Pre4Notification {
             if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Announce) {
                 ChatUtils.debug("Pre 4 Announce: Sending message in party chat.")
 
-                val message = ravenAddonsConfig.pre4AnnounceMessage
+                val message = ravenAddonsConfig.pre4AnnounceMessage.replace("\$time", formatTicks(timeElapsed))
 
                 val announce = if (ravenAddonsConfig.announcePrefix) {
                     "/pc [RA] $message"
@@ -96,6 +108,25 @@ object Pre4Notification {
                 }
 
                 ChatUtils.sendMessage(announce)
+            }
+
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
+                if (timeElapsed > 600) {
+                    ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
+                    time = ServerTimeMark.FAR_PAST
+                    return@matchMatcher
+                }
+
+                // TO-DO: Calculate the difference between new and old pb.
+                if (timeElapsed < personalBest) {
+                    ChatUtils.chat(
+                        "Pre 4 took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${formatTicks(personalBest)})"
+                    )
+                    ravenAddonsConfig.pre4PersonalBestNumber = timeElapsed
+                    ravenAddonsConfig.markDirty()
+                } else {
+                    ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${formatTicks(personalBest)})")
+                }
             }
         }
     }
@@ -115,4 +146,10 @@ object Pre4Notification {
             }
         }
     }*/
+
+    @SubscribeEvent
+    fun onWorldLoad(event: WorldChangeEvent) {
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.pre4PersonalBest) return
+        time = ServerTimeMark.FAR_PAST
+    }
 }
