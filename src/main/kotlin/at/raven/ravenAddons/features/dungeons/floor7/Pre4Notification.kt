@@ -32,6 +32,11 @@ object Pre4Notification {
     private var time = ServerTimeMark.FAR_PAST
 
     private var personalBest = ravenAddonsConfig.pre4PersonalBestNumber
+        set(value) {
+            ravenAddonsConfig.pre4PersonalBestNumber = value
+            ravenAddonsConfig.markDirty()
+            field = value
+        }
 
     private val pre4BoundingBox = AxisAlignedBB(
         60.0, 125.0, 32.0, 66.0, 130.0, 38.0
@@ -122,8 +127,7 @@ object Pre4Notification {
                     ChatUtils.chat(
                         "Pre 4 took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${formatTicks(personalBest)})"
                     )
-                    ravenAddonsConfig.pre4PersonalBestNumber = timeElapsed
-                    ravenAddonsConfig.markDirty()
+                    personalBest = timeElapsed
                 } else {
                     ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${formatTicks(personalBest)})")
                 }

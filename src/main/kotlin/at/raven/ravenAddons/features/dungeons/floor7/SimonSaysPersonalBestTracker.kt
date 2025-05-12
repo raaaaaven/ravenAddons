@@ -27,6 +27,11 @@ object SimonSaysPersonalBestTracker {
     private var time = ServerTimeMark.FAR_PAST
 
     private var personalBest = ravenAddonsConfig.simonSaysPersonalBestNumber
+        set(value) {
+            ravenAddonsConfig.simonSaysPersonalBestNumber = value
+            ravenAddonsConfig.markDirty()
+            field = value
+        }
 
     private val boundingBox = AxisAlignedBB(
         110.0, 124.0, 91.0, 107.0, 119.0, 96.0
@@ -53,8 +58,7 @@ object SimonSaysPersonalBestTracker {
                     ChatUtils.chat(
                         "Simon Says took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${formatTicks(personalBest)})"
                     )
-                    ravenAddonsConfig.simonSaysPersonalBestNumber = timeElapsed
-                    ravenAddonsConfig.markDirty()
+                    personalBest = timeElapsed
                 } else {
                     ChatUtils.chat(
                         "Simon Says took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${formatTicks(personalBest)})"
