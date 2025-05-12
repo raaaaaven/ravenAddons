@@ -126,7 +126,8 @@ object Pre4Notification {
                 // TO-DO: Calculate the difference between new and old pb.
                 if ( timeElapsed < personalBest) {
                     ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(${formatTicks(personalBest)})")
-                    personalBest = timeElapsed
+                    ravenAddonsConfig.pre4PersonalBestNumber = timeElapsed
+                    ravenAddonsConfig.markDirty()
                 } else {
                     ChatUtils.chat("Pre 4 took §f${formatTicks(timeElapsed)}§7. §8(${formatTicks(personalBest)})")
                 }
