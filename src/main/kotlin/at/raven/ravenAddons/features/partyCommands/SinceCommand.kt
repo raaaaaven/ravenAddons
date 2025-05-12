@@ -55,9 +55,11 @@ object SinceCommand {
 
     private fun addToSince() {
         sinceInq += 1
+        ravenAddonsConfig.markDirty()
     }
 
     private fun resetSince() {
         sinceInq = 0
+        ravenAddonsConfig.markDirty()
     }
 }
