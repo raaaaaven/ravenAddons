@@ -51,21 +51,13 @@ object SimonSaysPersonalBestTracker {
                 // TO-DO: Calculate the difference between new and old pb.
                 if (timeElapsed < personalBest) {
                     ChatUtils.chat(
-                        "Simon Says took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${
-                            formatTicks(
-                                personalBest
-                            )
-                        })"
+                        "Simon Says took §f${formatTicks(timeElapsed)}§7. §d§l(NEW PB) §8(Old PB: ${formatTicks(personalBest)})"
                     )
                     ravenAddonsConfig.simonSaysPersonalBestNumber = timeElapsed
                     ravenAddonsConfig.markDirty()
                 } else {
                     ChatUtils.chat(
-                        "Simon Says took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${
-                            formatTicks(
-                                personalBest
-                            )
-                        })"
+                        "Simon Says took §f${formatTicks(timeElapsed)}§7. §8(Old PB: ${formatTicks(personalBest)})"
                     )
                 }
             }
