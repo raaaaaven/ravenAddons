@@ -23,7 +23,10 @@ object GemstonePowderNotification {
 
         gemstonePowderPattern.matchMatcher(event.message) {
             val amount = group("amount")
-            if (amount.toInt() < ravenAddonsConfig.gemstonePowderThreshold) return
+            val powder = amount.replace(",", "")
+            val convertedAmount = powder.toIntOrNull() ?: return@matchMatcher
+
+            if (convertedAmount < ravenAddonsConfig.gemstonePowderThreshold) return
 
             ChatUtils.debug("Gemstone powder Notification: Found amount: $amount.")
             TitleManager.setTitle("", "§dGemstone Powder §8x$amount", 1.5.seconds, ZERO, ZERO)
