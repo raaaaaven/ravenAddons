@@ -197,6 +197,26 @@ object ravenAddonsConfig : Vigilant(
     var gemstonePowderThreshold = 0
 
     @Property(
+        type = PropertyType.SWITCH,
+        name = "Vanguard Notiifer",
+        description = "Allows for guild members to join your vanguard party using !ra join.",
+        category = "Mining",
+        subcategory = "Vanguard"
+    )
+    var vanguardNotifier = false
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Vanguard Notifier Warp Delay",
+        description = "Choose the delay (in seconds) for how long the mod should wait before warping",
+        category = "Mining",
+        subcategory = "Vanguard",
+        min = 10,
+        max = 30
+    )
+    var vanguardNotifierWarpDelay = 20
+
+    @Property(
         type = PropertyType.CHECKBOX,
         name = "Announce Prefix",
         description = "Choose whether or not you want [RA] infront of your dungeon announcements.",
