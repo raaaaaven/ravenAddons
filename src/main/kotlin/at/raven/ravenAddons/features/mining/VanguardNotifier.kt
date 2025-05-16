@@ -68,7 +68,7 @@ object VanguardNotifier {
             players.clear()
             waitingToWarp = false
 
-            ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within 20 seconds.")
+            ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
 
             ravenAddons.runDelayed(config.seconds) {
                 waitingToWarp = true
