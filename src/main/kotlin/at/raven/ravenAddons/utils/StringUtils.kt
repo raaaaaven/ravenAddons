@@ -1,6 +1,10 @@
 package at.raven.ravenAddons.utils
 
+import at.raven.ravenAddons.utils.RegexUtils.findAll
+
 object StringUtils {
+    private val minecraftColorCodesPattern = "(?i)(§[0-9a-fklmnor])+".toPattern()
+
     fun String.removeColors(): String {
         val result = StringBuilder()
 
@@ -32,4 +36,6 @@ object StringUtils {
 
     fun <T : Enum<T>> T.toFormattedName() =
         name.split("_").joinToString(" ") { it.lowercase().replaceFirstChar(Char::uppercase) }
+
+    fun String.lastColorCode(): String? = minecraftColorCodesPattern.findAll(this).lastOrNull()
 }
