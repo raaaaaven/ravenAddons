@@ -1,8 +1,10 @@
 package at.raven.ravenAddons.features.mining
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.data.SkyBlockIsland.Companion.miningIslands
+import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.event.hypixel.IslandChangeEvent
 import at.raven.ravenAddons.event.managers.ScoreboardManager
@@ -82,5 +84,13 @@ object VanguardNotifier {
                 }
             }
         }
+    }
+
+    @SubscribeEvent
+    fun onWorldLoad(event: WorldChangeEvent) {
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
+        players.clear()
+        waitingToWarp = false
+        timeSincePartyJoin =  SimpleTimeMark.farPast()
     }
 }
