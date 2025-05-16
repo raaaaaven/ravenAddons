@@ -18,8 +18,8 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object VanguardNotifier {
     private val playerCreatePartyPattern = ".*\\[RA] Vanguard Found! Type \"/ra join\" to get warped.".toPattern()
-    private val playerAttemptJoinPartyPattern =
-        "§2G(?:uild)? > §.(?:\\[.*?])? (?<author>\\w+)(?: §2\\[.*?])?§f: (?:(?:§r)?)+!ra join?".toPattern()
+
+    private val playerAttemptJoinPartyPattern = "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
     // https://regex101.com/r/BzjqgV/1
     private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
@@ -77,6 +77,7 @@ object VanguardNotifier {
                     ChatUtils.chat("Warping the party as it has been $config seconds since you have entered.")
                     ChatUtils.sendMessage("/party warp")
                 } else {
+                    ChatUtils.chat("Cancelling the warp as it has been $config seconds and nobody has joined.")
                     ChatUtils.debug("Vanguard Notifier: Player size is 0 so do not warp.")
                 }
             }
