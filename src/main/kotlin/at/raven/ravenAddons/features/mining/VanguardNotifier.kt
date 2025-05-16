@@ -40,7 +40,7 @@ object VanguardNotifier {
             timeSincePartyJoin = SimpleTimeMark.now()
         }
 
-        playerAttemptJoinPartyPattern.matchMatcher(event.message) {
+        playerAttemptJoinPartyPattern.matchMatcher(event.cleanMessage) {
             if (!waitingToWarp) return@matchMatcher
             val player = group("author")
 
