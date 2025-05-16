@@ -29,7 +29,7 @@ object VanguardNotifier {
     private val players = mutableSetOf<String>()
 
     private var waitingToWarp = false
-    private var timeSincePartyJoin =  SimpleTimeMark.farPast()
+    private var timeSincePartyJoin = SimpleTimeMark.farPast()
 
     private val config get() = ravenAddonsConfig.vanguardNotifierWarpDelay
 
@@ -91,6 +91,6 @@ object VanguardNotifier {
         if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
         players.clear()
         waitingToWarp = false
-        timeSincePartyJoin =  SimpleTimeMark.farPast()
+        timeSincePartyJoin = SimpleTimeMark.farPast()
     }
 }
