@@ -13,7 +13,6 @@ import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
@@ -60,7 +59,7 @@ object VanguardNotifier {
     fun onIslandChange(event: IslandChangeEvent) {
         if (event.new != SkyBlockIsland.MINESHAFT) return
 
-        ravenAddons.runDelayed(500.milliseconds) {
+        ravenAddons.runDelayed(2.5.seconds) {
             val scoreboard = ScoreboardManager.scoreboardLines
 
             if (!scoreboard.any { vanguardRoomIDPattern.matches(it) }) return@runDelayed

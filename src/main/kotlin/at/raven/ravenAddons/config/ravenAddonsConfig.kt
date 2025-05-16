@@ -208,7 +208,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SLIDER,
         name = "Vanguard Notifier Warp Delay",
-        description = "Choose the delay (in seconds) for how long the mod should wait before warping",
+        description = "Choose the delay (in seconds) for how long the mod should wait before warping.",
         category = "Mining",
         subcategory = "Vanguard",
         min = 10,
