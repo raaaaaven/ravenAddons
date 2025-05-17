@@ -20,6 +20,7 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object VanguardNotifier {
+    // https://regex101.com/r/7bY0CJ/1
     private val playerCreatePartyPattern = "^(.*?)\\[RA] Vanguard Found! Type \"!ra join\" to be warped within(.*?)$".toPattern()
 
     private val playerAttemptJoinPartyPattern = "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
