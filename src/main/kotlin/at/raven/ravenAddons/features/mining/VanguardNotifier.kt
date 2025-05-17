@@ -64,8 +64,8 @@ object VanguardNotifier {
         ravenAddons.runDelayed(2.5.seconds) {
             val scoreboard = ScoreboardManager.scoreboardLines
 
-            if (!scoreboard.any { vanguardRoomIDPattern.matches(it) }) return@runDelayed
             if (timeSincePartyJoin.passedSince() < 30.seconds) return@runDelayed
+            if (!scoreboard.any { vanguardRoomIDPattern.matches(it) }) return@runDelayed
 
             players.clear()
             waitingToWarp = true

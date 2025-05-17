@@ -2,14 +2,11 @@ package at.raven.ravenAddons.event
 
 import at.raven.ravenAddons.event.base.RavenEvent
 
-open class ScoreboardUpdateEvent : RavenEvent() {
-    open class Title(
-        val title: String,
-        val objective: String,
-    ) : ScoreboardUpdateEvent()
-
-    open class Content(
-        val oldLines: List<String>,
-        val newLines: List<String>,
-    ) : ScoreboardUpdateEvent()
+@Suppress("CanBeParameter", "MemberVisibilityCanBePrivate")
+class ScoreboardUpdateEvent(
+    val old: List<String>,
+    val new: List<String>,
+) : RavenEvent() {
+    val added = new - old.toSet()
+    val removed = old - new.toSet()
 }

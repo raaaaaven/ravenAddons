@@ -1,9 +1,6 @@
 package at.raven.ravenAddons.event.managers
 
-import at.raven.ravenAddons.event.CommandRegistrationEvent
-import at.raven.ravenAddons.event.PacketReceivedEvent
-import at.raven.ravenAddons.event.ScoreboardUpdateEvent
-import at.raven.ravenAddons.event.TickEvent
+import at.raven.ravenAddons.event.*
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ClipboardUtils
@@ -56,7 +53,7 @@ object ScoreboardManager {
                 val objectiveName = packet.func_149339_c()
                 if (objectiveName == "health") return
                 val objectiveValue = packet.func_149337_d()
-                ScoreboardUpdateEvent.Title(objectiveValue, objectiveName).post()
+                ScoreboardTitleUpdateEvent(objectiveValue, objectiveName).post()
             }
         }
     }
@@ -73,7 +70,7 @@ object ScoreboardManager {
         if (new != scoreboardLines) {
             val old = scoreboardLines
             scoreboardLines = new
-            ScoreboardUpdateEvent.Content(old, new).post()
+            ScoreboardUpdateEvent(old, new).post()
         }
     }
 
