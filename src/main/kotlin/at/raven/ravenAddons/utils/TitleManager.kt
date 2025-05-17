@@ -11,6 +11,7 @@ import at.raven.ravenAddons.event.render.TitleReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
+import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.network.play.server.S45PacketTitle
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -68,6 +69,19 @@ object TitleManager {
 
     fun addTitle(title: TitleObject) {
         titlesToRender.add(title)
+    }
+
+    fun setVanillaTitle(
+        title: String? = null,
+        subTitle: String? = null,
+        time: Int,
+        fadeIn: Int,
+        fadeOut: Int,
+    ) {
+        val ingameGui = Minecraft.getMinecraft().ingameGUI
+        ingameGui.displayTitle(title, null, time, fadeIn, fadeOut)
+        ingameGui.displayTitle(null, subTitle, time, fadeIn, fadeOut)
+        ingameGui.displayTitle(null,null, time, fadeIn, fadeOut)
     }
 
     private fun command(args: Array<String>) {
