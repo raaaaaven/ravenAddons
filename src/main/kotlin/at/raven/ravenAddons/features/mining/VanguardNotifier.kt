@@ -15,11 +15,12 @@ import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object VanguardNotifier {
-    private val playerCreatePartyPattern = ".*\\[RA] Vanguard Found! Type \"/ra join\" to get warped.".toPattern()
+    private val playerCreatePartyPattern = "^(.*?)\\[RA] Vanguard Found! Type \"!ra join\" to be warped within(.*?)$".toPattern()
 
     private val playerAttemptJoinPartyPattern = "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
@@ -38,7 +39,7 @@ object VanguardNotifier {
         if (!SkyBlockIsland.inAnyIsland(miningIslands) || !ravenAddonsConfig.vanguardNotifier) return
 
         if (playerCreatePartyPattern.matches(event.cleanMessage)) {
-            ChatUtils.debug("Vanguard Notifier: Found [RA] message in chat.")
+            ChatUtils.debug("Vanguard Notifier: Found a previous ravenAddons message in chat.")
             timeSincePartyJoin = SimpleTimeMark.now()
         }
 
@@ -76,11 +77,15 @@ object VanguardNotifier {
                 waitingToWarp = false
 
                 if (players.isNotEmpty()) {
-                    ChatUtils.chat("Warping the party as it has been $config seconds since you have entered.")
+                    ChatUtils.chat("Warping the party as it has been $config seconds.")
                     ChatUtils.sendMessage("/party warp")
+
+                    ravenAddons.runDelayed(250.milliseconds){
+                        ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
+                    }
                 } else {
-                    ChatUtils.chat("Cancelling the warp as it has been $config seconds and nobody has joined.")
-                    ChatUtils.debug("Vanguard Notifier: Player size is 0 so do not warp.")
+                    ChatUtils.chat("Warp was cancelled as no one joined the Vanguard party.")
+                    ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
                 }
             }
         }
