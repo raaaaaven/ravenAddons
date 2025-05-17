@@ -52,7 +52,7 @@ object VanguardNotifier {
             }
 
             players.add(player)
-            ChatUtils.chat("Attempting to invite $player to the Vanguard party.")
+            ChatUtils.chat("Inviting $player to the Vanguard party.")
             ChatUtils.sendMessage("/p invite $player")
         }
     }
@@ -68,12 +68,12 @@ object VanguardNotifier {
             if (timeSincePartyJoin.passedSince() < 30.seconds) return@runDelayed
 
             players.clear()
-            waitingToWarp = false
+            waitingToWarp = true
 
             ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
 
             ravenAddons.runDelayed(config.seconds) {
-                waitingToWarp = true
+                waitingToWarp = false
 
                 if (players.isNotEmpty()) {
                     ChatUtils.chat("Warping the party as it has been $config seconds since you have entered.")
