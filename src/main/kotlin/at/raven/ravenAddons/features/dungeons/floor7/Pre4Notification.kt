@@ -19,7 +19,6 @@ import at.raven.ravenAddons.utils.TitleManager
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.milliseconds
-import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object Pre4Notification {
@@ -93,8 +92,8 @@ object Pre4Notification {
                 val subtitle = ravenAddonsConfig.pre4NotificationSubtitle.replace("&", "§")
 
                 ravenAddons.runDelayed(5.milliseconds) {
-                    TitleManager.setTitle(
-                        title, subtitle, 1.5.seconds, 0.seconds, 0.seconds
+                    TitleManager.setVanillaTitle(
+                        title, subtitle, 30, 0, 0
                     )
                     SoundUtils.pling()
                 }
