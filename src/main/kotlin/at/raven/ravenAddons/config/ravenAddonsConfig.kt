@@ -198,8 +198,8 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Vanguard Notiifer",
-        description = "Allows for guild members to join your vanguard party using !ra join.",
+        name = "Vanguard Notifier",
+        description = "Notify your guild of Vanguard Mineshafts and let them join using !ra join.",
         category = "Mining",
         subcategory = "Vanguard"
     )
