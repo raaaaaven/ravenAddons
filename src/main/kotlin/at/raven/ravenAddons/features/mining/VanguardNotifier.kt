@@ -97,6 +97,5 @@ object VanguardNotifier {
         if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
         players.clear()
         waitingToWarp = false
-        timeSincePartyJoin = SimpleTimeMark.farPast()
     }
 }
