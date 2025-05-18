@@ -3,7 +3,6 @@ package at.raven.ravenAddons.features.mining
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
-import at.raven.ravenAddons.data.SkyBlockIsland.Companion.miningIslands
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.event.hypixel.IslandChangeEvent
@@ -23,7 +22,7 @@ object VanguardNotifier {
     // https://regex101.com/r/7bY0CJ/1
     private val playerCreatePartyPattern = "^(.*?)\\[RA] Vanguard Found! Type \"!ra join\" to be warped within(.*?)$".toPattern()
 
-    private val playerAttemptJoinPartyPattern = "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
+    private val playerAttemptJoinPartyPattern = "P(?:arty)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
     // https://regex101.com/r/BzjqgV/1
     private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
@@ -37,7 +36,7 @@ object VanguardNotifier {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!SkyBlockIsland.inAnyIsland(miningIslands) || !ravenAddonsConfig.vanguardNotifier) return
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
 
         if (playerCreatePartyPattern.matches(event.cleanMessage)) {
             ChatUtils.debug("Vanguard Notifier: Found a previous ravenAddons message in chat.")
@@ -66,13 +65,17 @@ object VanguardNotifier {
         ravenAddons.runDelayed(2.5.seconds) {
             val scoreboard = ScoreboardManager.scoreboardLines
 
-            if (timeSincePartyJoin.passedSince() < 30.seconds) return@runDelayed
+            if (timeSincePartyJoin.passedSince() < 45.seconds) {
+                ChatUtils.debug("Vanguard Notifier: ravenAddons message for a Vanguard party was previously matched so returning.")
+                return@runDelayed
+            }
             if (!scoreboard.any { vanguardRoomIDPattern.matches(it) }) return@runDelayed
 
             players.clear()
             waitingToWarp = true
 
-            ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
+            ChatUtils.debug("Vanguard Notifier: Vanguard detected! Message is being sent in guild chat.")
+            ChatUtils.sendMessage("/pc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
 
             ravenAddons.runDelayed(config.seconds) {
                 waitingToWarp = false
