@@ -22,7 +22,7 @@ object VanguardNotifier {
     // https://regex101.com/r/7bY0CJ/1
     private val playerCreatePartyPattern = "^(.*?)\\[RA] Vanguard Found! Type \"!ra join\" to be warped within(.*?)$".toPattern()
 
-    private val playerAttemptJoinPartyPattern = "P(?:arty)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
+    private val playerAttemptJoinPartyPattern = "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
     // https://regex101.com/r/BzjqgV/1
     private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
@@ -75,7 +75,7 @@ object VanguardNotifier {
             waitingToWarp = true
 
             ChatUtils.debug("Vanguard Notifier: Vanguard detected! Message is being sent in guild chat.")
-            ChatUtils.sendMessage("/pc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
+            ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
 
             ravenAddons.runDelayed(config.seconds) {
                 waitingToWarp = false
