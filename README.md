@@ -57,9 +57,13 @@ You can see a list of features below, as well as a list of upcoming features and
     - You can choose if the timer should start from five to three seconds.
     - Sound customizability for when you should freeze the professor while the default sound being `random.anvil_land`.
 
++ Simon Says Personal Best
+
 + Pre 4 Notification
     - Customizable title for when you complete the 4th device.
     - Option to announce the completion of the 4th device.
+
++ Pre 4 Personal Best
 
 + Energy Crystal Notification
     - Shows "Place Crystal" when you have an energy crystal in your inventory.
@@ -81,6 +85,9 @@ You can see a list of features below, as well as a list of upcoming features and
 
 + Gemstone Powder Notifications
     - Option to choose the threshold of powder.
+
++ Vanguard Notifier
+    - Option to choose the delay for when the mod should warp.
 
 </details>
 
