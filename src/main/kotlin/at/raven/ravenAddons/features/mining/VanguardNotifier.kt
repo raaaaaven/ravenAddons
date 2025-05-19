@@ -76,21 +76,30 @@ object VanguardNotifier {
             waitingToWarp = true
 
             ChatUtils.debug("Vanguard Notifier: Vanguard detected! Message is being sent in guild chat.")
-            ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
 
-            ravenAddons.runDelayed(config.seconds) {
-                waitingToWarp = false
+            val message = if (ravenAddonsConfig.vanguardNotifierWarp) {
+                "/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds."
+            } else {
+                "/gc [RA] Vanguard Found! Type \"!ra join\" to join the Vanguard party."
+            }
 
-                if (players.isNotEmpty()) {
-                    ChatUtils.chat("Warping the party as it has been $config seconds.")
-                    ChatUtils.sendMessage("/party warp")
+            ChatUtils.sendMessage(message)
 
-                    ravenAddons.runDelayed(250.milliseconds){
+            if (ravenAddonsConfig.vanguardNotifierWarp) {
+                ravenAddons.runDelayed(config.seconds) {
+                    waitingToWarp = false
+
+                    if (players.isNotEmpty()) {
+                        ChatUtils.chat("Warping the party as it has been $config seconds.")
+                        ChatUtils.sendMessage("/party warp")
+
+                        ravenAddons.runDelayed(250.milliseconds) {
+                            ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
+                        }
+                    } else {
+                        ChatUtils.chat("Warp was cancelled as no one joined the Vanguard party.")
                         ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
                     }
-                } else {
-                    ChatUtils.chat("Warp was cancelled as no one joined the Vanguard party.")
-                    ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
                 }
             }
         }
