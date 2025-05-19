@@ -170,7 +170,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Blazetekk Ham Radio Message Hider",
-        description = "Hides all messages related to the Blazetekk Ham Radio",
+        description = "Hides all messages related to the Blazetekk Ham Radio.",
         category = "SkyBlock",
         subcategory = "Blazetekk Ham Radio"
     )
