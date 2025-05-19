@@ -169,6 +169,15 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Blazetekk Ham Radio Message Hider",
+        description = "Hides all messages related to the Blazetekk Ham Radio",
+        category = "SkyBlock",
+        subcategory = "Blazetekk Ham Radio"
+    )
+    var blazetekkHamRadioMessageHider = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
         category = "Mining",
