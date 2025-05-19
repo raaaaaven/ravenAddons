@@ -60,6 +60,7 @@ object VanguardNotifier {
 
     @SubscribeEvent
     fun onIslandChange(event: IslandChangeEvent) {
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
         if (event.new != SkyBlockIsland.MINESHAFT) return
 
         ravenAddons.runDelayed(2.5.seconds) {
