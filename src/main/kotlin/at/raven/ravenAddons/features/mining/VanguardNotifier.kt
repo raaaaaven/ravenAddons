@@ -20,9 +20,11 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object VanguardNotifier {
     // https://regex101.com/r/7bY0CJ/1
-    private val playerCreatePartyPattern = "^(.*?)\\[RA] Vanguard Found! Type \"!ra join\" to be warped within(.*?)$".toPattern()
+    private val playerCreatePartyPattern =
+        "^(.*?)\\[RA] Vanguard Found! Type \"!ra join\" to be warped within(.*?)$".toPattern()
 
-    private val playerAttemptJoinPartyPattern = "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
+    private val playerAttemptJoinPartyPattern =
+        "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
     // https://regex101.com/r/BzjqgV/1
     private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
@@ -84,7 +86,16 @@ object VanguardNotifier {
             waitingToWarp = true
 
             ChatUtils.debug("Vanguard Notifier: Vanguard detected! Message is being sent in guild chat.")
-            ChatUtils.sendMessage("/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds.")
+
+            val message = if (ravenAddonsConfig.vanguardNotifierWarp) {
+                "/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds."
+            } else {
+                "/gc [RA] Vanguard Found! Type \"!ra join\" to join the Vanguard party."
+            }
+
+            ChatUtils.sendMessage(message)
+
+            if (!ravenAddonsConfig.vanguardNotifierWarp) return@runDelayed
 
             ravenAddons.runDelayed(config.seconds) {
                 waitingToWarp = false
@@ -92,7 +103,7 @@ object VanguardNotifier {
                 if (players.isNotEmpty()) {
                     ChatUtils.chat("Warping the party as it has been $config seconds.")
                     ChatUtils.sendMessage("/party warp")
-
+                    
                     if (players.size < 3) {
                         ravenAddons.runDelayed(250.milliseconds) {
                             ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")

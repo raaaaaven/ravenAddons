@@ -215,6 +215,15 @@ object ravenAddonsConfig : Vigilant(
     var vanguardNotifier = false
 
     @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Vanguard Notifier Warp",
+        description = "Automatically warp users that join the Vanguard party.",
+        category = "Mining",
+        subcategory = "Vanguard"
+    )
+    var vanguardNotifierWarp = false
+
+    @Property(
         type = PropertyType.SLIDER,
         name = "Vanguard Notifier Warp Delay",
         description = "Choose the delay (in seconds) for how long the mod should wait before warping.",
@@ -468,6 +477,7 @@ object ravenAddonsConfig : Vigilant(
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
         this::vanguardNotifierWarpDelay requires this::vanguardNotifier
+        this::vanguardNotifierWarpDelay requires this::vanguardNotifierWarp
 
         this::pre4NotificationTitle requires this::pre4Notification
         this::pre4NotificationSubtitle requires this::pre4Notification
