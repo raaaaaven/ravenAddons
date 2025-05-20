@@ -85,7 +85,7 @@ object VanguardNotifier {
 
             ChatUtils.sendMessage(message)
 
-            if (ravenAddonsConfig.vanguardNotifierWarp) {
+            if (ravenAddonsConfig.vanguardNotifierWarp) return@runDelayed
                 ravenAddons.runDelayed(config.seconds) {
                     waitingToWarp = false
 
@@ -101,7 +101,6 @@ object VanguardNotifier {
                         ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
                     }
                 }
-            }
         }
     }
 
