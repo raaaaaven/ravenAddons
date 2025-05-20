@@ -30,6 +30,7 @@ object VanguardNotifier {
     private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
 
     private val players = mutableSetOf<String>()
+    private var playersFull = false
 
     private var waitingToWarp = false
     private var timeSincePartyJoin = SimpleTimeMark.farPast()
@@ -57,6 +58,13 @@ object VanguardNotifier {
             players.add(player)
             ChatUtils.chat("Inviting $player to the Vanguard party.")
             ChatUtils.sendMessage("/p invite $player")
+
+            ravenAddons.runDelayed(250.milliseconds){
+                if (players.size == 3 && !playersFull) {
+                    ChatUtils.sendMessage("/gc [RA] Vanguard party is now full. (4/4)")
+                    playersFull = true
+                }
+            }
         }
     }
 
@@ -95,9 +103,11 @@ object VanguardNotifier {
                 if (players.isNotEmpty()) {
                     ChatUtils.chat("Warping the party as it has been $config seconds.")
                     ChatUtils.sendMessage("/party warp")
-
-                    ravenAddons.runDelayed(250.milliseconds) {
-                        ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
+                    
+                    if (players.size < 3) {
+                        ravenAddons.runDelayed(250.milliseconds) {
+                            ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
+                        }
                     }
                 } else {
                     ChatUtils.chat("Warp was cancelled as no one joined the Vanguard party.")
@@ -111,6 +121,7 @@ object VanguardNotifier {
     fun onWorldLoad(event: WorldChangeEvent) {
         if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
         players.clear()
+        playersFull = false
         waitingToWarp = false
     }
 }
