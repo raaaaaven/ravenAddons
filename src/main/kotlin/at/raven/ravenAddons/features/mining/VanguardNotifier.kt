@@ -85,7 +85,7 @@ object VanguardNotifier {
 
             ChatUtils.sendMessage(message)
 
-            if (ravenAddonsConfig.vanguardNotifierWarp) return@runDelayed
+            if (!ravenAddonsConfig.vanguardNotifierWarp) return@runDelayed
                 ravenAddons.runDelayed(config.seconds) {
                     waitingToWarp = false
 
