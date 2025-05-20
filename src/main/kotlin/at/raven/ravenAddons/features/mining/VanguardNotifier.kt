@@ -86,21 +86,22 @@ object VanguardNotifier {
             ChatUtils.sendMessage(message)
 
             if (!ravenAddonsConfig.vanguardNotifierWarp) return@runDelayed
-                ravenAddons.runDelayed(config.seconds) {
-                    waitingToWarp = false
 
-                    if (players.isNotEmpty()) {
-                        ChatUtils.chat("Warping the party as it has been $config seconds.")
-                        ChatUtils.sendMessage("/party warp")
+            ravenAddons.runDelayed(config.seconds) {
+                waitingToWarp = false
 
-                        ravenAddons.runDelayed(250.milliseconds) {
-                            ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
-                        }
-                    } else {
-                        ChatUtils.chat("Warp was cancelled as no one joined the Vanguard party.")
+                if (players.isNotEmpty()) {
+                    ChatUtils.chat("Warping the party as it has been $config seconds.")
+                    ChatUtils.sendMessage("/party warp")
+
+                    ravenAddons.runDelayed(250.milliseconds) {
                         ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
                     }
+                } else {
+                    ChatUtils.chat("Warp was cancelled as no one joined the Vanguard party.")
+                    ChatUtils.sendMessage("/gc [RA] Vanguard expired after $config seconds.")
                 }
+            }
         }
     }
 
