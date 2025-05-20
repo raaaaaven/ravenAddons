@@ -18,7 +18,7 @@ object BlazetekkHamRadioMessageHider {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock || ravenAddonsConfig.blazetekkHamRadioMessageHider) return
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.blazetekkHamRadioMessageHider) return
 
         radioPatterns.any { it.matches(event.cleanMessage) }
             event.isCanceled = true
