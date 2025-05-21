@@ -1,8 +1,8 @@
 package at.raven.ravenAddons.utils.render
 
 import at.raven.ravenAddons.event.render.WorldRenderEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
+import me.owdding.ktmodules.Module
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.client.renderer.Tessellator
@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL11
 import java.awt.Color
 import kotlin.math.sqrt
 
-@LoadModule
+@Module
 object WorldRenderUtils {
     fun WorldRenderEvent.drawString(
         location: Vec3? = null,

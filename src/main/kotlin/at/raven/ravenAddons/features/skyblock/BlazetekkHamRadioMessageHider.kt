@@ -3,11 +3,11 @@ package at.raven.ravenAddons.features.skyblock
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.RegexUtils.matches
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object BlazetekkHamRadioMessageHider {
 
     private val radioPatterns = listOf(

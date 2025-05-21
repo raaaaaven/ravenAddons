@@ -4,13 +4,13 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
+import me.owdding.ktmodules.Module
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object EnergyCrystalNotification {
     private const val ENERGY_CRYSTAL = "§cPLACE CRYSTAL"
     private var hasEnergyCrystal = false

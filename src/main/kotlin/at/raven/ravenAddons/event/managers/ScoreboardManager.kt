@@ -1,10 +1,14 @@
 package at.raven.ravenAddons.event.managers
 
-import at.raven.ravenAddons.event.*
-import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.event.CommandRegistrationEvent
+import at.raven.ravenAddons.event.PacketReceivedEvent
+import at.raven.ravenAddons.event.ScoreboardTitleUpdateEvent
+import at.raven.ravenAddons.event.ScoreboardUpdateEvent
+import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ClipboardUtils
 import at.raven.ravenAddons.utils.StringUtils.lastColorCode
+import me.owdding.ktmodules.Module
 import net.minecraft.client.Minecraft
 import net.minecraft.network.play.server.S3BPacketScoreboardObjective
 import net.minecraft.network.play.server.S3CPacketUpdateScore
@@ -13,7 +17,7 @@ import net.minecraft.scoreboard.IScoreObjectiveCriteria
 import net.minecraft.scoreboard.ScorePlayerTeam
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object ScoreboardManager {
     private var dirty = false
     private val world get() = Minecraft.getMinecraft().theWorld

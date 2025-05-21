@@ -5,7 +5,6 @@ import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
@@ -13,10 +12,11 @@ import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
 import at.raven.ravenAddons.utils.TimeUtils.formatTicks
+import me.owdding.ktmodules.Module
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object SimonSaysPersonalBestTracker {
 
     // REGEX TEST: §aGillsplash§r§a completed a device! (§r§c6§r§a/7)

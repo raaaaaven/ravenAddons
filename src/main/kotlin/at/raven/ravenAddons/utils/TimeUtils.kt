@@ -1,11 +1,11 @@
 package at.raven.ravenAddons.utils
 
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
 import at.raven.ravenAddons.utils.ServerTimeMark.Companion.ticks
+import me.owdding.ktmodules.Module
 import kotlin.time.Duration
 
-@LoadModule
+@Module
 object TimeUtils {
     fun Duration.format(): String {
         return buildString {

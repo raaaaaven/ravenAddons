@@ -5,7 +5,6 @@ import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils
@@ -16,11 +15,12 @@ import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.TimeUtils.formatTicks
 import at.raven.ravenAddons.utils.TitleManager
+import me.owdding.ktmodules.Module
 import net.minecraft.util.AxisAlignedBB
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.milliseconds
 
-@LoadModule
+@Module
 object Pre4Notification {
 
     // REGEX TEST: §aGillsplash§r§a completed a device! (§r§c6§r§a/7)

@@ -8,9 +8,9 @@ import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.PacketReceivedEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.event.render.TitleReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
+import me.owdding.ktmodules.Module
 import net.minecraft.client.Minecraft
 import net.minecraft.client.renderer.GlStateManager
 import net.minecraft.network.play.server.S45PacketTitle
@@ -18,7 +18,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-@LoadModule
+@Module
 object TitleManager {
     private val titlesToRender = mutableListOf<TitleObject>()
 

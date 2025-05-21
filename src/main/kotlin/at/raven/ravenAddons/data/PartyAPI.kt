@@ -4,15 +4,15 @@ import at.raven.ravenAddons.data.PartyAPI.PartyRole.Companion.getRole
 import at.raven.ravenAddons.event.PartyUpdateEvent
 import at.raven.ravenAddons.event.hypixel.HypixelPartyEvent
 import at.raven.ravenAddons.event.managers.HypixelEvents
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
+import me.owdding.ktmodules.Module
 import net.hypixel.modapi.packet.impl.clientbound.ClientboundPartyInfoPacket
 import net.hypixel.modapi.packet.impl.serverbound.ServerboundPartyInfoPacket
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object PartyAPI {
     var partyList: Map<PlayerUtils.PlayerIdentifier, PartyRole> = emptyMap()
         private set

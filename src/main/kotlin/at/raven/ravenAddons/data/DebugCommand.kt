@@ -3,14 +3,14 @@ package at.raven.ravenAddons.data
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ClipboardUtils
 import at.raven.ravenAddons.utils.StringUtils.equalsIgnoreColor
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object DebugCommand {
     fun command(args: Array<String>) {
         val list = mutableListOf<String>()

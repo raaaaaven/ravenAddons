@@ -4,7 +4,6 @@ import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matches
@@ -12,11 +11,12 @@ import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.TimeUtils.clampTicks
 import at.raven.ravenAddons.utils.TimeUtils.format
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
 import kotlin.time.Duration.Companion.seconds
 
-@LoadModule
+@Module
 object LostTimeCalculator {
 
     private var time = SimpleTimeMark.farPast()

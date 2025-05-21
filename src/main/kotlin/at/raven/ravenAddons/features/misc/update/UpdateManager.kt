@@ -3,17 +3,21 @@ package at.raven.ravenAddons.features.misc.update
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
-import at.raven.ravenAddons.ravenAddons.Companion.modVersion
+import at.raven.ravenAddons.ravenAddons.modVersion
 import at.raven.ravenAddons.utils.APIUtils.patchHttpsRequest
 import at.raven.ravenAddons.utils.ChatUtils
-import moe.nea.libautoupdate.*
+import me.owdding.ktmodules.Module
+import moe.nea.libautoupdate.CurrentVersion
+import moe.nea.libautoupdate.PotentialUpdate
+import moe.nea.libautoupdate.UpdateContext
+import moe.nea.libautoupdate.UpdateTarget
+import moe.nea.libautoupdate.UpdateUtils
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.CompletableFuture
 import javax.net.ssl.HttpsURLConnection
 
-@LoadModule
+@Module
 object UpdateManager {
     private val updateContext =
         UpdateContext(
@@ -23,12 +27,10 @@ object UpdateManager {
             "pre"
         )
 
-    private var _activePromise: CompletableFuture<*>? = null
-    private var activePromise: CompletableFuture<*>?
-        get() = _activePromise
+    private var activePromise: CompletableFuture<*>? = null
         set(value) {
-            _activePromise?.cancel(true)
-            _activePromise = value
+            field?.cancel(true)
+            field = value
         }
 
     private var potentialUpdate: PotentialUpdate? = null
