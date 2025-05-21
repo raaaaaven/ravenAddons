@@ -7,17 +7,17 @@ import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.event.hypixel.IslandChangeEvent
 import at.raven.ravenAddons.event.managers.ScoreboardManager
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.SimpleTimeMark
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
-@LoadModule
+@Module
 object VanguardNotifier {
     // https://regex101.com/r/7bY0CJ/1
     private val playerCreatePartyPattern =

@@ -1,11 +1,11 @@
 package at.raven.ravenAddons.event.managers
 
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.PlayerUtils
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import net.minecraftforge.fml.common.gameevent.TickEvent
 
-@LoadModule
+@Module
 object TickManager {
     @SubscribeEvent
     fun onTick(event: TickEvent.ClientTickEvent) {

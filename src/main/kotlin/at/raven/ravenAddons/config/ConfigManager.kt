@@ -1,11 +1,11 @@
 package at.raven.ravenAddons.config
 
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
 import kotlinx.coroutines.delay
+import me.owdding.ktmodules.Module
 import net.minecraft.client.gui.GuiScreen
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
@@ -13,7 +13,7 @@ import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.milliseconds
 
-@LoadModule
+@Module
 object ConfigManager {
     private var configGui: GuiScreen? = null
     private var wasModUpdated = ModUpdateStatus.NONE

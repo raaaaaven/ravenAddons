@@ -3,7 +3,6 @@ package at.raven.ravenAddons.features.dungeons.floor3
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
@@ -11,10 +10,11 @@ import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.TitleManager
 import kotlinx.coroutines.delay
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration.Companion.seconds
 
-@LoadModule
+@Module
 object FireFreezeTimer {
 
     // REGEX TEST: "§r§c[BOSS] The Professor§r§f: Oh? You found my Guardians' one weakness?§r"

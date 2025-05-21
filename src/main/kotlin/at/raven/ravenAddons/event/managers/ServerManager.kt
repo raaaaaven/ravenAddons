@@ -3,12 +3,12 @@ package at.raven.ravenAddons.event.managers
 import at.raven.ravenAddons.event.PacketReceivedEvent
 import at.raven.ravenAddons.event.RealServerTickEvent
 import at.raven.ravenAddons.event.WorldChangeEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
+import me.owdding.ktmodules.Module
 import net.minecraft.network.play.server.S32PacketConfirmTransaction
 import net.minecraftforge.event.world.WorldEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object ServerManager {
 
     @SubscribeEvent

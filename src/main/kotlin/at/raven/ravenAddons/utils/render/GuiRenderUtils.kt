@@ -9,11 +9,11 @@ import net.minecraft.inventory.Slot
 import java.awt.Color
 
 object GuiRenderUtils {
-    val scaledResolution get() = ScaledResolution(ravenAddons.Companion.mc)
+    val scaledResolution get() = ScaledResolution(ravenAddons.mc)
     val scaledWidth get() = scaledResolution.scaledWidth
     val scaledHeight get() = scaledResolution.scaledHeight
 
-    val fontRenderer get() = ravenAddons.Companion.mc.fontRendererObj
+    val fontRenderer get() = ravenAddons.mc.fontRendererObj
 
     fun Slot.highlight(color: Color) {
         highlight(color, xDisplayPosition, yDisplayPosition)

@@ -28,7 +28,7 @@ object DodgeListChatComponents {
             oneTime = true,
             runnable = {
                 ChatUtils.sendMessage("/pc [RA] Kicking $playerName since they are on the dodge list.")
-                ravenAddons.Companion.launchCoroutine {
+                ravenAddons.launchCoroutine {
                     Thread.sleep(500)
 
                     ChatUtils.sendMessage("/p kick $playerName")

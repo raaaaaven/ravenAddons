@@ -6,8 +6,8 @@ plugins {
     id("gg.essential.loom") version "0.10.0.5"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("com.google.devtools.ksp") version "2.0.0-1.0.22"
-    kotlin("jvm") version "2.0.0"
+    id("com.google.devtools.ksp") version "2.1.20-2.0.0"
+    kotlin("jvm") version "2.1.20"
 }
 
 val baseGroup: String by project
@@ -54,7 +54,8 @@ loom {
 }
 
 ksp {
-    arg("symbolProcessor", "at.raven.ravenAddons.loadmodule.LoadModuleProvider")
+    arg("meowdding.modules.project_name", "RavenAddons")
+    arg("meowdding.modules.package", "at.raven.ravenAddons.module")
 }
 
 kotlin {
@@ -98,6 +99,7 @@ sourceSets.main {
 // Dependencies:
 repositories {
     mavenCentral()
+    maven("https://maven.teamresourceful.com/repository/maven-public/")
     maven("https://repo.spongepowered.org/maven/")
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
@@ -120,6 +122,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.8.5")
 
     shadowImpl(kotlin("stdlib-jdk8"))
+    shadowImpl("org.jetbrains.kotlin:kotlin-reflect:1.9.0")
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
@@ -140,7 +143,8 @@ dependencies {
 
     shadowImpl(libs.libautoupdate)
 
-    compileOnly(ksp(project(":annotation-processors"))!!)
+    compileOnly(libs.meowdding.ktmodules)
+    ksp(libs.meowdding.ktmodules)
 }
 
 tasks.withType(JavaCompile::class) {

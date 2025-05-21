@@ -2,12 +2,12 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import java.util.*
+import java.util.UUID
 
-@LoadModule
+@Module
 object ClickableChatManager {
     private val commandMap = mutableMapOf<UUID, Clickable>()
 

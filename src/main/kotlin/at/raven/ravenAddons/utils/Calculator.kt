@@ -2,10 +2,10 @@ package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object Calculator {
     fun String.calc(): Double? {
         val tokens = tokenize(this.replace(" ", ""))

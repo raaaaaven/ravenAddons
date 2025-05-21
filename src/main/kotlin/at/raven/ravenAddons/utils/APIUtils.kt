@@ -1,8 +1,12 @@
 package at.raven.ravenAddons.utils
 
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
-import com.google.gson.*
+import com.google.gson.JsonArray
+import com.google.gson.JsonElement
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.google.gson.JsonSyntaxException
+import me.owdding.ktmodules.Module
 import java.net.URL
 import java.security.KeyStore
 import javax.net.ssl.HttpsURLConnection
@@ -10,7 +14,7 @@ import javax.net.ssl.KeyManagerFactory
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManagerFactory
 
-@LoadModule
+@Module
 object APIUtils {
     private val ctx: SSLContext? = run {
         try {

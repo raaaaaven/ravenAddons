@@ -3,12 +3,12 @@ package at.raven.ravenAddons.commands
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
+import me.owdding.ktmodules.Module
 import net.minecraft.client.Minecraft
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object RefillCommand {
     private enum class Item(
         val command: String,

@@ -1,14 +1,14 @@
 package at.raven.ravenAddons.data.commands
 
 import at.raven.ravenAddons.config.ConfigManager
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
+import me.owdding.ktmodules.Module
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.client.ClientCommandHandler
 
-@LoadModule
+@Module
 object CommandManager {
     private val mainCommand = SimpleCommand(
         "ravenAddons",

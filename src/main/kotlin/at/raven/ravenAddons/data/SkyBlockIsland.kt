@@ -3,8 +3,8 @@ package at.raven.ravenAddons.data
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.hypixel.IslandChangeEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.StringUtils.toFormattedName
+import me.owdding.ktmodules.Module
 import net.minecraftforge.fml.common.eventhandler.EventPriority
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -37,7 +37,7 @@ enum class SkyBlockIsland(val id: String, displayName: String? = null) {
     private val displayName: String = displayName ?: toFormattedName()
     override fun toString() = displayName
 
-    @LoadModule
+    @Module
     companion object {
         var current: SkyBlockIsland? = null
             private set

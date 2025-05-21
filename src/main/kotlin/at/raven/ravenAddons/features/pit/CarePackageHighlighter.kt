@@ -3,15 +3,15 @@ package at.raven.ravenAddons.features.pit
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.InventoryUtils.getContainerName
 import at.raven.ravenAddons.utils.InventoryUtils.getUpperItems
 import at.raven.ravenAddons.utils.render.GuiRenderUtils.highlight
+import me.owdding.ktmodules.Module
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.inventory.ContainerChest
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object CarePackageHighlighter {
     private val importantItems = setOf(
         "Mystic Sword",

@@ -10,25 +10,34 @@ import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.
 import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getKickComponent
 import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.getRemoveComponent
 import at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.prefixComponent
-import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.*
-import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListAdd
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListHelp
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListList
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListRemove
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListReset
+import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListTempAdd
 import at.raven.ravenAddons.ravenAddons
-import at.raven.ravenAddons.utils.*
+import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
+import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.PlayerUtils.getPlayer
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
+import at.raven.ravenAddons.utils.SimpleTimeMark
+import at.raven.ravenAddons.utils.SoundUtils
+import at.raven.ravenAddons.utils.TitleManager
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.annotations.Expose
 import com.google.gson.reflect.TypeToken
+import me.owdding.ktmodules.Module
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.io.File
-import java.util.*
+import java.util.UUID
 import kotlin.time.Duration.Companion.seconds
 
-@LoadModule
+@Module
 object DodgeList {
     private val fullPartyPattern =
         "Party Finder > Your (dungeon|kuudra) group is full!.+".toPattern()
@@ -194,7 +203,7 @@ object DodgeList {
     }
 
     fun saveToFile() {
-        ravenAddons.Companion.launchCoroutine {
+        ravenAddons.launchCoroutine {
             val gson = GsonBuilder().setPrettyPrinting().create()
             val jsonString = gson.toJson(throwers)
 

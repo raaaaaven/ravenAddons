@@ -4,15 +4,15 @@ import at.raven.ravenAddons.data.commands.CommandBuilder
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.data.commands.CommandManager.commandList
 import at.raven.ravenAddons.event.CommandRegistrationEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
+import me.owdding.ktmodules.Module
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object CommandList {
     @SubscribeEvent
     fun onCommandRegistration(event: CommandRegistrationEvent) {

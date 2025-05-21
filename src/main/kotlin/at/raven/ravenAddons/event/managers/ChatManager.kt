@@ -2,12 +2,12 @@ package at.raven.ravenAddons.event.managers
 
 import at.raven.ravenAddons.event.chat.ActionBarEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
+import me.owdding.ktmodules.Module
 import net.minecraftforge.client.event.ClientChatReceivedEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
-@LoadModule
+@Module
 object ChatManager {
     @SubscribeEvent(receiveCanceled = true)
     fun onChat(event: ClientChatReceivedEvent) {

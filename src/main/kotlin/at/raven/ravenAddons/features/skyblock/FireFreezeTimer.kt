@@ -9,7 +9,6 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.hypixel.HypixelServerChangeEvent
 import at.raven.ravenAddons.event.render.WorldRenderEvent
-import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ClipboardUtils
@@ -19,6 +18,7 @@ import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.TitleManager
 import at.raven.ravenAddons.utils.render.WorldRenderUtils.drawString
 import kotlinx.coroutines.delay
+import me.owdding.ktmodules.Module
 import net.minecraft.client.entity.EntityPlayerSP
 import net.minecraft.entity.Entity
 import net.minecraft.entity.EntityLivingBase
@@ -30,7 +30,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.awt.Color
 import kotlin.time.Duration.Companion.seconds
 
-@LoadModule
+@Module
 object FireFreezeTimer {
     private val frozenEntities: MutableMap<EntityLivingBase, SimpleTimeMark> = mutableMapOf()
     private var freezeMessageCooldown = SimpleTimeMark.farPast()
