@@ -243,6 +243,14 @@ object ravenAddonsConfig : Vigilant(
     var announcePrefix = true
 
     @Property(
+        type = PropertyType.CHECKBOX,
+        name = "Blood Timer",
+        description = "Display a message and title for when to kill blood mobs.",
+        category = "Dungeons"
+    )
+    var bloodTimer = false
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Simon Says Personal Best",
         description = "Tracks your personal best for the Simon Says device.",
