@@ -56,7 +56,7 @@ object BloodTimer {
                 val bloodMovePrediction = bloodMovePredictionNumber?.let { "%.2f".format(it) }
 
                 bloodMovePrediction?.let {
-                    ChatUtils.chat("§7Move Prediction: §f$it Seconds§.")
+                    ChatUtils.chat("§7Move Prediction: §f$it Seconds§7.")
                     TitleManager.setTitle("", "§7Move Prediction: §f${it}s", 2.5.seconds, 0.seconds, 0.seconds)
 
                     ravenAddons.runDelayed(((bloodMovePredictionNumber - bloodMoveTicks) * 1000.0 - 150).milliseconds) {
