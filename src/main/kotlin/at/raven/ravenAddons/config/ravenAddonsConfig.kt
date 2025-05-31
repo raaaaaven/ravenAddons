@@ -243,7 +243,7 @@ object ravenAddonsConfig : Vigilant(
     var announcePrefix = true
 
     @Property(
-        type = PropertyType.CHECKBOX,
+        type = PropertyType.SWITCH,
         name = "Blood Timer",
         description = "Display a message and title for when to kill blood mobs.",
         category = "Dungeons"

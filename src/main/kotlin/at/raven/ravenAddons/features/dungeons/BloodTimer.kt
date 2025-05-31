@@ -2,7 +2,7 @@ package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
-import at.raven.ravenAddons.event.TickEvent
+import at.raven.ravenAddons.event.RealServerTickEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -13,6 +13,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
+import kotlin.time.DurationUnit
 
 @LoadModule
 object BloodTimer {
@@ -37,7 +38,7 @@ object BloodTimer {
                 bloodOpenLength = 0
             }
             "[BOSS] The Watcher: Let's see how you can handle this." -> {
-                val bloodMove = String.format("%.2f", (floor((SimpleTimeMark.now().toMillis().toFloat() - bloodOpenTime.toMillis().toFloat())/10)/100)+0.10).toFloat()
+                val bloodMove = String.format("%.2f", (floor((bloodOpenTime.passedSince().toDouble(DurationUnit.MILLISECONDS))/10)/100)+0.10).toFloat()
                 val bloodMoveTicks = String.format("%.2f", (bloodOpenLength*0.05+0.1)).toFloat()
 
                 val bloodLag = bloodMove - bloodMoveTicks
@@ -59,7 +60,7 @@ object BloodTimer {
     }
 
     @SubscribeEvent
-    fun onTick(event: TickEvent) {
+    fun onServerTick(event: RealServerTickEvent) {
         if (!isEnabled()) return
         bloodOpenLength++
     }
