@@ -17,7 +17,7 @@ import kotlin.time.DurationUnit
 
 @LoadModule
 object BloodTimer {
-    private val bloodOpenMessages = listOf(
+    private val bloodOpenMessages = setOf(
         "[BOSS] The Watcher: Things feel a little more roomy now, eh?",
         "[BOSS] The Watcher: Oh.. hello?",
         "[BOSS] The Watcher: I'm starting to get tired of seeing you around here...",
@@ -33,28 +33,39 @@ object BloodTimer {
     fun onChatReceived(event: ChatReceivedEvent) {
         if (!isEnabled()) return
         when (event.cleanMessage) {
-            in (bloodOpenMessages) -> {
+            in bloodOpenMessages -> {
                 bloodOpenTime = SimpleTimeMark.now()
                 bloodOpenLength = 0
             }
+
             "[BOSS] The Watcher: Let's see how you can handle this." -> {
-                val bloodMove = String.format("%.2f", (floor((bloodOpenTime.passedSince().toDouble(DurationUnit.MILLISECONDS))/10)/100)+0.10).toFloat()
-                val bloodMoveTicks = String.format("%.2f", (bloodOpenLength*0.05+0.1)).toFloat()
+                val bloodMove = floor((bloodOpenTime.passedSince().inWholeMilliseconds.toFloat() / 10) / 100) + 0.10f
+                val bloodMoveTicks = bloodOpenLength * 0.05f + 0.1f // convert ticks to time to compare for lag calc
 
+                // calcs delay caused by lag
                 val bloodLag = bloodMove - bloodMoveTicks
-                val bloodMovePrediction = if (bloodMoveTicks >= 31 && bloodMoveTicks <= 33.99) String.format("%.2f", 36 + bloodLag)
-                else if (bloodMoveTicks >= 28 && bloodMoveTicks <= 30.99) String.format("%.2f", 33 + bloodLag)
-                else if (bloodMoveTicks >= 25 && bloodMoveTicks <= 27.99) String.format("%.2f", 30 + bloodLag)
-                else if (bloodMoveTicks >= 22 && bloodMoveTicks <= 24.99) String.format("%.2f", 27 + bloodLag)
-                else if (bloodMoveTicks >= 1 && bloodMoveTicks <= 21.99) String.format("%.2f", 24 + bloodLag)
-                else ""
 
-                ChatUtils.chat(if (bloodMovePrediction != "") "§3Move Prediction: §6$bloodMovePrediction §eSeconds" else "§cInvalid Prediction")
-                TitleManager.setTitle(if (bloodMovePrediction != "") "§6${bloodMovePrediction}s" else "§cInvalid Prediction", "§3Move Prediction", 2.5.seconds, 0.seconds, 0.seconds)
-                ravenAddons.runDelayed(
-                    (((bloodMovePrediction.toFloatOrNull()?.minus(bloodMoveTicks))?.times(1000))?.minus(150))?.toInt()?.milliseconds
-                        ?: 0.seconds
-                ) { TitleManager.setTitle(if (bloodMovePrediction != "") "§cKill Blood" else "§cInvalid Prediction", "", 1.5.seconds, 0.seconds, 0.seconds) }
+                // selects move prediction for 4th mob based on how long watcher took to say activation line
+                val bloodMovePredictionNumber: Float? = when (bloodMoveTicks) {
+                    in 31.0..34.0 -> bloodLag + 36
+                    in 28.0..31.0 -> bloodLag + 33
+                    in 25.0..28.0 -> bloodLag + 30
+                    in 22.0..25.0 -> bloodLag + 27
+                    in 1.0..21.0 -> bloodLag + 24
+                    else -> null
+                }
+                val bloodMovePrediction = bloodMovePredictionNumber?.let { "%.2f".format(it) }
+
+                bloodMovePrediction?.let {
+                    ChatUtils.chat("§3Move Prediction: §6$it §eSeconds")
+                    TitleManager.setTitle("§6${it}s", "§3Move Prediction", 2.5.seconds, 0.seconds, 0.seconds)
+
+                    ravenAddons.runDelayed(((bloodMovePredictionNumber - bloodMoveTicks) * 1000.0 - 150).milliseconds) {
+                        TitleManager.setTitle("§cKill Blood", "", 1.5.seconds, 0.seconds, 0.seconds)
+                    }
+                } ?: run {
+                    ChatUtils.warning("§cInvalid Prediction")
+                }
             }
         }
     }
