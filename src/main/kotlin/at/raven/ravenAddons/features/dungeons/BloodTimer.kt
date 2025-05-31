@@ -71,5 +71,5 @@ object BloodTimer {
         }
     }
 
-    fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() || ravenAddonsConfig.bloodTimer)
+    private fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() && ravenAddonsConfig.bloodTimer)
 }
