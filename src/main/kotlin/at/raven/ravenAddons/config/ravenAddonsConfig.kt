@@ -244,14 +244,6 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
-        name = "Blood Timer",
-        description = "Display a message and title for when to kill blood mobs.",
-        category = "Dungeons"
-    )
-    var bloodTimer = false
-
-    @Property(
-        type = PropertyType.SWITCH,
         name = "Simon Says Personal Best",
         description = "Tracks your personal best for the Simon Says device.",
         category = "Dungeons",
@@ -386,6 +378,15 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Floor 3"
     )
     var floor3FireFreezeSound = "random.anvil_land"
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Blood Timer",
+        description = "Display a message and title for when to kill blood mobs.",
+        category = "Dungeons",
+        subcategory = "Blood Camp"
+    )
+    var bloodTimer = false
 
     @Property(
         type = PropertyType.SWITCH,
