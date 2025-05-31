@@ -7,9 +7,13 @@ import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.SimpleTimeMark
+import at.raven.ravenAddons.utils.TimeUtils.inPartialSeconds
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import org.apache.logging.log4j.core.jmx.Server
+import java.time.Duration
 import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
@@ -26,7 +30,7 @@ object BloodTimer {
         "[BOSS] The Watcher: Ah, you've finally arrived.",
     )
     private var bloodOpenTime = SimpleTimeMark.farPast()
-    private var bloodOpenLength = 0
+    private var bloodOpenLength = ServerTimeMark.FAR_PAST
 
     @SubscribeEvent
     fun onChatReceived(event: ChatReceivedEvent) {
@@ -34,32 +38,35 @@ object BloodTimer {
         when (event.cleanMessage) {
             in bloodOpenMessages -> {
                 bloodOpenTime = SimpleTimeMark.now()
-                bloodOpenLength = 0
+                bloodOpenLength = ServerTimeMark.now()
             }
 
             "[BOSS] The Watcher: Let's see how you can handle this." -> {
-                val bloodMove = floor((bloodOpenTime.passedSince().inWholeMilliseconds.toFloat() / 10) / 100) + 0.10f
-                val bloodMoveTicks = bloodOpenLength * 0.05f + 0.1f // convert ticks to time to compare for lag calc
+                val bloodMove = bloodOpenTime.passedSince() + 0.1.seconds
+                val bloodMoveTime = bloodOpenLength.passedSince() + 0.1.seconds
 
                 // calcs delay caused by lag
-                val bloodLag = bloodMove - bloodMoveTicks
+                val bloodLag = bloodMove - bloodMoveTime
+
+                ChatUtils.debug("bloodMoveTime: $bloodMoveTime")
 
                 // selects move prediction for 4th mob based on how long watcher took to say activation line
-                val bloodMovePredictionNumber: Float? = when (bloodMoveTicks) {
-                    in 31.0..34.0 -> bloodLag + 36
-                    in 28.0..31.0 -> bloodLag + 33
-                    in 25.0..28.0 -> bloodLag + 30
-                    in 22.0..25.0 -> bloodLag + 27
-                    in 1.0..21.0 -> bloodLag + 24
+                val bloodMovePredictionNumber: kotlin.time.Duration? = when (bloodMoveTime.inPartialSeconds) {
+                    in 31.0..34.0 -> bloodLag + 36.seconds
+                    in 28.0..31.0 -> bloodLag + 33.seconds
+                    in 25.0..28.0 -> bloodLag + 30.seconds
+                    in 22.0..25.0 -> bloodLag + 27.seconds
+                    in 1.0..21.0 -> bloodLag + 24.seconds
                     else -> null
                 }
-                val bloodMovePrediction = bloodMovePredictionNumber?.let { "%.2f".format(it) }
+                val bloodMovePrediction = bloodMovePredictionNumber?.inPartialSeconds?.let { "%.2f".format(it) }
 
                 bloodMovePrediction?.let {
                     ChatUtils.chat("§7Move Prediction: §f$it Seconds§7.")
                     TitleManager.setTitle("", "§7Move Prediction: §f${it}s", 2.5.seconds, 0.seconds, 0.seconds)
-
-                    ravenAddons.runDelayed(((bloodMovePredictionNumber - bloodMoveTicks) * 1000.0 - 150).milliseconds) {
+                    val delay = bloodMovePredictionNumber - bloodMoveTime - 150.milliseconds
+                    ChatUtils.debug("Blood delay: $delay")
+                    ravenAddons.runDelayed(delay) {
                         TitleManager.setTitle("", "§cKill Blood", 1.5.seconds, 0.seconds, 0.seconds)
                     }
                 } ?: run {
@@ -67,12 +74,6 @@ object BloodTimer {
                 }
             }
         }
-    }
-
-    @SubscribeEvent
-    fun onServerTick(event: RealServerTickEvent) {
-        if (!isEnabled()) return
-        bloodOpenLength++
     }
 
     fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() && ravenAddonsConfig.bloodTimer)

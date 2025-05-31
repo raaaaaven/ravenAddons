@@ -4,6 +4,7 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ServerTimeMark.Companion.inWholeTicks
 import at.raven.ravenAddons.utils.ServerTimeMark.Companion.ticks
 import kotlin.time.Duration
+import kotlin.time.DurationUnit
 
 @LoadModule
 object TimeUtils {
@@ -24,6 +25,8 @@ object TimeUtils {
             }
         }
     }
+
+    val Duration.inPartialSeconds: Double get() = toDouble(DurationUnit.SECONDS)
 
     fun Duration.clampTicks(): Duration = inWholeTicks.ticks
 
