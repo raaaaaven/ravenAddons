@@ -2,7 +2,6 @@ package at.raven.ravenAddons.features.dungeons
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
-import at.raven.ravenAddons.event.RealServerTickEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -12,9 +11,6 @@ import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.TimeUtils.inPartialSeconds
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import org.apache.logging.log4j.core.jmx.Server
-import java.time.Duration
-import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -45,7 +41,6 @@ object BloodTimer {
                 val bloodMove = bloodOpenTime.passedSince() + 0.1.seconds
                 val bloodMoveTime = bloodOpenLength.passedSince() + 0.1.seconds
 
-                // calcs delay caused by lag
                 val bloodLag = bloodMove - bloodMoveTime
 
                 ChatUtils.debug("bloodMoveTime: $bloodMoveTime")
@@ -65,7 +60,7 @@ object BloodTimer {
                     ChatUtils.chat("§7Move Prediction: §f$it Seconds§7.")
                     TitleManager.setTitle("", "§7Move Prediction: §f${it}s", 2.5.seconds, 0.seconds, 0.seconds)
                     val delay = bloodMovePredictionNumber - bloodMoveTime - 150.milliseconds
-                    ChatUtils.debug("Blood delay: $delay")
+                    ChatUtils.debug("Blood Timer: $delay delay.")
                     ravenAddons.runDelayed(delay) {
                         TitleManager.setTitle("", "§cKill Blood", 1.5.seconds, 0.seconds, 0.seconds)
                     }
@@ -76,5 +71,5 @@ object BloodTimer {
         }
     }
 
-    fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() && ravenAddonsConfig.bloodTimer)
+    fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() || ravenAddonsConfig.bloodTimer)
 }
