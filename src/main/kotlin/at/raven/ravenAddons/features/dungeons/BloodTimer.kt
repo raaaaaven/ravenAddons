@@ -43,7 +43,7 @@ object BloodTimer {
 
                 val bloodLag = bloodMove - bloodMoveTime
 
-                ChatUtils.debug("bloodMoveTime: $bloodMoveTime")
+                ChatUtils.debug("Blood Timer: $bloodMoveTime move time.")
 
                 // selects move prediction for 4th mob based on how long watcher took to say activation line
                 val bloodMovePredictionNumber: kotlin.time.Duration? = when (bloodMoveTime.inPartialSeconds) {
