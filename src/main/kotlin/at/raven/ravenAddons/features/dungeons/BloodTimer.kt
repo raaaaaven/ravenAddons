@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.math.floor
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
-import kotlin.time.DurationUnit
 
 @LoadModule
 object BloodTimer {
@@ -57,11 +56,11 @@ object BloodTimer {
                 val bloodMovePrediction = bloodMovePredictionNumber?.let { "%.2f".format(it) }
 
                 bloodMovePrediction?.let {
-                    ChatUtils.chat("§3Move Prediction: §6$it §eSeconds")
-                    TitleManager.setTitle("§6${it}s", "§3Move Prediction", 2.5.seconds, 0.seconds, 0.seconds)
+                    ChatUtils.chat("§7Move Prediction: §f$it Seconds§.")
+                    TitleManager.setTitle("", "§7Move Prediction: §f${it}s", 2.5.seconds, 0.seconds, 0.seconds)
 
                     ravenAddons.runDelayed(((bloodMovePredictionNumber - bloodMoveTicks) * 1000.0 - 150).milliseconds) {
-                        TitleManager.setTitle("§cKill Blood", "", 1.5.seconds, 0.seconds, 0.seconds)
+                        TitleManager.setTitle("", "§cKill Blood", 1.5.seconds, 0.seconds, 0.seconds)
                     }
                 } ?: run {
                     ChatUtils.warning("§cInvalid Prediction")
