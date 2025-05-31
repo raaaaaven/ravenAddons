@@ -484,7 +484,7 @@ object ravenAddonsConfig : Vigilant(
 
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
-        this::vanguardNotifierWarpDelay requires this::vanguardNotifier
+        this::vanguardNotifierWarp requires this::vanguardNotifier
         this::vanguardNotifierWarpDelay requires this::vanguardNotifierWarp
 
         this::pre4NotificationTitle requires this::pre4Notification
