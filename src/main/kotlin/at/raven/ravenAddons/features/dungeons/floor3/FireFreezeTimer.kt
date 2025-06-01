@@ -28,7 +28,7 @@ object FireFreezeTimer {
             ChatUtils.debug("Floor 3 Fire Freeze Timer: Timer started.")
 
             ravenAddons.launchCoroutine {
-                val timer = ServerTimeMark.now() + 5.seconds
+                val timer = ServerTimeMark.now() + 5.10.seconds
 
                 while (timer.isInFuture()) {
                     val timeUntil = timer.timeUntil()
