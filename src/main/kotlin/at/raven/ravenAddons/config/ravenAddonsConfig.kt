@@ -97,7 +97,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Fire Freeze Timer",
-        description = "Display a 10 second timer above a frozen entity's head.",
+        description = "Display a 10 second timer above a frozen entity's head.\n&cThis feature is disabled in dungeons.",
         category = "SkyBlock",
         subcategory = "Fire Freeze Staff"
     )
