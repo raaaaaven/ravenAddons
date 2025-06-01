@@ -11,6 +11,7 @@ import at.raven.ravenAddons.utils.SimpleTimeMark
 import at.raven.ravenAddons.utils.TimeUtils.inPartialSeconds
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.Duration.Companion.seconds
 
@@ -45,8 +46,9 @@ object BloodTimer {
 
                 ChatUtils.debug("Blood Timer: $bloodMoveTime move time.")
 
-                // selects move prediction for 4th mob based on how long watcher took to say activation line
-                val bloodMovePredictionNumber: kotlin.time.Duration? = when (bloodMoveTime.inPartialSeconds) {
+                // Selects move prediction for 4th/5th mob based on how long watcher took to say activation line
+                // TODO: Calc prediction from bloodMoveTime (may just need to add to repo if not possible; not sure if its set for each floor or random.
+                val bloodMovePredictionNumber: Duration? = when (bloodMoveTime.inPartialSeconds) {
                     in 31.0..34.0 -> bloodLag + 36.seconds
                     in 28.0..31.0 -> bloodLag + 33.seconds
                     in 25.0..28.0 -> bloodLag + 30.seconds
