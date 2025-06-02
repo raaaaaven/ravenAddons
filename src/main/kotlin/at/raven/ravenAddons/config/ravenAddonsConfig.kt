@@ -381,6 +381,15 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Blood Timer",
+        description = "Display a message and title for when to kill blood mobs.",
+        category = "Dungeons",
+        subcategory = "Blood Camp"
+    )
+    var bloodTimer = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "!since",
         description = "Announces to the party how many mobs you have spawned before spawning an Inquisitor.",
         category = "Party Commands"

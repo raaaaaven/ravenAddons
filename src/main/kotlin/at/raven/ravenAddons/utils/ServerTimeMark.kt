@@ -44,6 +44,10 @@ value class ServerTimeMark private constructor(val ticks: Long) : Comparable<Ser
         val Duration.inWholeTicks: Long
             get() = (this.inWholeMilliseconds / 50)
 
+        val Int.ticks: Duration
+            get() = (this * 50).milliseconds
+        val Duration.inPartialTicks: Double get() = inWholeMilliseconds / 50.0
+
         fun now() = ServerTimeMark(ServerManager.ticks)
 
         private const val FAR_PAST_TICKS = Long.MIN_VALUE
