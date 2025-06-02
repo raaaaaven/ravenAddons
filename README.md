@@ -74,6 +74,9 @@ You can see a list of features below, as well as a list of upcoming features and
 + Leap Sound
     - Plays note.pling when you leap to someone.
 
++ Blood Timer
+    - Includes blood prediction.
+
 </details>
 
 <details>
