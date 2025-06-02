@@ -51,7 +51,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Required Pants Type",
-        description = "Adds the oolour of pants required to tier 3 a mystic item to it's description.",
+        description = "Adds the colour of pants required to tier 3 a mystic item to it's description.",
         category = "Pit",
         subcategory = "Mystics"
     )
@@ -60,7 +60,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Required Pants Type Highlighter",
-        description = "Highlights tier 2 mystics in the Mystic Well based on the colour of pants they require to tier 3.",
+        description = "Highlights mystics in the Mystic Well based on the colour of pants they require to tier 3.",
         category = "Pit",
         subcategory = "Mystics"
     )
