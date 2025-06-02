@@ -26,6 +26,8 @@ object VanguardNotifier {
     private val playerAttemptJoinPartyPattern =
         "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
+    private val playerWarpedPatten = "^Party Leader, (?:\\[.*] )?(?<author>\\w+)?, summoned you to their server.".toPattern()
+
     // https://regex101.com/r/BzjqgV/1
     private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
 
@@ -34,6 +36,7 @@ object VanguardNotifier {
 
     private var waitingToWarp = false
     private var timeSincePartyJoin = SimpleTimeMark.farPast()
+    private var timeSinceWarp = SimpleTimeMark.farPast()
 
     private val config get() = ravenAddonsConfig.vanguardNotifierWarpDelay
 
@@ -44,6 +47,11 @@ object VanguardNotifier {
         if (playerCreatePartyPattern.matches(event.cleanMessage)) {
             ChatUtils.debug("Vanguard Notifier: Found a previous ravenAddons message in chat.")
             timeSincePartyJoin = SimpleTimeMark.now()
+        }
+
+        if (playerWarpedPatten.matches(event.cleanMessage)) {
+            ChatUtils.debug("Vanguard Notifier: Found a warp message in chat.")
+            timeSinceWarp = SimpleTimeMark.now()
         }
 
         playerAttemptJoinPartyPattern.matchMatcher(event.cleanMessage) {
@@ -76,8 +84,8 @@ object VanguardNotifier {
         ravenAddons.runDelayed(2.5.seconds) {
             val scoreboard = ScoreboardManager.scoreboardLines
 
-            if (timeSincePartyJoin.passedSince() < 45.seconds) {
-                ChatUtils.debug("Vanguard Notifier: ravenAddons message for a Vanguard party was previously matched so returning.")
+            if (timeSincePartyJoin.passedSince() < 45.seconds || timeSinceWarp.passedSince() < 10.seconds) {
+                ChatUtils.debug("Vanguard Notifier: ravenAddons returned due to timeSincePartyJoin or timeSinceWarp being under the time limit.")
                 return@runDelayed
             }
             if (!scoreboard.any { vanguardRoomIDPattern.matches(it) }) return@runDelayed
