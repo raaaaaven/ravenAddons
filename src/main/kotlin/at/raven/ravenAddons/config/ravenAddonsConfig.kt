@@ -97,7 +97,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Fire Freeze Timer",
-        description = "Display a 10 second timer above a frozen entity's head.",
+        description = "Display a 10 second timer above a frozen entity's head.\n&cThis feature is disabled in dungeons.",
         category = "SkyBlock",
         subcategory = "Fire Freeze Staff"
     )
@@ -378,6 +378,15 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Floor 3"
     )
     var floor3FireFreezeSound = "random.anvil_land"
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Blood Timer",
+        description = "Display a message and title for when to kill blood mobs.",
+        category = "Dungeons",
+        subcategory = "Blood Camp"
+    )
+    var bloodTimer = false
 
     @Property(
         type = PropertyType.SWITCH,
