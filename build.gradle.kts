@@ -1,4 +1,6 @@
 import org.apache.commons.lang3.SystemUtils
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 
 plugins {
     idea
@@ -8,6 +10,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("com.google.devtools.ksp") version "2.0.0-1.0.22"
     kotlin("jvm") version "2.0.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 }
 
 val baseGroup: String by project
@@ -98,6 +101,7 @@ sourceSets.main {
 // Dependencies:
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://repo.spongepowered.org/maven/")
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
@@ -172,6 +176,24 @@ tasks.processResources {
     }
 
     rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")
+}
+
+tasks.withType<Detekt>().configureEach {
+    onlyIf {
+       project.findProperty("skipDetekt") != "true"
+    }
+    outputs.cacheIf { false } // Custom rules won't work if cached
+
+    reports {
+        html.required.set(true) // observe findings in your browser with structure and code snippets
+        xml.required.set(true) // checkstyle like format mainly for integrations like Jenkins
+        sarif.required.set(true) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
+        md.required.set(true) // simple Markdown format
+    }
+}
+
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    outputs.cacheIf { false } // Custom rules won't work if cached
 }
 
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {
