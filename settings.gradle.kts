@@ -22,5 +22,6 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version("0.6.0")
 }
 
+include("detekt")
 include("annotation-processors")
 rootProject.name = "ravenAddons"
