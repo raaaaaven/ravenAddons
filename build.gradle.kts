@@ -108,6 +108,7 @@ repositories {
     maven("https://repo.essential.gg/repository/maven-public/")
     maven("https://repo.hypixel.net/repository/Hypixel/")
     maven("https://repo.nea.moe/releases")
+    maven("https://maven.notenoughupdates.org/releases") // NotEnoughUpdates (dev env)
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -145,6 +146,10 @@ dependencies {
     shadowImpl(libs.libautoupdate)
 
     compileOnly(ksp(project(":annotation-processors"))!!)
+
+    detektPlugins("org.notenoughupdates:detektrules:1.0.0")
+    detektPlugins(project(":detekt"))
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 }
 
 tasks.withType(JavaCompile::class) {
@@ -176,6 +181,13 @@ tasks.processResources {
     }
 
     rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")
+}
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    config.setFrom(rootProject.layout.projectDirectory.file("detekt/detekt.yml")) // point to your custom config defining rules to run, overwriting default behavior
+    baseline = file(layout.projectDirectory.file("detekt/baseline.xml")) // a way of suppressing issues before introducing detekt
+    source.setFrom(project.sourceSets.named("main").map { it.allSource })
 }
 
 tasks.withType<Detekt>().configureEach {

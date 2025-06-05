@@ -114,10 +114,3 @@ potential-bugs:
         active: false
     HasPlatformType: # false positives on config get() methods
         active: false
-    StorageNeedsExpose:
-        active: true
-    NonStorageDoesntNeedExpose:
-        active: true
-    ImmutableTypesWithExpectedInteriorMutabilityInConfig:
-        active: true
-

@@ -1,0 +1,228 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ClassNaming:ravenAddons.kt$ravenAddons</ID>
+    <ID>ClassNaming:ravenAddonsConfig.kt$ravenAddonsConfig : Vigilant</ID>
+    <ID>EmptyClassBlock:WorldChangeEvent.kt$WorldChangeEvent${}</ID>
+    <ID>Filename:ravenAddonsConfig.kt$at.raven.ravenAddons.config.ravenAddonsConfig.kt</ID>
+    <ID>FinalNewline:APIUtils.kt$at.raven.ravenAddons.utils.APIUtils.kt</ID>
+    <ID>FinalNewline:ActionBarEvent.kt$at.raven.ravenAddons.event.chat.ActionBarEvent.kt</ID>
+    <ID>FinalNewline:BlazetekkHamRadioMessageHider.kt$at.raven.ravenAddons.features.skyblock.BlazetekkHamRadioMessageHider.kt</ID>
+    <ID>FinalNewline:BloodTimer.kt$at.raven.ravenAddons.features.dungeons.BloodTimer.kt</ID>
+    <ID>FinalNewline:CancellableRavenEvent.kt$at.raven.ravenAddons.event.base.CancellableRavenEvent.kt</ID>
+    <ID>FinalNewline:CarePackageHighlighter.kt$at.raven.ravenAddons.features.pit.CarePackageHighlighter.kt</ID>
+    <ID>FinalNewline:ChatManager.kt$at.raven.ravenAddons.event.managers.ChatManager.kt</ID>
+    <ID>FinalNewline:ChatReceivedEvent.kt$at.raven.ravenAddons.event.chat.ChatReceivedEvent.kt</ID>
+    <ID>FinalNewline:ColorUtils.kt$at.raven.ravenAddons.utils.ColorUtils.kt</ID>
+    <ID>FinalNewline:CommandList.kt$at.raven.ravenAddons.config.CommandList.kt</ID>
+    <ID>FinalNewline:ConfigFixEvent.kt$at.raven.ravenAddons.event.ConfigFixEvent.kt</ID>
+    <ID>FinalNewline:ConfigFixer.kt$at.raven.ravenAddons.config.ConfigFixer.kt</ID>
+    <ID>FinalNewline:ConfigManager.kt$at.raven.ravenAddons.config.ConfigManager.kt</ID>
+    <ID>FinalNewline:ConfigSorting.kt$at.raven.ravenAddons.config.ConfigSorting.kt</ID>
+    <ID>FinalNewline:ContainerBackgroundDrawEvent.kt$at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent.kt</ID>
+    <ID>FinalNewline:ContainerForegroundDrawEvent.kt$at.raven.ravenAddons.event.render.container.ContainerForegroundDrawEvent.kt</ID>
+    <ID>FinalNewline:DebugCommand.kt$at.raven.ravenAddons.data.DebugCommand.kt</ID>
+    <ID>FinalNewline:DodgeList.kt$at.raven.ravenAddons.features.skyblock.dodgelist.DodgeList.kt</ID>
+    <ID>FinalNewline:DodgeListAdd.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListAdd.kt</ID>
+    <ID>FinalNewline:DodgeListChatComponents.kt$at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.kt</ID>
+    <ID>FinalNewline:DodgeListHelp.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListHelp.kt</ID>
+    <ID>FinalNewline:DodgeListList.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListList.kt</ID>
+    <ID>FinalNewline:DodgeListRemove.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListRemove.kt</ID>
+    <ID>FinalNewline:DodgeListReset.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListReset.kt</ID>
+    <ID>FinalNewline:DodgeListSubcommand.kt$at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListSubcommand.kt</ID>
+    <ID>FinalNewline:DodgeListTempAdd.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListTempAdd.kt</ID>
+    <ID>FinalNewline:DropFeatures.kt$at.raven.ravenAddons.features.skyblock.DropFeatures.kt</ID>
+    <ID>FinalNewline:EnergyCrystalNotification.kt$at.raven.ravenAddons.features.dungeons.EnergyCrystalNotification.kt</ID>
+    <ID>FinalNewline:EntityManager.kt$at.raven.ravenAddons.event.managers.EntityManager.kt</ID>
+    <ID>FinalNewline:EntityTeleportEvent.kt$at.raven.ravenAddons.event.EntityTeleportEvent.kt</ID>
+    <ID>FinalNewline:EntityUtils.kt$at.raven.ravenAddons.utils.EntityUtils.kt</ID>
+    <ID>FinalNewline:FireFreezeTimer.kt$at.raven.ravenAddons.features.dungeons.floor3.FireFreezeTimer.kt</ID>
+    <ID>FinalNewline:FireFreezeTimer.kt$at.raven.ravenAddons.features.skyblock.FireFreezeTimer.kt</ID>
+    <ID>FinalNewline:GameLoadEvent.kt$at.raven.ravenAddons.event.GameLoadEvent.kt</ID>
+    <ID>FinalNewline:GemstonePowderNotification.kt$at.raven.ravenAddons.features.mining.GemstonePowderNotification.kt</ID>
+    <ID>FinalNewline:GuiContainerHook.kt$at.raven.ravenAddons.mixin.hooks.GuiContainerHook.kt</ID>
+    <ID>FinalNewline:GuiRenderUtils.kt$at.raven.ravenAddons.utils.render.GuiRenderUtils.kt</ID>
+    <ID>FinalNewline:HypixelEvents.kt$at.raven.ravenAddons.event.managers.HypixelEvents.kt</ID>
+    <ID>FinalNewline:HypixelGame.kt$at.raven.ravenAddons.data.HypixelGame.kt</ID>
+    <ID>FinalNewline:HypixelGameSwitch.kt$at.raven.ravenAddons.event.hypixel.HypixelGameSwitch.kt</ID>
+    <ID>FinalNewline:HypixelPartyEvent.kt$at.raven.ravenAddons.event.hypixel.HypixelPartyEvent.kt</ID>
+    <ID>FinalNewline:InventoryUtils.kt$at.raven.ravenAddons.utils.InventoryUtils.kt</ID>
+    <ID>FinalNewline:IslandChangeEvent.kt$at.raven.ravenAddons.event.hypixel.IslandChangeEvent.kt</ID>
+    <ID>FinalNewline:ItemRarity.kt$at.raven.ravenAddons.features.skyblock.ItemRarity.kt</ID>
+    <ID>FinalNewline:LeapAnnounce.kt$at.raven.ravenAddons.features.dungeons.LeapAnnounce.kt</ID>
+    <ID>FinalNewline:LostTimeCalculator.kt$at.raven.ravenAddons.features.skyblock.LostTimeCalculator.kt</ID>
+    <ID>FinalNewline:MiningAbilityNotification.kt$at.raven.ravenAddons.features.mining.MiningAbilityNotification.kt</ID>
+    <ID>FinalNewline:ModrinthUpdateSource.kt$at.raven.ravenAddons.features.misc.update.ModrinthUpdateSource.kt</ID>
+    <ID>FinalNewline:PacketReceivedEvent.kt$at.raven.ravenAddons.event.PacketReceivedEvent.kt</ID>
+    <ID>FinalNewline:PartyAPI.kt$at.raven.ravenAddons.data.PartyAPI.kt</ID>
+    <ID>FinalNewline:PartyUpdateEvent.kt$at.raven.ravenAddons.event.PartyUpdateEvent.kt</ID>
+    <ID>FinalNewline:PlayerUtils.kt$at.raven.ravenAddons.utils.PlayerUtils.kt</ID>
+    <ID>FinalNewline:Pre4Notification.kt$at.raven.ravenAddons.features.dungeons.floor7.Pre4Notification.kt</ID>
+    <ID>FinalNewline:RavenEvent.kt$at.raven.ravenAddons.event.base.RavenEvent.kt</ID>
+    <ID>FinalNewline:RealServerTickEvent.kt$at.raven.ravenAddons.event.RealServerTickEvent.kt</ID>
+    <ID>FinalNewline:RefillCommand.kt$at.raven.ravenAddons.commands.RefillCommand.kt</ID>
+    <ID>FinalNewline:RenderManager.kt$at.raven.ravenAddons.event.managers.RenderManager.kt</ID>
+    <ID>FinalNewline:RenderOverlayEvent.kt$at.raven.ravenAddons.event.render.RenderOverlayEvent.kt</ID>
+    <ID>FinalNewline:RendererLivingEntityHook.kt$at.raven.ravenAddons.mixin.hooks.RendererLivingEntityHook.kt</ID>
+    <ID>FinalNewline:ScoreboardTitleUpdateEvent.kt$at.raven.ravenAddons.event.ScoreboardTitleUpdateEvent.kt</ID>
+    <ID>FinalNewline:ServerManager.kt$at.raven.ravenAddons.event.managers.ServerManager.kt</ID>
+    <ID>FinalNewline:ServerTimeMark.kt$at.raven.ravenAddons.utils.ServerTimeMark.kt</ID>
+    <ID>FinalNewline:SimonSaysPersonalBestTracker.kt$at.raven.ravenAddons.features.dungeons.floor7.SimonSaysPersonalBestTracker.kt</ID>
+    <ID>FinalNewline:SimpleTimeMark.kt$at.raven.ravenAddons.utils.SimpleTimeMark.kt</ID>
+    <ID>FinalNewline:SkyBlockIsland.kt$at.raven.ravenAddons.data.SkyBlockIsland.kt</ID>
+    <ID>FinalNewline:SoundUtils.kt$at.raven.ravenAddons.utils.SoundUtils.kt</ID>
+    <ID>FinalNewline:StringUtils.kt$at.raven.ravenAddons.utils.StringUtils.kt</ID>
+    <ID>FinalNewline:TickEvent.kt$at.raven.ravenAddons.event.TickEvent.kt</ID>
+    <ID>FinalNewline:TickManager.kt$at.raven.ravenAddons.event.managers.TickManager.kt</ID>
+    <ID>FinalNewline:TimeUtils.kt$at.raven.ravenAddons.utils.TimeUtils.kt</ID>
+    <ID>FinalNewline:TitleManager.kt$at.raven.ravenAddons.utils.TitleManager.kt</ID>
+    <ID>FinalNewline:UpdateManager.kt$at.raven.ravenAddons.features.misc.update.UpdateManager.kt</ID>
+    <ID>FinalNewline:VanguardNotifier.kt$at.raven.ravenAddons.features.mining.VanguardNotifier.kt</ID>
+    <ID>FinalNewline:WorldChangeEvent.kt$at.raven.ravenAddons.event.WorldChangeEvent.kt</ID>
+    <ID>FinalNewline:WorldRenderEvent.kt$at.raven.ravenAddons.event.render.WorldRenderEvent.kt</ID>
+    <ID>FinalNewline:WorldRenderUtils.kt$at.raven.ravenAddons.utils.render.WorldRenderUtils.kt</ID>
+    <ID>FinalNewline:ravenAddons.kt$at.raven.ravenAddons.ravenAddons.kt</ID>
+    <ID>FinalNewline:ravenAddonsConfig.kt$at.raven.ravenAddons.config.ravenAddonsConfig.kt</ID>
+    <ID>LoopWithTooManyJumpStatements:FireFreezeTimer.kt$FireFreezeTimer$for</ID>
+    <ID>MaxLineLength:ClickableChatManager.kt$ClickableChatManager$fun</ID>
+    <ID>MaxLineLength:ClickableChatManager.kt$ClickableChatManager$message = "Caught a ${e.javaClass.simpleName} while executing a runnable! Click here to copy the stacktrace to the clipboard."</ID>
+    <ID>MaxLineLength:ConfigManager.kt$ConfigManager.ModUpdateStatus.UPDATED$val finalComponent = ChatComponentText("§8[§cRA§8] §7ravenAddons successfully updated to version ${ravenAddons.MOD_VERSION}!\n")</ID>
+    <ID>MaxLineLength:DodgeList.kt$DodgeList$TitleManager.setTitle("§c${data.playerName} §e→ §a$newPlayerName", "§e${data.actualReason}", 1.5.seconds, 0.5.seconds, 0.5.seconds)</ID>
+    <ID>MaxLineLength:DropFeatures.kt$DropFeatures$private</ID>
+    <ID>MaxLineLength:DropFeatures.kt$DropFeatures$val</ID>
+    <ID>MaxLineLength:ModrinthUpdateSource.kt$ModrinthUpdateSource$private val url = "https://api.modrinth.com/v2/project/$project/version?loaders=%5B%22$loader%22%5D&amp;game_versions=%5B%22$mcVersion%22%5D"</ID>
+    <ID>MaxLineLength:Pre4Notification.kt$Pre4Notification$/*private val waitingBoundingBox = AxisAlignedBB( 94.0, 133.0, 48.0, 89.0, 128.0, 43.0 ) @SubscribeEvent fun onEntityTeleport(event: EntityTeleportEvent) { if (event.entity !is EntityPlayer || !event.entity.isRealPlayer()) return val distanceToPlayer = event.distanceToPlayer ?: return if (distanceToPlayer &gt;= 3.0) return val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return if (!SkyBlockIsland.CATACOMBS.isInIsland() || !waitingBoundingBox.isVecInside(playerPosition) || !ravenAddonsConfig.enterSection4Title) return ChatUtils.chat("${event.entity.displayName.formattedText.removeColors()}!!") TitleManager.setTitle( "§aEnter Section 4", "${event.entity.displayName.formattedText} §aleaped to you!", 3.seconds, 1.seconds, 1.seconds ) }*/</ID>
+    <ID>MaxLineLength:VanguardNotifier.kt$VanguardNotifier$ChatUtils.debug("Vanguard Notifier: ravenAddons returned due to timeSincePartyJoin or timeSinceWarp being under the time limit.")</ID>
+    <ID>MaxLineLength:ravenAddonsConfig.kt$ravenAddonsConfig$description = "Choose a Minecraft sound to indicate when you should freeze The Professor, with the default sound being &amp;erandom.anvil_land&amp;7."</ID>
+    <ID>NewLineAtEndOfFile:APIUtils.kt$at.raven.ravenAddons.utils.APIUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:ActionBarEvent.kt$at.raven.ravenAddons.event.chat.ActionBarEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:BlazetekkHamRadioMessageHider.kt$at.raven.ravenAddons.features.skyblock.BlazetekkHamRadioMessageHider.kt</ID>
+    <ID>NewLineAtEndOfFile:BloodTimer.kt$at.raven.ravenAddons.features.dungeons.BloodTimer.kt</ID>
+    <ID>NewLineAtEndOfFile:CancellableRavenEvent.kt$at.raven.ravenAddons.event.base.CancellableRavenEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:CarePackageHighlighter.kt$at.raven.ravenAddons.features.pit.CarePackageHighlighter.kt</ID>
+    <ID>NewLineAtEndOfFile:ChatManager.kt$at.raven.ravenAddons.event.managers.ChatManager.kt</ID>
+    <ID>NewLineAtEndOfFile:ChatReceivedEvent.kt$at.raven.ravenAddons.event.chat.ChatReceivedEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:ColorUtils.kt$at.raven.ravenAddons.utils.ColorUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:CommandList.kt$at.raven.ravenAddons.config.CommandList.kt</ID>
+    <ID>NewLineAtEndOfFile:ConfigFixEvent.kt$at.raven.ravenAddons.event.ConfigFixEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:ConfigFixer.kt$at.raven.ravenAddons.config.ConfigFixer.kt</ID>
+    <ID>NewLineAtEndOfFile:ConfigManager.kt$at.raven.ravenAddons.config.ConfigManager.kt</ID>
+    <ID>NewLineAtEndOfFile:ConfigSorting.kt$at.raven.ravenAddons.config.ConfigSorting.kt</ID>
+    <ID>NewLineAtEndOfFile:ContainerBackgroundDrawEvent.kt$at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:ContainerForegroundDrawEvent.kt$at.raven.ravenAddons.event.render.container.ContainerForegroundDrawEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:DebugCommand.kt$at.raven.ravenAddons.data.DebugCommand.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeList.kt$at.raven.ravenAddons.features.skyblock.dodgelist.DodgeList.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListAdd.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListAdd.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListChatComponents.kt$at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListChatComponents.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListHelp.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListHelp.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListList.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListList.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListRemove.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListRemove.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListReset.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListReset.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListSubcommand.kt$at.raven.ravenAddons.features.skyblock.dodgelist.DodgeListSubcommand.kt</ID>
+    <ID>NewLineAtEndOfFile:DodgeListTempAdd.kt$at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.DodgeListTempAdd.kt</ID>
+    <ID>NewLineAtEndOfFile:DropFeatures.kt$at.raven.ravenAddons.features.skyblock.DropFeatures.kt</ID>
+    <ID>NewLineAtEndOfFile:EnergyCrystalNotification.kt$at.raven.ravenAddons.features.dungeons.EnergyCrystalNotification.kt</ID>
+    <ID>NewLineAtEndOfFile:EntityManager.kt$at.raven.ravenAddons.event.managers.EntityManager.kt</ID>
+    <ID>NewLineAtEndOfFile:EntityTeleportEvent.kt$at.raven.ravenAddons.event.EntityTeleportEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:EntityUtils.kt$at.raven.ravenAddons.utils.EntityUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:FireFreezeTimer.kt$at.raven.ravenAddons.features.dungeons.floor3.FireFreezeTimer.kt</ID>
+    <ID>NewLineAtEndOfFile:FireFreezeTimer.kt$at.raven.ravenAddons.features.skyblock.FireFreezeTimer.kt</ID>
+    <ID>NewLineAtEndOfFile:GameLoadEvent.kt$at.raven.ravenAddons.event.GameLoadEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:GemstonePowderNotification.kt$at.raven.ravenAddons.features.mining.GemstonePowderNotification.kt</ID>
+    <ID>NewLineAtEndOfFile:GuiContainerHook.kt$at.raven.ravenAddons.mixin.hooks.GuiContainerHook.kt</ID>
+    <ID>NewLineAtEndOfFile:GuiRenderUtils.kt$at.raven.ravenAddons.utils.render.GuiRenderUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:HypixelEvents.kt$at.raven.ravenAddons.event.managers.HypixelEvents.kt</ID>
+    <ID>NewLineAtEndOfFile:HypixelGame.kt$at.raven.ravenAddons.data.HypixelGame.kt</ID>
+    <ID>NewLineAtEndOfFile:HypixelGameSwitch.kt$at.raven.ravenAddons.event.hypixel.HypixelGameSwitch.kt</ID>
+    <ID>NewLineAtEndOfFile:HypixelPartyEvent.kt$at.raven.ravenAddons.event.hypixel.HypixelPartyEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:InventoryUtils.kt$at.raven.ravenAddons.utils.InventoryUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:IslandChangeEvent.kt$at.raven.ravenAddons.event.hypixel.IslandChangeEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:ItemRarity.kt$at.raven.ravenAddons.features.skyblock.ItemRarity.kt</ID>
+    <ID>NewLineAtEndOfFile:LeapAnnounce.kt$at.raven.ravenAddons.features.dungeons.LeapAnnounce.kt</ID>
+    <ID>NewLineAtEndOfFile:LostTimeCalculator.kt$at.raven.ravenAddons.features.skyblock.LostTimeCalculator.kt</ID>
+    <ID>NewLineAtEndOfFile:MiningAbilityNotification.kt$at.raven.ravenAddons.features.mining.MiningAbilityNotification.kt</ID>
+    <ID>NewLineAtEndOfFile:ModrinthUpdateSource.kt$at.raven.ravenAddons.features.misc.update.ModrinthUpdateSource.kt</ID>
+    <ID>NewLineAtEndOfFile:PacketReceivedEvent.kt$at.raven.ravenAddons.event.PacketReceivedEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:PartyAPI.kt$at.raven.ravenAddons.data.PartyAPI.kt</ID>
+    <ID>NewLineAtEndOfFile:PartyUpdateEvent.kt$at.raven.ravenAddons.event.PartyUpdateEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:PlayerUtils.kt$at.raven.ravenAddons.utils.PlayerUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:Pre4Notification.kt$at.raven.ravenAddons.features.dungeons.floor7.Pre4Notification.kt</ID>
+    <ID>NewLineAtEndOfFile:RavenEvent.kt$at.raven.ravenAddons.event.base.RavenEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:RealServerTickEvent.kt$at.raven.ravenAddons.event.RealServerTickEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:RefillCommand.kt$at.raven.ravenAddons.commands.RefillCommand.kt</ID>
+    <ID>NewLineAtEndOfFile:RenderManager.kt$at.raven.ravenAddons.event.managers.RenderManager.kt</ID>
+    <ID>NewLineAtEndOfFile:RenderOverlayEvent.kt$at.raven.ravenAddons.event.render.RenderOverlayEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:RendererLivingEntityHook.kt$at.raven.ravenAddons.mixin.hooks.RendererLivingEntityHook.kt</ID>
+    <ID>NewLineAtEndOfFile:ScoreboardTitleUpdateEvent.kt$at.raven.ravenAddons.event.ScoreboardTitleUpdateEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:ServerManager.kt$at.raven.ravenAddons.event.managers.ServerManager.kt</ID>
+    <ID>NewLineAtEndOfFile:ServerTimeMark.kt$at.raven.ravenAddons.utils.ServerTimeMark.kt</ID>
+    <ID>NewLineAtEndOfFile:SimonSaysPersonalBestTracker.kt$at.raven.ravenAddons.features.dungeons.floor7.SimonSaysPersonalBestTracker.kt</ID>
+    <ID>NewLineAtEndOfFile:SimpleTimeMark.kt$at.raven.ravenAddons.utils.SimpleTimeMark.kt</ID>
+    <ID>NewLineAtEndOfFile:SkyBlockIsland.kt$at.raven.ravenAddons.data.SkyBlockIsland.kt</ID>
+    <ID>NewLineAtEndOfFile:SoundUtils.kt$at.raven.ravenAddons.utils.SoundUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:StringUtils.kt$at.raven.ravenAddons.utils.StringUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:TickEvent.kt$at.raven.ravenAddons.event.TickEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:TickManager.kt$at.raven.ravenAddons.event.managers.TickManager.kt</ID>
+    <ID>NewLineAtEndOfFile:TimeUtils.kt$at.raven.ravenAddons.utils.TimeUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:TitleManager.kt$at.raven.ravenAddons.utils.TitleManager.kt</ID>
+    <ID>NewLineAtEndOfFile:UpdateManager.kt$at.raven.ravenAddons.features.misc.update.UpdateManager.kt</ID>
+    <ID>NewLineAtEndOfFile:VanguardNotifier.kt$at.raven.ravenAddons.features.mining.VanguardNotifier.kt</ID>
+    <ID>NewLineAtEndOfFile:WorldChangeEvent.kt$at.raven.ravenAddons.event.WorldChangeEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:WorldRenderEvent.kt$at.raven.ravenAddons.event.render.WorldRenderEvent.kt</ID>
+    <ID>NewLineAtEndOfFile:WorldRenderUtils.kt$at.raven.ravenAddons.utils.render.WorldRenderUtils.kt</ID>
+    <ID>NewLineAtEndOfFile:ravenAddons.kt$at.raven.ravenAddons.ravenAddons.kt</ID>
+    <ID>NewLineAtEndOfFile:ravenAddonsConfig.kt$at.raven.ravenAddons.config.ravenAddonsConfig.kt</ID>
+    <ID>NoEmptyClassBody:WorldChangeEvent.kt$WorldChangeEvent${}</ID>
+    <ID>NoMultipleSpaces:FireFreezeTimer.kt$FireFreezeTimer$ </ID>
+    <ID>NoMultipleSpaces:ravenAddonsConfig.kt$ravenAddonsConfig$ </ID>
+    <ID>NoNameShadowing:CommandList.kt$CommandList$tooltipComponent</ID>
+    <ID>NoNameShadowing:TitleManager.kt$TitleManager$title</ID>
+    <ID>NoSemicolons:DodgeList.kt$DodgeList$;</ID>
+    <ID>NoSemicolons:RefillCommand.kt$RefillCommand.Item.JUNGLE_KEY$;</ID>
+    <ID>NoTrailingSpaces:VanguardNotifier.kt$VanguardNotifier$ </ID>
+    <ID>NoWildcardImports:APIUtils.kt$import com.google.gson.*</ID>
+    <ID>NoWildcardImports:DodgeList.kt$import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.*</ID>
+    <ID>NoWildcardImports:DodgeList.kt$import at.raven.ravenAddons.utils.*</ID>
+    <ID>NoWildcardImports:ScoreboardManager.kt$import at.raven.ravenAddons.event.*</ID>
+    <ID>NoWildcardImports:UpdateManager.kt$import moe.nea.libautoupdate.*</ID>
+    <ID>PrintStackTrace:APIUtils.kt$APIUtils$e</ID>
+    <ID>PrintStackTrace:CancellableRavenEvent.kt$CancellableRavenEvent$e</ID>
+    <ID>PrintStackTrace:ConfigFixer.kt$ConfigFixer$e</ID>
+    <ID>PrintStackTrace:PlayerUtils.kt$PlayerUtils$e</ID>
+    <ID>PrintStackTrace:RavenEvent.kt$RavenEvent$e</ID>
+    <ID>PrintStackTrace:SimpleCommand.kt$SimpleCommand$e</ID>
+    <ID>PropertyWrapping:ConfigManager.kt$ConfigManager.ModUpdateStatus.UPDATED$val finalComponent = ChatComponentText("§8[§cRA§8] §7ravenAddons successfully updated to version ${ravenAddons.MOD_VERSION}!\n")</ID>
+    <ID>RedundantSuspendModifier:PlayerUtils.kt$PlayerUtils$suspend</ID>
+    <ID>SleepInsteadOfDelay:DodgeListChatComponents.kt$DodgeListChatComponents$sleep(500)</ID>
+    <ID>SleepInsteadOfDelay:DodgeListReset.kt$DodgeListReset$sleep(5000)</ID>
+    <ID>SpacingAroundColon:ConfigFixEvent.kt$ConfigFixEvent$:</ID>
+    <ID>SpacingAroundColon:DodgeListAdd.kt$DodgeListAdd$:</ID>
+    <ID>SpacingAroundColon:DodgeListList.kt$DodgeListList$:</ID>
+    <ID>SpacingAroundColon:DodgeListReset.kt$DodgeListReset$:</ID>
+    <ID>SpacingAroundColon:DodgeListTempAdd.kt$DodgeListTempAdd$:</ID>
+    <ID>SpacingAroundColon:WorldRenderEvent.kt$WorldRenderEvent$:</ID>
+    <ID>SpacingAroundComma:FireFreezeTimer.kt$FireFreezeTimer$,</ID>
+    <ID>SpacingAroundComma:TitleManager.kt$TitleManager$,</ID>
+    <ID>SpacingAroundCurly:DodgeList.kt$DodgeList$}</ID>
+    <ID>SpacingAroundCurly:ItemRarity.kt$ItemRarity.Companion$}</ID>
+    <ID>SpacingAroundCurly:VanguardNotifier.kt$VanguardNotifier${</ID>
+    <ID>SpacingAroundCurly:ravenAddons.kt$ravenAddons.Companion${</ID>
+    <ID>SpacingAroundKeyword:FireFreezeTimer.kt$FireFreezeTimer$else</ID>
+    <ID>UnsafeCallOnNullableType:UpdateManager.kt$UpdateManager$potentialUpdate!!</ID>
+    <ID>UseOrEmpty:ConfigFixer.kt$ConfigFixer$configLines.firstOrNull { it.contains("ravenaddonsversion") } ?: ""</ID>
+    <ID>UseOrEmpty:DropFeatures.kt$DropFeatures$group("itemColor") ?: ""</ID>
+    <ID>UseOrEmpty:FireFreezeTimer.kt$FireFreezeTimer$name?.removeColors() ?: ""</ID>
+    <ID>UseOrEmpty:TitleManager.kt$TitleManager$subTitle ?: ""</ID>
+    <ID>UseOrEmpty:TitleManager.kt$TitleManager$title ?: ""</ID>
+    <ID>VarCouldBeVal:CommandList.kt$CommandList$var message = ChatComponentText("")</ID>
+    <ID>WildcardImport:APIUtils.kt$import com.google.gson.*</ID>
+    <ID>WildcardImport:DodgeList.kt$import at.raven.ravenAddons.features.skyblock.dodgelist.subcommands.*</ID>
+    <ID>WildcardImport:DodgeList.kt$import at.raven.ravenAddons.utils.*</ID>
+    <ID>WildcardImport:ScoreboardManager.kt$import at.raven.ravenAddons.event.*</ID>
+    <ID>WildcardImport:UpdateManager.kt$import moe.nea.libautoupdate.*</ID>
+    <ID>Wrapping:ConfigManager.kt$ConfigManager.ModUpdateStatus$;</ID>
+    <ID>Wrapping:DropFeatures.kt$DropFeatures$-&gt;</ID>
+    <ID>Wrapping:PlayerUtils.kt$PlayerUtils$(</ID>
+  </CurrentIssues>
+</SmellBaseline>
