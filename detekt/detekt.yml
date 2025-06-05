@@ -87,7 +87,7 @@ complexity:
         thresholdInObjects: 20
         thresholdInEnums: 11
         ignoreAnnotated:
-            - 'SkyHanniModule'
+            - 'LoadModule'
     ComplexCondition: # aggressive by default, at a complexity of 4
         active: true
         threshold: 6
