@@ -228,10 +228,10 @@ object A7XCommand {
                 "$colour$song",
                 "$colour$album",
                 2.5.seconds,
-                0.seconds,
-                0.seconds
+                0.5.seconds,
+                0.5.seconds
             )
-            sound(pitch = 2.0f)
+            SoundUtils.playSound("random.levelup", 1.0f, 1.0f)
             ChatUtils.chat("Your Avenged Sevenfold Song is $colour$song §7from $colour$album§7.")
         }
     }
