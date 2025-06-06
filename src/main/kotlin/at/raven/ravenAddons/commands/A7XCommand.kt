@@ -232,7 +232,7 @@ object A7XCommand {
                 0.5.seconds
             )
             SoundUtils.playSound("random.levelup", 1.0f, 1.0f)
-            ChatUtils.chat("Your Avenged Sevenfold Song is $colour$song §7from $colour$album§7.")
+            ChatUtils.chat("Your Avenged Sevenfold song is $colour$song §7from $colour$album§7.")
         }
     }
 }
