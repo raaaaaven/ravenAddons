@@ -97,7 +97,7 @@ object A7XCommand {
             "Acid Rain"
         ),
 
-        "The Stage" to listOf(
+        "The Stage (Deluxe Edition)" to listOf(
             "The Stage",
             "Paradigm",
             "Sunny Disposition",
@@ -179,7 +179,7 @@ object A7XCommand {
         "Avenged Sevenfold" to "§f",
         "Nightmare" to "§9",
         "Hail to the King" to "§7",
-        "The Stage" to "§5",
+        "The Stage (Deluxe Edition)" to "§5",
         "Black Reign" to "§4",
         "Diamonds in the Rough" to "§2",
         "Live in the LBC" to "§a",
