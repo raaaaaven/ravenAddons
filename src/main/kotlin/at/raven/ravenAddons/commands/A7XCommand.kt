@@ -111,6 +111,13 @@ object A7XCommand {
             "Exist"
         ),
 
+        "Black Reign" to listOf(
+            "Mad Hatter",
+            "Carry On",
+            "Not Ready to Die - From \"Call of the Dead\"",
+            "Jade Helm - Instrumental"
+        ),
+
         "Diamonds in the Rough" to listOf(
             "Demons",
             "Girl I Know",
@@ -166,6 +173,7 @@ object A7XCommand {
         "Nightmare" to "§9",
         "Hail to the King" to "§7",
         "The Stage" to "§5",
+        "Black Reign" to "§4",
         "Diamonds in the Rough" to "§2",
         "Live in the LBC" to "§a",
         "Life Is But a Dream..." to "§e"
