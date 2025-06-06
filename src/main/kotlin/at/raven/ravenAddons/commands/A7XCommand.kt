@@ -108,7 +108,14 @@ object A7XCommand {
             "Higher",
             "Roman Sky",
             "Fermi Paradox",
-            "Exist"
+            "Exist",
+            "Dose",
+            "Retrovertigo",
+            "Malagueña Salerosa",
+            "Runaway",
+            "As Tears Go By",
+            "Wish You Were Here",
+            "God Only Knows"
         ),
 
         "Black Reign" to listOf(
