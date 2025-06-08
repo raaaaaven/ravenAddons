@@ -1,8 +1,0 @@
-<?xml version="1.0" ?>
-<SmellBaseline>
-  <ManuallySuppressedIssues></ManuallySuppressedIssues>
-  <CurrentIssues>
-    <ID>InvalidPackageDeclaration:RavenAddonsRule.kt$package at.raven.ravenAddons.detektrules</ID>
-    <ID>InvalidPackageDeclaration:root.kt$package at.raven.ravenAddons.detektrules</ID>
-  </CurrentIssues>
-</SmellBaseline>
