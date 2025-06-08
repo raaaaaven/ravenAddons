@@ -21,7 +21,9 @@ object A7XCommand {
 
     private val albums = listOf(
         Album(
-            "Sounding the Seventh Trumpet", "§d", listOf(
+            "Sounding the Seventh Trumpet",
+            "§d",
+            listOf(
                 "To End the Rapture",
                 "Turn the Other Way",
                 "Darkness Surrounding",
@@ -38,7 +40,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Waking The Fallen", "§8", listOf(
+            "Waking The Fallen",
+            "§8",
+            listOf(
                 "Unholy Confessions",
                 "Chapter Four",
                 "Remenissions",
@@ -53,7 +57,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "City of Evil", "§c", listOf(
+            "City of Evil",
+            "§c",
+            listOf(
                 "Beast and the Harlot",
                 "Burn it Down",
                 "Blinded in Chains",
@@ -68,7 +74,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Avenged Sevenfold", "§f", listOf(
+            "Avenged Sevenfold",
+            "§f",
+            listOf(
                 "Critical Acclaim",
                 "Almost Easy",
                 "Scream",
@@ -82,7 +90,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Nightmare", "§9", listOf(
+            "Nightmare",
+            "§9",
+            listOf(
                 "Nightmare",
                 "Welcome to the Family",
                 "Danger Line",
@@ -97,7 +107,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Hail to the King", "§7", listOf(
+            "Hail to the King",
+            "§7",
+            listOf(
                 "Shepherd of Fire",
                 "Hail to the King",
                 "Doing Time",
@@ -111,7 +123,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "The Stage (Deluxe Edition)", "§5", listOf(
+            "The Stage (Deluxe Edition)",
+            "§5",
+            listOf(
                 "The Stage",
                 "Paradigm",
                 "Sunny Disposition",
@@ -133,7 +147,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Black Reign", "§4", listOf(
+            "Black Reign",
+            "§4",
+            listOf(
                 "Mad Hatter",
                 "Carry On",
                 "Not Ready to Die - From \"Call of the Dead\"",
@@ -141,7 +157,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Diamonds in the Rough", "§2", listOf(
+            "Diamonds in the Rough",
+            "§2",
+            listOf(
                 "Demons",
                 "Girl I Know",
                 "Crossroads",
@@ -159,7 +177,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Live in the LBC", "§a", listOf(
+            "Live in the LBC",
+            "§a",
+            listOf(
                 "Critical Acclaim - Live",
                 "Second Heartbeat - Live",
                 "Afterlife - Live",
@@ -175,7 +195,9 @@ object A7XCommand {
             )
         ),
         Album(
-            "Life Is But a Dream...", "§e", listOf(
+            "Life Is But a Dream...",
+            "§e",
+            listOf(
                 "Game Over",
                 "Mattel",
                 "Nobody",
