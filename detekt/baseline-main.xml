@@ -78,7 +78,6 @@
     <ID>FinalNewline:TimeUtils.kt$at.raven.ravenAddons.utils.TimeUtils.kt</ID>
     <ID>FinalNewline:TitleManager.kt$at.raven.ravenAddons.utils.TitleManager.kt</ID>
     <ID>FinalNewline:UpdateManager.kt$at.raven.ravenAddons.features.misc.update.UpdateManager.kt</ID>
-    <ID>FinalNewline:VanguardNotifier.kt$at.raven.ravenAddons.features.mining.VanguardNotifier.kt</ID>
     <ID>FinalNewline:WorldChangeEvent.kt$at.raven.ravenAddons.event.WorldChangeEvent.kt</ID>
     <ID>FinalNewline:WorldRenderEvent.kt$at.raven.ravenAddons.event.render.WorldRenderEvent.kt</ID>
     <ID>FinalNewline:WorldRenderUtils.kt$at.raven.ravenAddons.utils.render.WorldRenderUtils.kt</ID>
@@ -167,7 +166,6 @@
     <ID>NewLineAtEndOfFile:TimeUtils.kt$at.raven.ravenAddons.utils.TimeUtils.kt</ID>
     <ID>NewLineAtEndOfFile:TitleManager.kt$at.raven.ravenAddons.utils.TitleManager.kt</ID>
     <ID>NewLineAtEndOfFile:UpdateManager.kt$at.raven.ravenAddons.features.misc.update.UpdateManager.kt</ID>
-    <ID>NewLineAtEndOfFile:VanguardNotifier.kt$at.raven.ravenAddons.features.mining.VanguardNotifier.kt</ID>
     <ID>NewLineAtEndOfFile:WorldChangeEvent.kt$at.raven.ravenAddons.event.WorldChangeEvent.kt</ID>
     <ID>NewLineAtEndOfFile:WorldRenderEvent.kt$at.raven.ravenAddons.event.render.WorldRenderEvent.kt</ID>
     <ID>NewLineAtEndOfFile:WorldRenderUtils.kt$at.raven.ravenAddons.utils.render.WorldRenderUtils.kt</ID>
