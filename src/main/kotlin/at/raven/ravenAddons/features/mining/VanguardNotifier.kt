@@ -26,6 +26,7 @@ object VanguardNotifier {
     private val playerAttemptJoinPartyPattern =
         "G(?:uild)? > (?:\\[.*] )?(?<author>\\w+)?(?:\\[.*] )?(?:\\s\\[[^]]+])?: !ra join".toPattern()
 
+    // https://regex101.com/r/n4vtyw/1
     private val playerWarpedPatten = "^Party Leader, (?:\\[.*] )?(?<author>\\w+)?, summoned you to their server.".toPattern()
 
     // https://regex101.com/r/BzjqgV/1
