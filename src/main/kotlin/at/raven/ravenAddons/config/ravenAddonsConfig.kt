@@ -198,7 +198,7 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Invincibility Timer",
         description = "Display a timer for Bonzo Mask, Phoenix Pet and Spirit Mask.\n" +
-            "§Note: The mod assumes that your Phoenix Pet is level 100.",
+            "§cNote: The mod assumes that your Phoenix Pet is level 100.",
         category = "SkyBlock",
         subcategory = "Invincibility"
     )
