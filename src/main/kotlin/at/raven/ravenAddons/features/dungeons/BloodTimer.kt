@@ -18,6 +18,7 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object BloodTimer {
     private val bloodOpenMessages = setOf(
+        "[BOSS] The Watcher: Congratulations, you made it through the Entrance.",
         "[BOSS] The Watcher: Things feel a little more roomy now, eh?",
         "[BOSS] The Watcher: Oh.. hello?",
         "[BOSS] The Watcher: I'm starting to get tired of seeing you around here...",
