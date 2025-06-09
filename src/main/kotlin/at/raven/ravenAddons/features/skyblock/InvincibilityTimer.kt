@@ -19,8 +19,6 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object InvincibilityTimer {
 
-    private var invincibilityActive = false
-
     private var invincibilityJob: Job? = null
 
     enum class Invincibility(val pattern: Pattern, val cooldown: Duration) {
@@ -40,7 +38,6 @@ object InvincibilityTimer {
 
         val invincibility = Invincibility.match(event.cleanMessage)
         if (invincibility != null) {
-            invincibilityActive = true
             invincibilityJob?.cancel()
             invincibilityJob = ravenAddons.launchCoroutine {
                 try {
@@ -70,9 +67,8 @@ object InvincibilityTimer {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.invincibilityTimer || !invincibilityActive) return
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.invincibilityTimer) return
 
         invincibilityJob?.cancel()
-        invincibilityActive = false
     }
 }
