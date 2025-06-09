@@ -18,6 +18,7 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object BloodTimer {
     private val bloodOpenMessages = setOf(
+        "[BOSS] The Watcher: Congratulations, you made it through the Entrance.",
         "[BOSS] The Watcher: Things feel a little more roomy now, eh?",
         "[BOSS] The Watcher: Oh.. hello?",
         "[BOSS] The Watcher: I'm starting to get tired of seeing you around here...",
@@ -53,7 +54,7 @@ object BloodTimer {
                     in 28.0..31.0 -> bloodLag + 33.seconds
                     in 25.0..28.0 -> bloodLag + 30.seconds
                     in 22.0..25.0 -> bloodLag + 27.seconds
-                    in 1.0..21.0 -> bloodLag + 24.seconds
+                    in 1.0..22.0 -> bloodLag + 24.seconds
                     else -> null
                 }
                 val bloodMovePrediction = bloodMovePredictionNumber?.inPartialSeconds?.let { "%.2f".format(it) }
