@@ -1,7 +1,9 @@
 package at.raven.ravenAddons.utils.render
 
+import at.raven.ravenAddons.config.guieditor.GuiPositionEditorManager
+import at.raven.ravenAddons.config.guieditor.data.GuiPosition
+import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons.Companion.mc
-import net.minecraft.client.Minecraft
 import net.minecraft.client.gui.FontRenderer
 import net.minecraft.client.gui.Gui
 import net.minecraft.client.gui.ScaledResolution
@@ -15,7 +17,7 @@ object GuiRenderUtils {
     val scaledWidth get() = scaledResolution.scaledWidth
     val scaledHeight get() = scaledResolution.scaledHeight
 
-    val fontRenderer get() = mc.fontRendererObj
+    val fontRenderer: FontRenderer get() = mc.fontRendererObj
 
     fun Slot.highlight(color: Color) {
         highlight(color, xDisplayPosition, yDisplayPosition)
@@ -25,7 +27,7 @@ object GuiRenderUtils {
         GlStateManager.disableLighting()
         GlStateManager.disableDepth()
         GlStateManager.pushMatrix()
-        GlStateManager.translate(0f, 0f, 110 + Minecraft.getMinecraft().renderItem.zLevel)
+        GlStateManager.translate(0f, 0f, 110 + mc.renderItem.zLevel)
         Gui.drawRect(x, y, x + 16, y + 16, color.rgb)
         GlStateManager.popMatrix()
         GlStateManager.enableDepth()
@@ -40,7 +42,7 @@ object GuiRenderUtils {
         GlStateManager.disableLighting()
         GlStateManager.disableDepth()
         GlStateManager.pushMatrix()
-        GlStateManager.translate(0f, 0f, 110 + Minecraft.getMinecraft().renderItem.zLevel)
+        GlStateManager.translate(0f, 0f, 110 + mc.renderItem.zLevel)
         Gui.drawRect(x, y, x + 1, y + 16, color.rgb)
         Gui.drawRect(x, y, x + 16, y + 1, color.rgb)
         Gui.drawRect(x, y + 15, x + 16, y + 16, color.rgb)
@@ -83,6 +85,31 @@ object GuiRenderUtils {
         x: Int,
         y: Int,
     ) {
-        drawStringCentered(str, mc.fontRendererObj, x.toFloat(), y.toFloat())
+        drawStringCentered(str, fontRenderer, x.toFloat(), y.toFloat())
+    }
+
+    fun GuiPosition.renderString(
+        string: String?,
+        label: String,
+        dropShadow: Boolean = true,
+    ) {
+        if (string.isNullOrEmpty()) return
+        val fontRenderer = fontRenderer
+
+        val stringWidth = fontRenderer.getStringWidth(string) * scale
+        val stringHeight = 10 * scale
+
+        GuiPositionEditorManager.add(
+            this,
+            label,
+            stringWidth.toInt(),
+            stringHeight.toInt(),
+        )
+
+        GlStateManager.pushMatrix()
+        GlStateManager.translate(x.toFloat(), y.toFloat(), 0f)
+        GlStateManager.scale(scale, scale, scale)
+        fontRenderer.drawString(string, 0f, 0f, Color.WHITE.rgb, dropShadow)
+        GlStateManager.popMatrix()
     }
 }
