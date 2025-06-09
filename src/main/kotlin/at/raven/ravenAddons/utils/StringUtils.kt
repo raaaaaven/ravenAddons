@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.utils
 
 import at.raven.ravenAddons.utils.RegexUtils.findAll
+import java.util.UUID
 
 object StringUtils {
     private val minecraftColorCodesPattern = "(?i)(§[0-9a-fklmnor])+".toPattern()
@@ -38,4 +39,6 @@ object StringUtils {
         name.split("_").joinToString(" ") { it.lowercase().replaceFirstChar(Char::uppercase) }
 
     fun String.lastColorCode(): String? = minecraftColorCodesPattern.findAll(this).lastOrNull()
+
+    fun generateRandomId() = UUID.randomUUID().toString()
 }
