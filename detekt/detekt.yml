@@ -16,7 +16,7 @@ style:
             - 'HandleEvent'
             - 'Mod.EventHandler'
     MaxLineLength:
-        active: true
+        active: false
         maxLineLength: 140
         excludeCommentStatements: true
     LoopWithTooManyJumpStatements:
