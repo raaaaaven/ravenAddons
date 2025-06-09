@@ -1,6 +1,7 @@
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
+import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
@@ -15,6 +16,8 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object InvincibilityTimer {
+
+    private var activeInvincibility = false
 
     enum class Invincibility(val pattern: Pattern, val cooldown: Duration) {
         BONZO("^Your (?:. )?Bonzo's Mask saved your life!".toPattern(), 3.seconds),
@@ -33,6 +36,7 @@ object InvincibilityTimer {
 
         val invincibility = Invincibility.match(event.cleanMessage)
         if (invincibility != null) {
+            activeInvincibility = true
             ravenAddons.launchCoroutine {
                 val timer = ServerTimeMark.now() + invincibility.cooldown
                 while (timer.isInFuture()) {
@@ -55,5 +59,11 @@ object InvincibilityTimer {
                 TitleManager.setTitle("", "", 0.seconds, 0.seconds, 0.seconds)
             }
         }
+    }
+
+    @SubscribeEvent
+    fun onWorldLoad(event: WorldChangeEvent) {
+        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.invincibilityTimer || !activeInvincibility) return
+        TitleManager.setTitle("", "", 0.seconds, 0.seconds, 0.seconds)
     }
 }
