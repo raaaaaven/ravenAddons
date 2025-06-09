@@ -1,4 +1,6 @@
 import org.apache.commons.lang3.SystemUtils
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
 
 plugins {
     idea
@@ -8,6 +10,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
     id("com.google.devtools.ksp") version "2.0.0-1.0.22"
     kotlin("jvm") version "2.0.0"
+    id("io.gitlab.arturbosch.detekt") version "1.23.7"
 }
 
 val baseGroup: String by project
@@ -98,12 +101,14 @@ sourceSets.main {
 // Dependencies:
 repositories {
     mavenCentral()
+    mavenLocal()
     maven("https://repo.spongepowered.org/maven/")
     // If you don't want to log in with your real minecraft account, remove this line
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
     maven("https://repo.essential.gg/repository/maven-public/")
     maven("https://repo.hypixel.net/repository/Hypixel/")
     maven("https://repo.nea.moe/releases")
+    maven("https://maven.notenoughupdates.org/releases") // NotEnoughUpdates (dev env)
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -141,6 +146,10 @@ dependencies {
     shadowImpl(libs.libautoupdate)
 
     compileOnly(ksp(project(":annotation-processors"))!!)
+
+    detektPlugins("org.notenoughupdates:detektrules:1.0.0")
+    detektPlugins(project(":detekt"))
+    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:1.23.7")
 }
 
 tasks.withType(JavaCompile::class) {
@@ -172,6 +181,31 @@ tasks.processResources {
     }
 
     rename("accesstransformer.cfg", "META-INF/${modid}_at.cfg")
+}
+
+detekt {
+    buildUponDefaultConfig = true // preconfigure defaults
+    config.setFrom(rootProject.layout.projectDirectory.file("detekt/detekt.yml")) // point to your custom config defining rules to run, overwriting default behavior
+    baseline = file(layout.projectDirectory.file("detekt/baseline.xml")) // a way of suppressing issues before introducing detekt
+    source.setFrom(project.sourceSets.named("main").map { it.allSource })
+}
+
+tasks.withType<Detekt>().configureEach {
+    onlyIf {
+       project.findProperty("skipDetekt") != "true"
+    }
+    outputs.cacheIf { false } // Custom rules won't work if cached
+
+    reports {
+        html.required.set(true) // observe findings in your browser with structure and code snippets
+        xml.required.set(true) // checkstyle like format mainly for integrations like Jenkins
+        sarif.required.set(true) // standardized SARIF format (https://sarifweb.azurewebsites.net/) to support integrations with GitHub Code Scanning
+        md.required.set(true) // simple Markdown format
+    }
+}
+
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    outputs.cacheIf { false } // Custom rules won't work if cached
 }
 
 val remapJar by tasks.named<net.fabricmc.loom.task.RemapJarTask>("remapJar") {

@@ -50,6 +50,24 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Required Pants Type",
+        description = "Adds the colour of pants required to tier 3 a mystic item to it's description.",
+        category = "Pit",
+        subcategory = "Mystics"
+    )
+    var requiredPantsType = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Required Pants Type Highlighter",
+        description = "Highlights mystics in the Mystic Well based on the colour of pants they require to tier 3.",
+        category = "Pit",
+        subcategory = "Mystics"
+    )
+    var highlightRequiredPantsType = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "DROP Alerts",
         description = "Message a user about your RARE DROPS.",
         category = "SkyBlock",
@@ -480,6 +498,7 @@ object ravenAddonsConfig : Vigilant(
         initialize()
 
         this::carePackageHighlighterColour requires this::carePackageHighlighter
+        this::highlightRequiredPantsType requires this::requiredPantsType
 
         this::dropAlertUserName requires this::dropAlert
 
