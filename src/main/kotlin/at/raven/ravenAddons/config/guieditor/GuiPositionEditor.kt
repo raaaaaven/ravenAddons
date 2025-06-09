@@ -4,6 +4,7 @@ import at.raven.ravenAddons.config.guieditor.GuiPositionEditorManager.getDummySi
 import at.raven.ravenAddons.config.guieditor.GuiPositionEditorUtils.scaledWindowHeight
 import at.raven.ravenAddons.config.guieditor.GuiPositionEditorUtils.scaledWindowWidth
 import at.raven.ravenAddons.config.guieditor.data.GuiPosition
+import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.utils.KeyboardUtils.isKeyHeld
 import at.raven.ravenAddons.utils.NumberUtils.roundTo
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
@@ -46,6 +47,8 @@ class GuiPositionEditor(
         renderText()
 
         GlStateManager.disableLighting()
+
+        RenderOverlayEvent(partialTicks).post()
     }
 
     override fun mouseClicked(
@@ -59,7 +62,7 @@ class GuiPositionEditor(
 
         for (i in positions.indices.reversed()) {
             val pos = positions[i]
-            var (elementWidth, elementHeight) = pos.getDummySize()
+            val (elementWidth, elementHeight) = pos.getDummySize()
             val x = pos.x
             val y = pos.y
             val isHovered =
@@ -177,7 +180,7 @@ class GuiPositionEditor(
         val (mouseX, mouseY) = GuiPositionEditorUtils.mousePos
 
         for ((index, pos) in positions.withIndex()) {
-            var (elementWidth, elementHeight) = pos.getDummySize()
+            val (elementWidth, elementHeight) = pos.getDummySize()
 
             if (pos.clicked) {
                 grabbedX += pos.moveX(mouseX - grabbedX, elementWidth)
