@@ -118,7 +118,7 @@ class GuiPosition() {
 //    }
 }
 
-class GuiPositionPropertyInfo: PropertyInfo() {
+class GuiPositionPropertyInfo : PropertyInfo() {
     override fun createSettingComponent(initialValue: Any?): SettingComponent {
         return CheckboxComponent(
             initialValue = false

@@ -112,10 +112,10 @@ class GuiPositionEditor(
         for (pos in positions) {
             if (!pos.clicked) continue
 
-            val (mouseX, mouseY) = GuiPositionEditorUtils.mousePos
-            var (elementWidth, elementHeight) = pos.getDummySize()
-            grabbedX += pos.moveX(mouseX - grabbedX, elementWidth)
-            grabbedY += pos.moveY(mouseY - grabbedY, elementHeight)
+            val (newMouseX, newMouseY) = GuiPositionEditorUtils.mousePos
+            val (elementWidth, elementHeight) = pos.getDummySize()
+            grabbedX += pos.moveX(newMouseX - grabbedX, elementWidth)
+            grabbedY += pos.moveY(newMouseY - grabbedY, elementHeight)
         }
     }
 
