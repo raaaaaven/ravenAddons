@@ -7,6 +7,7 @@ import at.raven.ravenAddons.event.managers.ScoreboardManager
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
+import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.TitleManager
@@ -15,8 +16,8 @@ import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object SkeletonMasterChestplateTracker {
-    // https://regex101.com/r/TDrnhE/1
-    private val chestplatePattern = "^(.*?) has obtained (.*?) Skeleton Master Chestplate!".toPattern()
+    // https://regex101.com/r/TDrnhE/2
+    private val chestplatePattern = "^(?:\\[[MVIP+]+] )?(?<username>\\w+) has obtained (?:\\w+) Skeleton Master Chestplate!\$".toPattern()
 
     private val m7RoomIDPattern = "^ §7⏣ §cThe Catacombs §7(M7)".toPattern()
 
@@ -40,6 +41,9 @@ object SkeletonMasterChestplateTracker {
         }
 
         chestplatePattern.matchMatcher(event.cleanMessage) {
+            val username = group("username")
+            if (username != PlayerUtils.playerName) return
+
             TitleManager.setTitle(
                 "§6Skeleton Master Chestplate",
                 "§7It took you &f$runs M7 §7runs",
