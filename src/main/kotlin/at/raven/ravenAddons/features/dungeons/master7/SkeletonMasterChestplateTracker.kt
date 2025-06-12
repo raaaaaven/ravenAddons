@@ -23,7 +23,6 @@ object SkeletonMasterChestplateTracker {
 
     private val dungeonPattern = "^\\[NPC] Mort: Here, I found this map when I first entered the dungeon.".toPattern()
 
-
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.skeletonMasterChestplateTracker) return
