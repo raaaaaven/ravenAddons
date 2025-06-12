@@ -42,7 +42,7 @@ object SkeletonMasterChestplateTracker {
         chestplatePattern.matchMatcher(event.cleanMessage) {
             TitleManager.setTitle(
                 "§6Skeleton Master Chestplate",
-                "§7It took you &f$runs M7 runs §7since your last!",
+                "§7It took you &f$runs M7 §7runs",
                 3.seconds,
                 1.seconds,
                 1.seconds
