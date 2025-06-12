@@ -47,7 +47,7 @@ object SkeletonMasterChestplateTracker {
                 1.seconds,
                 1.seconds
             )
-            ChatUtils.chat("It took you §f$runs M7 runs §7since your last 50/50 Skeleton Chestplate.")
+            ChatUtils.chat("It took you §f$runs M7 runs §7since your last Skeleton Master Chestplate.")
             ravenAddonsConfig.skeletonMasterChestplateTrackerNumber = 0
             ravenAddonsConfig.markDirty()
         }
