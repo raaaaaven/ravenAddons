@@ -408,6 +408,15 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Skeleton Master Chestplate Tracker",
+        description = "Tracks how many M7 runs it takes for you to drop a 50/50 Skeleton Master Chestplate.",
+        category = "Dungeons",
+        subcategory = "Master Mode Floor 7"
+    )
+    var skeletonMasterChestplateTracker = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "!since",
         description = "Announces to the party how many mobs you have spawned before spawning an Inquisitor.",
         category = "Party Commands"
@@ -484,6 +493,15 @@ object ravenAddonsConfig : Vigilant(
         hidden = true
     )
     var pre4PersonalBestNumber = Int.MAX_VALUE
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Skeleton Master Chestplate Tracker Number",
+        description = "Stores the amount of runs it takes for the Skeleton Master Chestplate tracker.",
+        category = "Developer",
+        hidden = true
+    )
+    var skeletonMasterChestplateTrackerNumber = 0
 
     init {
         initialize()
