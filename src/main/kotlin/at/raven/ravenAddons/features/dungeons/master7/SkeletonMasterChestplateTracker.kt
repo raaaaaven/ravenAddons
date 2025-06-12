@@ -19,7 +19,7 @@ object SkeletonMasterChestplateTracker {
     // https://regex101.com/r/TDrnhE/2
     private val chestplatePattern = "^(?:\\[[MVIP+]+] )?(?<username>\\w+) has obtained (?:\\w+) Skeleton Master Chestplate!\$".toPattern()
 
-    private val m7RoomIDPattern = "^ §7⏣ §cThe Catacombs §7(M7)".toPattern()
+    private val m7RoomIDPattern = "^ §7⏣ §cThe Catacombs §7\\(M7\\)".toPattern()
 
     private val dungeonPattern = "^\\[NPC] Mort: Here, I found this map when I first entered the dungeon.".toPattern()
 
@@ -33,6 +33,7 @@ object SkeletonMasterChestplateTracker {
 
                 if (!scoreboard.any { m7RoomIDPattern.matches(it) }) return@runDelayed
 
+                ChatUtils.debug("Skeleton Master Chestplate Tracker: Increasing stored run by 1.")
                 ravenAddonsConfig.skeletonMasterChestplateTrackerNumber += 1
                 ravenAddonsConfig.markDirty()
             }
@@ -44,8 +45,8 @@ object SkeletonMasterChestplateTracker {
 
             TitleManager.setTitle(
                 "§6Skeleton Master Chestplate",
-                "§7It took you &f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber} M7 §7runs",
-                3.seconds,
+                "§7It took you §f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber} M7 §7runs",
+                5.seconds,
                 1.seconds,
                 1.seconds,
             )
@@ -53,6 +54,8 @@ object SkeletonMasterChestplateTracker {
                 "It took you §f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber}s M7 runs " +
                     "§7since your last Skeleton Master Chestplate.",
             )
+
+            ChatUtils.debug("Skeleton Master Chestplate Tracker: Resetting stored run back to 0.")
             ravenAddonsConfig.skeletonMasterChestplateTrackerNumber = 0
             ravenAddonsConfig.markDirty()
         }
