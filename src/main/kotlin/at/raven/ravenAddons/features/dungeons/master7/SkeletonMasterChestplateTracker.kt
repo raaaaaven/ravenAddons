@@ -23,7 +23,6 @@ object SkeletonMasterChestplateTracker {
 
     private val dungeonPattern = "^\\[NPC] Mort: Here, I found this map when I first entered the dungeon.".toPattern()
 
-    private val runs = ravenAddonsConfig.skeletonMasterChestplateTrackerNumber
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
@@ -46,12 +45,12 @@ object SkeletonMasterChestplateTracker {
 
             TitleManager.setTitle(
                 "§6Skeleton Master Chestplate",
-                "§7It took you &f$runs M7 §7runs",
+                "§7It took you &f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber} M7 §7runs",
                 3.seconds,
                 1.seconds,
                 1.seconds
             )
-            ChatUtils.chat("It took you §f$runs M7 runs §7since your last Skeleton Master Chestplate.")
+            ChatUtils.chat("It took you §f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber}s M7 runs §7since your last Skeleton Master Chestplate.")
             ravenAddonsConfig.skeletonMasterChestplateTrackerNumber = 0
             ravenAddonsConfig.markDirty()
         }
