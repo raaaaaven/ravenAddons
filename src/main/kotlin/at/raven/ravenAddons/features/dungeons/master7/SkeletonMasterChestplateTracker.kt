@@ -27,12 +27,12 @@ object SkeletonMasterChestplateTracker {
     fun onChat(event: ChatReceivedEvent) {
         if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.skeletonMasterChestplateTracker) return
 
+        val scoreboard = ScoreboardManager.scoreboardLines
+
+        if (!scoreboard.any { m7RoomIDPattern.matches(it) }) return
+
         dungeonPattern.matchMatcher(event.cleanMessage) {
             ravenAddons.runDelayed(5.seconds) {
-                val scoreboard = ScoreboardManager.scoreboardLines
-
-                if (!scoreboard.any { m7RoomIDPattern.matches(it) }) return@runDelayed
-
                 ChatUtils.debug("Skeleton Master Chestplate Tracker: Increasing stored run by 1.")
                 ravenAddonsConfig.skeletonMasterChestplateTrackerNumber += 1
                 ravenAddonsConfig.markDirty()
