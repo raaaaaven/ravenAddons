@@ -5,9 +5,11 @@ import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
+import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import at.raven.ravenAddons.utils.ServerTimeMark
 import at.raven.ravenAddons.utils.TitleManager
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
@@ -41,24 +43,28 @@ object InvincibilityTimer {
         invincibilityJob?.cancel()
         invincibilityJob =
             ravenAddons.launchCoroutine {
-                val timer = ServerTimeMark.now() + invincibility.cooldown
-                while (timer.isInFuture()) {
-                    val timeUntil = timer.timeUntil()
-                    val formattedTime = timeUntil.inWholeMilliseconds / 1000f
-                    val color =
-                        when {
-                            timeUntil > 2.seconds -> "§a"
-                            timeUntil > 1.seconds -> "§e"
-                            else -> "§c"
-                        }
-                    TitleManager.setTitle(
-                        "$color%.3f".format(formattedTime),
-                        "",
-                        1.seconds,
-                        0.seconds,
-                        0.seconds,
-                    )
-                    delay(50)
+                try {
+                    val timer = ServerTimeMark.now() + invincibility.cooldown
+                    while (timer.isInFuture()) {
+                        val timeUntil = timer.timeUntil()
+                        val formattedTime = timeUntil.inWholeMilliseconds / 1000f
+                        val color =
+                            when {
+                                timeUntil > 2.seconds -> "§a"
+                                timeUntil > 1.seconds -> "§e"
+                                else -> "§c"
+                            }
+                        TitleManager.setTitle(
+                            "$color%.3f".format(formattedTime),
+                            "",
+                            1.seconds,
+                            0.seconds,
+                            0.seconds,
+                        )
+                        delay(50)
+                    }
+                } catch (e: CancellationException) {
+                    ChatUtils.debug("Invincibility Timer: Invincibility Job cancelled: ${e.message}")
                 }
             }
     }
