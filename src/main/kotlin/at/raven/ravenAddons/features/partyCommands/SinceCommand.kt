@@ -13,7 +13,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 @LoadModule
 object SinceCommand {
-    private val sincePattern = "Party > (?:\\[.*] )?(?<author>\\w+): !since".toPattern()
+    // https://regex101.com/r/DYjrgE/1
+    private val sincePattern = "^Party > (?:\\[.*] )?(?<author>([^:]*)?): !since".toPattern()
 
     private val inqPattern = ".* You dug out a Minos Inquisitor!".toPattern()
 
