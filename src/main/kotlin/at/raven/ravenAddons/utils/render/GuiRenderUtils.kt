@@ -90,6 +90,7 @@ object GuiRenderUtils {
     fun GuiPosition.renderString(
         string: String?,
         label: String,
+        yOffset: Int = 0,
         dropShadow: Boolean = true,
     ) {
         if (string.isNullOrEmpty()) return
@@ -106,7 +107,7 @@ object GuiRenderUtils {
         )
 
         GlStateManager.pushMatrix()
-        GlStateManager.translate(x.toFloat(), y.toFloat(), 0f)
+        GlStateManager.translate(x.toFloat(), (y + yOffset).toFloat(), 0f)
         GlStateManager.scale(scale, scale, scale)
         fontRenderer.drawString(string, 0f, 0f, Color.WHITE.rgb, dropShadow)
         GlStateManager.popMatrix()
