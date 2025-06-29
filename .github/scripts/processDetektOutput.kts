@@ -41,12 +41,13 @@ val formatLines = lines.filter { it.isNotBlank() }.mapNotNull { raw ->
         val wholeRule = it.group("wholeRule")
         val message = it.group("message")
 
+        val cleanedFilePath = filePath.substringAfter("src/")
+
         rulesBroken[wholeRule] = rulesBroken.getOrDefault(wholeRule, 0) + 1
-        violatingFiles[filePath] = violatingFiles.getOrDefault(filePath, 0) + 1
-        pathToNameCache[filePath] = fileName
+        violatingFiles[cleanedFilePath] = violatingFiles.getOrDefault(filePath, 0) + 1
+        pathToNameCache[cleanedFilePath] = fileName
         wholeRuleToNameCache[wholeRule] = rule
 
-        val cleanedFilePath = filePath.substringAfter("src/")
         val urlFormat = "$urlBase$cleanedFilePath#L$lineNum"
         val ruleFormat = "`[$rule]`"
 
