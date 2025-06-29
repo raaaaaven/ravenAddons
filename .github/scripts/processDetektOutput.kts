@@ -44,7 +44,7 @@ val formatLines = lines.filter { it.isNotBlank() }.mapNotNull { raw ->
         val cleanedFilePath = filePath.substringAfter("src/")
 
         rulesBroken[wholeRule] = rulesBroken.getOrDefault(wholeRule, 0) + 1
-        violatingFiles[cleanedFilePath] = violatingFiles.getOrDefault(filePath, 0) + 1
+        violatingFiles[cleanedFilePath] = violatingFiles.getOrDefault(cleanedFilePath, 0) + 1
         pathToNameCache[cleanedFilePath] = fileName
         wholeRuleToNameCache[wholeRule] = rule
 
@@ -94,9 +94,9 @@ val sb = StringBuilder().apply {
             violatingFiles.keys.size -> ""
             else -> " (+ ${violatingFiles.size - ceilingedFiles.size} more)"
         }
-        val fileViolationsFormat = ceilingedFiles.joinToString(", ") { (filePath, _) ->
-            val url = flaggedFileUrls[filePath]
-            val fileName = pathToNameCache[filePath] ?: filePath.substringAfter("src/")
+        val fileViolationsFormat = ceilingedFiles.joinToString(", ") { (cleanedFilePath, _) ->
+            val url = flaggedFileUrls[cleanedFilePath]
+            val fileName = pathToNameCache[cleanedFilePath] ?: cleanedFilePath.substringAfter("src/")
             when (url) {
                 null -> "`$fileName`"
                 else -> "[$fileName]($url)"
