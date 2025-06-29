@@ -53,7 +53,7 @@ val formatLines = lines.filter { it.isNotBlank() }.mapNotNull { raw ->
 
         flaggedFileUrls[cleanedFilePath] = urlFormat
 
-        filePath to "- [${fileName}#L${lineNum}]($urlFormat) $ruleFormat: $message"
+        cleanedFilePath to "- [${fileName}#L${lineNum}]($urlFormat) $ruleFormat: $message"
     }
 }
 
