@@ -80,4 +80,3 @@ object RequiredPantsType {
 
     private fun isEnabled() = HypixelGame.inPit && ravenAddonsConfig.requiredPantsType
 }
-
