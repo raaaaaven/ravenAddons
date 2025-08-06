@@ -23,6 +23,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import kotlin.time.Duration
 
+@Suppress("ktlint:standard:class-naming")
 @Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
     private val loadedClasses = mutableSetOf<Any>()
@@ -45,8 +46,8 @@ class ravenAddons {
     }
 
     @LoadModule
-    companion object{
-        const val MOD_VERSION = "1.12.0"
+    companion object {
+        const val MOD_VERSION = "1.13.1"
         const val MOD_ID = "ravenAddons"
         val modVersion get() = UpdateManager.modVersionNumber(MOD_VERSION)
 
@@ -58,15 +59,18 @@ class ravenAddons {
                 CoroutineName("ravenAddons") + SupervisorJob(globalJob),
             )
 
-        fun runDelayed(delay: Duration, function: suspend () -> Unit) {
+        fun runDelayed(
+            delay: Duration,
+            function: suspend () -> Unit,
+        ) {
             launchCoroutine {
                 delay(delay)
                 function()
             }
         }
 
-        fun launchCoroutine(function: suspend () -> Unit): Job {
-            return coroutineScope.launch {
+        fun launchCoroutine(function: suspend () -> Unit): Job =
+            coroutineScope.launch {
                 try {
                     function()
                 } catch (e: Exception) {
@@ -74,7 +78,6 @@ class ravenAddons {
                     e.printStackTrace()
                 }
             }
-        }
 
         private var screenToOpenNextTick: GuiScreen? = null
 

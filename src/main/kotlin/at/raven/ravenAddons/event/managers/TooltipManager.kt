@@ -12,3 +12,4 @@ object TooltipManager {
         TooltipEvent(event.itemStack, event.toolTip).post()
     }
 }
+
