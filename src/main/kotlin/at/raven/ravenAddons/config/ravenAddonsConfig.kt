@@ -1,7 +1,9 @@
 package at.raven.ravenAddons.config
 
+import at.raven.ravenAddons.config.guieditor.data.GuiPosition
 import gg.essential.vigilance.Vigilant
 import gg.essential.vigilance.data.Property
+import gg.essential.vigilance.data.PropertyInfo
 import gg.essential.vigilance.data.PropertyType
 import java.awt.Color
 import kotlin.reflect.KProperty
@@ -65,6 +67,38 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Mystics"
     )
     var highlightRequiredPantsType = false
+
+    @Property(
+        type = PropertyType.SWITCH,
+        name = "Upcoming Events Display",
+        description = "Displays a list of upcoming events.",
+        category = "Pit",
+        subcategory = "Events"
+    )
+    var upcomingEventsDisplay = false
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Upcoming Events Display Amount",
+        description = "Choose the amount of events that should be display in the upcoming events display.",
+        category = "Pit",
+        subcategory = "Events",
+        min = 1,
+        max = 50,
+        increment = 1
+    )
+    var upcomingEventsDisplayAmount = 10
+
+    @Property(
+        type = PropertyType.CUSTOM,
+        name = "Upcoming Events Display Position",
+        description = "Where to display the upcoming events display.",
+        category = "Pit",
+        subcategory = "Events",
+        hidden = true,
+        customPropertyInfo = PropertyInfo::class
+    )
+    var upcomingEventsDisplayPosition = GuiPosition()
 
     @Property(
         type = PropertyType.SWITCH,
@@ -509,6 +543,7 @@ object ravenAddonsConfig : Vigilant(
 
         this::carePackageHighlighterColour requires this::carePackageHighlighter
         this::highlightRequiredPantsType requires this::requiredPantsType
+        this::upcomingEventsDisplayAmount requires this::upcomingEventsDisplay
 
         this::dropAlertUserName requires this::dropAlert
 
