@@ -26,7 +26,7 @@ object RequiredPantsType {
         "Green" to ChatColor.GREEN,
     )
 
-    private val mysticPattern = "Tier (?<tier>I+) .+".toPattern()
+    private val mysticPattern = "(?:Tier )?(?<tier>I+|Mystic|Fresh)? .+".toPattern()
 
     @SubscribeEvent
     fun onItemHover(event: TooltipEvent) {
