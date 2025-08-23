@@ -36,7 +36,7 @@ object MiningAbilityNotification {
             val ability = group("ability")
 
             ChatUtils.debug("Mining Ability Notification: Mining ability is ready.")
-            TitleManager.setTitle("§6$ability", "§ais now available!", 3.seconds, 0.5.seconds, 0.5.seconds)
+            TitleManager.setVanillaTitle("§6$ability", "§ais now available!", 60, 10, 10)
         }
     }
 }
