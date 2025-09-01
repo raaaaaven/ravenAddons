@@ -210,7 +210,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Mining",
         subcategory = "Notifications"
     )
-    var miningAbilityInsideMiningIslands = false
+    var miningAbilityInsideMiningIslands = true
 
     @Property(
         type = PropertyType.SWITCH,
