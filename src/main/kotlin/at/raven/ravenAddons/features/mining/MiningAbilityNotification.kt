@@ -23,6 +23,7 @@ object MiningAbilityNotification {
         "Sheer Force"
     )
 
+    // REGEX TEST: https://regex101.com/r/puEFul/1
     private val miningAbilityPattern =
         "^§a§r§6(?<ability>${abilities.joinToString("|")}) §r§ais now available!$".toPattern()
 
