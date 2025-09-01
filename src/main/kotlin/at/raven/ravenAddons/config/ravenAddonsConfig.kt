@@ -205,6 +205,15 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Only inside Mining Islands",
+        description = "Displays titles while inside the Mining Islands.",
+        category = "Mining",
+        subcategory = "Notifications"
+    )
+    var miningAbilityInsideMiningIslands = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Gemstone Powder Notification",
         description = "Display a title based on how much Gemstone Powder you get from chests.",
         category = "Mining",
@@ -520,6 +529,8 @@ object ravenAddonsConfig : Vigilant(
         this::dodgeListFullPartyCheck requires this::dodgeList
         this::dodgeListAutoKick requires this::dodgeList
         this::dodgeListAutoKickWithReason requires this::dodgeList
+
+        this::miningAbilityInsideMiningIslands requires this::miningAbilityNotification
 
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
