@@ -37,8 +37,8 @@ object FireFreezeTimer {
     private var unfreezeMessageCooldown = SimpleTimeMark.farPast()
     private var titleCooldown = SimpleTimeMark.farPast()
 
-    // https://regex101.com/r/YwLEWt/2
-    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?<name>[\\w ]+) [\\d.,/kMB]+❤(?: ﴿)?(?: ✯)?$".toPattern()
+    // https://regex101.com/r/YwLEWt/4
+    private val armorStandPattern = "^(?:﴾ )?(?:\\[Lv\\d+] )?(?:[✈☮⚓♃Ж⚙⚂♣⊙☃❄✰♨♆✿ൠ⛨\uD83E\uDDB4☽⛏༕☠⸙]+ )?(?<name>[\\w ]+) [\\d.,\\/kMB]+❤(?: [﴿✯])?\$".toPattern()
 
     @SubscribeEvent
     fun onPlaySound(event: PlaySoundEvent) {
