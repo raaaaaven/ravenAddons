@@ -1,6 +1,7 @@
 package at.raven.ravenAddons.features.mining
 
 import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.config.ravenAddonsConfig.miningAbilityInsideMiningIslands
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.data.SkyBlockIsland.Companion.miningIslands
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -28,7 +29,8 @@ object MiningAbilityNotification {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!SkyBlockIsland.inAnyIsland(miningIslands) || !ravenAddonsConfig.miningAbilityNotification) return
+        if (!ravenAddonsConfig.miningAbilityNotification) return
+        if (miningAbilityInsideMiningIslands && !SkyBlockIsland.inAnyIsland(miningIslands)) return
 
         miningAbilityPattern.matchMatcher(event.message) {
             val ability = group("ability")
