@@ -22,6 +22,7 @@ enum class ItemRarity(
                 "◆ Soultwist Rune I" to EPIC,
                 "◆ Snake Rune I" to LEGENDARY,
                 "◆ Couture Rune I" to LEGENDARY,
+                "◆ Darkness Within Rune I" to LEGENDARY,
                 "◆ Endersnake Rune I" to LEGENDARY,
                 "◆ Enchant Rune I" to LEGENDARY,
                 "◆ Lavatears Rune I" to LEGENDARY,
