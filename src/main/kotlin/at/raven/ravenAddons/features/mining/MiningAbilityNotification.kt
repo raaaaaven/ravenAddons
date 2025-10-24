@@ -8,6 +8,7 @@ import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import at.raven.ravenAddons.utils.SoundUtils
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -37,6 +38,11 @@ object MiningAbilityNotification {
 
             ChatUtils.debug("Mining Ability Notification: Mining ability is ready.")
             TitleManager.setVanillaTitle("§6$ability", "§ais now available!", 10, 60, 10)
+            SoundUtils.playSound(
+                ravenAddonsConfig.miningAbilityNotificationSound,
+                ravenAddonsConfig.miningAbilityNotificationVolume,
+                ravenAddonsConfig.miningAbilityNotificationPitch
+            )
         }
     }
 }
