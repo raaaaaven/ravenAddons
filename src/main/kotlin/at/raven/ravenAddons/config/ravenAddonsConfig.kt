@@ -8,7 +8,7 @@ import kotlin.reflect.KProperty
 
 object ravenAddonsConfig : Vigilant(
     ConfigFixer.configFile,
-    sortingBehavior = ConfigSorting()
+    sortingBehavior = ConfigSorting(),
 ) {
     private val clazz = javaClass
 
@@ -17,7 +17,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Check for Updates",
         description = "Automatically check for updates on each startup.",
         category = "General",
-        subcategory = "Updates"
+        subcategory = "Updates",
     )
     var autoUpdates = false
 
@@ -26,7 +26,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Download Updates",
         description = "Automatically download new version on each startup.",
         category = "General",
-        subcategory = "Updates"
+        subcategory = "Updates",
     )
     var fullAutoUpdates = false
 
@@ -35,7 +35,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Care Package Highlighter",
         description = "Highlights important items inside of Care Packages inside the Hypixel Pit.",
         category = "Pit",
-        subcategory = "Care Package"
+        subcategory = "Care Package",
     )
     var carePackageHighlighter = false
 
@@ -44,7 +44,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Care Package Highlight Colour",
         description = "Customize the color related to the Care Package Highlighter.",
         category = "Pit",
-        subcategory = "Care Package"
+        subcategory = "Care Package",
     )
     var carePackageHighlighterColour = Color(0, 255, 0, 100)
 
@@ -53,7 +53,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Required Pants Type",
         description = "Adds the colour of pants required to tier 3 a mystic item to it's description.",
         category = "Pit",
-        subcategory = "Mystics"
+        subcategory = "Mystics",
     )
     var requiredPantsType = false
 
@@ -62,7 +62,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Required Pants Type Highlighter",
         description = "Highlights mystics in the Mystic Well based on the colour of pants they require to tier 3.",
         category = "Pit",
-        subcategory = "Mystics"
+        subcategory = "Mystics",
     )
     var highlightRequiredPantsType = false
 
@@ -71,7 +71,7 @@ object ravenAddonsConfig : Vigilant(
         name = "DROP Alerts",
         description = "Message a user about your RARE DROPS.",
         category = "SkyBlock",
-        subcategory = "Drops"
+        subcategory = "Drops",
     )
     var dropAlert = false
 
@@ -80,7 +80,7 @@ object ravenAddonsConfig : Vigilant(
         name = "DROP Alerts Username",
         description = "Choose a username for your RARE DROPS.",
         category = "SkyBlock",
-        subcategory = "Drops"
+        subcategory = "Drops",
     )
     var dropAlertUserName = ""
 
@@ -89,7 +89,7 @@ object ravenAddonsConfig : Vigilant(
         name = "DROP Title",
         description = "Create a title notification for your RARE drop.",
         category = "SkyBlock",
-        subcategory = "Drops"
+        subcategory = "Drops",
     )
     var dropTitle = false
 
@@ -98,7 +98,7 @@ object ravenAddonsConfig : Vigilant(
         name = "DROP Title Category",
         description = "Choose whether or not to display the category of the drop in the title.",
         category = "SkyBlock",
-        subcategory = "Drops"
+        subcategory = "Drops",
     )
     var dropTitleCategory = true
 
@@ -108,7 +108,7 @@ object ravenAddonsConfig : Vigilant(
         description = "Choose the minimum rarity the drop must be to display the title.",
         category = "SkyBlock",
         subcategory = "Drops",
-        options = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"]
+        options = ["COMMON", "UNCOMMON", "RARE", "EPIC", "LEGENDARY", "MYTHIC"],
     )
     var dropTitleRarity = 0
 
@@ -117,7 +117,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Fire Freeze Timer",
         description = "Display a 10 second timer above a frozen entity's head.\n&cThis feature is disabled in dungeons.",
         category = "SkyBlock",
-        subcategory = "Fire Freeze Staff"
+        subcategory = "Fire Freeze Staff",
     )
     var fireFreezeTimer = false
 
@@ -127,7 +127,7 @@ object ravenAddonsConfig : Vigilant(
         description = "Announce to your party when a mob becomes frozen or unfrozen.",
         category = "SkyBlock",
         subcategory = "Fire Freeze Staff",
-        options = ["None", "Frozen", "Unfrozen", "Both"]
+        options = ["None", "Frozen", "Unfrozen", "Both"],
     )
     var fireFreezeAnnounce = 0
 
@@ -136,7 +136,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Fire Freeze Notification",
         description = "Sends a title and chat message for when fire freeze is available after a successful fire freeze on a mob.",
         category = "SkyBlock",
-        subcategory = "Fire Freeze Staff"
+        subcategory = "Fire Freeze Staff",
     )
     var fireFreezeNotification = false
 
@@ -145,7 +145,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Dodge List",
         description = "Enable the player dodge list for party finder.\n&e/ra dodge",
         category = "SkyBlock",
-        subcategory = "Dodge List"
+        subcategory = "Dodge List",
     )
     var dodgeList = false
 
@@ -154,7 +154,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Party Check",
         description = "Add an additional party check for people on the dodge list when your party finder group is full.",
         category = "SkyBlock",
-        subcategory = "Dodge List"
+        subcategory = "Dodge List",
     )
     var dodgeListFullPartyCheck = false
 
@@ -162,8 +162,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Auto Kick",
         description = "Auto kick users that join your party finder group if they are on your dodge list.",
-        category =  "SkyBlock",
-        subcategory = "Dodge List"
+        category = "SkyBlock",
+        subcategory = "Dodge List",
     )
     var dodgeListAutoKick = false
 
@@ -171,8 +171,8 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "Auto Kick With Reason",
         description = "Announce the reason when auto kicking.",
-        category =  "SkyBlock",
-        subcategory = "Dodge List"
+        category = "SkyBlock",
+        subcategory = "Dodge List",
     )
     var dodgeListAutoKickWithReason = false
 
@@ -181,7 +181,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Lost Time Calculator",
         description = "Sends a chat message calculating how much time was lost due to lag.",
         category = "SkyBlock",
-        subcategory = "Instance"
+        subcategory = "Instance",
     )
     var lostTimeCalculator = false
 
@@ -190,7 +190,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Blazetekk Ham Radio Message Hider",
         description = "Hides all messages related to the Blazetekk Ham Radio.",
         category = "SkyBlock",
-        subcategory = "Blazetekk Ham Radio"
+        subcategory = "Blazetekk Ham Radio",
     )
     var blazetekkHamRadioMessageHider = false
 
@@ -199,7 +199,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
         category = "Mining",
-        subcategory = "Notifications"
+        subcategory = "Notifications",
     )
     var miningAbilityNotification = false
 
@@ -208,7 +208,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Only inside Mining Islands",
         description = "Show Mining Ability Notifications only while you're in a mining island.",
         category = "Mining",
-        subcategory = "Notifications"
+        subcategory = "Notifications",
     )
     var miningAbilityInsideMiningIslands = true
 
@@ -229,7 +229,7 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Notifications",
         minF = 0f,
         maxF = 1f,
-        decimalPlaces = 2
+        decimalPlaces = 2,
     )
     var miningAbilityNotificationVolume = 1f
 
@@ -241,7 +241,7 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Notifications",
         minF = 0f,
         maxF = 2f,
-        decimalPlaces = 2
+        decimalPlaces = 2,
     )
     var miningAbilityNotificationPitch = 1f
 
@@ -250,7 +250,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Gemstone Powder Notification",
         description = "Display a title based on how much Gemstone Powder you get from chests.",
         category = "Mining",
-        subcategory = "Notifications"
+        subcategory = "Notifications",
     )
     var gemstonePowderNotification = false
 
@@ -261,7 +261,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Mining",
         subcategory = "Notifications",
         min = 0,
-        max = 10000
+        max = 10000,
     )
     var gemstonePowderThreshold = 0
 
@@ -270,7 +270,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Vanguard Notifier",
         description = "Notify your guild of Vanguard Mineshafts and let them join using !ra join.",
         category = "Mining",
-        subcategory = "Vanguard"
+        subcategory = "Vanguard",
     )
     var vanguardNotifier = false
 
@@ -279,7 +279,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Vanguard Notifier Warp",
         description = "Automatically warp users that join the Vanguard party.",
         category = "Mining",
-        subcategory = "Vanguard"
+        subcategory = "Vanguard",
     )
     var vanguardNotifierWarp = false
 
@@ -290,7 +290,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Mining",
         subcategory = "Vanguard",
         min = 10,
-        max = 30
+        max = 30,
     )
     var vanguardNotifierWarpDelay = 20
 
@@ -298,7 +298,7 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.CHECKBOX,
         name = "Announce Prefix",
         description = "Choose whether or not you want [RA] infront of your dungeon announcements.",
-        category = "Dungeons"
+        category = "Dungeons",
     )
     var announcePrefix = true
 
@@ -316,7 +316,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Pre 4 Notification",
         description = "Display a title notification for when completing the 4th device.",
         category = "Dungeons",
-        subcategory = "Floor 7 - 4th Device"
+        subcategory = "Floor 7 - 4th Device",
     )
     var pre4Notification = false
 
@@ -325,7 +325,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Pre 4 Title",
         description = "Choose a title for Pre 4 Notification.",
         category = "Dungeons",
-        subcategory = "Floor 7 - 4th Device"
+        subcategory = "Floor 7 - 4th Device",
     )
     var pre4NotificationTitle = ""
 
@@ -334,7 +334,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Pre 4 Subtitle",
         description = "Choose a subtitle for Pre 4 Notification.",
         category = "Dungeons",
-        subcategory = "Floor 7 - 4th Device"
+        subcategory = "Floor 7 - 4th Device",
     )
     var pre4NotificationSubtitle = ""
 
@@ -343,7 +343,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Pre 4 Announce",
         description = "Announce when you complete the 4th Device in Floor 7.",
         category = "Dungeons",
-        subcategory = "Floor 7 - 4th Device"
+        subcategory = "Floor 7 - 4th Device",
     )
     var pre4Announce = false
 
@@ -352,7 +352,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Pre 4 Message",
         description = "Enter a custom message for the Pre 4 Announce.\nUse §f\$time §7for the time.",
         category = "Dungeons",
-        subcategory = "Floor 7 - 4th Device"
+        subcategory = "Floor 7 - 4th Device",
     )
     var pre4AnnounceMessage = "Pre 4 complete in \$time."
 
@@ -379,7 +379,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Energy Crystal Notification",
         description = "Shows a reminder on screen when you have an unplaced Energy Crystal.",
         category = "Dungeons",
-        subcategory = "Floor 7"
+        subcategory = "Floor 7",
     )
     var energyCrystalNotification = false
 
@@ -388,7 +388,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Leap Announce",
         description = "Announce when you leap to someone in party chat.",
         category = "Dungeons",
-        subcategory = "Leap"
+        subcategory = "Leap",
     )
     var leapAnnounce = false
 
@@ -397,7 +397,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Leap Message",
         description = "Enter a custom message for the leap announce. \nUse §f\$ign §7for the username.",
         category = "Dungeons",
-        subcategory = "Leap"
+        subcategory = "Leap",
     )
     var leapAnnounceMessage = "Leaping to \$ign."
 
@@ -406,7 +406,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Leap Pling",
         description = "Play the pling sound effect when leaping to someone.",
         category = "Dungeons",
-        subcategory = "Leap"
+        subcategory = "Leap",
     )
     var leapSound = false
 
@@ -415,7 +415,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Fire Freeze Timer",
         description = "Display a timer for when to freeze The Professor.",
         category = "Dungeons",
-        subcategory = "Floor 3"
+        subcategory = "Floor 3",
     )
     var floor3FireFreezeTimer = false
 
@@ -426,7 +426,7 @@ object ravenAddonsConfig : Vigilant(
         category = "Dungeons",
         subcategory = "Floor 3",
         min = 3,
-        max = 5
+        max = 5,
     )
     var floor3FireFreezeDuration = 5
 
@@ -435,7 +435,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Fire Freeze Timer Sound",
         description = "Choose a Minecraft sound to indicate when you should freeze The Professor.",
         category = "Dungeons",
-        subcategory = "Floor 3"
+        subcategory = "Floor 3",
     )
     var floor3FireFreezeSound = "random.anvil_land"
 
@@ -447,7 +447,7 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Floor 3",
         minF = 0f,
         maxF = 1f,
-        decimalPlaces = 2
+        decimalPlaces = 2,
     )
     var floor3FireFreezeVolume = 1f
 
@@ -459,7 +459,7 @@ object ravenAddonsConfig : Vigilant(
         subcategory = "Floor 3",
         minF = 0f,
         maxF = 2f,
-        decimalPlaces = 2
+        decimalPlaces = 2,
     )
     var floor3FireFreezePitch = 1f
 
@@ -468,7 +468,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Blood Timer",
         description = "Display a message and title for when to kill blood mobs.",
         category = "Dungeons",
-        subcategory = "Blood Camp"
+        subcategory = "Blood Camp",
     )
     var bloodTimer = false
 
@@ -477,7 +477,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Skeleton Master Chestplate Tracker",
         description = "Tracks how many M7 runs it takes for you to drop a 50/50 Skeleton Master Chestplate.",
         category = "Dungeons",
-        subcategory = "Master Mode Floor 7"
+        subcategory = "Master Mode Floor 7",
     )
     var skeletonMasterChestplateTracker = false
 
@@ -487,7 +487,7 @@ object ravenAddonsConfig : Vigilant(
         description = "Stores the amount of runs it takes for the Skeleton Master Chestplate tracker.",
         category = "Dungeons",
         subcategory = "Master Mode Floor 7",
-        hidden = true
+        hidden = true,
     )
     var skeletonMasterChestplateTrackerNumber = 0
 
@@ -495,7 +495,7 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "!since",
         description = "Announces to the party how many mobs you have spawned before spawning an Inquisitor.",
-        category = "Party Commands"
+        category = "Party Commands",
     )
     var sinceCommand = false
 
@@ -503,7 +503,7 @@ object ravenAddonsConfig : Vigilant(
         type = PropertyType.SWITCH,
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
-        category = "Developer"
+        category = "Developer",
     )
     var debugMessages = false
 
@@ -512,7 +512,7 @@ object ravenAddonsConfig : Vigilant(
         name = "/ra testtitle Title",
         description = "Sets the title for the test title.",
         category = "Developer",
-        subcategory = "Title"
+        subcategory = "Title",
     )
     var developerTitle = ""
 
@@ -521,7 +521,7 @@ object ravenAddonsConfig : Vigilant(
         name = "/ra testtitle SubTitle",
         description = "Sets the subtitle for the test title.",
         category = "Developer",
-        subcategory = "Title"
+        subcategory = "Title",
     )
     var developerSubTitle = ""
 
@@ -530,7 +530,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Flip Contributors",
         description = "Turns contributors upside down.",
         category = "Developer",
-        subcategory = "Contributor"
+        subcategory = "Contributor",
     )
     var flipContributors = true
 
@@ -539,7 +539,7 @@ object ravenAddonsConfig : Vigilant(
         name = "ravenAddonsVersion",
         description = "Stores the last loaded ravenAddons version",
         category = "Developer",
-        hidden = true
+        hidden = true,
     )
     var configVersion = 0
 
@@ -548,7 +548,7 @@ object ravenAddonsConfig : Vigilant(
         name = "sinceInq",
         description = "Stores the number of mobs before inquisitor.",
         category = "Developer",
-        hidden = true
+        hidden = true,
     )
     var sinceInq = 0
 
@@ -557,7 +557,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Simon Says Personal Best Number",
         description = "Stores the personal best for the 1st device.",
         category = "Developer",
-        hidden = true
+        hidden = true,
     )
     var simonSaysPersonalBestNumber = Int.MAX_VALUE
 
@@ -566,7 +566,7 @@ object ravenAddonsConfig : Vigilant(
         name = "Pre 4 Personal Best Number",
         description = "Stores the personal best for the 4th device.",
         category = "Developer",
-        hidden = true
+        hidden = true,
     )
     var pre4PersonalBestNumber = Int.MAX_VALUE
 
@@ -588,6 +588,9 @@ object ravenAddonsConfig : Vigilant(
         this::dodgeListAutoKickWithReason requires this::dodgeList
 
         this::miningAbilityInsideMiningIslands requires this::miningAbilityNotification
+        this::miningAbilityNotificationSound requires this::miningAbilityNotification
+        this::miningAbilityNotificationVolume requires this::miningAbilityNotification
+        this::miningAbilityNotificationPitch requires this::miningAbilityNotification
 
         this::gemstonePowderThreshold requires this::gemstonePowderNotification
 
