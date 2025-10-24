@@ -17,7 +17,7 @@ object MiningAbilityNotification {
     private val abilities = listOf(
         "Mining Speed Boost",
         "Pickobulus",
-        "Anomalous Desire",
+        "Tunnel Vision",
         "Maniac Miner",
         "Gemstone Infusion",
         "Sheer Force"
