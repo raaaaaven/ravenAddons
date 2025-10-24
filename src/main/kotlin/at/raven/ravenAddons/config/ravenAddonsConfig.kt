@@ -206,7 +206,7 @@ object ravenAddonsConfig : Vigilant(
     @Property(
         type = PropertyType.SWITCH,
         name = "Only inside Mining Islands",
-        description = "Displays titles while inside the Mining Islands.",
+        description = "Show Mining Ability Notifications only while you're in a mining island.",
         category = "Mining",
         subcategory = "Notifications"
     )
