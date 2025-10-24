@@ -398,26 +398,28 @@ object ravenAddonsConfig : Vigilant(
     var floor3FireFreezeSound = "random.anvil_land"
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Fire Freeze Timer Volume",
         description = "Choose the volume for Fire Freeze Timer Sound.",
         category = "Dungeons",
         subcategory = "Floor 3",
-        min = 0,
-        max = 2,
+        minF = 0f,
+        maxF = 1f,
+        decimalPlaces = 2
     )
-    var floor3FireFreezeVolume = 1
+    var floor3FireFreezeVolume = 1f
 
     @Property(
-        type = PropertyType.SLIDER,
+        type = PropertyType.DECIMAL_SLIDER,
         name = "Fire Freeze Timer Pitch",
         description = "Choose the pitch for Fire Freeze Timer Sound.",
         category = "Dungeons",
         subcategory = "Floor 3",
-        min = 0,
-        max = 2,
+        minF = 0f,
+        maxF = 2f,
+        decimalPlaces = 2
     )
-    var floor3FireFreezePitch = 1
+    var floor3FireFreezePitch = 1f
 
     @Property(
         type = PropertyType.SWITCH,

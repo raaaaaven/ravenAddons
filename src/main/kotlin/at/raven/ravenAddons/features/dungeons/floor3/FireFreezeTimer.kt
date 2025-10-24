@@ -48,8 +48,8 @@ object FireFreezeTimer {
                 TitleManager.setTitle("§c§lNOW!", "§c§lFIRE FREEZE", 2.5.seconds, 0.seconds, 0.seconds)
                 SoundUtils.playSound(
                     ravenAddonsConfig.floor3FireFreezeSound,
-                    ravenAddonsConfig.floor3FireFreezeVolume.toFloat(),
-                    ravenAddonsConfig.floor3FireFreezePitch.toFloat()
+                    ravenAddonsConfig.floor3FireFreezeVolume,
+                    ravenAddonsConfig.floor3FireFreezePitch
                 )
             }
         }
