@@ -10,7 +10,6 @@ import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.TitleManager
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration.Companion.seconds
 
 @LoadModule
 object MiningAbilityNotification {
@@ -24,6 +23,7 @@ object MiningAbilityNotification {
         "Sheer Force"
     )
 
+    // REGEX TEST: https://regex101.com/r/puEFul/1
     private val miningAbilityPattern =
         "^§a§r§6(?<ability>${abilities.joinToString("|")}) §r§ais now available!$".toPattern()
 
@@ -36,7 +36,7 @@ object MiningAbilityNotification {
             val ability = group("ability")
 
             ChatUtils.debug("Mining Ability Notification: Mining ability is ready.")
-            TitleManager.setTitle("§6$ability", "§ais now available!", 3.seconds, 0.5.seconds, 0.5.seconds)
+            TitleManager.setVanillaTitle("§6$ability", "§ais now available!", 10, 60, 10)
         }
     }
 }
