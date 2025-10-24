@@ -6,6 +6,7 @@ import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.event.DebugDataCollectionEvent
 import at.raven.ravenAddons.event.PacketReceivedEvent
+import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.event.render.TitleReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -21,6 +22,8 @@ import kotlin.time.Duration.Companion.seconds
 @LoadModule
 object TitleManager {
     private val titlesToRender = mutableListOf<TitleObject>()
+
+    private var preTitle = false
 
     fun setTitle(
         title: String? = null,
@@ -79,6 +82,12 @@ object TitleManager {
         fadeOut: Int,
     ) {
         val ingameGui = Minecraft.getMinecraft().ingameGUI
+
+        if (!preTitle) {
+            ingameGui.displayTitle(null, null, fadeIn, time, fadeOut)
+            preTitle = true
+        }
+
         ingameGui.displayTitle(title, null, fadeIn, time, fadeOut)
         ingameGui.displayTitle(null, subTitle, fadeIn, time, fadeOut)
         ingameGui.displayTitle(null,null, fadeIn, time, fadeOut)
@@ -226,6 +235,11 @@ object TitleManager {
         if (titlesToRender.isEmpty()) return
 
         event.cancel()
+    }
+
+    @SubscribeEvent
+    fun onWorldLoad(event: WorldChangeEvent) {
+        preTitle = false
     }
 
     @JvmStatic
