@@ -74,14 +74,14 @@ object TitleManager {
     fun setVanillaTitle(
         title: String? = null,
         subTitle: String? = null,
-        time: Int,
         fadeIn: Int,
+        time: Int,
         fadeOut: Int,
     ) {
         val ingameGui = Minecraft.getMinecraft().ingameGUI
-        ingameGui.displayTitle(title, null, time, fadeIn, fadeOut)
-        ingameGui.displayTitle(null, subTitle, time, fadeIn, fadeOut)
-        ingameGui.displayTitle(null,null, time, fadeIn, fadeOut)
+        ingameGui.displayTitle(title, null, fadeIn, time, fadeOut)
+        ingameGui.displayTitle(null, subTitle, fadeIn, time, fadeOut)
+        ingameGui.displayTitle(null,null, fadeIn, time, fadeOut)
     }
 
     private fun command(args: Array<String>) {
