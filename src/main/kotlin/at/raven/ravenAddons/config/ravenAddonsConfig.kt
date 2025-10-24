@@ -398,6 +398,28 @@ object ravenAddonsConfig : Vigilant(
     var floor3FireFreezeSound = "random.anvil_land"
 
     @Property(
+        type = PropertyType.SLIDER,
+        name = "Fire Freeze Timer Volume",
+        description = "Choose the volume for Fire Freeze Timer Sound.",
+        category = "Dungeons",
+        subcategory = "Floor 3",
+        min = 0,
+        max = 2,
+    )
+    var floor3FireFreezeVolume = 1
+
+    @Property(
+        type = PropertyType.SLIDER,
+        name = "Fire Freeze Timer Pitch",
+        description = "Choose the pitch for Fire Freeze Timer Sound.",
+        category = "Dungeons",
+        subcategory = "Floor 3",
+        min = 0,
+        max = 2,
+    )
+    var floor3FireFreezePitch = 1
+
+    @Property(
         type = PropertyType.SWITCH,
         name = "Blood Timer",
         description = "Display a message and title for when to kill blood mobs.",
