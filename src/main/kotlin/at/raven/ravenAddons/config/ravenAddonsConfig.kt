@@ -204,13 +204,46 @@ object ravenAddonsConfig : Vigilant(
     var miningAbilityNotification = false
 
     @Property(
-        type = PropertyType.SWITCH,
+        type = PropertyType.CHECKBOX,
         name = "Only inside Mining Islands",
         description = "Show Mining Ability Notifications only while you're in a mining island.",
         category = "Mining",
         subcategory = "Notifications"
     )
     var miningAbilityInsideMiningIslands = true
+
+    @Property(
+        type = PropertyType.TEXT,
+        name = "Mining Ability Notification Sound",
+        description = "Choose a Minecraft sound to indicate when your pickaxe ability is ready.",
+        category = "Mining",
+        subcategory = "Notifications",
+    )
+    var miningAbilityNotificationSound = "note.pling"
+
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER,
+        name = "Mining Ability Notification Volume",
+        description = "Choose the volume for Mining Ability Notification Sound.",
+        category = "Mining",
+        subcategory = "Notifications",
+        minF = 0f,
+        maxF = 1f,
+        decimalPlaces = 2
+    )
+    var miningAbilityNotificationVolume = 1f
+
+    @Property(
+        type = PropertyType.DECIMAL_SLIDER,
+        name = "Mining Ability Notification Pitch",
+        description = "Choose the pitch for Mining Ability Notification Sound.",
+        category = "Mining",
+        subcategory = "Notifications",
+        minF = 0f,
+        maxF = 2f,
+        decimalPlaces = 2
+    )
+    var miningAbilityNotificationPitch = 1f
 
     @Property(
         type = PropertyType.SWITCH,
