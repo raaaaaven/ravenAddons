@@ -29,8 +29,8 @@ object VanguardNotifier {
     // https://regex101.com/r/n4vtyw/1
     private val playerWarpedPatten = "^Party Leader, (?:\\[.*] )?(?<author>\\w+)?, summoned you to their server.".toPattern()
 
-    // https://regex101.com/r/BzjqgV/1
-    private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR1$".toPattern()
+    // https://regex101.com/r/BzjqgV/2
+    private val vanguardRoomIDPattern = "^§.[\\d/]+ §.\\w+ FAIR_1$".toPattern()
 
     private val players = mutableSetOf<String>()
     private var playersFull = false
