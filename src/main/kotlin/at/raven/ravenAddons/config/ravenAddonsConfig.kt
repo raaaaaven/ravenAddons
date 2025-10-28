@@ -196,6 +196,16 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Invincibility Timer",
+        description = "Display a timer for Bonzo Mask, Phoenix Pet and Spirit Mask.\n" +
+            "§cNote: The mod assumes that your Phoenix Pet is level 100.",
+        category = "SkyBlock",
+        subcategory = "Invincibility"
+    )
+    var invincibilityTimer = false
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
         category = "Mining",
