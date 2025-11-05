@@ -112,4 +112,35 @@ object GuiRenderUtils {
         fontRenderer.drawString(string, 0f, 0f, Color.WHITE.rgb, dropShadow)
         GlStateManager.popMatrix()
     }
+
+    fun GuiPosition.renderStrings(
+        strings: List<String>,
+        label: String,
+        yOffset: Int = 0,
+        dropShadow: Boolean = true,
+    ) {
+        if (strings.isEmpty()) return
+        val fontRenderer = fontRenderer
+
+        val maxWidth = fontRenderer.getStringWidth(strings.maxBy { it.length }) * scale
+        val stringHeight = 10 * scale
+        val totalHeight = stringHeight * strings.size
+
+        GuiPositionEditorManager.add(
+            this,
+            label,
+            maxWidth.toInt(),
+            totalHeight.toInt(),
+        )
+
+        GlStateManager.pushMatrix()
+        GlStateManager.translate(x.toFloat(), (y + yOffset).toFloat(), 0f)
+        GlStateManager.scale(scale, scale, scale)
+        var top = 0.0
+        strings.forEach {
+            fontRenderer.drawString(it, 0f, top.toFloat(), Color.WHITE.rgb, dropShadow).also { top += stringHeight }
+        }
+
+        GlStateManager.popMatrix()
+    }
 }
