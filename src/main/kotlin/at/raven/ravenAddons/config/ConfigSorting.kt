@@ -1,9 +1,6 @@
 package at.raven.ravenAddons.config
 
-import gg.essential.vigilance.data.Category
-import gg.essential.vigilance.data.SortingBehavior
-
-class ConfigSorting : SortingBehavior() {
+class ConfigSorting {
 
     private val categories: List<String> = listOf(
         "General",
@@ -19,7 +16,7 @@ class ConfigSorting : SortingBehavior() {
         "Developer"
     )
 
-    override fun getCategoryComparator(): Comparator<in Category> {
-        return compareBy { categories.indexOf(it.name) }
-    }
+//     override fun getCategoryComparator(): Comparator<in Category> {
+//         return compareBy { categories.indexOf(it.name) }
+//     }
 }

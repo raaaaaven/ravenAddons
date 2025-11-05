@@ -1,9 +1,9 @@
 package at.raven.ravenAddons.features.dungeons
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.SoundUtils
@@ -22,13 +22,13 @@ object LeapAnnounce {
         leapPattern.matchMatcher(event.cleanMessage) {
             val ign = group("ign")
 
-            if (ravenAddonsConfig.leapAnnounce) {
+            if (ravenAddons.config.leapAnnounce) {
                 ChatUtils.debug("Leap Announce: Teleported to $ign.")
-                ChatUtils.debug("Leap Announce: Sending ${ravenAddonsConfig.leapAnnounceMessage}.")
+                ChatUtils.debug("Leap Announce: Sending ${ravenAddons.config.leapAnnounceMessage}.")
 
-                val message = ravenAddonsConfig.leapAnnounceMessage.replace("\$ign", ign)
+                val message = ravenAddons.config.leapAnnounceMessage.replace("\$ign", ign)
 
-                val announce = if (ravenAddonsConfig.announcePrefix) {
+                val announce = if (ravenAddons.config.announcePrefix) {
                     "/pc [RA] $message"
                 } else {
                     "/pc $message"
@@ -37,7 +37,7 @@ object LeapAnnounce {
                 ChatUtils.sendMessage(announce)
             }
 
-            if (ravenAddonsConfig.leapSound) {
+            if (ravenAddons.config.leapSound) {
                 ChatUtils.debug("Leap Sound: Playing SoundUtils.pling().")
                 SoundUtils.pling()
             }

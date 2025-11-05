@@ -1,6 +1,6 @@
 package at.raven.ravenAddons.mixin.hooks
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
+import at.raven.ravenAddons.ravenAddons
 
 object RendererLivingEntityHook {
 
@@ -12,7 +12,7 @@ object RendererLivingEntityHook {
     @JvmStatic
     fun shouldBeUpsideDown(name: String): Boolean {
         try {
-            if (!ravenAddonsConfig.flipContributors) return false
+            if (!ravenAddons.config.flipContributors) return false
             return name in upsideDown
         } catch (_: Throwable) {
             return false

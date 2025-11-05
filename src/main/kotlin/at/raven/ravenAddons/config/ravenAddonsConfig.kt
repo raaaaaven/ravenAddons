@@ -8,10 +8,12 @@ import cc.polyfrost.oneconfig.config.annotations.Number
 import cc.polyfrost.oneconfig.config.annotations.Slider
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.annotations.Text
+import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
+import kotlin.reflect.KProperty
 
-class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "config.json") {
+class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "ravenaddons.json") {
     @Switch(
         name = "Check for Updates",
         description = "Automatically check for updates on each startup.",
@@ -42,7 +44,7 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "config.j
         category = "Pit",
         subcategory = "Care Package",
     )
-    var carePackageHighlighterColour = java.awt.Color(0, 255, 0, 100)
+    var carePackageHighlighterColour = OneColor(0, 255, 0, 100)
 
     @Switch(
         name = "Required Pants Type",
@@ -521,41 +523,41 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "config.j
     )
     var pre4PersonalBestNumber = Int.MAX_VALUE
 
-//     init {
-//         initialize()
-//
-//         this::carePackageHighlighterColour requires this::carePackageHighlighter
-//         this::highlightRequiredPantsType requires this::requiredPantsType
-//
-//         this::dropAlertUserName requires this::dropAlert
-//
-//         this::dropTitleCategory requires this::dropTitle
-//         this::dropTitleRarity requires this::dropTitle
-//
-//         this::fireFreezeAnnounce requires this::fireFreezeTimer
-//
-//         this::dodgeListFullPartyCheck requires this::dodgeList
-//         this::dodgeListAutoKick requires this::dodgeList
-//         this::dodgeListAutoKickWithReason requires this::dodgeList
-//
-//         this::miningAbilityInsideMiningIslands requires this::miningAbilityNotification
-//         this::miningAbilityNotificationSound requires this::miningAbilityNotification
-//         this::miningAbilityNotificationVolume requires this::miningAbilityNotification
-//         this::miningAbilityNotificationPitch requires this::miningAbilityNotification
-//
-//         this::gemstonePowderThreshold requires this::gemstonePowderNotification
-//
-//         this::vanguardNotifierWarp requires this::vanguardNotifier
-//         this::vanguardNotifierWarpDelay requires this::vanguardNotifierWarp
-//
-//         this::pre4NotificationTitle requires this::pre4Notification
-//         this::pre4NotificationSubtitle requires this::pre4Notification
-//
-//         this::pre4AnnounceMessage requires this::pre4Announce
-//
-//         this::leapAnnounceMessage requires this::leapAnnounce
-//
-//         this::floor3FireFreezeDuration requires this::floor3FireFreezeTimer
-//         this::floor3FireFreezeSound requires this::floor3FireFreezeTimer
-//     }
+    init {
+        initialize()
+
+        addDependency("carePackageHighlighterColour", "carePackageHighlighter")
+        addDependency("highlightRequiredPantsType", "requiredPantsType")
+
+        addDependency("dropAlertUserName", "dropAlert")
+
+        addDependency("dropTitleCategory", "dropTitle")
+        addDependency("dropTitleRarity", "dropTitle")
+
+        addDependency("fireFreezeAnnounce", "fireFreezeTimer")
+
+        addDependency("dodgeListFullPartyCheck", "dodgeList")
+        addDependency("dodgeListAutoKick", "dodgeList")
+        addDependency("dodgeListAutoKickWithReason", "dodgeList")
+
+        addDependency("miningAbilityInsideMiningIslands", "miningAbilityNotification")
+        addDependency("miningAbilityNotificationSound", "miningAbilityNotification")
+        addDependency("miningAbilityNotificationVolume", "miningAbilityNotification")
+        addDependency("miningAbilityNotificationPitch", "miningAbilityNotification")
+
+        addDependency("gemstonePowderThreshold", "gemstonePowderNotification")
+
+        addDependency("vanguardNotifierWarp", "vanguardNotifier")
+        addDependency("vanguardNotifierWarpDelay", "vanguardNotifierWarp")
+
+        addDependency("pre4NotificationTitle", "pre4Notification")
+        addDependency("pre4NotificationSubtitle", "pre4Notification")
+
+        addDependency("pre4AnnounceMessage", "pre4Announce")
+
+        addDependency("leapAnnounceMessage", "leapAnnounce")
+
+        addDependency("floor3FireFreezeDuration", "floor3FireFreezeTimer")
+        addDependency("floor3FireFreezeSound", "floor3FireFreezeTimer")
+    }
 }

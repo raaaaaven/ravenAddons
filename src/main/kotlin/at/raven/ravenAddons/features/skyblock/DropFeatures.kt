@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.skyblock
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -47,7 +46,7 @@ object DropFeatures {
             val multiDropColor = group("multiDropColor")
             val item = multiDropCount?.let { "$it ($itemName)" } ?: itemName
 
-            val title = if (ravenAddonsConfig.dropTitleCategory) group("title")
+            val title = if (ravenAddons.config.dropTitleCategory) group("title")
             else {
                 buildString {
                     if (multiDropCount != null) {
@@ -66,12 +65,12 @@ object DropFeatures {
 
             ChatUtils.debug("$title ${group("subtitle")}")
 
-            if (ravenAddonsConfig.dropAlert && ravenAddonsConfig.dropAlertUserName.isNotEmpty() && messageCooldown.isInPast()) {
+            if (ravenAddons.config.dropAlert && ravenAddons.config.dropAlertUserName.isNotEmpty() && messageCooldown.isInPast()) {
                 messageCooldown = SimpleTimeMark.now() + 1.seconds
 
                 ravenAddons.runDelayed(500.milliseconds) {
                     val message = buildString {
-                        append("/msg ${ravenAddonsConfig.dropAlertUserName} [RA] ")
+                        append("/msg ${ravenAddons.config.dropAlertUserName} [RA] ")
                         append("$dropType $item")
                         if (extra.isNotEmpty()) {
                             append(" $extra")
@@ -86,9 +85,9 @@ object DropFeatures {
                 }
             }
 
-            if (ravenAddonsConfig.dropTitle) {
+            if (ravenAddons.config.dropTitle) {
 
-                val configRarity = ItemRarity.entries[ravenAddonsConfig.dropTitleRarity]
+                val configRarity = ItemRarity.entries[ravenAddons.config.dropTitleRarity]
                 val titleRarity = ItemRarity.runeMap[itemName] ?: itemColor.getOrNull(1)?.let { char -> ItemRarity.getFromChatColor(char) ?: run {
                     ChatUtils.warning("Unknown color code '$char' for rarity!")
                     ItemRarity.COMMON

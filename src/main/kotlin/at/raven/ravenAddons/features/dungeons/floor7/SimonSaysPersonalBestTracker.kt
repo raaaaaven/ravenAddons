@@ -1,11 +1,11 @@
 package at.raven.ravenAddons.features.dungeons.floor7
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.PlayerUtils
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
@@ -26,12 +26,12 @@ object SimonSaysPersonalBestTracker {
 
     private var time = ServerTimeMark.FAR_PAST
 
-    private var personalBest = ravenAddonsConfig.simonSaysPersonalBestNumber
-        set(value) {
-            ravenAddonsConfig.simonSaysPersonalBestNumber = value
-            ravenAddonsConfig.markDirty()
-            field = value
-        }
+    //     private var personalBest = ravenAddons.config.pre4PersonalBestNumber
+//         set(value) {
+//             ravenAddons.config.pre4PersonalBestNumber = value
+//             field = value
+//         }
+    private var personalBest = 0 //todo fix this
 
     private val boundingBox = AxisAlignedBB(
         110.0, 124.0, 91.0, 107.0, 119.0, 96.0
@@ -39,7 +39,7 @@ object SimonSaysPersonalBestTracker {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.simonSaysPersonalBest) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddons.config.simonSaysPersonalBest) return
 
         if (phase3Start.matches(event.cleanMessage)) {
             time = ServerTimeMark.now()
@@ -70,7 +70,7 @@ object SimonSaysPersonalBestTracker {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.simonSaysPersonalBest) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.simonSaysPersonalBest) return
         time = ServerTimeMark.FAR_PAST
     }
 }

@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.dungeons.floor3
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -22,7 +21,7 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.floor3FireFreezeTimer) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddons.config.floor3FireFreezeTimer) return
 
         professorPattern.matchMatcher(event.cleanMessage) {
             ChatUtils.debug("Floor 3 Fire Freeze Timer: Timer started.")
@@ -34,7 +33,7 @@ object FireFreezeTimer {
                     val timeUntil = timer.timeUntil()
                     val formattedTime = timeUntil.inWholeMilliseconds / 1000f
 
-                    if (timeUntil.inWholeMilliseconds <= ravenAddonsConfig.floor3FireFreezeDuration * 1000) {
+                    if (timeUntil.inWholeMilliseconds <= ravenAddons.config.floor3FireFreezeDuration * 1000) {
                         val color = when {
                             timeUntil > 3.seconds -> "§a"
                             timeUntil > 1.seconds -> "§6"
@@ -47,9 +46,9 @@ object FireFreezeTimer {
 
                 TitleManager.setTitle("§c§lNOW!", "§c§lFIRE FREEZE", 2.5.seconds, 0.seconds, 0.seconds)
                 SoundUtils.playSound(
-                    ravenAddonsConfig.floor3FireFreezeSound,
-                    ravenAddonsConfig.floor3FireFreezeVolume,
-                    ravenAddonsConfig.floor3FireFreezePitch
+                    ravenAddons.config.floor3FireFreezeSound,
+                    ravenAddons.config.floor3FireFreezeVolume,
+                    ravenAddons.config.floor3FireFreezePitch
                 )
             }
         }

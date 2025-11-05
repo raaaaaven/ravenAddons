@@ -161,13 +161,13 @@ object Calculator {
     }
 
     @SubscribeEvent
-    fun onConfigFix(event: ConfigFixEvent) {
-        event.checkVersion(150) {
-            val tomlData = event.tomlData ?: return@checkVersion
-
-            tomlData.remove<Boolean>("general.miscellaneous.quick_maths!_solver")
-
-            event.tomlData = tomlData
-        }
+    fun onConfigFix(event: ConfigFixEvent) { // todo fix this
+//         event.checkVersion(150) {
+//             val tomlData = event.tomlData ?: return@checkVersion
+//
+//             tomlData.remove<Boolean>("general.miscellaneous.quick_maths!_solver")
+//
+//             event.tomlData = tomlData
+//         }
     }
 }

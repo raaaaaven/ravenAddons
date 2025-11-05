@@ -2,9 +2,6 @@ package at.raven.ravenAddons.config.guieditor.data
 
 import at.raven.ravenAddons.ravenAddons.Companion.mc
 import com.google.gson.annotations.Expose
-import gg.essential.vigilance.data.PropertyInfo
-import gg.essential.vigilance.gui.settings.CheckboxComponent
-import gg.essential.vigilance.gui.settings.SettingComponent
 import net.minecraft.client.gui.ScaledResolution
 import java.lang.reflect.Field
 
@@ -116,12 +113,4 @@ class GuiPosition() {
 //        if (!editor.goToOption(option)) return
 //        Awesome.openScreen(GuiScreenElementWrapper(editor))
 //    }
-}
-
-class GuiPositionPropertyInfo : PropertyInfo() {
-    override fun createSettingComponent(initialValue: Any?): SettingComponent {
-        return CheckboxComponent(
-            initialValue = false
-        )
-    }
 }

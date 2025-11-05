@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.utils
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.ConfigFixEvent
@@ -10,6 +9,7 @@ import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.render.RenderOverlayEvent
 import at.raven.ravenAddons.event.render.TitleReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.StringUtils.cleanupColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils
 import net.minecraft.client.Minecraft
@@ -98,8 +98,8 @@ object TitleManager {
             ChatUtils.warning("Wrong usage! /ra testtitle <duration> <fadeIn> <fadeOut>")
             return
         }
-        val title = ravenAddonsConfig.developerTitle.replace("&", "§")
-        val subtitle = ravenAddonsConfig.developerSubTitle.replace("&", "§")
+        val title = ravenAddons.config.developerTitle.replace("&", "§")
+        val subtitle = ravenAddons.config.developerSubTitle.replace("&", "§")
         if (title.isEmpty() && subtitle.isEmpty()) {
             ChatUtils.warning("Wrong usage! Either a title or subtitle need to be set in the config.")
             return
@@ -200,19 +200,19 @@ object TitleManager {
 
     @SubscribeEvent
     fun onConfigFix(event: ConfigFixEvent) {
-        event.checkVersion(160) {
-            val tomlData = event.tomlData ?: return@checkVersion
-            val titleValue = tomlData.get<String>("developer.title./ratesttitle_title")
-            val subTitleValue = tomlData.get<String>("developer.title./ratesttitle_subtitle")
-
-            tomlData.add("developer.title./ra_testtitle_title", titleValue)
-            tomlData.add("developer.title./ra_testtitle_subtitle", subTitleValue)
-
-            tomlData.remove<String>("developer.title./ratesttitle_title")
-            tomlData.remove<String>("developer.title./ratesttitle_subtitle")
-
-            event.tomlData = tomlData
-        }
+//         event.checkVersion(160) { //todo fix this
+//             val tomlData = event.tomlData ?: return@checkVersion
+//             val titleValue = tomlData.get<String>("developer.title./ratesttitle_title")
+//             val subTitleValue = tomlData.get<String>("developer.title./ratesttitle_subtitle")
+//
+//             tomlData.add("developer.title./ra_testtitle_title", titleValue)
+//             tomlData.add("developer.title./ra_testtitle_subtitle", subTitleValue)
+//
+//             tomlData.remove<String>("developer.title./ratesttitle_title")
+//             tomlData.remove<String>("developer.title./ratesttitle_subtitle")
+//
+//             event.tomlData = tomlData
+//         }
     }
 
     @SubscribeEvent

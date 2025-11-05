@@ -5,6 +5,7 @@ import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.data.commands.CommandManager.commandList
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
 import net.minecraft.event.ClickEvent
@@ -33,7 +34,7 @@ object CommandList {
         )
 
         for (command in sortedCommandList) {
-            if (command.hidden && !ravenAddonsConfig.debugMessages) continue
+            if (command.hidden && !ravenAddons.config.debugMessages) continue
 
             val clickableCommand = ChatComponentText("\n §7• §${command.category.colorCode}${command.name}")
             val tooltipComponent = ChatComponentText("§bClick to run /ra ${command.name}\n")

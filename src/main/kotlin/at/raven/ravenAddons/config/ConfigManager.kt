@@ -30,15 +30,15 @@ object ConfigManager {
     }
 
     private fun initConfig() {
-        ConfigFixer
+//         ConfigFixer
 
-        if (ravenAddonsConfig.configVersion < ravenAddons.modVersion) {
-            ravenAddonsConfig.configVersion = ravenAddons.modVersion
-            ravenAddonsConfig.markDirty()
+        if (ravenAddons.config.configVersion < ravenAddons.modVersion) {
+            ravenAddons.config.configVersion = ravenAddons.modVersion
+//             ravenAddons.config.markDirty()
             wasModUpdated = ModUpdateStatus.UPDATED
-        } else if (ravenAddonsConfig.configVersion > ravenAddons.modVersion) {
-            ravenAddonsConfig.configVersion = ravenAddons.modVersion
-            ravenAddonsConfig.markDirty()
+        } else if (ravenAddons.config.configVersion > ravenAddons.modVersion) {
+            ravenAddons.config.configVersion = ravenAddons.modVersion
+//             ravenAddons.config.markDirty()
             wasModUpdated = ModUpdateStatus.DOWNGRADED
         }
 
@@ -47,13 +47,14 @@ object ConfigManager {
                 delay(50)
             }
 
-            configGui = ravenAddonsConfig.gui()
+//             configGui = ravenAddons.config.gui()
         }
     }
 
     fun openConfig() {
-        val gui = configGui ?: ravenAddonsConfig.gui() ?: return
-        ravenAddons.openScreen(gui)
+//         ravenAddons.config.openGui()
+//         val gui = configGui ?: ravenAddons.config.gui() ?: return
+//         ravenAddons.openScreen(gui)
     }
 
     enum class ModUpdateStatus(

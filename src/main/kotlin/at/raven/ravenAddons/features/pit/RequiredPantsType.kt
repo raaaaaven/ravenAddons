@@ -1,29 +1,29 @@
 package at.raven.ravenAddons.features.pit
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.TooltipEvent
 import at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.InventoryUtils.getAllItems
 import at.raven.ravenAddons.utils.InventoryUtils.getContainerName
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import at.raven.ravenAddons.utils.StringUtils.removeColors
 import at.raven.ravenAddons.utils.render.GuiRenderUtils.highlight
-import gg.essential.universal.ChatColor
 import net.minecraft.client.gui.inventory.GuiChest
 import net.minecraft.inventory.ContainerChest
 import net.minecraft.item.ItemStack
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
+import java.awt.Color
 
 @LoadModule
 object RequiredPantsType {
     private val colors = listOf(
-        "Red" to ChatColor.RED,
-        "Yellow" to ChatColor.YELLOW,
-        "Blue" to ChatColor.BLUE,
-        "Orange" to ChatColor.GOLD,
-        "Green" to ChatColor.GREEN,
+        "Red" to Color.RED,
+        "Yellow" to Color.YELLOW,
+        "Blue" to Color.BLUE,
+        "Orange" to Color.ORANGE,
+        "Green" to Color.GREEN,
     )
 
     private val mysticPattern = "(?:Tier )?(?<tier>I+|Mystic|Fresh)? .+".toPattern()
@@ -50,7 +50,7 @@ object RequiredPantsType {
 
     @SubscribeEvent
     fun onContainerBackground(event: ContainerBackgroundDrawEvent) {
-        if (!isEnabled() || !ravenAddonsConfig.highlightRequiredPantsType) return
+        if (!isEnabled() || !ravenAddons.config.highlightRequiredPantsType) return
         val gui = event.gui
         if (gui !is GuiChest || gui.getContainerName() != "Mystic Well") return
 
@@ -66,7 +66,7 @@ object RequiredPantsType {
                 val nonce = stack.getNonce() ?: return@matchMatcher
                 if (nonce <= 20) return@matchMatcher
 
-                val color = colors[nonce % 5].second.color ?: return@matchMatcher
+                val color = colors[nonce % 5].second
                 slot.highlight(color)
             }
         }
@@ -78,5 +78,5 @@ object RequiredPantsType {
         return extraAttributes.getInteger("Nonce")
     }
 
-    private fun isEnabled() = HypixelGame.inPit && ravenAddonsConfig.requiredPantsType
+    private fun isEnabled() = HypixelGame.inPit && ravenAddons.config.requiredPantsType
 }
