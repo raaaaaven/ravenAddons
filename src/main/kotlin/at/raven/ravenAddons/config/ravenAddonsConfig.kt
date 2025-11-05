@@ -11,9 +11,9 @@ import cc.polyfrost.oneconfig.config.annotations.Text
 import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
-import kotlin.reflect.KProperty
+import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator
 
-class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "ravenaddons.json") {
+class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceMigrator("./config/ravenaddons.toml")), "ravenaddons.json") {
     @Switch(
         name = "Check for Updates",
         description = "Automatically check for updates on each startup.",
@@ -209,7 +209,7 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "ravenadd
         max = 100f,
         step = 2,
     )
-    var miningAbilityNotificationVolume = 100f // todo: divide by 100
+    var miningAbilityNotificationVolume = 100f
 
     @Slider(
         name = "Mining Ability Notification Pitch",
@@ -220,7 +220,7 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "ravenadd
         max = 200f,
         step = 2,
     )
-    var miningAbilityNotificationPitch = 100f // todo: divide by 100
+    var miningAbilityNotificationPitch = 100f
 
     @Switch(
         name = "Gemstone Powder Notification",
@@ -405,7 +405,7 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "ravenadd
         max = 100f,
         step = 2,
     )
-    var floor3FireFreezeVolume = 100f // todo: divide by 100
+    var floor3FireFreezeVolume = 100f
 
     @Slider(
         name = "Fire Freeze Timer Pitch",
@@ -416,7 +416,7 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "ravenadd
         max = 200f,
         step = 2,
     )
-    var floor3FireFreezePitch = 100f // todo: divide by 100
+    var floor3FireFreezePitch = 100f
 
     @Switch(
         name = "Blood Timer",

@@ -40,7 +40,7 @@ object MiningAbilityNotification {
             SoundUtils.playSound(
                 ravenAddons.config.miningAbilityNotificationSound,
                 ravenAddons.config.miningAbilityNotificationVolume / 100,
-                ravenAddons.config.miningAbilityNotificationPitch
+                ravenAddons.config.miningAbilityNotificationPitch / 100
             )
         }
     }

@@ -94,23 +94,4 @@ class GuiPosition() {
         this.y += adjustedDeltaY
         return adjustedDeltaY
     }
-
-    // TODO: move away to a better config
-//    @Throws(NoSuchFieldException::class)
-//    fun setLink(configLink: ConfigLink) {
-//        this.configField = configLink.owner.java.getDeclaredField(configLink.field)
-//    }
-
-//    @Throws(NoSuchFieldException::class)
-//    fun canJumpToConfigOptions(): Boolean =
-//        configField != null && ConfigGuiManager.getEditorInstance().getOptionFromField(configField) != null
-//
-//    fun jumpToConfigOption() {
-//        val editor = ConfigGuiManager.getEditorInstance()
-//        if (configField == null) return
-//        val option = editor.getOptionFromField(configField) ?: return
-//        editor.search("")
-//        if (!editor.goToOption(option)) return
-//        Awesome.openScreen(GuiScreenElementWrapper(editor))
-//    }
 }
