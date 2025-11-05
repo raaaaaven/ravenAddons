@@ -29,12 +29,13 @@ object Pre4Notification {
 
     private var time = ServerTimeMark.FAR_PAST
 
-//     private var personalBest = ravenAddons.config.pre4PersonalBestNumber
-//         set(value) {
-//             ravenAddons.config.pre4PersonalBestNumber = value
-//             field = value
-//         }
-    private var personalBest = 0 // todo: fix this
+    private var personalBest: Int
+        get() {
+            return ravenAddons.config.pre4PersonalBestNumber
+        }
+        set(value) {
+            ravenAddons.config.pre4PersonalBestNumber = value
+        }
 
     private val pre4BoundingBox = AxisAlignedBB(
         60.0, 125.0, 32.0, 66.0, 130.0, 38.0
