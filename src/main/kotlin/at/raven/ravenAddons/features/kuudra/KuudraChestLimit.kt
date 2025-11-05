@@ -36,7 +36,7 @@ object KuudraChestLimit {
         ravenAddonsConfig.kuudraChestLimitWarningNumber += 1
         ravenAddonsConfig.markDirty()
 
-        if (ravenAddonsConfig.kuudraChestLimitWarningNumber <= 60) {
+        if (ravenAddonsConfig.kuudraChestLimitWarningNumber >= 60) {
             ChatUtils.chat("You've done 60 Kuudra runs without checking your chests.")
             TitleManager.setTitle("§cOpen Chests", "", 3.seconds, 1.seconds, 1.seconds)
         }
