@@ -434,15 +434,12 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceM
     )
     var skeletonMasterChestplateTracker = false
 
-    @Number(
-        name = "Skeleton Master Chestplate Tracker Number",
-        description = "Stores the amount of runs it takes for the Skeleton Master Chestplate tracker.",
-        category = "Dungeons",
-        subcategory = "Master Mode Floor 7",
-        min = Float.MIN_VALUE,
-        max = Float.MAX_VALUE,
-        // todo hidden = true,
-    )
+//     @Number(
+//         name = "Skeleton Master Chestplate Tracker Number",
+//         description = "Stores the amount of runs it takes for the Skeleton Master Chestplate tracker.",
+//         category = "Dungeons",
+//         subcategory = "Master Mode Floor 7",
+//     )
     var skeletonMasterChestplateTrackerNumber = 0
 
     @Switch(
@@ -483,44 +480,32 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceM
     )
     var flipContributors = true
 
-    @Number(
-        name = "ravenAddonsVersion",
-        description = "Stores the last loaded ravenAddons version",
-        category = "Developer",
-        min = Float.MIN_VALUE,
-        max = Float.MAX_VALUE,
-        // todo hidden = true,
-    )
+//     @Number(
+//         name = "ravenAddonsVersion",
+//         description = "Stores the last loaded ravenAddons version",
+//         category = "Developer",
+//     )
     var configVersion = 0
 
-    @Number(
-        name = "sinceInq",
-        description = "Stores the number of mobs before inquisitor.",
-        category = "Developer",
-        min = Float.MIN_VALUE,
-        max = Float.MAX_VALUE,
-        // todo hidden = true,
-    )
+//     @Number(
+//         name = "sinceInq",
+//         description = "Stores the number of mobs before inquisitor.",
+//         category = "Developer",
+//     )
     var sinceInq = 0
 
-    @Number(
-        name = "Simon Says Personal Best Number",
-        description = "Stores the personal best for the 1st device.",
-        category = "Developer",
-        min = Float.MIN_VALUE,
-        max = Float.MAX_VALUE,
-        // todo hidden = true,
-    )
+//     @Number(
+//         name = "Simon Says Personal Best Number",
+//         description = "Stores the personal best for the 1st device.",
+//         category = "Developer",
+//     )
     var simonSaysPersonalBestNumber = Int.MAX_VALUE
 
-    @Number(
-        name = "Pre 4 Personal Best Number",
-        description = "Stores the personal best for the 4th device.",
-        category = "Developer",
-        min = Float.MIN_VALUE,
-        max = Float.MAX_VALUE,
-        // todo hidden = true,
-    )
+//     @Number(
+//         name = "Pre 4 Personal Best Number",
+//         description = "Stores the personal best for the 4th device.",
+//         category = "Developer",
+//     )
     var pre4PersonalBestNumber = Int.MAX_VALUE
 
     init {
