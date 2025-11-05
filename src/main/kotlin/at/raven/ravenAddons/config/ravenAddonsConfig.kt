@@ -493,6 +493,25 @@ object ravenAddonsConfig : Vigilant(
 
     @Property(
         type = PropertyType.SWITCH,
+        name = "Kuudra Chest Limit Warning",
+        description = "Warns the user upon completing 60 Kuudra runs without claiming their chests.",
+        category = "Kuudra",
+        subcategory = "Chest Limit"
+    )
+    var kuudraChestLimitWarning = false
+
+    @Property(
+        type = PropertyType.NUMBER,
+        name = "Kuudra Chest Limit Warning Number",
+        description = "Stores the amount of Kuudra completions for Kuudra Chest Limit Warning.",
+        category = "Kuudra",
+        subcategory = "Chest Limit",
+        hidden = true,
+    )
+    var kuudraChestLimitWarningNumber = 0
+
+    @Property(
+        type = PropertyType.SWITCH,
         name = "!since",
         description = "Announces to the party how many mobs you have spawned before spawning an Inquisitor.",
         category = "Party Commands",
