@@ -1,5 +1,6 @@
 package at.raven.ravenAddons
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.features.misc.update.UpdateManager
@@ -8,6 +9,7 @@ import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
+import cc.polyfrost.oneconfig.config.Config
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -42,6 +44,7 @@ class ravenAddons {
 
     @Mod.EventHandler
     fun init(event: FMLInitializationEvent) {
+        config = ravenAddonsConfig()
         loadedClasses.clear()
     }
 
@@ -53,6 +56,8 @@ class ravenAddons {
 
         val mc get() = Minecraft.getMinecraft()
         private val globalJob: Job = Job(null)
+
+        lateinit var config: ravenAddonsConfig
 
         val coroutineScope =
             CoroutineScope(

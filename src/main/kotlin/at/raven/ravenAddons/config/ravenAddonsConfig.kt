@@ -1,28 +1,26 @@
 package at.raven.ravenAddons.config
 
-import gg.essential.vigilance.Vigilant
-import gg.essential.vigilance.data.Property
-import gg.essential.vigilance.data.PropertyType
-import java.awt.Color
-import kotlin.reflect.KProperty
+import cc.polyfrost.oneconfig.config.Config
+import cc.polyfrost.oneconfig.config.annotations.Checkbox
+import cc.polyfrost.oneconfig.config.annotations.Color
+import cc.polyfrost.oneconfig.config.annotations.Dropdown
+import cc.polyfrost.oneconfig.config.annotations.Number
+import cc.polyfrost.oneconfig.config.annotations.Slider
+import cc.polyfrost.oneconfig.config.annotations.Switch
+import cc.polyfrost.oneconfig.config.annotations.Text
+import cc.polyfrost.oneconfig.config.data.Mod
+import cc.polyfrost.oneconfig.config.data.ModType
 
-object ravenAddonsConfig : Vigilant(
-    ConfigFixer.configFile,
-    sortingBehavior = ConfigSorting(),
-) {
-    private val clazz = javaClass
-
-    @Property(
-        type = PropertyType.SWITCH,
+class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL), "config.json") {
+    @Switch(
         name = "Check for Updates",
         description = "Automatically check for updates on each startup.",
         category = "General",
-        subcategory = "Updates",
+        subcategory = "Updates"
     )
     var autoUpdates = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Download Updates",
         description = "Automatically download new version on each startup.",
         category = "General",
@@ -30,8 +28,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var fullAutoUpdates = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Care Package Highlighter",
         description = "Highlights important items inside of Care Packages inside the Hypixel Pit.",
         category = "Pit",
@@ -39,17 +36,15 @@ object ravenAddonsConfig : Vigilant(
     )
     var carePackageHighlighter = false
 
-    @Property(
-        type = PropertyType.COLOR,
+    @Color(
         name = "Care Package Highlight Colour",
         description = "Customize the color related to the Care Package Highlighter.",
         category = "Pit",
         subcategory = "Care Package",
     )
-    var carePackageHighlighterColour = Color(0, 255, 0, 100)
+    var carePackageHighlighterColour = java.awt.Color(0, 255, 0, 100)
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Required Pants Type",
         description = "Adds the colour of pants required to tier 3 a mystic item to it's description.",
         category = "Pit",
@@ -57,8 +52,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var requiredPantsType = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Required Pants Type Highlighter",
         description = "Highlights mystics in the Mystic Well based on the colour of pants they require to tier 3.",
         category = "Pit",
@@ -66,8 +60,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var highlightRequiredPantsType = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "DROP Alerts",
         description = "Message a user about your RARE DROPS.",
         category = "SkyBlock",
@@ -75,8 +68,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dropAlert = false
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "DROP Alerts Username",
         description = "Choose a username for your RARE DROPS.",
         category = "SkyBlock",
@@ -84,8 +76,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dropAlertUserName = ""
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "DROP Title",
         description = "Create a title notification for your RARE drop.",
         category = "SkyBlock",
@@ -93,8 +84,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dropTitle = false
 
-    @Property(
-        type = PropertyType.CHECKBOX,
+    @Checkbox(
         name = "DROP Title Category",
         description = "Choose whether or not to display the category of the drop in the title.",
         category = "SkyBlock",
@@ -102,8 +92,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dropTitleCategory = true
 
-    @Property(
-        type = PropertyType.SELECTOR,
+    @Dropdown(
         name = "DROP Title Rarity",
         description = "Choose the minimum rarity the drop must be to display the title.",
         category = "SkyBlock",
@@ -112,8 +101,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dropTitleRarity = 0
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Fire Freeze Timer",
         description = "Display a 10 second timer above a frozen entity's head.\n&cThis feature is disabled in dungeons.",
         category = "SkyBlock",
@@ -121,8 +109,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var fireFreezeTimer = false
 
-    @Property(
-        type = PropertyType.SELECTOR,
+    @Dropdown(
         name = "Fire Freeze Announcer",
         description = "Announce to your party when a mob becomes frozen or unfrozen.",
         category = "SkyBlock",
@@ -131,8 +118,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var fireFreezeAnnounce = 0
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Fire Freeze Notification",
         description = "Sends a title and chat message for when fire freeze is available after a successful fire freeze on a mob.",
         category = "SkyBlock",
@@ -140,8 +126,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var fireFreezeNotification = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Dodge List",
         description = "Enable the player dodge list for party finder.\n&e/ra dodge",
         category = "SkyBlock",
@@ -149,8 +134,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dodgeList = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Party Check",
         description = "Add an additional party check for people on the dodge list when your party finder group is full.",
         category = "SkyBlock",
@@ -158,8 +142,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dodgeListFullPartyCheck = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Auto Kick",
         description = "Auto kick users that join your party finder group if they are on your dodge list.",
         category = "SkyBlock",
@@ -167,8 +150,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dodgeListAutoKick = false
 
-    @Property(
-        type = PropertyType.CHECKBOX,
+    @Checkbox(
         name = "Auto Kick With Reason",
         description = "Announce the reason when auto kicking.",
         category = "SkyBlock",
@@ -176,8 +158,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var dodgeListAutoKickWithReason = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Lost Time Calculator",
         description = "Sends a chat message calculating how much time was lost due to lag.",
         category = "SkyBlock",
@@ -185,8 +166,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var lostTimeCalculator = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Blazetekk Ham Radio Message Hider",
         description = "Hides all messages related to the Blazetekk Ham Radio.",
         category = "SkyBlock",
@@ -194,8 +174,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var blazetekkHamRadioMessageHider = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Mining Ability Notification",
         description = "Display a title when your Mining Ability is ready.",
         category = "Mining",
@@ -203,8 +182,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var miningAbilityNotification = false
 
-    @Property(
-        type = PropertyType.CHECKBOX,
+    @Checkbox(
         name = "Only inside Mining Islands",
         description = "Show Mining Ability Notifications only while you're in a mining island.",
         category = "Mining",
@@ -212,8 +190,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var miningAbilityInsideMiningIslands = true
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "Mining Ability Notification Sound",
         description = "Choose a Minecraft sound to indicate when your pickaxe ability is ready.",
         category = "Mining",
@@ -221,32 +198,29 @@ object ravenAddonsConfig : Vigilant(
     )
     var miningAbilityNotificationSound = "note.pling"
 
-    @Property(
-        type = PropertyType.DECIMAL_SLIDER,
+    @Slider(
         name = "Mining Ability Notification Volume",
         description = "Choose the volume for Mining Ability Notification Sound.",
         category = "Mining",
         subcategory = "Notifications",
-        minF = 0f,
-        maxF = 1f,
-        decimalPlaces = 2,
+        min = 0f,
+        max = 100f,
+        step = 2,
     )
-    var miningAbilityNotificationVolume = 1f
+    var miningAbilityNotificationVolume = 100f // todo: divide by 100
 
-    @Property(
-        type = PropertyType.DECIMAL_SLIDER,
+    @Slider(
         name = "Mining Ability Notification Pitch",
         description = "Choose the pitch for Mining Ability Notification Sound.",
         category = "Mining",
         subcategory = "Notifications",
-        minF = 0f,
-        maxF = 2f,
-        decimalPlaces = 2,
+        min = 0f,
+        max = 200f,
+        step = 2,
     )
-    var miningAbilityNotificationPitch = 1f
+    var miningAbilityNotificationPitch = 100f // todo: divide by 100
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Gemstone Powder Notification",
         description = "Display a title based on how much Gemstone Powder you get from chests.",
         category = "Mining",
@@ -254,19 +228,17 @@ object ravenAddonsConfig : Vigilant(
     )
     var gemstonePowderNotification = false
 
-    @Property(
-        type = PropertyType.SLIDER,
+    @Slider(
         name = "Powder Notification Amount",
         description = "Minimum amount of Gemstone Powder needed for it to be displayed as a title.",
         category = "Mining",
         subcategory = "Notifications",
-        min = 0,
-        max = 10000,
+        min = 0f,
+        max = 10000f,
     )
     var gemstonePowderThreshold = 0
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Vanguard Notifier",
         description = "Notify your guild of Vanguard Mineshafts and let them join using !ra join.",
         category = "Mining",
@@ -274,8 +246,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var vanguardNotifier = false
 
-    @Property(
-        type = PropertyType.CHECKBOX,
+    @Checkbox(
         name = "Vanguard Notifier Warp",
         description = "Automatically warp users that join the Vanguard party.",
         category = "Mining",
@@ -283,27 +254,24 @@ object ravenAddonsConfig : Vigilant(
     )
     var vanguardNotifierWarp = false
 
-    @Property(
-        type = PropertyType.SLIDER,
+    @Slider(
         name = "Vanguard Notifier Warp Delay",
         description = "Choose the delay (in seconds) for how long the mod should wait before warping.",
         category = "Mining",
         subcategory = "Vanguard",
-        min = 10,
-        max = 30,
+        min = 10f,
+        max = 30f,
     )
     var vanguardNotifierWarpDelay = 20
 
-    @Property(
-        type = PropertyType.CHECKBOX,
+    @Checkbox(
         name = "Announce Prefix",
         description = "Choose whether or not you want [RA] infront of your dungeon announcements.",
         category = "Dungeons",
     )
     var announcePrefix = true
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Simon Says Personal Best",
         description = "Tracks your personal best for the Simon Says device.",
         category = "Dungeons",
@@ -311,8 +279,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var simonSaysPersonalBest = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Pre 4 Notification",
         description = "Display a title notification for when completing the 4th device.",
         category = "Dungeons",
@@ -320,8 +287,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var pre4Notification = false
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "Pre 4 Title",
         description = "Choose a title for Pre 4 Notification.",
         category = "Dungeons",
@@ -329,8 +295,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var pre4NotificationTitle = ""
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "Pre 4 Subtitle",
         description = "Choose a subtitle for Pre 4 Notification.",
         category = "Dungeons",
@@ -338,8 +303,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var pre4NotificationSubtitle = ""
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Pre 4 Announce",
         description = "Announce when you complete the 4th Device in Floor 7.",
         category = "Dungeons",
@@ -347,8 +311,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var pre4Announce = false
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "Pre 4 Message",
         description = "Enter a custom message for the Pre 4 Announce.\nUse §f\$time §7for the time.",
         category = "Dungeons",
@@ -356,8 +319,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var pre4AnnounceMessage = "Pre 4 complete in \$time."
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Pre 4 Personal Best",
         description = "Tracks your personal best for a successful Pre 4.",
         category = "Dungeons",
@@ -374,8 +336,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var enterSection4Title = false*/
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Energy Crystal Notification",
         description = "Shows a reminder on screen when you have an unplaced Energy Crystal.",
         category = "Dungeons",
@@ -383,8 +344,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var energyCrystalNotification = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Leap Announce",
         description = "Announce when you leap to someone in party chat.",
         category = "Dungeons",
@@ -392,8 +352,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var leapAnnounce = false
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "Leap Message",
         description = "Enter a custom message for the leap announce. \nUse §f\$ign §7for the username.",
         category = "Dungeons",
@@ -401,8 +360,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var leapAnnounceMessage = "Leaping to \$ign."
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Leap Pling",
         description = "Play the pling sound effect when leaping to someone.",
         category = "Dungeons",
@@ -410,8 +368,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var leapSound = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Fire Freeze Timer",
         description = "Display a timer for when to freeze The Professor.",
         category = "Dungeons",
@@ -419,19 +376,17 @@ object ravenAddonsConfig : Vigilant(
     )
     var floor3FireFreezeTimer = false
 
-    @Property(
-        type = PropertyType.SLIDER,
+    @Slider(
         name = "Fire Freeze Timer Duration",
         description = "Select how long the timer should last in seconds.",
         category = "Dungeons",
         subcategory = "Floor 3",
-        min = 3,
-        max = 5,
+        min = 3f,
+        max = 5f,
     )
-    var floor3FireFreezeDuration = 5
+    var floor3FireFreezeDuration = 5f
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "Fire Freeze Timer Sound",
         description = "Choose a Minecraft sound to indicate when you should freeze The Professor.",
         category = "Dungeons",
@@ -439,32 +394,29 @@ object ravenAddonsConfig : Vigilant(
     )
     var floor3FireFreezeSound = "random.anvil_land"
 
-    @Property(
-        type = PropertyType.DECIMAL_SLIDER,
+    @Slider(
         name = "Fire Freeze Timer Volume",
         description = "Choose the volume for Fire Freeze Timer Sound.",
         category = "Dungeons",
         subcategory = "Floor 3",
-        minF = 0f,
-        maxF = 1f,
-        decimalPlaces = 2,
+        min = 0f,
+        max = 100f,
+        step = 2,
     )
-    var floor3FireFreezeVolume = 1f
+    var floor3FireFreezeVolume = 100f // todo: divide by 100
 
-    @Property(
-        type = PropertyType.DECIMAL_SLIDER,
+    @Slider(
         name = "Fire Freeze Timer Pitch",
         description = "Choose the pitch for Fire Freeze Timer Sound.",
         category = "Dungeons",
         subcategory = "Floor 3",
-        minF = 0f,
-        maxF = 2f,
-        decimalPlaces = 2,
+        min = 0f,
+        max = 200f,
+        step = 2,
     )
-    var floor3FireFreezePitch = 1f
+    var floor3FireFreezePitch = 100f // todo: divide by 100
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Blood Timer",
         description = "Display a message and title for when to kill blood mobs.",
         category = "Dungeons",
@@ -472,8 +424,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var bloodTimer = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Skeleton Master Chestplate Tracker",
         description = "Tracks how many M7 runs it takes for you to drop a 50/50 Skeleton Master Chestplate.",
         category = "Dungeons",
@@ -481,34 +432,32 @@ object ravenAddonsConfig : Vigilant(
     )
     var skeletonMasterChestplateTracker = false
 
-    @Property(
-        type = PropertyType.NUMBER,
+    @Number(
         name = "Skeleton Master Chestplate Tracker Number",
         description = "Stores the amount of runs it takes for the Skeleton Master Chestplate tracker.",
         category = "Dungeons",
         subcategory = "Master Mode Floor 7",
-        hidden = true,
+        min = Float.MIN_VALUE,
+        max = Float.MAX_VALUE,
+        // todo hidden = true,
     )
     var skeletonMasterChestplateTrackerNumber = 0
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "!since",
         description = "Announces to the party how many mobs you have spawned before spawning an Inquisitor.",
         category = "Party Commands",
     )
     var sinceCommand = false
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Enable Debug Messages",
         description = "This allows the user to see debug messages.",
         category = "Developer",
     )
     var debugMessages = false
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "/ra testtitle Title",
         description = "Sets the title for the test title.",
         category = "Developer",
@@ -516,8 +465,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var developerTitle = ""
 
-    @Property(
-        type = PropertyType.TEXT,
+    @Text(
         name = "/ra testtitle SubTitle",
         description = "Sets the subtitle for the test title.",
         category = "Developer",
@@ -525,8 +473,7 @@ object ravenAddonsConfig : Vigilant(
     )
     var developerSubTitle = ""
 
-    @Property(
-        type = PropertyType.SWITCH,
+    @Switch(
         name = "Flip Contributors",
         description = "Turns contributors upside down.",
         category = "Developer",
@@ -534,82 +481,81 @@ object ravenAddonsConfig : Vigilant(
     )
     var flipContributors = true
 
-    @Property(
-        type = PropertyType.NUMBER,
+    @Number(
         name = "ravenAddonsVersion",
         description = "Stores the last loaded ravenAddons version",
         category = "Developer",
-        hidden = true,
+        min = Float.MIN_VALUE,
+        max = Float.MAX_VALUE,
+        // todo hidden = true,
     )
     var configVersion = 0
 
-    @Property(
-        type = PropertyType.NUMBER,
+    @Number(
         name = "sinceInq",
         description = "Stores the number of mobs before inquisitor.",
         category = "Developer",
-        hidden = true,
+        min = Float.MIN_VALUE,
+        max = Float.MAX_VALUE,
+        // todo hidden = true,
     )
     var sinceInq = 0
 
-    @Property(
-        type = PropertyType.NUMBER,
+    @Number(
         name = "Simon Says Personal Best Number",
         description = "Stores the personal best for the 1st device.",
         category = "Developer",
-        hidden = true,
+        min = Float.MIN_VALUE,
+        max = Float.MAX_VALUE,
+        // todo hidden = true,
     )
     var simonSaysPersonalBestNumber = Int.MAX_VALUE
 
-    @Property(
-        type = PropertyType.NUMBER,
+    @Number(
         name = "Pre 4 Personal Best Number",
         description = "Stores the personal best for the 4th device.",
         category = "Developer",
-        hidden = true,
+        min = Float.MIN_VALUE,
+        max = Float.MAX_VALUE,
+        // todo hidden = true,
     )
     var pre4PersonalBestNumber = Int.MAX_VALUE
 
-    init {
-        initialize()
-
-        this::carePackageHighlighterColour requires this::carePackageHighlighter
-        this::highlightRequiredPantsType requires this::requiredPantsType
-
-        this::dropAlertUserName requires this::dropAlert
-
-        this::dropTitleCategory requires this::dropTitle
-        this::dropTitleRarity requires this::dropTitle
-
-        this::fireFreezeAnnounce requires this::fireFreezeTimer
-
-        this::dodgeListFullPartyCheck requires this::dodgeList
-        this::dodgeListAutoKick requires this::dodgeList
-        this::dodgeListAutoKickWithReason requires this::dodgeList
-
-        this::miningAbilityInsideMiningIslands requires this::miningAbilityNotification
-        this::miningAbilityNotificationSound requires this::miningAbilityNotification
-        this::miningAbilityNotificationVolume requires this::miningAbilityNotification
-        this::miningAbilityNotificationPitch requires this::miningAbilityNotification
-
-        this::gemstonePowderThreshold requires this::gemstonePowderNotification
-
-        this::vanguardNotifierWarp requires this::vanguardNotifier
-        this::vanguardNotifierWarpDelay requires this::vanguardNotifierWarp
-
-        this::pre4NotificationTitle requires this::pre4Notification
-        this::pre4NotificationSubtitle requires this::pre4Notification
-
-        this::pre4AnnounceMessage requires this::pre4Announce
-
-        this::leapAnnounceMessage requires this::leapAnnounce
-
-        this::floor3FireFreezeDuration requires this::floor3FireFreezeTimer
-        this::floor3FireFreezeSound requires this::floor3FireFreezeTimer
-    }
-
-
-    infix fun <T> KProperty<T>.requires(dependency: KProperty<T>) {
-        addDependency(clazz.getDeclaredField(this.name), clazz.getDeclaredField(dependency.name))
-    }
+//     init {
+//         initialize()
+//
+//         this::carePackageHighlighterColour requires this::carePackageHighlighter
+//         this::highlightRequiredPantsType requires this::requiredPantsType
+//
+//         this::dropAlertUserName requires this::dropAlert
+//
+//         this::dropTitleCategory requires this::dropTitle
+//         this::dropTitleRarity requires this::dropTitle
+//
+//         this::fireFreezeAnnounce requires this::fireFreezeTimer
+//
+//         this::dodgeListFullPartyCheck requires this::dodgeList
+//         this::dodgeListAutoKick requires this::dodgeList
+//         this::dodgeListAutoKickWithReason requires this::dodgeList
+//
+//         this::miningAbilityInsideMiningIslands requires this::miningAbilityNotification
+//         this::miningAbilityNotificationSound requires this::miningAbilityNotification
+//         this::miningAbilityNotificationVolume requires this::miningAbilityNotification
+//         this::miningAbilityNotificationPitch requires this::miningAbilityNotification
+//
+//         this::gemstonePowderThreshold requires this::gemstonePowderNotification
+//
+//         this::vanguardNotifierWarp requires this::vanguardNotifier
+//         this::vanguardNotifierWarpDelay requires this::vanguardNotifierWarp
+//
+//         this::pre4NotificationTitle requires this::pre4Notification
+//         this::pre4NotificationSubtitle requires this::pre4Notification
+//
+//         this::pre4AnnounceMessage requires this::pre4Announce
+//
+//         this::leapAnnounceMessage requires this::leapAnnounce
+//
+//         this::floor3FireFreezeDuration requires this::floor3FireFreezeTimer
+//         this::floor3FireFreezeSound requires this::floor3FireFreezeTimer
+//     }
 }

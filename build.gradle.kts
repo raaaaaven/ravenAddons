@@ -109,6 +109,7 @@ repositories {
     maven("https://repo.hypixel.net/repository/Hypixel/")
     maven("https://repo.nea.moe/releases")
     maven("https://maven.notenoughupdates.org/releases") // NotEnoughUpdates (dev env)
+    maven("https://repo.polyfrost.cc/releases")
 }
 
 val shadowImpl: Configuration by configurations.creating {
@@ -135,10 +136,8 @@ dependencies {
     // If you don't want to log in with your real minecraft account, remove this line
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
-    shadowImpl(libs.vigilance)
-    implementation(libs.vigilance)
-    shadowImpl(libs.universalcraft)
-    implementation(libs.universalcraft)
+    compileOnly("cc.polyfrost:oneconfig-1.8.9-forge:0.2.2-alpha+")
+    shadowImpl("cc.polyfrost:oneconfig-wrapper-launchwrapper:1.0.0-beta+")
 
     compileOnly(libs.hypixelmodapi)
     shadowImpl(libs.hypixelmodapitweaker)
