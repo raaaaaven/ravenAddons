@@ -2,9 +2,6 @@ package at.raven.ravenAddons.config.guieditor.data
 
 import at.raven.ravenAddons.ravenAddons.Companion.mc
 import com.google.gson.annotations.Expose
-import gg.essential.vigilance.data.PropertyInfo
-import gg.essential.vigilance.gui.settings.CheckboxComponent
-import gg.essential.vigilance.gui.settings.SettingComponent
 import net.minecraft.client.gui.ScaledResolution
 import java.lang.reflect.Field
 
@@ -96,32 +93,5 @@ class GuiPosition() {
 
         this.y += adjustedDeltaY
         return adjustedDeltaY
-    }
-
-    // TODO: move away to a better config
-//    @Throws(NoSuchFieldException::class)
-//    fun setLink(configLink: ConfigLink) {
-//        this.configField = configLink.owner.java.getDeclaredField(configLink.field)
-//    }
-
-//    @Throws(NoSuchFieldException::class)
-//    fun canJumpToConfigOptions(): Boolean =
-//        configField != null && ConfigGuiManager.getEditorInstance().getOptionFromField(configField) != null
-//
-//    fun jumpToConfigOption() {
-//        val editor = ConfigGuiManager.getEditorInstance()
-//        if (configField == null) return
-//        val option = editor.getOptionFromField(configField) ?: return
-//        editor.search("")
-//        if (!editor.goToOption(option)) return
-//        Awesome.openScreen(GuiScreenElementWrapper(editor))
-//    }
-}
-
-class GuiPositionPropertyInfo : PropertyInfo() {
-    override fun createSettingComponent(initialValue: Any?): SettingComponent {
-        return CheckboxComponent(
-            initialValue = false
-        )
     }
 }

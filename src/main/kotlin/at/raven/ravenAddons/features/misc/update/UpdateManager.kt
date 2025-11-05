@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.misc.update
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.hypixel.HypixelJoinEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -8,7 +7,11 @@ import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.ravenAddons.Companion.modVersion
 import at.raven.ravenAddons.utils.APIUtils.patchHttpsRequest
 import at.raven.ravenAddons.utils.ChatUtils
-import moe.nea.libautoupdate.*
+import moe.nea.libautoupdate.CurrentVersion
+import moe.nea.libautoupdate.PotentialUpdate
+import moe.nea.libautoupdate.UpdateContext
+import moe.nea.libautoupdate.UpdateTarget
+import moe.nea.libautoupdate.UpdateUtils
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import java.util.concurrent.CompletableFuture
 import javax.net.ssl.HttpsURLConnection
@@ -58,13 +61,13 @@ object UpdateManager {
                 return@thenAcceptAsync
             }
             var message = "${it.update.versionName} is available!"
-            if (!(fromCommand || ravenAddonsConfig.fullAutoUpdates)) {
+            if (!(fromCommand || ravenAddons.config.fullAutoUpdates)) {
                 message += " Use §b/ra update §7to download it."
             }
             ChatUtils.chat(message)
 
             updateState = UpdateState.AVAILABLE
-            if (fromCommand || ravenAddonsConfig.fullAutoUpdates) queueUpdate()
+            if (fromCommand || ravenAddons.config.fullAutoUpdates) queueUpdate()
         }
     }
 
@@ -102,7 +105,7 @@ object UpdateManager {
 
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
-        if (!ravenAddonsConfig.autoUpdates) return
+        if (!ravenAddons.config.autoUpdates) return
         checkUpdate()
     }
 

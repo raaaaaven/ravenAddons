@@ -1,5 +1,6 @@
 package at.raven.ravenAddons.tweaker;
 
+import cc.polyfrost.oneconfig.loader.stage0.LaunchWrapperTweaker;
 import net.hypixel.modapi.tweaker.HypixelModAPITweaker;
 import net.minecraft.launchwrapper.ITweaker;
 import net.minecraft.launchwrapper.Launch;
@@ -17,6 +18,7 @@ public class TestTweaker implements ITweaker {
         tweakClasses.add(MixinTweaker.class.getName());
         tweakClasses.add(HypixelModAPITweaker.class.getName());
         tweakClasses.add(ModLoadingTweaker.class.getName());
+        tweakClasses.add(LaunchWrapperTweaker.class.getName());
     }
 
     @Override

@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.skyblock
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.WorldChangeEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
@@ -32,7 +31,7 @@ object LostTimeCalculator {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.lostTimeCalculator) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.lostTimeCalculator) return
 
         if (dungeonStartPattern.matches(event.cleanMessage) || kuudraStartPattern.matches(event.cleanMessage)) {
             ChatUtils.debug("Instance Lag Calculator: Starting timer.")
@@ -74,7 +73,7 @@ object LostTimeCalculator {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.lostTimeCalculator) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.lostTimeCalculator) return
         resetTimer()
     }
 }

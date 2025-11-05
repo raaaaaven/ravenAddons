@@ -1,5 +1,6 @@
 package at.raven.ravenAddons
 
+import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.features.misc.update.UpdateManager
@@ -8,6 +9,9 @@ import at.raven.ravenAddons.loadmodule.LoadedModules
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_ID
 import at.raven.ravenAddons.ravenAddons.Companion.MOD_VERSION
 import at.raven.ravenAddons.utils.ChatUtils
+import cc.polyfrost.oneconfig.events.EventManager
+import cc.polyfrost.oneconfig.events.event.InitializationEvent
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -26,6 +30,10 @@ import kotlin.time.Duration
 @Suppress("ktlint:standard:class-naming")
 @Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
+    init {
+        EventManager.INSTANCE.register(this)
+    }
+
     private val loadedClasses = mutableSetOf<Any>()
 
     private fun loadModule(obj: Any) {
@@ -45,6 +53,11 @@ class ravenAddons {
         loadedClasses.clear()
     }
 
+    @Subscribe
+    fun onOneConfigInit(event: InitializationEvent) {
+        config = ravenAddonsConfig()
+    }
+
     @LoadModule
     companion object {
         const val MOD_VERSION = "1.13.3"
@@ -53,6 +66,8 @@ class ravenAddons {
 
         val mc get() = Minecraft.getMinecraft()
         private val globalJob: Job = Job(null)
+
+        lateinit var config: ravenAddonsConfig
 
         val coroutineScope =
             CoroutineScope(

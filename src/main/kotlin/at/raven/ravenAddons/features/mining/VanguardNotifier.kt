@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.mining
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.WorldChangeEvent
@@ -39,11 +38,11 @@ object VanguardNotifier {
     private var timeSincePartyJoin = SimpleTimeMark.farPast()
     private var timeSinceWarp = SimpleTimeMark.farPast()
 
-    private val config get() = ravenAddonsConfig.vanguardNotifierWarpDelay
+    private val config get() = ravenAddons.config.vanguardNotifierWarpDelay
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.vanguardNotifier) return
 
         if (playerCreatePartyPattern.matches(event.cleanMessage)) {
             ChatUtils.debug("Vanguard Notifier: Found a previous ravenAddons message in chat.")
@@ -79,7 +78,7 @@ object VanguardNotifier {
 
     @SubscribeEvent
     fun onIslandChange(event: IslandChangeEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.vanguardNotifier) return
         if (event.new != SkyBlockIsland.MINESHAFT) return
 
         ravenAddons.runDelayed(2.5.seconds) {
@@ -96,7 +95,7 @@ object VanguardNotifier {
 
             ChatUtils.debug("Vanguard Notifier: Vanguard detected! Message is being sent in guild chat.")
 
-            val message = if (ravenAddonsConfig.vanguardNotifierWarp) {
+            val message = if (ravenAddons.config.vanguardNotifierWarp) {
                 "/gc [RA] Vanguard Found! Type \"!ra join\" to be warped within $config seconds."
             } else {
                 "/gc [RA] Vanguard Found! Type \"!ra join\" to join the Vanguard party."
@@ -104,7 +103,7 @@ object VanguardNotifier {
 
             ChatUtils.sendMessage(message)
 
-            if (!ravenAddonsConfig.vanguardNotifierWarp) return@runDelayed
+            if (!ravenAddons.config.vanguardNotifierWarp) return@runDelayed
 
             ravenAddons.runDelayed(config.seconds) {
                 waitingToWarp = false
@@ -128,7 +127,7 @@ object VanguardNotifier {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.vanguardNotifier) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.vanguardNotifier) return
         players.clear()
         playersFull = false
         waitingToWarp = false

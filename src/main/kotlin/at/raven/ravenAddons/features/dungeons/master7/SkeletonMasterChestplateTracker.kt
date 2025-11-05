@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.dungeons.master7
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.event.managers.ScoreboardManager
@@ -25,7 +24,7 @@ object SkeletonMasterChestplateTracker {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.skeletonMasterChestplateTracker) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddons.config.skeletonMasterChestplateTracker) return
 
         val scoreboard = ScoreboardManager.scoreboardLines
 
@@ -34,8 +33,8 @@ object SkeletonMasterChestplateTracker {
         dungeonPattern.matchMatcher(event.cleanMessage) {
             ravenAddons.runDelayed(5.seconds) {
                 ChatUtils.debug("Skeleton Master Chestplate Tracker: Increasing stored run by 1.")
-                ravenAddonsConfig.skeletonMasterChestplateTrackerNumber += 1
-                ravenAddonsConfig.markDirty()
+                ravenAddons.config.skeletonMasterChestplateTrackerNumber += 1
+                //ravenAddons.config.markDirty()
             }
         }
 
@@ -45,19 +44,19 @@ object SkeletonMasterChestplateTracker {
 
             TitleManager.setTitle(
                 "§6Skeleton Master Chestplate",
-                "§7It took you §f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber} M7 §7runs",
+                "§7It took you §f${ravenAddons.config.skeletonMasterChestplateTrackerNumber} M7 §7runs",
                 5.seconds,
                 1.seconds,
                 1.seconds,
             )
             ChatUtils.chat(
-                "It took you §f${ravenAddonsConfig.skeletonMasterChestplateTrackerNumber} M7 runs " +
+                "It took you §f${ravenAddons.config.skeletonMasterChestplateTrackerNumber} M7 runs " +
                     "§7since your last Skeleton Master Chestplate.",
             )
 
             ChatUtils.debug("Skeleton Master Chestplate Tracker: Resetting stored run back to 0.")
-            ravenAddonsConfig.skeletonMasterChestplateTrackerNumber = 0
-            ravenAddonsConfig.markDirty()
+            ravenAddons.config.skeletonMasterChestplateTrackerNumber = 0
+            //ravenAddons.config.markDirty()
         }
     }
 }

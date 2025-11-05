@@ -6,7 +6,7 @@ import com.mojang.authlib.GameProfile
 import net.minecraft.client.Minecraft
 import net.minecraft.client.entity.EntityPlayerSP
 import java.net.URL
-import java.util.*
+import java.util.UUID
 
 object PlayerUtils {
     private var uuidPlayerCache: Map<UUID, String> = emptyMap()
