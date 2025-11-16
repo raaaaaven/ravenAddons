@@ -1,10 +1,10 @@
 package at.raven.ravenAddons.config
 
+import at.raven.ravenAddons.ravenAddons
 import cc.polyfrost.oneconfig.config.Config
 import cc.polyfrost.oneconfig.config.annotations.Checkbox
 import cc.polyfrost.oneconfig.config.annotations.Color
 import cc.polyfrost.oneconfig.config.annotations.Dropdown
-import cc.polyfrost.oneconfig.config.annotations.Number
 import cc.polyfrost.oneconfig.config.annotations.Slider
 import cc.polyfrost.oneconfig.config.annotations.Switch
 import cc.polyfrost.oneconfig.config.annotations.Text
@@ -12,8 +12,10 @@ import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator
+import java.io.File
 
-class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceMigrator("./config/ravenaddons.toml")), "ravenaddons.json") {
+@Suppress("ClassNaming")
+class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceMigrator(File(File(ravenAddons.mc.mcDataDir, "config"), "ravenAddons").path + "config.toml")), "ravenAddons/config.json") {
     @Switch(
         name = "Check for Updates",
         description = "Automatically check for updates on each startup.",
@@ -480,32 +482,11 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceM
     )
     var flipContributors = true
 
-//     @Number(
-//         name = "ravenAddonsVersion",
-//         description = "Stores the last loaded ravenAddons version",
-//         category = "Developer",
-//     )
-    var configVersion = 0
+    var configVersion = ravenAddons.modVersion
 
-//     @Number(
-//         name = "sinceInq",
-//         description = "Stores the number of mobs before inquisitor.",
-//         category = "Developer",
-//     )
     var sinceInq = 0
 
-//     @Number(
-//         name = "Simon Says Personal Best Number",
-//         description = "Stores the personal best for the 1st device.",
-//         category = "Developer",
-//     )
     var simonSaysPersonalBestNumber = Int.MAX_VALUE
-
-//     @Number(
-//         name = "Pre 4 Personal Best Number",
-//         description = "Stores the personal best for the 4th device.",
-//         category = "Developer",
-//     )
     var pre4PersonalBestNumber = Int.MAX_VALUE
 
     init {

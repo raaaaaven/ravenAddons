@@ -3,54 +3,78 @@ package at.raven.ravenAddons.config
 import at.raven.ravenAddons.event.ConfigFixEvent
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import net.minecraft.crash.CrashReport
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.file.StandardCopyOption
 
 object ConfigFixer {
-    private val oldConfigFile = File("./config/ravenAddons.toml")
+    private val firstConfigFile = File("./config/ravenAddons.toml")
+    val secondConfigFile = File("./config/ravenAddons/config.toml")
+    private val secondConfigPath = File("./config/ravenAddons/")
 
-    private val configPath = File("config/ravenAddons")
-    val configFile = File("config/ravenAddons/config.toml")
+    // this probably won't work with non-default profiles
+    private val configFile = File("./OneConfig/profiles/Default Profile/ravenAddons/config.json")
 
     private val versionInConfigPattern = "\travenaddonsversion = (?<version>\\d+)".toPattern()
 
-    init {
+    fun init() {
+        moveToVigilancePath()
+        VigilanceMigrator.asdf()
+        fixConfigEvent()
+    }
+
+    private fun moveToVigilancePath() {
         try {
-            configPath.mkdirs()
+            secondConfigPath.mkdirs()
             moveConfig()
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-        try {
-            if (configFile.exists()) fixConfigEvent()
         } catch (e: Exception) {
             e.printStackTrace()
         }
     }
 
     private fun moveConfig() {
-        if (oldConfigFile.exists() && !configFile.exists()) {
-            oldConfigFile.move(configFile)
-            oldConfigFile.delete()
+        if (firstConfigFile.exists() && !secondConfigFile.exists()) {
+            firstConfigFile.move(secondConfigFile)
+            firstConfigFile.delete()
         }
     }
 
+    private fun checkVigilantVersion(): Boolean {
+        try {
+            secondConfigFile.readLines().forEach {
+                versionInConfigPattern.matchMatcher(it) {
+                    if (group("version").toInt() < 1140) {
+                        return true
+                    }
+                }
+            }
+        } catch (_: Exception) {}
+        return false
+    }
+
     private fun fixConfigEvent() {
-        val configLines = configFile.readLines()
-        val versionLine = configLines.firstOrNull { it.contains("ravenaddonsversion") } ?: ""
-        var oldVersion = 0
-        versionInConfigPattern.matchMatcher(versionLine) {
-            oldVersion = group("version").toInt()
+        val configJson: JsonObject?
+        try {
+            configJson = JsonParser().parse(configFile.readText()).asJsonObject
+        } catch (_: Exception) {
+            if (checkVigilantVersion()) {
+                ravenAddons.mc.displayCrashReport(CrashReport("bad config, update to the latest vigilant config first", Throwable("bad vigilant config")))
+            }
+            return
         }
+        configJson as JsonObject
+
+        val oldVersion: Int = configJson["configVersion"].asInt
 
         if (oldVersion >= ravenAddons.modVersion) return
-        val event = ConfigFixEvent(configLines, oldVersion, ravenAddons.modVersion)
+        val event = ConfigFixEvent(configJson, oldVersion, ravenAddons.modVersion)
         event.post()
 
-        val newLines = event.configLines
-        configFile.writeText(newLines.joinToString("\n"))
+        configFile.writeText(configJson.toString())
     }
 
     private fun File.move(path: Path) {

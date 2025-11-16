@@ -5,19 +5,29 @@ import at.raven.ravenAddons.loadmodule.LoadModule
 import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.ChatUtils
 import at.raven.ravenAddons.utils.ChatUtils.add
+import cc.polyfrost.oneconfig.events.EventManager
+import cc.polyfrost.oneconfig.events.event.InitializationEvent
+import cc.polyfrost.oneconfig.libs.eventbus.Subscribe
 import kotlinx.coroutines.delay
-import net.minecraft.client.gui.GuiScreen
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
 import net.minecraft.util.ChatComponentText
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
-import kotlin.time.Duration.Companion.milliseconds
 
 @LoadModule
 object ConfigManager {
-    private var configGui: GuiScreen? = null
+    lateinit var config: ravenAddonsConfig
     private var wasModUpdated = ModUpdateStatus.NONE
     private var updateMessageSent = false
+
+    init {
+        EventManager.INSTANCE.register(this)
+    }
+
+    @Subscribe
+    fun onOneConfigInit(event: InitializationEvent) {
+        initConfig()
+    }
 
     @SubscribeEvent
     fun onHypixelJoin(event: HypixelJoinEvent) {
@@ -25,36 +35,24 @@ object ConfigManager {
             wasModUpdated.sendMessage()
             updateMessageSent = true
         }
-
-        if (configGui == null) initConfig()
     }
 
     private fun initConfig() {
-//         ConfigFixer
+        ConfigFixer.init()
+        config = ravenAddonsConfig()
 
         if (ravenAddons.config.configVersion < ravenAddons.modVersion) {
             ravenAddons.config.configVersion = ravenAddons.modVersion
-//             ravenAddons.config.markDirty()
             wasModUpdated = ModUpdateStatus.UPDATED
         } else if (ravenAddons.config.configVersion > ravenAddons.modVersion) {
             ravenAddons.config.configVersion = ravenAddons.modVersion
-//             ravenAddons.config.markDirty()
             wasModUpdated = ModUpdateStatus.DOWNGRADED
         }
-
-        ravenAddons.runDelayed(150.milliseconds) {
-            while (ravenAddons.mc.currentScreen != null) {
-                delay(50)
-            }
-
-//             configGui = ravenAddons.config.gui()
-        }
+        ravenAddons.config.save()
     }
 
     fun openConfig() {
-//         ravenAddons.config.openGui()
-//         val gui = configGui ?: ravenAddons.config.gui() ?: return
-//         ravenAddons.openScreen(gui)
+        config.openGui()
     }
 
     enum class ModUpdateStatus(

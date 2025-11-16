@@ -1,5 +1,6 @@
 package at.raven.ravenAddons
 
+import at.raven.ravenAddons.config.ConfigManager
 import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.TickEvent
@@ -31,7 +32,7 @@ import kotlin.time.Duration
 @Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
     init {
-        EventManager.INSTANCE.register(this)
+        ConfigManager
     }
 
     private val loadedClasses = mutableSetOf<Any>()
@@ -53,21 +54,18 @@ class ravenAddons {
         loadedClasses.clear()
     }
 
-    @Subscribe
-    fun onOneConfigInit(event: InitializationEvent) {
-        config = ravenAddonsConfig()
-    }
-
     @LoadModule
     companion object {
-        const val MOD_VERSION = "1.13.3"
+        const val MOD_VERSION = "1.14.0"
         const val MOD_ID = "ravenAddons"
         val modVersion get() = UpdateManager.modVersionNumber(MOD_VERSION)
 
         val mc get() = Minecraft.getMinecraft()
         private val globalJob: Job = Job(null)
 
-        lateinit var config: ravenAddonsConfig
+        var config
+            get() = ConfigManager.config
+            set(value) { ConfigManager.config = value }
 
         val coroutineScope =
             CoroutineScope(

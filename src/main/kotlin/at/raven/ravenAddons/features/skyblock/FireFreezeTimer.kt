@@ -222,9 +222,11 @@ object FireFreezeTimer {
 //             val newValue = if (announcerValue) 3 else 0
 //
 //             tomlData.remove<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
-//             tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announcer", newValue)
-//
+//             tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announc
 //             event.tomlData = tomlData
 //         }
+        event.checkVersion(1120) {
+            event.configJson.addProperty("sinceInq", 10)
+        }
     }
 }
