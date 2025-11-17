@@ -23,7 +23,7 @@ object ConfigFixer {
 
     fun init() {
         moveToVigilancePath()
-        VigilanceMigrator.asdf()
+        VigilanceMigrator.insertVigilanceConfig()
         fixConfigEvent()
     }
 
@@ -47,7 +47,7 @@ object ConfigFixer {
         try {
             secondConfigFile.readLines().forEach {
                 versionInConfigPattern.matchMatcher(it) {
-                    if (group("version").toInt() < 1140) {
+                    if (group("version").toInt() < 1133) {
                         return true
                     }
                 }

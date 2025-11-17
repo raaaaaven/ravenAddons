@@ -38,8 +38,8 @@ object ConfigManager {
     }
 
     private fun initConfig() {
-        ConfigFixer.init()
         config = ravenAddonsConfig()
+        ConfigFixer.init()
 
         if (ravenAddons.config.configVersion < ravenAddons.modVersion) {
             ravenAddons.config.configVersion = ravenAddons.modVersion

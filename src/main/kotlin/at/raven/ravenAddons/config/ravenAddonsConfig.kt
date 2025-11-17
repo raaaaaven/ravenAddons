@@ -436,14 +436,6 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceM
     )
     var skeletonMasterChestplateTracker = false
 
-//     @Number(
-//         name = "Skeleton Master Chestplate Tracker Number",
-//         description = "Stores the amount of runs it takes for the Skeleton Master Chestplate tracker.",
-//         category = "Dungeons",
-//         subcategory = "Master Mode Floor 7",
-//     )
-    var skeletonMasterChestplateTrackerNumber = 0
-
     @Switch(
         name = "!since",
         description = "Announces to the party how many mobs you have spawned before spawning an Inquisitor.",
@@ -483,10 +475,9 @@ class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceM
     var flipContributors = true
 
     var configVersion = ravenAddons.modVersion
-
     var sinceInq = 0
-
     var simonSaysPersonalBestNumber = Int.MAX_VALUE
+    var skeletonMasterChestplateTrackerNumber = 0
     var pre4PersonalBestNumber = Int.MAX_VALUE
 
     init {
