@@ -7,6 +7,7 @@ style:
             - 'SubscribeEvent'
             - 'HandleEvent'
             - 'Mod.EventHandler'
+            - 'Subscribe'
     ReturnCount:
         active: true
         max: 5

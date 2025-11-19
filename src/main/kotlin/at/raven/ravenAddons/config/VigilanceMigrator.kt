@@ -81,7 +81,11 @@ object VigilanceMigrator {
         }
     }
 
-    private fun String.attemptConversion(): Any? = this.toBooleanStrictOrNull() ?: this.toIntOrNull() ?: this.toFloatOrNull() ?: this.toOneColorOrNull()
+    private fun String.attemptConversion(): Any? =
+        this.toBooleanStrictOrNull()
+            ?: this.toIntOrNull()
+            ?: this.toFloatOrNull()
+            ?: this.toOneColorOrNull()
 
     private fun String?.toOneColorOrNull(): OneColor? {
         val newString = this?.removePrefix("\"")?.removeSuffix("\"") ?: return null

@@ -56,7 +56,9 @@ object Pre4Notification {
         if (distanceToPlayer >= 3.0) return
         val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
 
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !waitingBoundingBox.isVecInside(playerPosition) || !ravenAddons.config.enterSection4Title) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland()
+            || !waitingBoundingBox.isVecInside(playerPosition)
+            || !ravenAddons.config.enterSection4Title) return
 
         ChatUtils.chat("${event.entity.displayName.formattedText.removeColors()}!!")
 

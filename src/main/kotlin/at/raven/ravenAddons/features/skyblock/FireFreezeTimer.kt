@@ -81,8 +81,7 @@ object FireFreezeTimer {
                         val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
 
                         ChatUtils.sendMessage("/pc [RA] $string frozen!")
-                    }
-                    else
+                    } else
                         ChatUtils.sendMessage("/pc [RA] $entityName frozen!")
                 }
             }
@@ -98,7 +97,10 @@ object FireFreezeTimer {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
                 ChatUtils.debug("Fire Freeze Announce: Frozen entity died or is now unfrozen.")
-                if (ravenAddons.config.fireFreezeAnnounce == 2 || ravenAddons.config.fireFreezeAnnounce == 3 && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
+                if (ravenAddons.config.fireFreezeAnnounce == 2 ||
+                    ravenAddons.config.fireFreezeAnnounce == 3 &&
+                    unfreezeMessageCooldown.isInPast() && entity.isInWorld()
+                ) {
                     ChatUtils.debug("Fire Freeze Announce: Sending message for unfrozen mob.")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     unfreezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
@@ -152,7 +154,7 @@ object FireFreezeTimer {
             ChatUtils.chatClickable(
                 message = "§8[§cRA ERROR§8] §7Unknown mob detected! Click here to run §f/ra copyentities§7.",
                 command = "/ra copyentities",
-                usePrefix = false
+                usePrefix = false,
             )
             println("'${name?.removeColors()}'")
         }

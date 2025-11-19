@@ -12,15 +12,21 @@ import cc.polyfrost.oneconfig.config.core.OneColor
 import cc.polyfrost.oneconfig.config.data.Mod
 import cc.polyfrost.oneconfig.config.data.ModType
 import cc.polyfrost.oneconfig.config.migration.VigilanceMigrator
-import java.io.File
 
 @Suppress("ClassNaming")
-class ravenAddonsConfig : Config(Mod("ravenAddons", ModType.UTIL_QOL, VigilanceMigrator(File(File(ravenAddons.mc.mcDataDir, "config"), "ravenAddons").path + "config.toml")), "ravenAddons/config.json") {
+class ravenAddonsConfig :
+    Config(
+        Mod(
+            "ravenAddons", ModType.UTIL_QOL,
+            VigilanceMigrator(ConfigFixer.secondConfigFile.path),
+        ),
+        "ravenAddons/config.json",
+    ) {
     @Switch(
         name = "Check for Updates",
         description = "Automatically check for updates on each startup.",
         category = "General",
-        subcategory = "Updates"
+        subcategory = "Updates",
     )
     var autoUpdates = false
 
