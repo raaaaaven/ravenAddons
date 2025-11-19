@@ -27,9 +27,9 @@ object SimonSaysPersonalBestTracker {
     private var time = ServerTimeMark.FAR_PAST
 
     private var personalBest: Int
-        get() = ravenAddons.config.pre4PersonalBestNumber
+        get() = ravenAddons.config.simonSaysPersonalBestNumber
         set(value) {
-            ravenAddons.config.pre4PersonalBestNumber = value
+            ravenAddons.config.simonSaysPersonalBestNumber = value
             ravenAddons.config.save()
         }
 
