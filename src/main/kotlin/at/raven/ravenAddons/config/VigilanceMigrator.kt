@@ -27,29 +27,24 @@ object VigilanceMigrator {
     }
 
     private fun getConfigMap(): Map<String, KProperty1<ravenAddonsConfig, *>> {
-        val configValues = mutableMapOf<String, KProperty1<ravenAddonsConfig, *>>()
-
-        for (field in ravenAddonsConfig::class.memberProperties) {
-            val configName = (field.javaField?.annotations?.firstOrNull()
-                ?.let { it::class.memberProperties.find { prop -> prop.name == "name" }?.call(it) } as? String) ?: run {
+        return ravenAddonsConfig::class.memberProperties.associateBy { field ->
+            val configName = field.javaField?.annotations?.firstNotNullOfOrNull { annotation ->
+                runCatching {
+                    val nameMethod = annotation.annotationClass.java.getMethod("name")
+                    nameMethod.invoke(annotation) as? String
+                }.getOrNull()
+            }
+            val configNameFallback = configName ?: run {
                 when (field) {
                     ravenAddonsConfig::configVersion -> "ravenaddonsversion"
                     ravenAddonsConfig::sinceInq -> "sinceinq"
-                    else -> {
-                        var newName = ""
-                        field.name.forEach { char ->
-                            if (char.isUpperCase() || char.isDigit()) {
-                                newName += " "
-                            }
-                            newName += char.lowercase()
-                        }
-                        newName
-                    }
+
+                    else -> field.name.replace("(?<=[a-z])([A-Z\\d])".toRegex(), "_$1").lowercase()
                 }
             }
-            configValues[configName.lowercase().replace(' ', '_')] = field
+
+            (configNameFallback.trim().lowercase().replace(' ', '_'))
         }
-        return configValues
     }
 
     private fun getVigilanceLines(): List<String>? {
@@ -69,7 +64,7 @@ object VigilanceMigrator {
                 val key = group("name").lowercase()
                 val value: Any
                 group("value").let { groupValue ->
-                    value = groupValue.toBooleanStrictOrNull() ?: groupValue.toIntOrNull() ?: groupValue.toFloatOrNull() ?: groupValue.toOneColorOrNull() ?: run {
+                    value = groupValue.attemptConversion() ?: run {
                         groupValue.removePrefix("\"").removeSuffix("\"")
                     }
                 }
@@ -85,6 +80,8 @@ object VigilanceMigrator {
             }
         }
     }
+
+    private fun String.attemptConversion(): Any? = this.toBooleanStrictOrNull() ?: this.toIntOrNull() ?: this.toFloatOrNull() ?: this.toOneColorOrNull()
 
     private fun String?.toOneColorOrNull(): OneColor? {
         val newString = this?.removePrefix("\"")?.removeSuffix("\"") ?: return null
