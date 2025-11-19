@@ -1,9 +1,9 @@
 package at.raven.ravenAddons.features.skyblock
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.RegexUtils.matches
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
@@ -18,7 +18,7 @@ object BlazetekkHamRadioMessageHider {
 
     @SubscribeEvent
     fun onChat(event: ChatReceivedEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.blazetekkHamRadioMessageHider) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.blazetekkHamRadioMessageHider) return
 
         if (radioPatterns.any { it.matches(event.cleanMessage) }) {
             event.isCanceled = true

@@ -1,10 +1,10 @@
 package at.raven.ravenAddons.utils
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.commands.CommandCategory
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import net.minecraft.client.Minecraft
 import net.minecraft.event.ClickEvent
 import net.minecraft.event.HoverEvent
@@ -98,7 +98,7 @@ object ChatUtils {
     }
 
     fun debug(message: String) {
-        if (!ravenAddonsConfig.debugMessages) return
+        if (!ravenAddons.config.debugMessages) return
 
         chat("§7[RA DEBUG] $message", usePrefix = false)
     }

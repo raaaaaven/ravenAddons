@@ -1,5 +1,6 @@
 package at.raven.ravenAddons
 
+import at.raven.ravenAddons.config.ConfigManager
 import at.raven.ravenAddons.event.CommandRegistrationEvent
 import at.raven.ravenAddons.event.TickEvent
 import at.raven.ravenAddons.features.misc.update.UpdateManager
@@ -26,6 +27,10 @@ import kotlin.time.Duration
 @Suppress("ktlint:standard:class-naming")
 @Mod(modid = MOD_ID, useMetadata = true, version = MOD_VERSION)
 class ravenAddons {
+    init {
+        ConfigManager
+    }
+
     private val loadedClasses = mutableSetOf<Any>()
 
     private fun loadModule(obj: Any) {
@@ -53,6 +58,10 @@ class ravenAddons {
 
         val mc get() = Minecraft.getMinecraft()
         private val globalJob: Job = Job(null)
+
+        var config
+            get() = ConfigManager.config
+            set(value) { ConfigManager.config = value }
 
         val coroutineScope =
             CoroutineScope(

@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.dungeons.floor7
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.WorldChangeEvent
@@ -30,11 +29,11 @@ object Pre4Notification {
 
     private var time = ServerTimeMark.FAR_PAST
 
-    private var personalBest = ravenAddonsConfig.pre4PersonalBestNumber
+    private var personalBest: Int
+        get() = ravenAddons.config.pre4PersonalBestNumber
         set(value) {
-            ravenAddonsConfig.pre4PersonalBestNumber = value
-            ravenAddonsConfig.markDirty()
-            field = value
+            ravenAddons.config.pre4PersonalBestNumber = value
+            ravenAddons.config.save()
         }
 
     private val pre4BoundingBox = AxisAlignedBB(
@@ -57,7 +56,9 @@ object Pre4Notification {
         if (distanceToPlayer >= 3.0) return
         val playerPosition = PlayerUtils.getPlayer()?.positionVector ?: return
 
-        if (!SkyBlockIsland.CATACOMBS.isInIsland() || !waitingBoundingBox.isVecInside(playerPosition) || !ravenAddonsConfig.enterSection4Title) return
+        if (!SkyBlockIsland.CATACOMBS.isInIsland()
+            || !waitingBoundingBox.isVecInside(playerPosition)
+            || !ravenAddons.config.enterSection4Title) return
 
         ChatUtils.chat("${event.entity.displayName.formattedText.removeColors()}!!")
 
@@ -85,11 +86,11 @@ object Pre4Notification {
 
             val timeElapsed = time.passedSince().inWholeTicks.toInt()
 
-            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Notification) {
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddons.config.pre4Notification) {
                 ChatUtils.debug("Pre 4 Notification: Sending title and subtitle for $ign.")
 
-                val title = ravenAddonsConfig.pre4NotificationTitle.replace("&", "§")
-                val subtitle = ravenAddonsConfig.pre4NotificationSubtitle.replace("&", "§")
+                val title = ravenAddons.config.pre4NotificationTitle.replace("&", "§")
+                val subtitle = ravenAddons.config.pre4NotificationSubtitle.replace("&", "§")
 
                 ravenAddons.runDelayed(5.milliseconds) {
                     TitleManager.setVanillaTitle(
@@ -100,12 +101,12 @@ object Pre4Notification {
 
             }
 
-            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4Announce) {
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddons.config.pre4Announce) {
                 ChatUtils.debug("Pre 4 Announce: Sending message in party chat.")
 
-                val message = ravenAddonsConfig.pre4AnnounceMessage.replace("\$time", formatTicks(timeElapsed))
+                val message = ravenAddons.config.pre4AnnounceMessage.replace("\$time", formatTicks(timeElapsed))
 
-                val announce = if (ravenAddonsConfig.announcePrefix) {
+                val announce = if (ravenAddons.config.announcePrefix) {
                     "/pc [RA] $message"
                 } else {
                     "/pc $message"
@@ -114,7 +115,7 @@ object Pre4Notification {
                 ChatUtils.sendMessage(announce)
             }
 
-            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddonsConfig.pre4PersonalBest) {
+            if (pre4BoundingBox.isVecInside(playerPosition) && ravenAddons.config.pre4PersonalBest) {
                 if (timeElapsed > 600) {
                     ChatUtils.debug("Pre 4 Personal Best: Could not mark pre 4 done so returning.")
                     time = ServerTimeMark.FAR_PAST
@@ -152,7 +153,7 @@ object Pre4Notification {
 
     @SubscribeEvent
     fun onWorldLoad(event: WorldChangeEvent) {
-        if (!HypixelGame.inSkyBlock || !ravenAddonsConfig.pre4PersonalBest) return
+        if (!HypixelGame.inSkyBlock || !ravenAddons.config.pre4PersonalBest) return
         time = ServerTimeMark.FAR_PAST
     }
 }

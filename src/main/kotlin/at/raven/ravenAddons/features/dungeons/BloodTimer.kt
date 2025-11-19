@@ -1,6 +1,5 @@
 package at.raven.ravenAddons.features.dungeons
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.event.chat.ChatReceivedEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
@@ -74,5 +73,5 @@ object BloodTimer {
         }
     }
 
-    private fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() && ravenAddonsConfig.bloodTimer)
+    private fun isEnabled() = (SkyBlockIsland.CATACOMBS.isInIsland() && ravenAddons.config.bloodTimer)
 }

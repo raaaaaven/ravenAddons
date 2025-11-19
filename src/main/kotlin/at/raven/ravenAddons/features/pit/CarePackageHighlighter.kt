@@ -1,9 +1,9 @@
 package at.raven.ravenAddons.features.pit
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.event.render.container.ContainerBackgroundDrawEvent
 import at.raven.ravenAddons.loadmodule.LoadModule
+import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.InventoryUtils.getContainerName
 import at.raven.ravenAddons.utils.InventoryUtils.getUpperItems
 import at.raven.ravenAddons.utils.render.GuiRenderUtils.highlight
@@ -26,14 +26,14 @@ object CarePackageHighlighter {
     @SubscribeEvent
     fun onContainerBackground(event: ContainerBackgroundDrawEvent) {
         if (!HypixelGame.inPit) return
-        if (!ravenAddonsConfig.carePackageHighlighter) return
+        if (!ravenAddons.config.carePackageHighlighter) return
         if (event.gui !is GuiChest) return
         if (event.gui.getContainerName() != "Chest") return
         val inventory = event.gui.inventorySlots as ContainerChest
 
         for ((slot, stack) in inventory.getUpperItems()) {
             if (importantItems.any { stack?.displayName?.contains(it) == true }) {
-                slot.highlight(ravenAddonsConfig.carePackageHighlighterColour)
+                slot.highlight(ravenAddons.config.carePackageHighlighterColour.toJavaColor())
             }
         }
     }

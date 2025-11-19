@@ -1,7 +1,5 @@
 package at.raven.ravenAddons.features.skyblock
 
-import at.raven.ravenAddons.config.ravenAddonsConfig
-import at.raven.ravenAddons.config.ravenAddonsConfig.fireFreezeAnnounce
 import at.raven.ravenAddons.data.HypixelGame
 import at.raven.ravenAddons.data.SkyBlockIsland
 import at.raven.ravenAddons.data.commands.CommandCategory
@@ -65,7 +63,7 @@ object FireFreezeTimer {
         }
         ChatUtils.debug("Fire Freeze Timer: $entityName.")
 
-        if (ravenAddonsConfig.fireFreezeNotification && titleCooldown.isInPast()) {
+        if (ravenAddons.config.fireFreezeNotification && titleCooldown.isInPast()) {
             titleCooldown = SimpleTimeMark.now() + 1.seconds
             ravenAddons.runDelayed(5.seconds) {
                 TitleManager.setTitle("§b§lFREEZE!", "", 3.seconds, 1.seconds, 1.seconds)
@@ -73,7 +71,7 @@ object FireFreezeTimer {
             }
         }
 
-        if (fireFreezeAnnounce == 1 || fireFreezeAnnounce == 3) {
+        if (ravenAddons.config.fireFreezeAnnounce == 1 || ravenAddons.config.fireFreezeAnnounce == 3) {
             ChatUtils.debug("Fire Freeze Announce: Sending message in 250ms.")
             if (freezeMessageCooldown.isInPast()) {
                 freezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
@@ -83,8 +81,7 @@ object FireFreezeTimer {
                         val string = if (entityCount == 1) "Mob" else "$entityCount Mobs"
 
                         ChatUtils.sendMessage("/pc [RA] $string frozen!")
-                    }
-                    else
+                    } else
                         ChatUtils.sendMessage("/pc [RA] $entityName frozen!")
                 }
             }
@@ -93,14 +90,17 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onWorldRender(event: WorldRenderEvent) {
-        if (!HypixelGame.inSkyBlock || SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddonsConfig.fireFreezeTimer) return
+        if (!HypixelGame.inSkyBlock || SkyBlockIsland.CATACOMBS.isInIsland() || !ravenAddons.config.fireFreezeTimer) return
 
         val entities = frozenEntities.toMap()
         for ((entity, timer) in entities) {
             if (timer.isInPast() || !entity.isInWorld()) {
                 frozenEntities.remove(entity)
                 ChatUtils.debug("Fire Freeze Announce: Frozen entity died or is now unfrozen.")
-                if (fireFreezeAnnounce == 2 || fireFreezeAnnounce == 3 && unfreezeMessageCooldown.isInPast() && entity.isInWorld()) {
+                if (ravenAddons.config.fireFreezeAnnounce == 2 ||
+                    ravenAddons.config.fireFreezeAnnounce == 3 &&
+                    unfreezeMessageCooldown.isInPast() && entity.isInWorld()
+                ) {
                     ChatUtils.debug("Fire Freeze Announce: Sending message for unfrozen mob.")
                     ChatUtils.sendMessage("/pc [RA] Mob(s) unfroze!")
                     unfreezeMessageCooldown = SimpleTimeMark.now() + 5.seconds
@@ -154,7 +154,7 @@ object FireFreezeTimer {
             ChatUtils.chatClickable(
                 message = "§8[§cRA ERROR§8] §7Unknown mob detected! Click here to run §f/ra copyentities§7.",
                 command = "/ra copyentities",
-                usePrefix = false
+                usePrefix = false,
             )
             println("'${name?.removeColors()}'")
         }
@@ -217,16 +217,15 @@ object FireFreezeTimer {
 
     @SubscribeEvent
     fun onConfigFix(event: ConfigFixEvent) {
-        event.checkVersion(150) {
-            val tomlData = event.tomlData ?: return@checkVersion
-            val announcerValue = tomlData.get<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
-
-            val newValue = if (announcerValue) 3 else 0
-
-            tomlData.remove<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
-            tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announcer", newValue)
-
-            event.tomlData = tomlData
-        }
+//         event.checkVersion(150) {
+//             val tomlData = event.tomlData ?: return@checkVersion
+//             val announcerValue = tomlData.get<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+//
+//             val newValue = if (announcerValue) 3 else 0
+//
+//             tomlData.remove<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+//             tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announcer")
+//             event.tomlData = tomlData
+//         }
     }
 }
