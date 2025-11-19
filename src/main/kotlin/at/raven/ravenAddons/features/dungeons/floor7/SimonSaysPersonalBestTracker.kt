@@ -27,11 +27,10 @@ object SimonSaysPersonalBestTracker {
     private var time = ServerTimeMark.FAR_PAST
 
     private var personalBest: Int
-        get() {
-            return ravenAddons.config.pre4PersonalBestNumber
-        }
+        get() = ravenAddons.config.pre4PersonalBestNumber
         set(value) {
             ravenAddons.config.pre4PersonalBestNumber = value
+            ravenAddons.config.save()
         }
 
     private val boundingBox = AxisAlignedBB(
