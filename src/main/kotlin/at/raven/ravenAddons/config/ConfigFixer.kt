@@ -5,7 +5,6 @@ import at.raven.ravenAddons.ravenAddons
 import at.raven.ravenAddons.utils.RegexUtils.matchMatcher
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
-import net.minecraft.crash.CrashReport
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
@@ -21,10 +20,10 @@ object ConfigFixer {
 
     private val versionInConfigPattern = "\travenaddonsversion = (?<version>\\d+)".toPattern()
 
-    fun init() {
+    fun attemptVigilanceMigration() {
         moveToVigilancePath()
-        VigilanceMigrator.insertVigilanceConfig()
-        fixConfigEvent()
+        if (checkVigilantVersion())
+            VigilanceMigrator.insertVigilanceConfig()
     }
 
     private fun moveToVigilancePath() {
@@ -56,14 +55,11 @@ object ConfigFixer {
         return false
     }
 
-    private fun fixConfigEvent() {
+    fun fixConfigEvent() {
         val configJson: JsonObject?
         try {
             configJson = JsonParser().parse(configFile.readText()).asJsonObject
         } catch (_: Exception) {
-            if (checkVigilantVersion()) {
-                ravenAddons.mc.displayCrashReport(CrashReport("bad config, update to the latest vigilant config first", Throwable("bad vigilant config")))
-            }
             return
         }
         configJson as JsonObject

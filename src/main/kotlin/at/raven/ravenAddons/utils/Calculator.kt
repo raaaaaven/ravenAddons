@@ -161,7 +161,7 @@ object Calculator {
     }
 
     @SubscribeEvent
-    fun onConfigFix(event: ConfigFixEvent) { // todo fix this
+    fun onConfigFix(event: ConfigFixEvent) {
 //         event.checkVersion(150) {
 //             val tomlData = event.tomlData ?: return@checkVersion
 //

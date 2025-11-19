@@ -214,7 +214,7 @@ object FireFreezeTimer {
     }
 
     @SubscribeEvent
-    fun onConfigFix(event: ConfigFixEvent) { //todo fix this
+    fun onConfigFix(event: ConfigFixEvent) {
 //         event.checkVersion(150) {
 //             val tomlData = event.tomlData ?: return@checkVersion
 //             val announcerValue = tomlData.get<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
@@ -222,11 +222,8 @@ object FireFreezeTimer {
 //             val newValue = if (announcerValue) 3 else 0
 //
 //             tomlData.remove<Boolean>("skyblock.fire_freeze_staff.fire_freeze_announcer")
-//             tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announc
+//             tomlData.set<Int>("skyblock.fire_freeze_staff.fire_freeze_announcer")
 //             event.tomlData = tomlData
 //         }
-        event.checkVersion(1120) {
-            event.configJson.addProperty("sinceInq", 10)
-        }
     }
 }
